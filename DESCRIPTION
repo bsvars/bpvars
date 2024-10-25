@@ -12,7 +12,7 @@ Maintainer: Tomasz Woźniak <wozniak.tom@pm.me>
 License: GPL (>= 3)
 Depends: 
     R (>= 2.10),
-    bsvars
+    bsvars (>= 3.2)
 Imports: 
     R6,
     Rcpp (>= 1.0.12),
