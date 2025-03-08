@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2025-03-08T06:41Z
+last_built: 2025-03-08T07:47Z
 urls:
-  reference: http://bvarPANELs.org/bvarPANELs/reference
-  article: http://bvarPANELs.org/bvarPANELs/articles
+  reference: http://bsvars.org/bvarPANELs/reference
+  article: http://bsvars.org/bvarPANELs/articles
