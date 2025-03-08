@@ -1,3 +1,9 @@
+# bvarPANELs 0.2
+
+1. The package features a hexagonal logo [#26](https://github.com/bsvars/bvarPANELs/issues/26) with the [code for reproduction](https://github.com/bsvars/hex)
+2. The package includes a **pkgdown** website [#26](https://github.com/bsvars/bvarPANELs/issues/26)
+3. The package is featured at [bsvars.org](https://bsvars.org/)
+
 # bvarPANELs 0.1
 
 1. This package is alive! [#1](https://github.com/bsvars/bvarPANELs/issues/1)
