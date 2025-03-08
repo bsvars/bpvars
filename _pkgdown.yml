@@ -1,0 +1,56 @@
+url: http://bvarPANELs.org/bvarPANELs/
+template:
+  bootstrap: 5
+
+development:
+  mode: auto
+
+navbar:
+  structure:
+    right: [github]
+
+
+reference:
+- title: "bvarPANELs: Forecasting with Bayesian Hierarchical Panel VARs"
+  desc: "Browse package information"
+- contents:
+  - bvarPANELs-package 
+  - bvarPANELs 
+- title: "Data"
+  desc: "Upload sample data set"
+- contents:
+  - ilo_dynamic_panel
+  - ilo_exogenous_variables
+  - ilo_exogenous_forecasts
+  - ilo_conditional_forecasts
+- title: "Model specification"
+  desc: "Choose a model to work with"
+- contents:
+  - matches("specify_bvarPANEL")
+- title: "More detailed model specification"
+  desc: "Adjust or inspect the specified model"
+- contents:
+  - matches("specify_prior")
+  - matches("specify_start")
+  - matches("specify_panel")
+- title: "Estimation"
+  desc: "Run Bayesian estimation of your model and inspect the outputs"
+- contents:
+  - matches("estimate")
+  - matches("specify_posterior")
+- title: "Posterior summaries"
+  desc: "Analyse the posterior summaries of the posterior estimation outcomes"
+- contents:
+  - matches("summary")
+- title: "Forecasting"
+  desc: "Predict future values of your variables"
+- contents:
+  - matches("forecast")
+- title: "Structural analyses"
+  desc: "Compute interpretable outcomes"
+- contents:
+  - matches("compute")
+- title: "Plot your results"
+  desc: "Prepare beautiful and informative plots for your analyses"
+- contents:
+  - matches("plot")
