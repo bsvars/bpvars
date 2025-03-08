@@ -184,7 +184,7 @@ You must have a **cpp** compiler. Follow the instructions from [Section 1.3. by 
 
 Just open your **R** and install the package from its developer's repository by typing:
 ```
-devtools::install_github("bsvars/bsvars")
+devtools::install_github("bsvars/bvarPANELs")
 ```
 
 ## Development

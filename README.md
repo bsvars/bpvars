@@ -213,7 +213,7 @@ and for **Linux:** install the standard development packages.
 Just open your **R** and install the package from its developer’s
 repository by typing:
 
-    devtools::install_github("bsvars/bsvars")
+    devtools::install_github("bsvars/bvarPANELs")
 
 ## Development
 
