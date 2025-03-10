@@ -1,0 +1,27 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>http://bsvars.org/bvarPANELs/dev/LICENSE.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/authors.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/index.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/news/index.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/bvarPANELs-package.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/compute_variance_decompositions.PosteriorBVARPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/estimate.BVARPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/estimate.PosteriorBVARPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/forecast.PosteriorBVARPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/ilo_conditional_forecasts.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/ilo_dynamic_panel.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/ilo_exogenous_forecasts.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/ilo_exogenous_variables.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/index.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/plot.ForecastsPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/plot.PosteriorFEVDPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/specify_bvarPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/specify_panel_data_matrices.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/specify_posterior_bvarPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/specify_prior_bvarPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/specify_starting_values_bvarPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/summary.ForecastsPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/summary.PosteriorBVARPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bvarPANELs/dev/reference/summary.PosteriorFEVDPANEL.html</loc></url>
+</urlset>
+
