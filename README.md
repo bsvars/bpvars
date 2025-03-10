@@ -26,10 +26,10 @@ coherent workflows and reproducibility. Beautiful plots, informative
 summary functions, and extensive documentation complement all this. An
 extraordinary computational speed is achieved thanks to employing
 frontier econometric and numerical techniques and algorithms written in
-C++. The **bvarPANELs** package is aligned regarding objects, workflows,
-and code structure with the R packages **bsvars** by [Woźniak
-(2024)](http://doi.org/10.32614/CRAN.package.bsvars) and **bsvarSIGNs**
-by [Wang & Woźniak
+**C++**. The **bvarPANELs** package is aligned regarding objects,
+workflows, and code structure with the **R** packages **bsvars** by
+[Woźniak (2024)](http://doi.org/10.32614/CRAN.package.bsvars) and
+**bsvarSIGNs** by [Wang & Woźniak
 (2024)](http://doi.org/10.32614/CRAN.package.bsvarSIGNs), and they
 constitute an integrated toolset.
 
