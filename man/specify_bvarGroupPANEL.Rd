@@ -5,7 +5,10 @@
 \title{R6 Class representing the specification of the BVARGROUPPANEL model}
 \description{
 The class BVARGROUPPANEL presents complete specification for the Bayesian Panel
-Vector Autoregression with county groups
+Vector Autoregression with county groups. The groups can be pre-specified, 
+which requires the argument \code{group_allocation} to be provided, or estimated,
+which requires the argument \code{G} for the number of groups to be provided 
+and the argument \code{group_allocation} to be left empty.
 }
 \examples{
 data(ilo_dynamic_panel)
@@ -25,6 +28,8 @@ spec = specify_bvarGroupPANEL$new(
 \item{\code{p}}{a non-negative integer specifying the autoregressive lag order of the model.}
 
 \item{\code{G}}{a non-negative integer specifying the number of country groupings.}
+
+\item{\code{estimate_groups}}{a logical value denoting whether the groups are to be estimated.}
 
 \item{\code{prior}}{an object PriorBSVAR with the prior specification.}
 
@@ -60,7 +65,10 @@ start adapting, the initial scaling rate}
 \if{latex}{\out{\hypertarget{method-BVARGROUPPANEL-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new specification of the Bayesian Panel VAR model with country 
-groupings BVARGROUPPANEL
+grouping BVARGROUPPANEL. The groups can be pre-specified, 
+which requires the argument \code{group_allocation} to be provided, or estimated,
+which requires the argument \code{G} for the number of groups to be provided 
+and the argument \code{group_allocation} to be left empty.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{specify_bvarGroupPANEL$new(
   data,
@@ -91,9 +99,14 @@ with time series data.}
 determining the truncation of the predictive density to \code{[0, 100]} and
 \code{(-Inf, Inf)} (no truncation) for each of the variables.}
 
-\item{\code{G}}{a positive integer specifying the number of country groups.}
+\item{\code{G}}{a positive integer specifying the number of country groups. Its 
+specification is required if \code{group_allocation} is not provided and 
+the country groups to be estimated.}
 
-\item{\code{group_allocation}}{a numeric vector with integer numbers denoting group allocations}
+\item{\code{group_allocation}}{an argument that can be provided as a numeric 
+vector with integer numbers denoting group allocations to pre-specify the
+the country groups, in which case they are not estimated, or left empty
+if the country groups are to be estimated.}
 }
 \if{html}{\out{</div>}}
 }

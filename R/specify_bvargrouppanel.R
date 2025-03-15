@@ -150,7 +150,10 @@ specify_starting_values_bvarGroupPANEL = R6::R6Class(
 #'
 #' @description
 #' The class BVARGROUPPANEL presents complete specification for the Bayesian Panel
-#' Vector Autoregression with county groups
+#' Vector Autoregression with county groups. The groups can be pre-specified, 
+#' which requires the argument \code{group_allocation} to be provided, or estimated,
+#' which requires the argument \code{G} for the number of groups to be provided 
+#' and the argument \code{group_allocation} to be left empty.
 #' 
 #' @examples 
 #' data(ilo_dynamic_panel)
@@ -174,6 +177,9 @@ specify_bvarGroupPANEL = R6::R6Class(
     #' @field G a non-negative integer specifying the number of country groupings. 
     G                      = numeric(),
     
+    #' @field estimate_groups a logical value denoting whether the groups are to be estimated. 
+    estimate_groups        = logical(),
+    
     #' @field prior an object PriorBSVAR with the prior specification. 
     prior                  = list(),
     
@@ -190,7 +196,10 @@ specify_bvarGroupPANEL = R6::R6Class(
     
     #' @description
     #' Create a new specification of the Bayesian Panel VAR model with country 
-    #' groupings BVARGROUPPANEL
+    #' grouping BVARGROUPPANEL. The groups can be pre-specified, 
+    #' which requires the argument \code{group_allocation} to be provided, or estimated,
+    #' which requires the argument \code{G} for the number of groups to be provided 
+    #' and the argument \code{group_allocation} to be left empty.
     #' @param data a list with \code{C} elements of \code{(T_c+p)xN} matrices 
     #' with time series data.
     #' @param p a positive integer providing model's autoregressive lag order.
@@ -201,17 +210,22 @@ specify_bvarGroupPANEL = R6::R6Class(
     #' @param type an \code{N} character vector with elements set to "rate" or "real"
     #' determining the truncation of the predictive density to \code{[0, 100]} and
     #' \code{(-Inf, Inf)} (no truncation) for each of the variables.
-    #' @param G a positive integer specifying the number of country groups.
-    #' @param group_allocation a numeric vector with integer numbers denoting group allocations
+    #' @param G a positive integer specifying the number of country groups. Its 
+    #' specification is required if \code{group_allocation} is not provided and 
+    #' the country groups to be estimated.
+    #' @param group_allocation an argument that can be provided as a numeric 
+    #' vector with integer numbers denoting group allocations to pre-specify the
+    #' the country groups, in which case they are not estimated, or left empty
+    #' if the country groups are to be estimated.
     #' @return A new complete specification for the Bayesian Panel VAR model BVARPANEL.
     initialize = function(
-    data,
-    p = 1L,
-    exogenous = NULL,
-    stationary = rep(FALSE, ncol(data[[1]])),
-    type = rep("real", ncol(data[[1]])),
-    G = NULL,
-    group_allocation = NULL
+      data,
+      p = 1L,
+      exogenous = NULL,
+      stationary = rep(FALSE, ncol(data[[1]])),
+      type = rep("real", ncol(data[[1]])),
+      G = NULL,
+      group_allocation = NULL
     ) {
       stopifnot("Argument data has to contain matrices with the same number of columns." 
                 = length(unique(simplify2array(lapply(data, ncol)))) == 1)
@@ -225,18 +239,22 @@ specify_bvarGroupPANEL = R6::R6Class(
         if (!is.null(group_allocation)) {
           stopifnot("Number of groups in argument group_allocation must be equal to the value of argument G." 
                     = length(unique(group_allocation)) == G)
+          message("Country groupings have been pre-specified and will not be estimated.")
+          self$estimate_groups = FALSE
         } else {
+          message("Country groupings will be estimated.")
           group_allocation = rep(1:G, length.out = length(data))
+          self$estimate_groups = TRUE
         }
         
       } else {
         
         if (!is.null(group_allocation)) {
           G = length(unique(group_allocation))
+          message("Country groupings have been pre-specified and will not be estimated.")
+          self$estimate_groups = FALSE
         } else {
-          message("No country groupings have been applied.")
-          G = length(data)
-          group_allocation = 1:length(data)
+          stop("Either the number of groups G or the group_allocation has to be provided.")
         }
         
       }
