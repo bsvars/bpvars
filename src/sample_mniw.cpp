@@ -162,13 +162,17 @@ double cov_nu (
 ) {
   
   double Cov_nu       = 0;
+  Rcout << "Cov_nu 1: " << Cov_nu << endl;
   for (int n = 1; n < N + 1; n++) {
     Cov_nu           += R::psigamma( 0.5 * (aux_nu + 1 - n), 1);
   } // END n loop
+  Rcout << "Cov_nu 2: " << Cov_nu << endl;
   Cov_nu             *= (C / 4);
+  Rcout << "Cov_nu 3: " << Cov_nu << endl;
   Cov_nu             -= (C * N * aux_nu) * (2 * pow(aux_nu - N - 1, 2));
+  Rcout << "Cov_nu 4: " << Cov_nu << endl;
   Cov_nu              = sqrt(1 / Cov_nu);
-  
+  Rcout << "Cov_nu 5: " << Cov_nu << endl;
   return Cov_nu;
 }
 
@@ -195,7 +199,7 @@ arma::vec sample_nu (
   
   // negative inverted Hessian of full conditional log-kernel
   double Cov_nu       = cov_nu(aux_nu, C, N);
-  
+  Rcout << "Cov_nu: " << Cov_nu << std::endl;
   // Metropolis-Hastings
   double aux_nu_star  = RcppTN::rtn1( aux_nu, adaptive_scale * Cov_nu, N + 1, R_PosInf );
   double lk_nu_star   = log_kernel_nu ( aux_nu_star, aux_Sigma_c_cpp, aux_Sigma_c_inv, aux_Sigma, prior_lambda, C, N, K );

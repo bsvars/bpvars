@@ -8,7 +8,7 @@
 #' 
 #' @examples 
 #' # starting values for a Bayesian Panel VAR
-#' sv = specify_starting_values_bvarGroupPANEL$new(rep(1,2), C = 2, N = 3, p = 1)
+#' sv = specify_starting_values_bvarGroupPANEL$new(rep(1,2), C = 2, G = 1, N = 3, p = 1)
 #' 
 #' @export
 specify_starting_values_bvarGroupPANEL = R6::R6Class(
@@ -28,6 +28,14 @@ specify_starting_values_bvarGroupPANEL = R6::R6Class(
     #' @field Sigma_c an \code{NxNxC} array of starting values for the local
     #' parameter \eqn{\mathbf{\Sigma}_c}. 
     Sigma_c       = array(),
+    
+    #' @field A_g an \code{KxNxG} array of starting values for the group parameter 
+    #' \eqn{\mathbf{A}_g}. 
+    A_g           = array(),
+    
+    #' @field Sigma_g an \code{NxNxG} array of starting values for the group
+    #' parameter \eqn{\mathbf{\Sigma}_g}. 
+    Sigma_g       = array(),
     
     #' @field A an \code{KxN} matrix of starting values for the global parameter 
     #' \eqn{\mathbf{A}}. 
@@ -62,6 +70,7 @@ specify_starting_values_bvarGroupPANEL = R6::R6Class(
     #' Create new starting values StartingValuesBVARGROUPPANEL
     #' @param group_allocation a numeric vector with integer numbers denoting group allocations
     #' @param C a positive integer - the number of countries in the data.
+    #' @param G a positive integer specifying the number of country groups.
     #' @param N a positive integer - the number of dependent variables in the model.
     #' @param p a positive integer - the autoregressive lag order of the SVAR model.
     #' @param d a positive integer - the number of \code{exogenous} variables in the model.
@@ -70,7 +79,7 @@ specify_starting_values_bvarGroupPANEL = R6::R6Class(
     #' # starting values for Bayesian Panel VAR 2-country model with 4 lags for a 3-variable system.
     #' sv = specify_starting_values_bvarGroupPANEL$new(C = 2, N = 3, p = 1)
     #' 
-    initialize = function(group_allocation = 1:C, C, N, p, d = 0){
+    initialize = function(group_allocation = 1:C, C, G = C, N, p, d = 0){
       
       stopifnot("Argument group_allocation must be a numeric vector with integer numbers denoting groups." = 
                   is.numeric(group_allocation) & all(group_allocation %% 1 == 0))
@@ -81,11 +90,16 @@ specify_starting_values_bvarGroupPANEL = R6::R6Class(
       
       K                     = N * p + 1 + d
       self$group_allocation = group_allocation
-      G                     = length(unique(group_allocation))
+      
+      self$A_g        = array(stats::rnorm(G * K * N, sd = 0.001), c(K, N, G))
+      self$Sigma_g    = stats::rWishart(G, N + 1, diag(N))
+      
       for (g in 1:G) {
+        
         NG = sum(group_allocation == g)
-        self$A_c[, , group_allocation == g]     = array(stats::rnorm(K * N, sd = 0.001), c(K, N, NG))
-        self$Sigma_c[, , group_allocation == g] = stats::rWishart(1, N + 1, diag(N))[,,1]
+        self$A_c[, , group_allocation == g]     = array(self$A_g[, , g], c(K, N, NG))
+        self$Sigma_c[, , group_allocation == g] = self$Sigma_g[, , g]
+        
       } # END g loop
     }, # END initialize
     
@@ -104,6 +118,8 @@ specify_starting_values_bvarGroupPANEL = R6::R6Class(
         group_allocation = self$group_allocation,
         A_c           = self$A_c,
         Sigma_c       = self$Sigma_c,
+        A_g           = self$A_g,
+        Sigma_g       = self$Sigma_g,
         A             = self$A,
         V             = self$V,
         Sigma         = self$Sigma,
@@ -133,6 +149,8 @@ specify_starting_values_bvarGroupPANEL = R6::R6Class(
       self$group_allocation = last_draw$group_allocation
       self$A_c            = last_draw$A_c
       self$Sigma_c        = last_draw$Sigma_c
+      self$A_g            = last_draw$A_g
+      self$Sigma_g        = last_draw$Sigma_g
       self$A              = last_draw$A
       self$V              = last_draw$V
       self$Sigma          = last_draw$Sigma
@@ -270,7 +288,7 @@ specify_bvarGroupPANEL = R6::R6Class(
       
       self$data_matrices   = specify_panel_data_matrices$new(data, self$p, exogenous, type)
       self$prior           = specify_prior_bvarPANEL$new(C, N, self$p, d, stationary)
-      self$starting_values = specify_starting_values_bvarGroupPANEL$new(group_allocation, C, N, self$p, d)
+      self$starting_values = specify_starting_values_bvarGroupPANEL$new(group_allocation, C, self$G, N, self$p, d)
       self$adaptiveMH      = c(0.44, 0.6)
     }#, # END initialize
     
@@ -336,16 +354,24 @@ specify_posterior_bvarGroupPANEL = R6::R6Class(
       N = dim(specification$starting_values$A_c)[2]
       K = dim(specification$starting_values$A_c)[1]
       C = dim(specification$starting_values$A_c)[3]
+      G = dim(specification$starting_values$A_g)[3]
       S = dim(posterior$A)[3]
       
       Sigma_c           = array(NA, c(N, N, C, S))
       A_c               = array(NA, c(K, N, C, S))
+      Sigma_g           = array(NA, c(N, N, G, S))
+      A_g               = array(NA, c(K, N, G, S))
+      
       for (s in 1:S) {
         A_c[,,,s]       = posterior$A_c_cpp[s,1][[1]]
         Sigma_c[,,,s]   = posterior$Sigma_c_cpp[s,1][[1]]
+        A_g[,,,s]       = posterior$A_g_cpp[s,1][[1]]
+        Sigma_g[,,,s]   = posterior$Sigma_g_cpp[s,1][[1]]
       }
       self$posterior$Sigma_c   = Sigma_c
       self$posterior$A_c       = A_c
+      self$posterior$Sigma_g   = Sigma_g
+      self$posterior$A_g       = A_g
 
     } # END initialize
   ) # END public

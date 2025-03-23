@@ -9,7 +9,7 @@ hierarchical panel VAR model with country grouping
 }
 \examples{
 # starting values for a Bayesian Panel VAR
-sv = specify_starting_values_bvarGroupPANEL$new(rep(1,2), C = 2, N = 3, p = 1)
+sv = specify_starting_values_bvarGroupPANEL$new(rep(1,2), C = 2, G = 1, N = 3, p = 1)
 
 
 ## ------------------------------------------------
@@ -55,6 +55,12 @@ sv$set_starting_values(sv_list)      # providing to the class object
 \item{\code{Sigma_c}}{an \code{NxNxC} array of starting values for the local
 parameter \eqn{\mathbf{\Sigma}_c}.}
 
+\item{\code{A_g}}{an \code{KxNxG} array of starting values for the group parameter 
+\eqn{\mathbf{A}_g}.}
+
+\item{\code{Sigma_g}}{an \code{NxNxG} array of starting values for the group
+parameter \eqn{\mathbf{\Sigma}_g}.}
+
 \item{\code{A}}{an \code{KxN} matrix of starting values for the global parameter 
 \eqn{\mathbf{A}}.}
 
@@ -96,6 +102,7 @@ Create new starting values StartingValuesBVARGROUPPANEL
 \if{html}{\out{<div class="r">}}\preformatted{specify_starting_values_bvarGroupPANEL$new(
   group_allocation = 1:C,
   C,
+  G = C,
   N,
   p,
   d = 0
@@ -108,6 +115,8 @@ Create new starting values StartingValuesBVARGROUPPANEL
 \item{\code{group_allocation}}{a numeric vector with integer numbers denoting group allocations}
 
 \item{\code{C}}{a positive integer - the number of countries in the data.}
+
+\item{\code{G}}{a positive integer specifying the number of country groups.}
 
 \item{\code{N}}{a positive integer - the number of dependent variables in the model.}
 

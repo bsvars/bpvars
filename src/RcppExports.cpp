@@ -14,6 +14,25 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// bvarGroupPANEL
+Rcpp::List bvarGroupPANEL(const int& S, const Rcpp::List& Y, const Rcpp::List& X, const Rcpp::List& prior, const Rcpp::List& starting_values, const int thin, const bool show_progress, const arma::vec& adptive_alpha_gamma, const bool estimate_groups);
+RcppExport SEXP _bvarPANELs_bvarGroupPANEL(SEXP SSEXP, SEXP YSEXP, SEXP XSEXP, SEXP priorSEXP, SEXP starting_valuesSEXP, SEXP thinSEXP, SEXP show_progressSEXP, SEXP adptive_alpha_gammaSEXP, SEXP estimate_groupsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type prior(priorSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type starting_values(starting_valuesSEXP);
+    Rcpp::traits::input_parameter< const int >::type thin(thinSEXP);
+    Rcpp::traits::input_parameter< const bool >::type show_progress(show_progressSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type adptive_alpha_gamma(adptive_alpha_gammaSEXP);
+    Rcpp::traits::input_parameter< const bool >::type estimate_groups(estimate_groupsSEXP);
+    rcpp_result_gen = Rcpp::wrap(bvarGroupPANEL(S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma, estimate_groups));
+    return rcpp_result_gen;
+END_RCPP
+}
 // bvarPANEL
 Rcpp::List bvarPANEL(const int& S, const Rcpp::List& Y, const Rcpp::List& X, const Rcpp::List& prior, const Rcpp::List& starting_values, const int thin, const bool show_progress, const arma::vec& adptive_alpha_gamma);
 RcppExport SEXP _bvarPANELs_bvarPANEL(SEXP SSEXP, SEXP YSEXP, SEXP XSEXP, SEXP priorSEXP, SEXP starting_valuesSEXP, SEXP thinSEXP, SEXP show_progressSEXP, SEXP adptive_alpha_gammaSEXP) {
@@ -351,6 +370,7 @@ RcppExport SEXP _bvarPANELs_RcppExport_registerCCallable() {
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_bvarPANELs_bvarGroupPANEL", (DL_FUNC) &_bvarPANELs_bvarGroupPANEL, 9},
     {"_bvarPANELs_bvarPANEL", (DL_FUNC) &_bvarPANELs_bvarPANEL, 8},
     {"_bvarPANELs_mvnrnd_truncated", (DL_FUNC) &_bvarPANELs_mvnrnd_truncated, 4},
     {"_bvarPANELs_mvnrnd_cond_truncated", (DL_FUNC) &_bvarPANELs_mvnrnd_cond_truncated, 5},
