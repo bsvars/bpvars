@@ -83,7 +83,7 @@
 #' }
 #'
 #' @seealso \code{\link{bvarPANELs}}, \code{\link{specify_bvarGroupPANEL}}, 
-#' \code{\link{specify_posterior_bvarGroupPANEL}}, \code{\link{summary.PosteriorBVARGROUPPANEL}}
+#' \code{\link{specify_posterior_bvarGroupPANEL}}, \code{\link{summary.PosteriorBVARPANEL}}
 #'
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
 #' 
