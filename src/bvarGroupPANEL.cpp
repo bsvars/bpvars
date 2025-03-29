@@ -76,8 +76,6 @@ Rcpp::List bvarGroupPANEL(
   vec         posterior_w(SS);
   vec         posterior_s(SS);
   
-  Rcout << "1" << endl;
-  
   cube    aux_Sigma_g_inv(N, N, G);
   cube    aux_Sigma_c_inv(N, N, C);
   for (int g=0; g<G; g++) {
@@ -90,7 +88,6 @@ Rcpp::List bvarGroupPANEL(
   field<mat> XG(G);
   int nryg = 0;
   
-  Rcout << "2" << endl;
   for (int c=0; c<C; c++) {
     
     aux_Sigma_c_inv.slice(c) = inv_sympd( aux_Sigma_c.slice(c) );
@@ -113,7 +110,6 @@ Rcpp::List bvarGroupPANEL(
   double adaptive_scale = cov_nu(aux_nu, C, N);
   vec aux_nu_tmp(2);
 
-  Rcout << "3" << endl;
   for (int s=0; s<S; s++) {
     // Rcout << "Iteration: " << s << endl;
     
@@ -127,35 +123,19 @@ Rcpp::List bvarGroupPANEL(
     aux_w       = sample_w( aux_V, prior );
     aux_s       = sample_s( aux_A, aux_V, aux_Sigma, aux_m, prior );
     
-    Rcout << "4" << endl;
     // sample aux_nu
-    
-    Rcout << "aux_nu: " << aux_nu << endl;
-    Rcout << "adaptive_scale: " << adaptive_scale << endl;
-    Rcout << "aux_Sigma_g: " << aux_Sigma_g << endl;
-    Rcout << "aux_Sigma_g_inv: " << aux_Sigma_g_inv << endl;
-    Rcout << "aux_Sigma: " << aux_Sigma << endl;
-    Rcout << "adptive_alpha_gamma: " << adptive_alpha_gamma << endl;
-    
     aux_nu_tmp  = sample_nu ( aux_nu, adaptive_scale, aux_Sigma_c, aux_Sigma_c_inv, aux_Sigma, prior, s, adptive_alpha_gamma );
-    Rcout << "aux_nu_tmp: " << aux_nu_tmp << endl;
     aux_nu      = aux_nu_tmp(0);
     scale(s)    = aux_nu_tmp(1);
     
-    Rcout << "5" << endl;
     // sample aux_Sigma
-    Rcout << "aux_Sigma_g_inv: " << aux_Sigma_g_inv << endl;
-    Rcout << "aux_s: " << aux_s << endl;
-    Rcout << "aux_nu: " << aux_nu << endl;
     aux_Sigma   = sample_Sigma( aux_Sigma_g_inv, aux_s, aux_nu, prior );
     
-    Rcout << "6" << endl;
     // sample aux_A, aux_V
     field<mat> tmp_AV     = sample_AV( aux_A_g, aux_Sigma_g_inv, aux_s, aux_m, aux_w, prior );
     aux_A       = tmp_AV(0);  
     aux_V       = tmp_AV(1);
     
-    Rcout << "7" << endl;
     // sample aux_A_c, aux_Sigma_c
     for (int g=0; g<G; g++) {
       field<mat> tmp_A_g_Sigma_g  = sample_A_c_Sigma_c( YG(g), XG(g), aux_A, aux_V, aux_Sigma, aux_nu );
@@ -164,7 +144,6 @@ Rcpp::List bvarGroupPANEL(
       aux_Sigma_g_inv.slice(g)    = inv_sympd( aux_Sigma_g.slice(g) );
     } // END g loop
     
-    Rcout << "8" << endl;
     for (int c=0; c<C; c++) {
       aux_A_c.slice(c)            = aux_A_g.slice(aux_ga(c));
       aux_Sigma_c.slice(c)        = aux_Sigma_g.slice(aux_ga(c));
@@ -190,7 +169,6 @@ Rcpp::List bvarGroupPANEL(
     }
   } // END s loop
   
-  Rcout << "3" << endl;
   return List::create(
     _["last_draw"]  = List::create(
       _["A_c"]      = aux_A_c,
@@ -203,7 +181,8 @@ Rcpp::List bvarGroupPANEL(
       _["nu"]       = aux_nu,
       _["m"]        = aux_m,
       _["w"]        = aux_w,
-      _["s"]        = aux_s
+      _["s"]        = aux_s,
+      _["group_allocation"] = aux_ga + 1
     ),
     _["posterior"]  = List::create(
       _["A_c_cpp"]  = posterior_A_c_cpp,
