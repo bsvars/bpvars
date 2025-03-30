@@ -35,8 +35,6 @@ Rcpp::List bvarGroupPANEL(
     Rcout << "bvarPANELs: Forecasting with Bayesian Hierarchical|" << endl;
     Rcout << "            Panel Vector Autoregressions          |" << endl;
     Rcout << "**************************************************|" << endl;
-    // Rcout << " Gibbs sampler for the SVAR-SV model              |" << endl;
-    // Rcout << "**************************************************|" << endl;
     Rcout << " Progress of the MCMC simulation for " << S << " draws" << endl;
     Rcout << "    Every " << oo << "draw is saved via MCMC thinning" << endl;
     Rcout << " Press Esc to interrupt the computations" << endl;
@@ -90,7 +88,7 @@ Rcpp::List bvarGroupPANEL(
   
   for (int c=0; c<C; c++) {
     
-    aux_Sigma_c_inv.slice(c) = inv_sympd( aux_Sigma_c.slice(c) );
+    aux_Sigma_c_inv.slice(c) = aux_Sigma_g_inv.slice(aux_ga(c));
     
     y(c)                  = as<mat>(Y[c]);
     x(c)                  = as<mat>(X[c]);
