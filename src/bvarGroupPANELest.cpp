@@ -3,6 +3,7 @@
 #include "bsvars.h"
 
 #include "sample_mniw.h"
+#include "utils.h"
 
 using namespace Rcpp;
 using namespace arma;
@@ -81,30 +82,20 @@ Rcpp::List bvarGroupPANELest(
     aux_Sigma_g_inv.slice(g) = inv_sympd( aux_Sigma_g.slice(g) );
   }
   
-  field<mat> y(C);            // store provided data matrices
-  field<mat> x(C);
-  field<cube> YTG(G);         // store group-specific transposed data matrices in cubes
-  field<cube> XTG(G);
+  mat y_tmp             = as<mat>(Y[0]);
+  int T                 = y_tmp.n_rows;
+  
+  cube yt(T, N, C);           // store provided data matrices
+  cube xt(T, K, C);           // store provided data matrices
   
   for (int c=0; c<C; c++) {
     
     aux_Sigma_c_inv.slice(c) = aux_Sigma_g_inv.slice(aux_ga(c));
     
-    y(c)                  = as<mat>(Y[c]);
-    x(c)                  = as<mat>(X[c]);
-    
-    
-    // FINISHED HERE! the line below not checked
-    YTG(aux_ga(c))
-      .insert_slices( YTG(aux_ga(c)).n_slices, y(c).t() );
-    
-    
-    nryg                  = YG(aux_ga(c)).n_rows;
-    YG(aux_ga(c)).insert_rows( nryg, y(c) );
-    XG(aux_ga(c)).insert_rows( nryg, x(c) );
+    yt.slice(c)         = trans(as<mat>(Y[c]));
+    xt.slice(c)         = trans(as<mat>(X[c]));
     
   } // END c loop
-  
   
   vec   scale(S);
   int   ss = 0;
@@ -140,19 +131,23 @@ Rcpp::List bvarGroupPANELest(
     aux_A       = tmp_AV(0);  
     aux_V       = tmp_AV(1);
     
-    // sample jointly aux_A_c, aux_Sigma_c, aux_ga
+    // sample jointly aux_A_g, aux_Sigma_g, and aux_ga c-by-c
     // THIS MUST BE NEW
-    // for (int g=0; g<G; g++) {
-    //   field<mat> tmp_A_g_Sigma_g  = sample_A_c_Sigma_c( YG(g), XG(g), aux_A, aux_V, aux_Sigma, aux_nu );
-    //   aux_A_g.slice(g)            = tmp_A_g_Sigma_g(0);
-    //   aux_Sigma_g.slice(g)        = tmp_A_g_Sigma_g(1);
-    //   aux_Sigma_g_inv.slice(g)    = inv_sympd( aux_Sigma_g.slice(g) );
-    // } // END g loop
-    // 
-    // for (int c=0; c<C; c++) {
-    //   aux_A_c.slice(c)            = aux_A_g.slice(aux_ga(c));
-    //   aux_Sigma_c.slice(c)        = aux_Sigma_g.slice(aux_ga(c));
-    // } // END c loop
+    // a new function sample_A_g_Sigma_g_ga_c is being written in src/sample_mniw.cpp
+    
+    mat aux_V_inv     = inv_sympd(aux_V);
+    mat aux_Sigma_inv = inv_sympd(aux_Sigma);
+    for (int c=0; c<C; c++) {
+      // List tmp_A_g_Sigma_g_ga     = sample_A_c_Sigma_c( YG(g), XG(g), aux_A, aux_V, aux_Sigma, aux_nu );
+      // aux_A_g.slice(g)            = tmp_A_g_Sigma_g(0);
+      // aux_Sigma_g.slice(g)        = tmp_A_g_Sigma_g(1);
+      // aux_Sigma_g_inv.slice(g)    = inv_sympd( aux_Sigma_g.slice(g) );
+    } // END c loop
+
+    for (int c=0; c<C; c++) {
+      aux_A_c.slice(c)            = aux_A_g.slice(aux_ga(c));
+      aux_Sigma_c.slice(c)        = aux_Sigma_g.slice(aux_ga(c));
+    } // END c loop
     
     
     posterior_nu_S(s) = aux_nu;
