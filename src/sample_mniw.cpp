@@ -1,5 +1,7 @@
 #include <RcppArmadillo.h>
 #include <RcppTN.h>
+#include <bsvars.h>
+#include "utils.h"
 
 using namespace Rcpp;
 using namespace arma;
@@ -374,3 +376,70 @@ arma::field<arma::mat> sample_A_c_Sigma_c (
   arma::field<arma::mat> aux_A_c_Sigma_c = rmniw1( A_bar, V_bar, Sigma_bar, nu_bar );
   return aux_A_c_Sigma_c;
 } // END sample_A_c_Sigma_c
+
+
+
+// [[Rcpp:interface(cpp)]]
+// [[Rcpp::export]]
+Rcpp::List sample_A_g_Sigma_g_ga_c (
+    const int           c,
+    const arma::cube&   yt,               // (T, N, C)
+    const arma::cube&   xt,               // (T, K, C)
+    arma::cube          aux_A_g,          // (K, N, G)
+    arma::cube          aux_Sigma_g,      // (N, N, G)
+    arma::vec           aux_ga,           // Cx1
+    const arma::mat&    aux_A,            // KxN
+    const arma::mat&    aux_V,            // KxK
+    const arma::mat&    aux_V_inv,        // KxK
+    const arma::mat&    aux_Sigma,        // NxN
+    const arma::mat&    aux_Sigma_inv,    // NxN
+    const double&       aux_nu            // scalar
+) {
+  
+  int G               = aux_A_g.n_slices;
+  int current_ga      = aux_ga(c);
+  
+  // sample the candidate ga
+  mat candid_range_tmp(G, 1);
+  for (int g = 0; g < G; g++) candid_range_tmp(g, 0) = g;
+  candid_range_tmp.shed_row(c);
+  vec candid_range    = candid_range_tmp.as_col();
+  vec prob(G - 1, fill::value( pow(G - 1, -1) ));
+  int candid_ga       = sample_arma(candid_range, prob);
+  
+  // sample A_g and Sigma_g for the current aux_ga
+  uvec which_in_g_cur = find(aux_ga == current_ga);
+  mat YG_cur          = tcube_to_mat_by_slices( yt.slices(which_in_g_cur) );
+  mat XG_cur          = tcube_to_mat_by_slices( xt.slices(which_in_g_cur) );
+  field<mat> AS_g     = sample_A_c_Sigma_c ( YG_cur, XG_cur, aux_A, aux_V, aux_Sigma, aux_nu );
+  
+  // sample A_g and Sigma_g for the candidate aux_ga
+  uvec which_in_g_can = find(aux_ga == candid_ga);
+  mat YG_can          = tcube_to_mat_by_slices( yt.slices(which_in_g_can) );
+  mat XG_can          = tcube_to_mat_by_slices( xt.slices(which_in_g_can) );
+  field<mat> AS_g_can = sample_A_c_Sigma_c ( YG_can, XG_can, aux_A, aux_V, aux_Sigma, aux_nu );
+  
+  // compute log-kernel for the current aux_ga
+  mat EE              = YG_cur - XG_cur * AS_g(0);
+  mat SEE             = solve(AS_g(1), EE.t() * EE, solve_opts::likely_sympd);
+  double log_kernel_cur = accu( SEE.diag() );
+  
+  mat AA              = AS_g(0) - aux_A;
+  mat SAVA            = aux_Sigma_inv * AA.t() * aux_V_inv * AA;
+  log_kernel_cur     += accu( SAVA.diag() );
+  // include here the part of the likelihood that for the candidate aux_ga before the change (this should be passed from aux_)
+  
+  
+  // aux_A_g.slice(g)            = tmp_A_g_Sigma_g(0);
+  // aux_Sigma_g.slice(g)        = tmp_A_g_Sigma_g(1);
+  // aux_Sigma_g_inv.slice(g)    = inv_sympd( aux_Sigma_g.slice(g) );
+  
+  return List::create(
+    _["aux_A_g"]      = aux_A_g,
+    _["aux_Sigma_g"]  = aux_Sigma_g,
+    _["aux_ga"]       = aux_ga
+  );
+} // END sample_A_g_Sigma_g_ga_c
+
+
+

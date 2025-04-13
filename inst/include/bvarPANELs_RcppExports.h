@@ -88,6 +88,48 @@ namespace bvarPANELs {
         return Rcpp::as<Rcpp::List >(rcpp_result_gen);
     }
 
+    inline arma::mat tcube_to_mat_by_slices(arma::cube Y) {
+        typedef SEXP(*Ptr_tcube_to_mat_by_slices)(SEXP);
+        static Ptr_tcube_to_mat_by_slices p_tcube_to_mat_by_slices = NULL;
+        if (p_tcube_to_mat_by_slices == NULL) {
+            validateSignature("arma::mat(*tcube_to_mat_by_slices)(arma::cube)");
+            p_tcube_to_mat_by_slices = (Ptr_tcube_to_mat_by_slices)R_GetCCallable("bvarPANELs", "_bvarPANELs_tcube_to_mat_by_slices");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_tcube_to_mat_by_slices(Shield<SEXP>(Rcpp::wrap(Y)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<arma::mat >(rcpp_result_gen);
+    }
+
+    inline int sample_arma(arma::vec y, arma::vec probabilities) {
+        typedef SEXP(*Ptr_sample_arma)(SEXP,SEXP);
+        static Ptr_sample_arma p_sample_arma = NULL;
+        if (p_sample_arma == NULL) {
+            validateSignature("int(*sample_arma)(arma::vec,arma::vec)");
+            p_sample_arma = (Ptr_sample_arma)R_GetCCallable("bvarPANELs", "_bvarPANELs_sample_arma");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_sample_arma(Shield<SEXP>(Rcpp::wrap(y)), Shield<SEXP>(Rcpp::wrap(probabilities)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<int >(rcpp_result_gen);
+    }
+
 }
 
 #endif // RCPP_bvarPANELs_RCPPEXPORTS_H_GEN_
