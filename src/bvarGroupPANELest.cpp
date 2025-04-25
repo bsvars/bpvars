@@ -55,6 +55,7 @@ Rcpp::List bvarGroupPANELest(
   double  aux_w       = as<double>(starting_values["w"]);
   double  aux_s       = as<double>(starting_values["s"]);
   vec     aux_ga      = as<vec>(starting_values["group_allocation"]) - 1;
+  double  aux_log_kernel = -9999999;
   
   const int G         = aux_A_g.n_slices;
   const int C         = aux_A_c.n_slices;
@@ -132,25 +133,29 @@ Rcpp::List bvarGroupPANELest(
     aux_V       = tmp_AV(1);
     
     // sample jointly aux_A_g, aux_Sigma_g, and aux_ga c-by-c
-    // THIS MUST BE NEW
-    // a new function sample_A_g_Sigma_g_ga_c is being written in src/sample_mniw.cpp
-    
     mat aux_V_inv     = inv_sympd(aux_V);
     mat aux_Sigma_inv = inv_sympd(aux_Sigma);
+    
     for (int c=0; c<C; c++) {
-      // List tmp_A_g_Sigma_g_ga     = sample_A_c_Sigma_c( YG(g), XG(g), aux_A, aux_V, aux_Sigma, aux_nu );
-      // aux_A_g.slice(g)            = tmp_A_g_Sigma_g(0);
-      // aux_Sigma_g.slice(g)        = tmp_A_g_Sigma_g(1);
-      // aux_Sigma_g_inv.slice(g)    = inv_sympd( aux_Sigma_g.slice(g) );
+      
+      List tmp_ASga     = sample_A_g_Sigma_g_ga_c ( c, yt, xt, aux_A_g, aux_Sigma_g, aux_ga, aux_log_kernel,
+                              aux_A, aux_V, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu );
+      
+      aux_A_g.slice(aux_ga(c))      = as<mat>(tmp_ASga["A_g"]);
+      aux_Sigma_g.slice(aux_ga(c))  = as<mat>(tmp_ASga["Sigma_g"]);
+      aux_ga(c)                     = as<int>(tmp_ASga["ga"]);
+      aux_log_kernel                = as<double>(tmp_ASga["log_kernel"]);
+      
+      for (int i=0; i<C; i++) {
+        aux_A_c.slice(i)            = aux_A_g.slice(aux_ga(i));
+        aux_Sigma_c.slice(i)        = aux_Sigma_g.slice(aux_ga(i));
+      } // END i loop
+      
     } // END c loop
 
-    for (int c=0; c<C; c++) {
-      aux_A_c.slice(c)            = aux_A_g.slice(aux_ga(c));
-      aux_Sigma_c.slice(c)        = aux_Sigma_g.slice(aux_ga(c));
-    } // END c loop
-    
-    
-    posterior_nu_S(s) = aux_nu;
+    for (int g=0; g<G; g++) {
+      aux_Sigma_g_inv.slice(g)  = inv_sympd( aux_Sigma_g.slice(g) );
+    } // END g loop
     
     if (s % thin == 0) {
       posterior_A_c_cpp(ss)     = aux_A_c;

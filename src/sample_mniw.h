@@ -98,4 +98,21 @@ arma::field<arma::mat> sample_A_c_Sigma_c (
 );
 
 
+Rcpp::List sample_A_g_Sigma_g_ga_c (
+    const int           c,
+    const arma::cube&   yt,               // (T, N, C)
+    const arma::cube&   xt,               // (T, K, C)
+    arma::cube          aux_A_g,          // (K, N, G)
+    arma::cube          aux_Sigma_g,      // (N, N, G)
+    arma::vec           aux_ga,           // Cx1
+    double&             aux_log_kernel,   // scalar
+    const arma::mat&    aux_A,            // KxN
+    const arma::mat&    aux_V,            // KxK
+    const arma::mat&    aux_V_inv,        // KxK
+    const arma::mat&    aux_Sigma,        // NxN
+    const arma::mat&    aux_Sigma_inv,    // NxN
+    const double&       aux_nu            // scalar
+);
+
+
 #endif  // _SAMPLE_MNIW_H_

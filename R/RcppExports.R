@@ -61,8 +61,8 @@ sample_A_c_Sigma_c <- function(Y_c, X_c, aux_A, aux_V, aux_Sigma, aux_nu) {
     .Call(`_bvarPANELs_sample_A_c_Sigma_c`, Y_c, X_c, aux_A, aux_V, aux_Sigma, aux_nu)
 }
 
-sample_A_g_Sigma_g_ga_c <- function(c, yt, xt, aux_A_g, aux_Sigma_g, aux_ga, aux_A, aux_V, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu) {
-    .Call(`_bvarPANELs_sample_A_g_Sigma_g_ga_c`, c, yt, xt, aux_A_g, aux_Sigma_g, aux_ga, aux_A, aux_V, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu)
+sample_A_g_Sigma_g_ga_c <- function(c, yt, xt, aux_A_g, aux_Sigma_g, aux_ga, aux_log_kernel, aux_A, aux_V, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu) {
+    .Call(`_bvarPANELs_sample_A_g_Sigma_g_ga_c`, c, yt, xt, aux_A_g, aux_Sigma_g, aux_ga, aux_log_kernel, aux_A, aux_V, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu)
 }
 
 # Register entry points for exported C++ functions
