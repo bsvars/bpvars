@@ -378,111 +378,88 @@ arma::field<arma::mat> sample_A_c_Sigma_c (
 } // END sample_A_c_Sigma_c
 
 
+// [[Rcpp:interface(cpp)]]
+// [[Rcpp::export]]
+double log_kernel_ga (
+        const arma::mat&    YG,               // (C_g*T, N) - only group-specific
+        const arma::mat&    XG,               // (C_g*T, K)
+        const arma::mat     A_g,              // (K, N)
+        const arma::mat     Sigma_g,          // (N, N)
+        const arma::mat&    aux_A,            // KxN
+        const arma::mat&    aux_V_inv,        // KxK
+        const arma::mat&    aux_Sigma,        // NxN
+        const arma::mat&    aux_Sigma_inv,    // NxN
+        const double&       aux_nu            // scalar
+) {
+  
+  int K               = A_g.n_rows;
+  int N               = A_g.n_cols;
+  
+  // normal log-likelihood part
+  mat EE              = YG - XG * A_g;
+  mat S_g_inv         = inv_sympd(Sigma_g);
+  mat SEE             = S_g_inv * EE.t() * EE;
+  double log_kernel   = accu( SEE.diag() );
+  
+  // normal log-prior part
+  mat AA              = A_g - aux_A;
+  mat SAVA            = pow(N - aux_nu - 1, -1) * aux_Sigma_inv * AA.t() * aux_V_inv * AA;
+  log_kernel         += accu( SAVA.diag() );
+  
+  // IW log-prior part
+  double ld_S_g       = log_det_sympd(Sigma_g);
+  log_kernel         += (aux_nu + N + K + 1) * ld_S_g;
+  log_kernel         += (N - aux_nu - 1) * accu( diagvec( S_g_inv * aux_Sigma ) );
+  
+  return log_kernel;
+} // END log_kernel_ga
+
 
 // [[Rcpp:interface(cpp)]]
 // [[Rcpp::export]]
-Rcpp::List sample_A_g_Sigma_g_ga_c (
-    const int           c,
+arma::vec sample_group_allocation (
+    arma::vec&          aux_ga,           // (C, 1)
     const arma::cube&   yt,               // (T, N, C)
     const arma::cube&   xt,               // (T, K, C)
-    arma::cube          aux_A_g,          // (K, N, G)
-    arma::cube          aux_Sigma_g,      // (N, N, G)
-    arma::vec           aux_ga,           // Cx1
-    double&             aux_log_kernel,   // scalar
+    const arma::cube    aux_A_g,          // (K, N, G)
+    const arma::cube    aux_Sigma_g,      // (N, N, G)
     const arma::mat&    aux_A,            // KxN
-    const arma::mat&    aux_V,            // KxK
     const arma::mat&    aux_V_inv,        // KxK
     const arma::mat&    aux_Sigma,        // NxN
     const arma::mat&    aux_Sigma_inv,    // NxN
     const double&       aux_nu            // scalar
 ) {
   
-  int G               = aux_A_g.n_slices;
-  int K               = aux_A_g.n_rows;
-  int N               = aux_A_g.n_cols;
-  int current_ga      = aux_ga(c);
+  int C       = aux_ga.n_rows;
+  int G       = aux_A_g.n_slices;
+  int K       = aux_A_g.n_rows;
+  int N       = aux_A_g.n_cols;
   
-  // sample the candidate ga
-  mat candid_range_tmp(G, 1);
-  for (int g = 0; g < G; g++) candid_range_tmp(g, 0) = g;
-  candid_range_tmp.shed_row(c);
-  vec candid_range    = candid_range_tmp.as_col();
-  vec prob(G - 1, fill::value( pow(G - 1, -1) ));
-  int candid_ga       = sample_arma(candid_range, prob);
+  vec domain  = regspace(0, G - 1); 
+  vec probabilities(G);
+  vec log_kernel_c(G);
   
-  // sample A_g and Sigma_g for the current aux_ga
-  uvec which_in_g_cur = find(aux_ga == current_ga);
-  mat YG_cur          = tcube_to_mat_by_slices( yt.slices(which_in_g_cur) );
-  mat XG_cur          = tcube_to_mat_by_slices( xt.slices(which_in_g_cur) );
-  field<mat> AS_g     = sample_A_c_Sigma_c ( YG_cur, XG_cur, aux_A, aux_V, aux_Sigma, aux_nu );
+  for (int c=0; c<C; c++) {
+    for (int g=0; g<G; g++) {
+      
+      uvec which_in_g = find(aux_ga == g);
+      mat YG          = tcube_to_mat_by_slices( yt.slices(which_in_g) );
+      mat XG          = tcube_to_mat_by_slices( xt.slices(which_in_g) );
+      
+      log_kernel_c(g) = log_kernel_ga ( 
+                          YG, XG, 
+                          aux_A_g.slice(g), 
+                          aux_Sigma_g.slice(g), 
+                          aux_A, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu 
+                        );
+      
+    } // END g loop
+    
+    probabilities     = exp(log_kernel_c - max(log_kernel_c));
+    probabilities     = probabilities / accu(probabilities);
+    aux_ga(c)         = sample_arma ( domain, probabilities );
+    
+  } // END c loop
   
-  // sample A_g and Sigma_g for the candidate aux_ga
-  uvec which_in_g_can = find(aux_ga == candid_ga);
-  mat YG_can          = tcube_to_mat_by_slices( yt.slices(which_in_g_can) );
-  mat XG_can          = tcube_to_mat_by_slices( xt.slices(which_in_g_can) );
-  field<mat> AS_g_can = sample_A_c_Sigma_c ( YG_can, XG_can, aux_A, aux_V, aux_Sigma, aux_nu );
-  
-  // compute log-kernel for the current aux_ga
-  mat EE              = YG_cur - XG_cur * AS_g(0);
-  mat S_g_inv         = inv_sympd(AS_g(1));
-  mat SEE             = S_g_inv * EE.t() * EE;
-  double log_kernel_cur = accu( SEE.diag() );             // normal log-likelihood part
-  
-  mat AA              = AS_g(0) - aux_A;
-  mat SAVA            = aux_Sigma_inv * AA.t() * aux_V_inv * AA;
-  log_kernel_cur     += accu( SAVA.diag() );              // normal log-prior part
-  
-  double ld_S_g       = log_det_sympd(AS_g(1));
-  log_kernel_cur     += (aux_nu + N + K + 1) * ld_S_g;    // IW log-prior part
-  log_kernel_cur     += (N - aux_nu - 1) * accu( diagvec( S_g_inv * aux_Sigma ) );
-  
-  // compute log-kernel for the candid_ga
-  EE                  = YG_can - XG_can * AS_g_can(0);
-  mat S_g_can_inv     = inv_sympd(AS_g_can(1));
-  SEE                 = S_g_can_inv * EE.t() * EE;
-  double log_kernel_can = accu( SEE.diag() );             // log-likelihood part
-  
-  AA                  = AS_g_can(0) - aux_A;
-  SAVA                = aux_Sigma_inv * AA.t() * aux_V_inv * AA;
-  log_kernel_can     += accu( SAVA.diag() );              // normal log-prior part
-  
-  ld_S_g              = log_det_sympd(AS_g_can(1));
-  log_kernel_can     += (aux_nu + N + K + 1) * ld_S_g;    // IW log-prior part
-  log_kernel_can     += (N - aux_nu - 1) * accu( diagvec( S_g_can_inv * aux_Sigma ) );
-  
-  // multinomial sampler
-  double p_can        = 1 / ( 1 + exp(log_kernel_cur - log_kernel_can) );
-  
-  mat     star_Ag, star_Sigma_g;
-  int     star_ga;
-  double  star_log_kernel;
-  if ( randu() < p_can ) {
-    star_Ag           = AS_g_can(0);
-    star_Sigma_g      = AS_g_can(1);
-    star_ga           = candid_ga;
-    star_log_kernel   = p_can * log_kernel_can;
-  } else {
-    star_Ag           = AS_g(0);
-    star_Sigma_g      = AS_g(1);
-    star_ga           = current_ga;
-    star_log_kernel   = (1 - p_can) * log_kernel_cur;
-  }
-  
-  // MH gate
-  if (randu() < exp(star_log_kernel - aux_log_kernel)) {
-    aux_A_g.slice(c)        = star_Ag;
-    aux_Sigma_g.slice(c)    = star_Sigma_g;
-    aux_ga(c)               = star_ga;
-    aux_log_kernel          = log_kernel_can;
-  }
-  
-  return List::create(
-    _["aux_A_g"]        = aux_A_g,
-    _["aux_Sigma_g"]    = aux_Sigma_g,
-    _["aux_ga"]         = aux_ga,
-    _["aux_log_kernel"] = aux_log_kernel
-  );
-} // END sample_A_g_Sigma_g_ga_c
-
-
-
+  return aux_ga;
+} // END sample_group_allocation
