@@ -4,7 +4,7 @@ library(dplyr)
 
 # this file contains a dynamic panel dynamic dataset
 all_cv    <- read.csv("inst/varia/ilo_dynamic_panel.csv")
-colnames(all_cv) = c("year", "iso3code", "country", "GDP", "UR", "EPR", "LFPR")
+colnames(all_cv) = c("year", "iso3code", "country", "GDP", "UR", "EPR", "LFPR", colnames(all_cv)[8:11])
 
 # all variables all countries
 data_cv <- all_cv %>% 

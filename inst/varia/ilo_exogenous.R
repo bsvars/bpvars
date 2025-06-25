@@ -3,16 +3,16 @@ devtools::load_all()
 
 # dummy panel variables
 ################################################
-data(ilo_cubic_panel)
-countries     = names(ilo_cubic_panel)
+data(ilo_dynamic_panel)
+countries     = names(ilo_dynamic_panel)
 
-dummies       = matrix(0, nrow(ilo_cubic_panel$POL), 3)
+dummies       = matrix(0, nrow(ilo_dynamic_panel$POL), 3)
 colnames(dummies) = c("2008", "2020", "2021")
 dummies       = ts(dummies, start = 1991, frequency = 1)
 dummies[18,1] = dummies[30,2] = dummies[31,3] = 1
 
 ilo_exogenous_variables             = list()
-for (c in 1:length(ilo_cubic_panel)) {
+for (c in 1:length(ilo_dynamic_panel)) {
   ilo_exogenous_variables[[c]]      = dummies
   names(ilo_exogenous_variables)[c] = countries[c]
 }
