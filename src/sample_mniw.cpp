@@ -432,8 +432,6 @@ arma::vec sample_group_allocation (
   
   int C       = aux_ga.n_rows;
   int G       = aux_A_g.n_slices;
-  int K       = aux_A_g.n_rows;
-  int N       = aux_A_g.n_cols;
   
   vec domain  = regspace(0, G - 1); 
   vec probabilities(G);
