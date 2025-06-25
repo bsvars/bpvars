@@ -7,7 +7,7 @@ using namespace Rcpp;
 using namespace arma;
 
 
-// [[Rcpp:interface(cpp,r)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::field<arma::mat> rmniw1(
     const arma::mat& A,     // KxN
@@ -32,7 +32,7 @@ arma::field<arma::mat> rmniw1(
 } // END rmniw1
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 double sample_m (
     const arma::mat&    aux_A,    // KxN
@@ -62,7 +62,7 @@ double sample_m (
 } // END sample_m
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 double sample_w (
     const arma::mat&    aux_V,    // KxK
@@ -84,7 +84,7 @@ double sample_w (
 } // END sample_w
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 double sample_s (
     const arma::mat&    aux_A,      // KxN
@@ -114,7 +114,7 @@ double sample_s (
 
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 double log_kernel_nu (
     const double&       aux_nu,           // scalar
@@ -155,7 +155,7 @@ double log_kernel_nu (
 
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 double cov_nu (
     const double&   aux_nu,
@@ -176,7 +176,7 @@ double cov_nu (
 
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::vec sample_nu (
     double&             aux_nu,           // scalar
@@ -280,7 +280,7 @@ arma::vec sample_nu (
 
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::mat sample_Sigma (
     const arma::cube&   aux_Sigma_c_inv,  // NxNxC
@@ -308,7 +308,7 @@ arma::mat sample_Sigma (
 } // END sample_Sigma
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::field<arma::mat> sample_AV (
     const arma::cube&   aux_A_c_cpp,      // KxNxC
@@ -351,7 +351,7 @@ arma::field<arma::mat> sample_AV (
 } // END sample_AV
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::field<arma::mat> sample_A_c_Sigma_c (
     const arma::mat&    Y_c,              // T_cxN
@@ -378,7 +378,7 @@ arma::field<arma::mat> sample_A_c_Sigma_c (
 } // END sample_A_c_Sigma_c
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 double log_kernel_ga (
         const arma::mat&    YG,               // (C_g*T, N) - only group-specific
@@ -415,7 +415,7 @@ double log_kernel_ga (
 } // END log_kernel_ga
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::vec sample_group_allocation (
     arma::vec&          aux_ga,           // (C, 1)

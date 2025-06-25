@@ -5,8 +5,7 @@
 using namespace Rcpp;
 using namespace arma;
 
-
-// [[Rcpp:interface(cpp,r)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::cube Sigma2B_c (
     arma::cube&   posterior_Sigma_c,    // (N, N, S)
@@ -49,7 +48,7 @@ arma::cube flip_cube_rows_cols (
 
 
 
-// [[Rcpp:interface(cpp,r)]]
+// [[Rcpp::interfaces(cpp,r)]]
 // [[Rcpp::export]]
 arma::field<arma::cube> panel_variance_decompositions (
     arma::field<arma::cube>&  posterior_Sigma,    // (S)(N, N, C)

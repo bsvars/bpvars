@@ -4,6 +4,7 @@
 using namespace Rcpp;
 using namespace arma;
 
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::mat tcube_to_mat_by_slices (
     arma::cube  Y             // TRANSPOSED cube (T,N,C_g) - not (N,T,C_g) - to use reshape

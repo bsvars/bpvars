@@ -8,7 +8,7 @@ using namespace Rcpp;
 using namespace arma;
 
 
-// [[Rcpp:interface(cpp,r)]]
+// [[Rcpp::interfaces(cpp,r)]]
 // [[Rcpp::export]]
 Rcpp::List bvarPANEL(
     const int&                    S,          // No. of posterior draws

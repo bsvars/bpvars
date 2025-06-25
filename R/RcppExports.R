@@ -9,62 +9,6 @@ bvarPANEL <- function(S, Y, X, prior, starting_values, thin, show_progress, adpt
     .Call(`_bvarPANELs_bvarPANEL`, S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma)
 }
 
-Sigma2B_c <- function(posterior_Sigma_c, lower = TRUE) {
-    .Call(`_bvarPANELs_Sigma2B_c`, posterior_Sigma_c, lower)
-}
-
-panel_variance_decompositions <- function(posterior_Sigma, posterior_A, global_Sigma, global_A, horizon, p, lower = TRUE) {
-    .Call(`_bvarPANELs_panel_variance_decompositions`, posterior_Sigma, posterior_A, global_Sigma, global_A, horizon, p, lower)
-}
-
-rmniw1 <- function(A, V, S, nu) {
-    .Call(`_bvarPANELs_rmniw1`, A, V, S, nu)
-}
-
-sample_m <- function(aux_A, aux_V, aux_s, aux_w, prior) {
-    .Call(`_bvarPANELs_sample_m`, aux_A, aux_V, aux_s, aux_w, prior)
-}
-
-sample_w <- function(aux_V, prior) {
-    .Call(`_bvarPANELs_sample_w`, aux_V, prior)
-}
-
-sample_s <- function(aux_A, aux_V, aux_Sigma, aux_m, prior) {
-    .Call(`_bvarPANELs_sample_s`, aux_A, aux_V, aux_Sigma, aux_m, prior)
-}
-
-log_kernel_nu <- function(aux_nu, aux_Sigma_c_cpp, aux_Sigma_c_inv, aux_Sigma, prior_lambda, C, N, K) {
-    .Call(`_bvarPANELs_log_kernel_nu`, aux_nu, aux_Sigma_c_cpp, aux_Sigma_c_inv, aux_Sigma, prior_lambda, C, N, K)
-}
-
-cov_nu <- function(aux_nu, C, N) {
-    .Call(`_bvarPANELs_cov_nu`, aux_nu, C, N)
-}
-
-sample_nu <- function(aux_nu, adaptive_scale, aux_Sigma_c_cpp, aux_Sigma_c_inv, aux_Sigma, prior, iteration, adptive_alpha_gamma) {
-    .Call(`_bvarPANELs_sample_nu`, aux_nu, adaptive_scale, aux_Sigma_c_cpp, aux_Sigma_c_inv, aux_Sigma, prior, iteration, adptive_alpha_gamma)
-}
-
-sample_Sigma <- function(aux_Sigma_c_inv, aux_s, aux_nu, prior) {
-    .Call(`_bvarPANELs_sample_Sigma`, aux_Sigma_c_inv, aux_s, aux_nu, prior)
-}
-
-sample_AV <- function(aux_A_c_cpp, aux_Sigma_c_inv, aux_s, aux_m, aux_w, prior) {
-    .Call(`_bvarPANELs_sample_AV`, aux_A_c_cpp, aux_Sigma_c_inv, aux_s, aux_m, aux_w, prior)
-}
-
-sample_A_c_Sigma_c <- function(Y_c, X_c, aux_A, aux_V, aux_Sigma, aux_nu) {
-    .Call(`_bvarPANELs_sample_A_c_Sigma_c`, Y_c, X_c, aux_A, aux_V, aux_Sigma, aux_nu)
-}
-
-log_kernel_ga <- function(YG, XG, A_g, Sigma_g, aux_A, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu) {
-    .Call(`_bvarPANELs_log_kernel_ga`, YG, XG, A_g, Sigma_g, aux_A, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu)
-}
-
-sample_group_allocation <- function(aux_ga, yt, xt, aux_A_g, aux_Sigma_g, aux_A, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu) {
-    .Call(`_bvarPANELs_sample_group_allocation`, aux_ga, yt, xt, aux_A_g, aux_Sigma_g, aux_A, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu)
-}
-
 # Register entry points for exported C++ functions
 methods::setLoadAction(function(ns) {
     .Call(`_bvarPANELs_RcppExport_registerCCallable`)
