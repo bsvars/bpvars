@@ -66,7 +66,7 @@ compute_variance_decompositions.PosteriorBVARPANEL <- function(posterior, horizo
   Y               = posterior$last_draw$data_matrices$Y
   c_names         = names(posterior$last_draw$data_matrices$Y)
   
-  fff             = .Call(`_bvarPANELs_panel_variance_decompositions`, 
+  fff             = .Call(`_bpvars_panel_variance_decompositions`, 
                           posterior_Sigma, 
                           posterior_A, 
                           posterior_Sg, 
