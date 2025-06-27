@@ -5,13 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Forecasting with Bayesian Hierarchical Panel VARs • bvarPANELs</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<title>Forecasting with Bayesian Hierarchical Panel VARs • bpvars</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -19,7 +18,7 @@
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Forecasting with Bayesian Hierarchical Panel VARs">
 <meta name="description" content="Provides Bayesian estimation and forecasting of dynamic panel data using Bayesian Hierarchical Panel Vector Autoregressions (VARs). The model includes country-specific VARs that share a global prior distribution. Under this prior expected value, each countrys system follows a global VAR with country-invariant parameters. Further flexibility is provided by the hierarchical prior structure that retains the Minnesota prior interpretation for the global VAR and features estimated prior covariance matrices, shrinkage, and persistence levels. Bayesian forecasting is developed for models including exogenous variables, allowing conditional forecasts given the future trajectories of some variables and restricted forecasts assuring that rates are forecasted to stay positive and less than 100. The package implements the model specification, estimation, and forecasting routines, facilitating coherent workflows and reproducibility. Beautiful plots, informative summary functions, and extensive documentation complement all this. An extraordinary computational speed is achieved thanks to employing frontier econometric and numerical techniques and algorithms written in C++. The bvarPANELs package is aligned regarding objects, workflows, and code structure with the R packages bsvars by Woźniak (2024) &lt;doi:10.32614/CRAN.package.bsvars&gt; and bsvarSIGNs' by Wang &amp; Woźniak (2025) &lt;doi:10.32614/CRAN.package.bsvarSIGNs&gt;, and they constitute an integrated toolset. Copyright: 2024 International Labour Organization.">
 <meta property="og:description" content="Provides Bayesian estimation and forecasting of dynamic panel data using Bayesian Hierarchical Panel Vector Autoregressions (VARs). The model includes country-specific VARs that share a global prior distribution. Under this prior expected value, each countrys system follows a global VAR with country-invariant parameters. Further flexibility is provided by the hierarchical prior structure that retains the Minnesota prior interpretation for the global VAR and features estimated prior covariance matrices, shrinkage, and persistence levels. Bayesian forecasting is developed for models including exogenous variables, allowing conditional forecasts given the future trajectories of some variables and restricted forecasts assuring that rates are forecasted to stay positive and less than 100. The package implements the model specification, estimation, and forecasting routines, facilitating coherent workflows and reproducibility. Beautiful plots, informative summary functions, and extensive documentation complement all this. An extraordinary computational speed is achieved thanks to employing frontier econometric and numerical techniques and algorithms written in C++. The bvarPANELs package is aligned regarding objects, workflows, and code structure with the R packages bsvars by Woźniak (2024) &lt;doi:10.32614/CRAN.package.bsvars&gt; and bsvarSIGNs' by Wang &amp; Woźniak (2025) &lt;doi:10.32614/CRAN.package.bsvarSIGNs&gt;, and they constitute an integrated toolset. Copyright: 2024 International Labour Organization.">
-<meta property="og:image" content="http://bsvars.org/bvarPANELs/logo.png">
+<meta property="og:image" content="http://bsvars.org/bpvars/logo.png">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -27,9 +26,9 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="index.html">bvarPANELs</a>
+    <a class="navbar-brand me-2" href="index.html">bpvars</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +41,7 @@
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/bsvars/bvarPANELs/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/bsvars/bpvars/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -52,16 +51,16 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="bvarpanels-">bvarPANELs 
-<a class="anchor" aria-label="anchor" href="#bvarpanels-"></a>
+<img src="logo.png" class="logo" alt=""><h1 id="bpvars-">bpvars 
+<a class="anchor" aria-label="anchor" href="#bpvars-"></a>
 </h1>
 </div>
 <p>An <strong>R</strong> package for Forecasting with Bayesian Hierarchical Panel Vector Autoregressions</p>
 <!-- badges: start -->
 
-<p>Provides Bayesian estimation and forecasting of dynamic panel data using Bayesian Hierarchical Panel Vector Autoregressions (VARs). The model includes country-specific VARs that share a global prior distribution. Under this prior expected value, each country’s system follows a global VAR with country-invariant parameters. Further flexibility is provided by the hierarchical prior structure that retains the Minnesota prior interpretation for the global VAR and features estimated prior covariance matrices, shrinkage, and persistence levels. Bayesian forecasting is developed for models including exogenous variables, allowing conditional forecasts given the future trajectories of some variables and restricted forecasts assuring that rates are forecasted to stay positive and less than 100. The package implements the model specification, estimation, and forecasting routines, facilitating coherent workflows and reproducibility. Beautiful plots, informative summary functions, and extensive documentation complement all this. An extraordinary computational speed is achieved thanks to employing frontier econometric and numerical techniques and algorithms written in <strong>C++</strong>. The <strong>bvarPANELs</strong> package is aligned regarding objects, workflows, and code structure with the <strong>R</strong> packages <strong>bsvars</strong> by <a href="http://doi.org/10.32614/CRAN.package.bsvars" class="external-link">Woźniak (2024)</a> and <strong>bsvarSIGNs</strong> by <a href="http://doi.org/10.32614/CRAN.package.bsvarSIGNs" class="external-link">Wang &amp; Woźniak (2024)</a>, and they constitute an integrated toolset.</p>
-<p><a href="https://bsvars.org" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/house.svg" width="40" height="40"></a> <a href="mailto:contact@bsvars.org"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/envelope.svg" width="40" height="40"></a> <a href="https://github.com/bsvars/bvarPANELs" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/github.svg" width="40" height="40"></a> <a href="https://bsky.app/profile/bsvars.org" class="external-link"> <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg" width="40" height="40"></a> <a href="https://fosstodon.org/@bsvars" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/mastodon.svg" width="40" height="40"></a></p>
-<p><a href="https://bsvars.org/" class="external-link"><img src="https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/bsvars.org/bsvars.org.png" width="120" alt="bsvars.org website"></a> <a href="https://bsvars.org/bsvars/" class="external-link"><img src="https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/bsvars/bsvars.png" width="120" alt="bsvars website"></a> <a href="https://bsvars.org/bsvarSIGNs/" class="external-link"><img src="https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/bsvarSIGNs/bsvarSIGNs.png" width="120" alt="bsvarSIGNs website"></a> <a href="https://bsvars.org/bvarPANELs/" class="external-link"><img src="reference/figures/logo.png" width="120" alt="bsvarSIGNs website"></a></p>
+<p>Provides Bayesian estimation and forecasting of dynamic panel data using Bayesian Hierarchical Panel Vector Autoregressions (VARs). The model includes country-specific VARs that share a global prior distribution. Under this prior expected value, each country’s system follows a global VAR with country-invariant parameters. Further flexibility is provided by the hierarchical prior structure that retains the Minnesota prior interpretation for the global VAR and features estimated prior covariance matrices, shrinkage, and persistence levels. Bayesian forecasting is developed for models including exogenous variables, allowing conditional forecasts given the future trajectories of some variables and restricted forecasts assuring that rates are forecasted to stay positive and less than 100. The package implements the model specification, estimation, and forecasting routines, facilitating coherent workflows and reproducibility. Beautiful plots, informative summary functions, and extensive documentation complement all this. An extraordinary computational speed is achieved thanks to employing frontier econometric and numerical techniques and algorithms written in <strong>C++</strong>. The <strong>bpvars</strong> package is aligned regarding objects, workflows, and code structure with the <strong>R</strong> packages <strong>bsvars</strong> by <a href="http://doi.org/10.32614/CRAN.package.bsvars" class="external-link">Woźniak (2024)</a> and <strong>bsvarSIGNs</strong> by <a href="http://doi.org/10.32614/CRAN.package.bsvarSIGNs" class="external-link">Wang &amp; Woźniak (2024)</a>, and they constitute an integrated toolset.</p>
+<p><a href="https://bsvars.org" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/house.svg" width="40" height="40"></a> <a href="mailto:contact@bsvars.org"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/envelope.svg" width="40" height="40"></a> <a href="https://github.com/bsvars/bpvars" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/github.svg" width="40" height="40"></a> <a href="https://bsky.app/profile/bsvars.org" class="external-link"> <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg" width="40" height="40"></a> <a href="https://fosstodon.org/@bsvars" class="external-link"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/mastodon.svg" width="40" height="40"></a></p>
+<p><a href="https://bsvars.org/" class="external-link"><img src="https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/bsvars.org/bsvars.org.png" width="120" alt="bsvars.org website"></a> <a href="https://bsvars.org/bsvars/" class="external-link"><img src="https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/bsvars/bsvars.png" width="120" alt="bsvars website"></a> <a href="https://bsvars.org/bsvarSIGNs/" class="external-link"><img src="https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/bsvarSIGNs/bsvarSIGNs.png" width="120" alt="bsvarSIGNs website"></a> <a href="https://bsvars.org/bpvars/" class="external-link"><img src="reference/figures/logo.png" width="120" alt="bpvars website"></a></p>
 <div class="section level2">
 <h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h2>
@@ -69,7 +68,7 @@
 <h4 id="bayesian-hierarchical-panel-vector-autoregressions">Bayesian Hierarchical Panel Vector Autoregressions<a class="anchor" aria-label="anchor" href="#bayesian-hierarchical-panel-vector-autoregressions"></a>
 </h4>
 <ul>
-<li>The model in the <strong>bvarPANELs</strong> package features a country-specific Vector Autoregressive equation for the country-specific:
+<li>The model in the <strong>bpvars</strong> package features a country-specific Vector Autoregressive equation for the country-specific:
 <ul>
 <li>dependent variables <code>Yc</code>,</li>
 <li>lagged dependent variables <code>Xc</code>,</li>
@@ -118,7 +117,7 @@
 <li>The algorithms used here are very fast. But still, Bayesian estimation might take a little time. Look at our beautiful <strong>progress bar</strong> in the meantime:</li>
 </ul>
 <!-- --><div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="sc">**</span><span class="er">************************************************|</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>bvarPANELs<span class="sc">:</span> Forecasting with Bayesian Hierarchical<span class="sc">|</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>bpvars<span class="sc">:</span> Forecasting with Bayesian Hierarchical    <span class="sc">|</span></span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>            Panel Vector Autoregressions          <span class="sc">|</span></span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="er">**************************************************|</span></span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a> Progress of the MCMC simulation <span class="cf">for</span> <span class="dv">10000</span> draws</span>
@@ -132,10 +131,10 @@
 <div class="section level4">
 <h4 id="the-hexagonal-logo">The hexagonal logo<a class="anchor" aria-label="anchor" href="#the-hexagonal-logo"></a>
 </h4>
-<p>This beautiful logo can be reproduced in R using <a href="https://github.com/bsvars/hex/blob/main/bvarPANELs/bvarPANELs.R" class="external-link">this file</a>.</p>
+<p>This beautiful logo can be reproduced in R using <a href="https://github.com/bsvars/hex/blob/main/bpvars/bvarPANELs.R" class="external-link">this file</a>.</p>
 <p>
 </p>
-<a href="https://bsvars.org/bvarPANELs/" class="external-link"><img src="reference/figures/logo.png" height="400" alt="bvarPANELs website"></a>
+<a href="https://bsvars.org/bpvars/" class="external-link"><img src="reference/figures/logo.png" height="400" alt="bpvars website"></a>
 <p>
 </p>
 </div>
@@ -160,7 +159,7 @@
 </h2>
 <p>The beginnings are as easy as ABC:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://bsvars.org/bvarPANELs/">bvarPANELs</a></span><span class="op">)</span>                                     <span class="co"># load the package</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://bsvars.org/bpvars/">bpvars</a></span><span class="op">)</span>                                     <span class="co"># load the package</span></span>
 <span></span>
 <span><span class="va">spec</span> <span class="op">=</span> <span class="va"><a href="reference/specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>                           <span class="co"># specify the model</span></span>
 <span>  <span class="va">ilo_dynamic_panel</span>,                                    <span class="co"># data</span></span>
@@ -185,7 +184,7 @@
 <span><span class="va">post</span> <span class="op">|&gt;</span>                                                 <span class="co"># estimation output</span></span>
 <span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/compute_variance_decompositions.html" class="external-link">compute_variance_decompositions</a></span><span class="op">(</span>horizon <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op">|&gt;</span>       <span class="co"># compute variance decompositions</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>which_c <span class="op">=</span> <span class="st">"COL"</span><span class="op">)</span>                                 <span class="co"># plot variance decompositions</span></span></code></pre></div>
-<p>The <strong>bvarPANELs</strong> package supports a simplified workflow using the <code>|&gt;</code> pipe:</p>
+<p>The <strong>bpvars</strong> package supports a simplified workflow using the <code>|&gt;</code> pipe:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ilo_dynamic_panel</span> <span class="op">|&gt;</span>                                    <span class="co"># data</span></span>
 <span>  <span class="va"><a href="reference/specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>                                <span class="co"># specify the model</span></span>
@@ -233,8 +232,8 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/bsvars/bvarPANELs/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/bsvars/bvarPANELs/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/bsvars/bpvars/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/bsvars/bpvars/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -250,14 +249,14 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing bvarPANELs</a></li>
+<li><a href="authors.html#citation">Citing bpvars</a></li>
 </ul>
 </div>
 
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Tomasz Woźniak <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-2212-2378" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Tomasz Woźniak <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-2212-2378" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -273,7 +272,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
