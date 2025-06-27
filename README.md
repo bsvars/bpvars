@@ -1,12 +1,12 @@
 
-# bvarPANELs <a href="http://bvarPANELs.org/bvarPANELs/"><img src="man/figures/logo.png" align="right" height="139" alt="bvarPANELs website" /></a>
+# bpvars <a href="http://bsvars.org/bpvars/"><img src="man/figures/logo.png" align="right" height="139" alt="bpvars website" /></a>
 
 An **R** package for Forecasting with Bayesian Hierarchical Panel Vector
 Autoregressions
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/bsvars/bvarPANELs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bsvars/bvarPANELs/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/bsvars/bpvars/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bsvars/bpvars/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Provides Bayesian estimation and forecasting of dynamic panel data using
@@ -26,10 +26,10 @@ coherent workflows and reproducibility. Beautiful plots, informative
 summary functions, and extensive documentation complement all this. An
 extraordinary computational speed is achieved thanks to employing
 frontier econometric and numerical techniques and algorithms written in
-**C++**. The **bvarPANELs** package is aligned regarding objects,
-workflows, and code structure with the **R** packages **bsvars** by
-[Woźniak (2024)](http://doi.org/10.32614/CRAN.package.bsvars) and
-**bsvarSIGNs** by [Wang & Woźniak
+**C++**. The **bpvars** package is aligned regarding objects, workflows,
+and code structure with the **R** packages **bsvars** by [Woźniak
+(2024)](http://doi.org/10.32614/CRAN.package.bsvars) and **bsvarSIGNs**
+by [Wang & Woźniak
 (2024)](http://doi.org/10.32614/CRAN.package.bsvarSIGNs), and they
 constitute an integrated toolset.
 
@@ -37,7 +37,7 @@ constitute an integrated toolset.
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/house.svg" width="40" height="40"/>
 </a> <a href="mailto:contact@bsvars.org">
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/envelope.svg" width="40" height="40"/>
-</a> <a href="https://github.com/bsvars/bvarPANELs">
+</a> <a href="https://github.com/bsvars/bpvars">
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/github.svg" width="40" height="40"/>
 </a> <a href="https://bsky.app/profile/bsvars.org">
 <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg" width="40" height="40"/>
@@ -48,14 +48,14 @@ constitute an integrated toolset.
 <a href="https://bsvars.org/"><img src="https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/bsvars.org/bsvars.org.png" width="120" alt="bsvars.org website" /></a>
 <a href="https://bsvars.org/bsvars/"><img src="https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/bsvars/bsvars.png" width="120" alt="bsvars website" /></a>
 <a href="https://bsvars.org/bsvarSIGNs/"><img src="https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/bsvarSIGNs/bsvarSIGNs.png" width="120" alt="bsvarSIGNs website" /></a>
-<a href="https://bsvars.org/bvarPANELs/"><img src="man/figures/logo.png" width="120" alt="bsvarSIGNs website" /></a>
+<a href="https://bsvars.org/bpvars/"><img src="man/figures/logo.png" width="120" alt="bpvars website" /></a>
 
 ## Features
 
 #### Bayesian Hierarchical Panel Vector Autoregressions
 
-- The model in the **bvarPANELs** package features a country-specific
-  Vector Autoregressive equation for the country-specific:
+- The model in the **bpvars** package features a country-specific Vector
+  Autoregressive equation for the country-specific:
   - dependent variables `Yc`,
   - lagged dependent variables `Xc`,
   - error terms `Ec`,
@@ -110,7 +110,7 @@ constitute an integrated toolset.
 <!-- -->
 
     **************************************************|
-    bvarPANELs: Forecasting with Bayesian Hierarchical|
+    bpvars: Forecasting with Bayesian Hierarchical    |
                 Panel Vector Autoregressions          |
     **************************************************|
      Progress of the MCMC simulation for 10000 draws
@@ -124,12 +124,15 @@ constitute an integrated toolset.
 #### The hexagonal logo
 
 This beautiful logo can be reproduced in R using [this
-file](https://github.com/bsvars/hex/blob/main/bvarPANELs/bvarPANELs.R).
+file](https://github.com/bsvars/hex/blob/main/bpvars/bvarPANELs.R).
 
 <p>
+
 </p>
-<a href="https://bsvars.org/bvarPANELs/"><img src="man/figures/logo.png" height="400" alt="bvarPANELs website" /></a>
+
+<a href="https://bsvars.org/bpvars/"><img src="man/figures/logo.png" height="400" alt="bpvars website" /></a>
 <p>
+
 </p>
 
 ## Resources
@@ -146,7 +149,7 @@ file](https://github.com/bsvars/hex/blob/main/bvarPANELs/bvarPANELs.R).
 The beginnings are as easy as ABC:
 
 ``` r
-library(bvarPANELs)                                     # load the package
+library(bpvars)                                     # load the package
 
 spec = specify_bvarPANEL$new(                           # specify the model
   ilo_dynamic_panel,                                    # data
@@ -173,7 +176,7 @@ post |>                                                 # estimation output
   plot(which_c = "COL")                                 # plot variance decompositions
 ```
 
-The **bvarPANELs** package supports a simplified workflow using the `|>`
+The **bpvars** package supports a simplified workflow using the `|>`
 pipe:
 
 ``` r
