@@ -7,7 +7,7 @@
 #' 
 #' @details 
 #' The Bayesian Hierarchical Panel Vector Autoregressive model described in 
-#' \code{\link{bvarPANELs}} is estimated using the Gibbs sampler. In this 
+#' \code{\link{bpvars}} is estimated using the Gibbs sampler. In this 
 #' estimation procedure all the parameters of the model are estimated jointly.
 #' The list of parameters of the model includes:
 #' \describe{
@@ -79,7 +79,7 @@
 #' the MCMC estimation using the \code{estimate()} method. }
 #' }
 #'
-#' @seealso \code{\link{bvarPANELs}}, \code{\link{specify_bvarPANEL}}, 
+#' @seealso \code{\link{bpvars}}, \code{\link{specify_bvarPANEL}}, 
 #' \code{\link{specify_posterior_bvarPANEL}}, \code{\link{summary.PosteriorBVARPANEL}}
 #'
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
@@ -110,7 +110,7 @@ estimate.BVARPANEL <- function(
   adaptiveMH          = specification$adaptiveMH
   
   # estimation
-  qqq                 = .Call(`_bvarPANELs_bvarPANEL`, S, data_matrices$Y, data_matrices$X, prior, starting_values, thin, show_progress, adaptiveMH)
+  qqq                 = .Call(`_bpvars_bvarPANEL`, S, data_matrices$Y, data_matrices$X, prior, starting_values, thin, show_progress, adaptiveMH)
   
   specification$starting_values$set_starting_values(qqq$last_draw)
   output              = specify_posterior_bvarPANEL$new(specification, qqq$posterior)
@@ -144,7 +144,7 @@ estimate.PosteriorBVARPANEL <- function(
   adaptiveMH          = specification$last_draw$adaptiveMH
   
   # estimation
-  qqq                 = .Call(`_bvarPANELs_bvarPANEL`, S, data_matrices$Y, data_matrices$X, prior, starting_values, thin, show_progress, adaptiveMH)
+  qqq                 = .Call(`_bpvars_bvarPANEL`, S, data_matrices$Y, data_matrices$X, prior, starting_values, thin, show_progress, adaptiveMH)
   
   specification$last_draw$starting_values$set_starting_values(qqq$last_draw)
   output              = specify_posterior_bvarPANEL$new(specification$last_draw, qqq$posterior)
