@@ -1,7 +1,7 @@
 
 # bpvars <a href="http://bsvars.org/bpvars/"><img src="man/figures/logo.png" align="right" height="139" alt="bpvars website" /></a>
 
-An **R** package for Forecasting with Bayesian Hierarchical Panel Vector
+An **R** package for Forecasting with Bayesian Panel Vector
 Autoregressions
 
 <!-- badges: start -->
@@ -10,26 +10,26 @@ Autoregressions
 <!-- badges: end -->
 
 Provides Bayesian estimation and forecasting of dynamic panel data using
-Bayesian Hierarchical Panel Vector Autoregressions (VARs). The model
-includes country-specific VARs that share a global prior distribution.
-Under this prior expected value, each country’s system follows a global
-VAR with country-invariant parameters. Further flexibility is provided
-by the hierarchical prior structure that retains the Minnesota prior
-interpretation for the global VAR and features estimated prior
-covariance matrices, shrinkage, and persistence levels. Bayesian
-forecasting is developed for models including exogenous variables,
-allowing conditional forecasts given the future trajectories of some
-variables and restricted forecasts assuring that rates are forecasted to
-stay positive and less than 100. The package implements the model
-specification, estimation, and forecasting routines, facilitating
-coherent workflows and reproducibility. Beautiful plots, informative
-summary functions, and extensive documentation complement all this. An
-extraordinary computational speed is achieved thanks to employing
-frontier econometric and numerical techniques and algorithms written in
-**C++**. The **bpvars** package is aligned regarding objects, workflows,
-and code structure with the **R** packages **bsvars** by [Woźniak
-(2024)](http://doi.org/10.32614/CRAN.package.bsvars) and **bsvarSIGNs**
-by [Wang & Woźniak
+Bayesian Panel Vector Autoregressions with hierarchical prior
+distributions. The model includes country-specific VARs that share a
+global prior distribution. Under this prior expected value, each
+country’s system follows a global VAR with country-invariant parameters.
+Further flexibility is provided by the hierarchical prior structure that
+retains the Minnesota prior interpretation for the global VAR and
+features estimated prior covariance matrices, shrinkage, and persistence
+levels. Bayesian forecasting is developed for models including exogenous
+variables, allowing conditional forecasts given the future trajectories
+of some variables and restricted forecasts assuring that rates are
+forecasted to stay positive and less than 100. The package implements
+the model specification, estimation, and forecasting routines,
+facilitating coherent workflows and reproducibility. Beautiful plots,
+informative summary functions, and extensive documentation complement
+all this. An extraordinary computational speed is achieved thanks to
+employing frontier econometric and numerical techniques and algorithms
+written in **C++**. The **bpvars** package is aligned regarding objects,
+workflows, and code structure with the **R** packages **bsvars** by
+[Woźniak (2024)](http://doi.org/10.32614/CRAN.package.bsvars) and
+**bsvarSIGNs** by [Wang & Woźniak
 (2024)](http://doi.org/10.32614/CRAN.package.bsvarSIGNs), and they
 constitute an integrated toolset.
 
@@ -52,7 +52,7 @@ constitute an integrated toolset.
 
 ## Features
 
-#### Bayesian Hierarchical Panel Vector Autoregressions
+#### Forecasting with Bayesian Panel Vector Autoregressions
 
 - The model in the **bpvars** package features a country-specific Vector
   Autoregressive equation for the country-specific:
@@ -124,7 +124,7 @@ constitute an integrated toolset.
 #### The hexagonal logo
 
 This beautiful logo can be reproduced in R using [this
-file](https://github.com/bsvars/hex/blob/main/bpvars/bvarPANELs.R).
+file](https://github.com/bsvars/hex/blob/main/bpvars/bpvars.R).
 
 <p>
 
