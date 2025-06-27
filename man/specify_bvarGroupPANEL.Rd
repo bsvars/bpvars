@@ -20,7 +20,7 @@ spec = specify_bvarGroupPANEL$new(
 
 }
 \section{Super class}{
-\code{bvarPANELs::BVARPANEL} -> \code{BVARGROUPPANEL}
+\code{bpvars::BVARPANEL} -> \code{BVARGROUPPANEL}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -53,10 +53,10 @@ start adapting, the initial scaling rate}
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bvarPANELs" data-topic="BVARPANEL" data-id="get_data_matrices"><a href='../../bvarPANELs/html/BVARPANEL.html#method-BVARPANEL-get_data_matrices'><code>bvarPANELs::BVARPANEL$get_data_matrices()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bvarPANELs" data-topic="BVARPANEL" data-id="get_prior"><a href='../../bvarPANELs/html/BVARPANEL.html#method-BVARPANEL-get_prior'><code>bvarPANELs::BVARPANEL$get_prior()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bvarPANELs" data-topic="BVARPANEL" data-id="get_starting_values"><a href='../../bvarPANELs/html/BVARPANEL.html#method-BVARPANEL-get_starting_values'><code>bvarPANELs::BVARPANEL$get_starting_values()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bvarPANELs" data-topic="BVARPANEL" data-id="set_adaptiveMH"><a href='../../bvarPANELs/html/BVARPANEL.html#method-BVARPANEL-set_adaptiveMH'><code>bvarPANELs::BVARPANEL$set_adaptiveMH()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="get_data_matrices"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-get_data_matrices'><code>bpvars::BVARPANEL$get_data_matrices()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="get_prior"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-get_prior'><code>bpvars::BVARPANEL$get_prior()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="get_starting_values"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-get_starting_values'><code>bpvars::BVARPANEL$get_starting_values()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="set_adaptiveMH"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-set_adaptiveMH'><code>bpvars::BVARPANEL$set_adaptiveMH()</code></a></span></li>
 </ul>
 </details>
 }}

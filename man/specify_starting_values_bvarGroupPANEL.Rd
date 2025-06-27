@@ -42,7 +42,7 @@ sv$set_starting_values(sv_list)      # providing to the class object
 
 }
 \section{Super class}{
-\code{bvarPANELs::StartingValuesBVARPANEL} -> \code{StartingValuesBVARGROUPPANEL}
+\code{bpvars::StartingValuesBVARPANEL} -> \code{StartingValuesBVARGROUPPANEL}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

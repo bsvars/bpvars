@@ -28,7 +28,7 @@ spec = specify_bvarGroupPANEL$new(
 \code{\link{specify_bvarGroupPANEL}}
 }
 \section{Super class}{
-\code{bvarPANELs::PosteriorBVARPANEL} -> \code{PosteriorBVARGROUPPANEL}
+\code{bpvars::PosteriorBVARPANEL} -> \code{PosteriorBVARGROUPPANEL}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -51,8 +51,8 @@ of the MCMC estimation using \code{estimate()}.}
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bvarPANELs" data-topic="PosteriorBVARPANEL" data-id="get_last_draw"><a href='../../bvarPANELs/html/PosteriorBVARPANEL.html#method-PosteriorBVARPANEL-get_last_draw'><code>bvarPANELs::PosteriorBVARPANEL$get_last_draw()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bvarPANELs" data-topic="PosteriorBVARPANEL" data-id="get_posterior"><a href='../../bvarPANELs/html/PosteriorBVARPANEL.html#method-PosteriorBVARPANEL-get_posterior'><code>bvarPANELs::PosteriorBVARPANEL$get_posterior()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bpvars" data-topic="PosteriorBVARPANEL" data-id="get_last_draw"><a href='../../bpvars/html/PosteriorBVARPANEL.html#method-PosteriorBVARPANEL-get_last_draw'><code>bpvars::PosteriorBVARPANEL$get_last_draw()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bpvars" data-topic="PosteriorBVARPANEL" data-id="get_posterior"><a href='../../bpvars/html/PosteriorBVARPANEL.html#method-PosteriorBVARPANEL-get_posterior'><code>bpvars::PosteriorBVARPANEL$get_posterior()</code></a></span></li>
 </ul>
 </details>
 }}
