@@ -13,7 +13,7 @@
 #' forecasting for models with exogenous variables.
 #' 
 #' \strong{One-period-ahead predictive density.}
-#' The model assumptions provided in the documentation for \code{\link{bvarPANELs}} 
+#' The model assumptions provided in the documentation for \code{\link{bpvars}} 
 #' determine the country-specific one-period ahead conditional predictive density 
 #' for the unknown vector \eqn{\mathbf{y}_{c.t+1}} given the data available at 
 #' time \eqn{t} and the parameters of the model. It is multivariate normal with
@@ -212,7 +212,7 @@ forecast.PosteriorBVARPANEL = function(
   }
   
   # perform forecasting
-  fff           = .Call(`_bvarPANELs_forecast_bvarPANEL`, 
+  fff           = .Call(`_bpvars_forecast_bvarPANEL`, 
                         posterior_A_c_cpp, 
                         posterior_Sigma_c_cpp, 
                         X_c, 
