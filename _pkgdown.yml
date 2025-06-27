@@ -1,4 +1,4 @@
-url: http://bsvars.org/bvarPANELs/
+url: http://bsvars.org/bpvars/
 template:
   bootstrap: 5
 
@@ -11,11 +11,11 @@ navbar:
 
 
 reference:
-- title: "bvarPANELs: Forecasting with Bayesian Hierarchical Panel VARs"
+- title: "bpvars: Forecasting with Bayesian Hierarchical Panel VARs"
   desc: "Browse package information"
 - contents:
-  - bvarPANELs-package 
-  - bvarPANELs 
+  - bpvars-package 
+  - bpvars 
 - title: "Data"
   desc: "Upload sample data set"
 - contents:
