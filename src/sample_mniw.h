@@ -98,4 +98,31 @@ arma::field<arma::mat> sample_A_c_Sigma_c (
 );
 
 
+double log_kernel_ga (
+    const arma::mat&    YG,               // (C_g*T, N) - only group-specific
+    const arma::mat&    XG,               // (C_g*T, K)
+    const arma::mat     A_g,              // (K, N)
+    const arma::mat     Sigma_g,          // (N, N)
+    const arma::mat&    aux_A,            // KxN
+    const arma::mat&    aux_V_inv,        // KxK
+    const arma::mat&    aux_Sigma,        // NxN
+    const arma::mat&    aux_Sigma_inv,    // NxN
+    const double&       aux_nu            // scalar
+);
+
+
+arma::vec sample_group_allocation (
+    arma::vec&          aux_ga,           // (C, 1)
+    const arma::cube&   yt,               // (T, N, C)
+    const arma::cube&   xt,               // (T, K, C)
+    const arma::cube    aux_A_g,          // (K, N, G)
+    const arma::cube    aux_Sigma_g,      // (N, N, G)
+    const arma::mat&    aux_A,            // KxN
+    const arma::mat&    aux_V_inv,        // KxK
+    const arma::mat&    aux_Sigma,        // NxN
+    const arma::mat&    aux_Sigma_inv,    // NxN
+    const double&       aux_nu            // scalar
+);
+
+
 #endif  // _SAMPLE_MNIW_H_

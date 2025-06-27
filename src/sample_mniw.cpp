@@ -1,11 +1,13 @@
 #include <RcppArmadillo.h>
 #include <RcppTN.h>
+#include <bsvars.h>
+#include "utils.h"
 
 using namespace Rcpp;
 using namespace arma;
 
 
-// [[Rcpp:interface(cpp,r)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::field<arma::mat> rmniw1(
     const arma::mat& A,     // KxN
@@ -30,7 +32,7 @@ arma::field<arma::mat> rmniw1(
 } // END rmniw1
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 double sample_m (
     const arma::mat&    aux_A,    // KxN
@@ -60,7 +62,7 @@ double sample_m (
 } // END sample_m
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 double sample_w (
     const arma::mat&    aux_V,    // KxK
@@ -82,7 +84,7 @@ double sample_w (
 } // END sample_w
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 double sample_s (
     const arma::mat&    aux_A,      // KxN
@@ -112,7 +114,7 @@ double sample_s (
 
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 double log_kernel_nu (
     const double&       aux_nu,           // scalar
@@ -153,7 +155,7 @@ double log_kernel_nu (
 
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 double cov_nu (
     const double&   aux_nu,
@@ -165,16 +167,16 @@ double cov_nu (
   for (int n = 1; n < N + 1; n++) {
     Cov_nu           += R::psigamma( 0.5 * (aux_nu + 1 - n), 1);
   } // END n loop
-  Cov_nu             *= (C / 4);
-  Cov_nu             -= (C * N * aux_nu) * (2 * pow(aux_nu - N - 1, 2));
+  Cov_nu             /= N;
+  Cov_nu             += (4 * (N + 1) - 2 * aux_nu) * pow(N + 1 - aux_nu, -2);
+  Cov_nu             *= (C * N / 4);
   Cov_nu              = sqrt(1 / Cov_nu);
-  
   return Cov_nu;
 }
 
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::vec sample_nu (
     double&             aux_nu,           // scalar
@@ -278,7 +280,7 @@ arma::vec sample_nu (
 
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::mat sample_Sigma (
     const arma::cube&   aux_Sigma_c_inv,  // NxNxC
@@ -306,7 +308,7 @@ arma::mat sample_Sigma (
 } // END sample_Sigma
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::field<arma::mat> sample_AV (
     const arma::cube&   aux_A_c_cpp,      // KxNxC
@@ -349,7 +351,7 @@ arma::field<arma::mat> sample_AV (
 } // END sample_AV
 
 
-// [[Rcpp:interface(cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::field<arma::mat> sample_A_c_Sigma_c (
     const arma::mat&    Y_c,              // T_cxN
@@ -374,3 +376,88 @@ arma::field<arma::mat> sample_A_c_Sigma_c (
   arma::field<arma::mat> aux_A_c_Sigma_c = rmniw1( A_bar, V_bar, Sigma_bar, nu_bar );
   return aux_A_c_Sigma_c;
 } // END sample_A_c_Sigma_c
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+double log_kernel_ga (
+        const arma::mat&    YG,               // (C_g*T, N) - only group-specific
+        const arma::mat&    XG,               // (C_g*T, K)
+        const arma::mat     A_g,              // (K, N)
+        const arma::mat     Sigma_g,          // (N, N)
+        const arma::mat&    aux_A,            // KxN
+        const arma::mat&    aux_V_inv,        // KxK
+        const arma::mat&    aux_Sigma,        // NxN
+        const arma::mat&    aux_Sigma_inv,    // NxN
+        const double&       aux_nu            // scalar
+) {
+  
+  int K               = A_g.n_rows;
+  int N               = A_g.n_cols;
+  
+  // normal log-likelihood part
+  mat EE              = YG - XG * A_g;
+  mat S_g_inv         = inv_sympd(Sigma_g);
+  mat SEE             = S_g_inv * EE.t() * EE;
+  double log_kernel   = accu( SEE.diag() );
+  
+  // normal log-prior part
+  mat AA              = A_g - aux_A;
+  mat SAVA            = pow(N - aux_nu - 1, -1) * aux_Sigma_inv * AA.t() * aux_V_inv * AA;
+  log_kernel         += accu( SAVA.diag() );
+  
+  // IW log-prior part
+  double ld_S_g       = log_det_sympd(Sigma_g);
+  log_kernel         += (aux_nu + N + K + 1) * ld_S_g;
+  log_kernel         += (N - aux_nu - 1) * accu( diagvec( S_g_inv * aux_Sigma ) );
+  
+  return log_kernel;
+} // END log_kernel_ga
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+arma::vec sample_group_allocation (
+    arma::vec&          aux_ga,           // (C, 1)
+    const arma::cube&   yt,               // (T, N, C)
+    const arma::cube&   xt,               // (T, K, C)
+    const arma::cube    aux_A_g,          // (K, N, G)
+    const arma::cube    aux_Sigma_g,      // (N, N, G)
+    const arma::mat&    aux_A,            // KxN
+    const arma::mat&    aux_V_inv,        // KxK
+    const arma::mat&    aux_Sigma,        // NxN
+    const arma::mat&    aux_Sigma_inv,    // NxN
+    const double&       aux_nu            // scalar
+) {
+  
+  int C       = aux_ga.n_rows;
+  int G       = aux_A_g.n_slices;
+  
+  vec domain  = regspace(0, G - 1); 
+  vec probabilities(G);
+  vec log_kernel_c(G);
+  
+  for (int c=0; c<C; c++) {
+    for (int g=0; g<G; g++) {
+      
+      uvec which_in_g = find(aux_ga == g);
+      mat YG          = tcube_to_mat_by_slices( yt.slices(which_in_g) );
+      mat XG          = tcube_to_mat_by_slices( xt.slices(which_in_g) );
+      
+      log_kernel_c(g) = log_kernel_ga ( 
+                          YG, XG, 
+                          aux_A_g.slice(g), 
+                          aux_Sigma_g.slice(g), 
+                          aux_A, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu 
+                        );
+      
+    } // END g loop
+    
+    probabilities     = exp(log_kernel_c - max(log_kernel_c));
+    probabilities     = probabilities / accu(probabilities);
+    aux_ga(c)         = sample_arma ( domain, probabilities );
+    
+  } // END c loop
+  
+  return aux_ga;
+} // END sample_group_allocation
