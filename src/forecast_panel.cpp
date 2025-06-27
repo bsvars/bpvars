@@ -101,7 +101,9 @@ Rcpp::List forecast_bvarPANEL (
   mat     EXcc    = as<mat>(exog_forecasts[0]);
   const int       d = EXcc.n_cols;
   
-  field<cube>     forecasts(C);                       // of (horizon, N, S) cubes
+  field<cube>     forecasts(C);               // of (horizon, N, S) cubes
+  field<cube>     out_forecast_mean(C);       // of (horizon, N, S) cubes
+  field<cube>     out_forecast_cov(C,S);      // of (N, N, horizon) cubes
   
   for (int c=0; c<C; c++) {
     
@@ -124,8 +126,10 @@ Rcpp::List forecast_bvarPANEL (
     
     vec     Xt(K);
     cube    forecasts_c(horizon, N, S);
+    cube    meanCS(horizon, N, S);
     
     for (int s=0; s<S; s++) {
+      
       
       if ( do_exog ) {
         Xt          = trans(join_rows(x_t, EXcc.row(0)));
@@ -136,19 +140,24 @@ Rcpp::List forecast_bvarPANEL (
       mat Sigma_cs  = posterior_Sigma_c_cpp(s).slice(c);
       mat A_cs      = trans(posterior_A_c_cpp(s).slice(c));
       
+      cube  SigmaCS(N, N, horizon);
+      
       for (int h=0; h<horizon; h++) {
-        
+      
         vec   cond_fc_h   = trans(cond_fc.row(h));
         uvec  nonf_el     = find_nonfinite(cond_fc_h);
         int   nonf_no     = nonf_el.n_elem;
         
+        mat   fore_mean   = A_cs * Xt;
+        meanCS.slice(s).row(h) = fore_mean.t();
+        
         if ( nonf_no == N ) {
           forecasts_c.slice(s).row(h) = trans(
-            mvnrnd_truncated( A_cs * Xt, Sigma_cs, LB, UB )
+            mvnrnd_truncated( fore_mean, Sigma_cs, LB, UB )
           );
         } else {
           forecasts_c.slice(s).row(h) = trans(
-            mvnrnd_cond_truncated( cond_fc_h, A_cs * Xt, Sigma_cs, LB, UB )   // does not work if cond_fc_h is all nan
+            mvnrnd_cond_truncated( cond_fc_h, fore_mean, Sigma_cs, LB, UB )   // does not work if cond_fc_h is all nan
           );
         }
         
@@ -160,14 +169,22 @@ Rcpp::List forecast_bvarPANEL (
           }
         }
         
+        SigmaCS.slice(h) = Sigma_cs;
+        
       } // END h loop
+      
+      out_forecast_cov(c,s) = SigmaCS;
+      
     } // END s loop
     
-    forecasts(c) = forecasts_c;
+    forecasts(c)          = forecasts_c;
+    out_forecast_mean(c)  = meanCS;
     
   } // END c loop
   
   return List::create(
-    _["forecasts_cpp"]  = forecasts
+    _["forecasts_cpp"]      = forecasts,
+    _["forecast_mean_cpp"]  = out_forecast_mean,
+    _["forecast_cov_cpp"]   = out_forecast_cov
   );
 } // END forecast_conditional_bvarPANEL
