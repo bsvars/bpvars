@@ -77,7 +77,11 @@
 #' object class \code{Forecasts} that includes:
 #' 
 #' \describe{
-#'  \item{forecasts}{an \code{horizonxNxS} array with the draws from the 
+#'  \item{forecasts}{an \code{NxhorizonxS} array with the draws from the 
+#'  country-specific predictive density}
+#'  \item{forecast_mean}{an \code{NxhorizonxS} array with the mean of the 
+#'  country-specific predictive density}
+#'  \item{forecast_cov}{an \code{NxNxhorizonxS} array with the covariance of the 
 #'  country-specific predictive density}
 #'  \item{Y}{a \code{T_cxN} matrix with the country-specific data}
 #' }
@@ -157,6 +161,7 @@ forecast.PosteriorBVARPANEL = function(
   N               = dim(Y_c[[1]])[2]
   K               = dim(X_c[[1]])[2]
   C               = length(Y_c)
+  S               = dim(posterior_A_c_cpp)[1]
   c_names         = names(posterior$last_draw$data_matrices$Y)
   
   d               = K - N * posterior$last_draw$p - 1
@@ -225,10 +230,21 @@ forecast.PosteriorBVARPANEL = function(
                        )
                           
   forecasts       = list()
+  
   for (c in 1:C) {
     fore            = list()
     fore_tmp        = aperm(fff$forecasts_cpp[c,1][[1]], c(2,1,3))
     fore$forecasts  = fore_tmp
+    
+    fmean_tmp       = aperm(fff$forecast_mean_cpp[c,1][[1]], c(2,1,3))
+    fore$forecast_mean = fmean_tmp
+    
+    cov_tmp        = array(NA, c(N, N, horizon, S))
+    for (s in 1:S) {
+      cov_tmp[,,,s] = fff$forecast_cov_cpp[c,s][[1]]
+    }
+    fore$forecast_cov = cov_tmp
+    
     fore$Y          = t(Y_c[[c]])
     class(fore)     = "Forecasts"
     forecasts[[c]]  = fore
