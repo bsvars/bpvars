@@ -2,14 +2,14 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 bvarGroupPANEL <- function(S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma, estimate_groups = FALSE) {
-    .Call(`_bvarPANELs_bvarGroupPANEL`, S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma, estimate_groups)
+    .Call(`_bpvars_bvarGroupPANEL`, S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma, estimate_groups)
 }
 
 bvarPANEL <- function(S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma) {
-    .Call(`_bvarPANELs_bvarPANEL`, S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma)
+    .Call(`_bpvars_bvarPANEL`, S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma)
 }
 
 # Register entry points for exported C++ functions
 methods::setLoadAction(function(ns) {
-    .Call(`_bvarPANELs_RcppExport_registerCCallable`)
+    .Call(`_bpvars_RcppExport_registerCCallable`)
 })
