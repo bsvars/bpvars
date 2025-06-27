@@ -1,3 +1,7 @@
+# bpvars 0.3
+
+1. Package has a new name
+
 # bvarPANELs 0.2
 
 1. The package features a hexagonal logo [#26](https://github.com/bsvars/bvarPANELs/issues/26) with the [code for reproduction](https://github.com/bsvars/hex)
