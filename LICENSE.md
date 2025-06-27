@@ -1,5 +1,5 @@
-    bvarPANELs: Forecasting with Bayesian Hierarchical Panel Vector Autoregressions
-    Copyright (C) 2024 International Labour Organization
+    bpvars: Forecasting with Bayesian Hierarchical Panel Vector Autoregressions
+    Copyright (C) 2025 International Labour Organization
     Contact: Tomasz Woźniak <wozniak.tom@pm.me>
     This software package is distributed under GPL (>= 3) license.
 
