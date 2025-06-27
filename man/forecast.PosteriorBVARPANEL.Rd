@@ -32,7 +32,11 @@ the draws from the country-specific predictive density and data in a form of
 object class \code{Forecasts} that includes:
 
 \describe{
- \item{forecasts}{an \code{horizonxNxS} array with the draws from the 
+ \item{forecasts}{an \code{NxhorizonxS} array with the draws from the 
+ country-specific predictive density}
+ \item{forecast_mean}{an \code{NxhorizonxS} array with the mean of the 
+ country-specific predictive density}
+ \item{forecast_cov}{an \code{NxNxhorizonxS} array with the covariance of the 
  country-specific predictive density}
  \item{Y}{a \code{T_cxN} matrix with the country-specific data}
 }
