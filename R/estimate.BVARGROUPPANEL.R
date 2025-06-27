@@ -82,7 +82,7 @@
 #' the MCMC estimation using the \code{estimate()} method. }
 #' }
 #'
-#' @seealso \code{\link{bvarPANELs}}, \code{\link{specify_bvarGroupPANEL}}, 
+#' @seealso \code{\link{bpvars}}, \code{\link{specify_bvarGroupPANEL}}, 
 #' \code{\link{specify_posterior_bvarGroupPANEL}}, \code{\link{summary.PosteriorBVARPANEL}}
 #'
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
@@ -119,7 +119,7 @@ estimate.BVARGROUPPANEL <- function(
   G                   = specification$G
   
   # estimation
-  qqq                 = .Call(`_bvarPANELs_bvarGroupPANEL`, S, data_matrices$Y, data_matrices$X, prior, starting_values, thin, show_progress, adaptiveMH, estimate_groups)
+  qqq                 = .Call(`_bpvars_bvarGroupPANEL`, S, data_matrices$Y, data_matrices$X, prior, starting_values, thin, show_progress, adaptiveMH, estimate_groups)
     
   specification$starting_values$set_starting_values(qqq$last_draw)
   output              = specify_posterior_bvarGroupPANEL$new(specification, qqq$posterior)
@@ -155,7 +155,7 @@ estimate.PosteriorBVARGROUPPANEL <- function(
   G                   = specification$last_draw$G
   
   # estimation
-  qqq                 = .Call(`_bvarPANELs_bvarGroupPANEL`, S, data_matrices$Y, data_matrices$X, prior, starting_values, thin, show_progress, adaptiveMH, estimate_groups)
+  qqq                 = .Call(`_bpvars_bvarGroupPANEL`, S, data_matrices$Y, data_matrices$X, prior, starting_values, thin, show_progress, adaptiveMH, estimate_groups)
     
   specification$last_draw$starting_values$set_starting_values(qqq$last_draw)
   output              = specify_posterior_bvarGroupPANEL$new(specification$last_draw, qqq$posterior)
