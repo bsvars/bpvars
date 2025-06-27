@@ -20,10 +20,11 @@
 #  refer to <http://www.gnu.org/licenses/>.
 #  #####################################################################################
 #
-#' @title Forecasting with Bayesian Hierarchical Panel Vector Autoregressions
+#' @title Forecasting with Bayesian Panel Vector Autoregressions
 #'
 #' @description Provides Bayesian estimation and forecasting of dynamic panel 
-#' data using Bayesian Hierarchical Panel Vector Autoregressions. The model 
+#' data using Bayesian Panel Vector Autoregressions with hierarchical prior 
+#' distributions. The model 
 #' includes country-specific VARs that share a global prior distribution. Under 
 #' this prior expected value, each country's system follows a global VAR with 
 #' country-invariant parameters. Further flexibility is provided by the 
