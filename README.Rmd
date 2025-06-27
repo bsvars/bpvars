@@ -11,15 +11,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-# bvarPANELs <a href="http://bvarPANELs.org/bvarPANELs/"><img src="man/figures/logo.png" align="right" height="139" alt="bvarPANELs website" /></a>
+# bpvars <a href="http://bsvars.org/bpvars/"><img src="man/figures/logo.png" align="right" height="139" alt="bpvars website" /></a>
 
 An **R** package for Forecasting with Bayesian Hierarchical Panel Vector Autoregressions
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/bsvars/bvarPANELs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bsvars/bvarPANELs/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/bsvars/bpvars/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bsvars/bpvars/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-Provides Bayesian estimation and forecasting of dynamic panel data using Bayesian Hierarchical Panel Vector Autoregressions (VARs). The model includes country-specific VARs that share a global prior distribution. Under this prior expected value, each country's system follows a global VAR with country-invariant parameters. Further flexibility is provided by the hierarchical prior structure that retains the Minnesota prior interpretation for the global VAR and features estimated prior covariance matrices, shrinkage, and persistence levels. Bayesian forecasting is developed for models including exogenous variables, allowing conditional forecasts given the future trajectories of some variables and restricted forecasts assuring that rates are forecasted to stay positive and less than 100. The package implements the model specification, estimation, and forecasting routines, facilitating coherent workflows and reproducibility. Beautiful plots, informative summary functions, and extensive documentation complement all this. An extraordinary computational speed is achieved thanks to employing frontier econometric and numerical techniques and algorithms written in **C++**. The **bvarPANELs** package is aligned regarding objects, workflows, and code structure with the **R** packages **bsvars** by [Woźniak (2024)](http://doi.org/10.32614/CRAN.package.bsvars) and **bsvarSIGNs** by [Wang & Woźniak (2024)](http://doi.org/10.32614/CRAN.package.bsvarSIGNs), and they constitute an integrated toolset.
+Provides Bayesian estimation and forecasting of dynamic panel data using Bayesian Hierarchical Panel Vector Autoregressions (VARs). The model includes country-specific VARs that share a global prior distribution. Under this prior expected value, each country's system follows a global VAR with country-invariant parameters. Further flexibility is provided by the hierarchical prior structure that retains the Minnesota prior interpretation for the global VAR and features estimated prior covariance matrices, shrinkage, and persistence levels. Bayesian forecasting is developed for models including exogenous variables, allowing conditional forecasts given the future trajectories of some variables and restricted forecasts assuring that rates are forecasted to stay positive and less than 100. The package implements the model specification, estimation, and forecasting routines, facilitating coherent workflows and reproducibility. Beautiful plots, informative summary functions, and extensive documentation complement all this. An extraordinary computational speed is achieved thanks to employing frontier econometric and numerical techniques and algorithms written in **C++**. The **bpvars** package is aligned regarding objects, workflows, and code structure with the **R** packages **bsvars** by [Woźniak (2024)](http://doi.org/10.32614/CRAN.package.bsvars) and **bsvarSIGNs** by [Wang & Woźniak (2024)](http://doi.org/10.32614/CRAN.package.bsvarSIGNs), and they constitute an integrated toolset.
 
 
 <a href="https://bsvars.org"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/house.svg" width="40" height="40"/> </a> 
@@ -52,7 +52,7 @@ Provides Bayesian estimation and forecasting of dynamic panel data using Bayesia
 
 #### Bayesian Hierarchical Panel Vector Autoregressions
 
-- The model in the **bvarPANELs** package features a country-specific Vector Autoregressive equation for the country-specific:
+- The model in the **bpvars** package features a country-specific Vector Autoregressive equation for the country-specific:
   - dependent variables `Yc`,
   - lagged dependent variables `Xc`,
   - error terms `Ec`,
@@ -90,7 +90,7 @@ Provides Bayesian estimation and forecasting of dynamic panel data using Bayesia
 - The algorithms used here are very fast. But still, Bayesian estimation might take a little time. Look at our beautiful **progress bar** in the meantime:
 ```
 **************************************************|
-bvarPANELs: Forecasting with Bayesian Hierarchical|
+bpvars: Forecasting with Bayesian Hierarchical    |
             Panel Vector Autoregressions          |
 **************************************************|
  Progress of the MCMC simulation for 10000 draws
@@ -107,10 +107,10 @@ bvarPANELs: Forecasting with Bayesian Hierarchical|
 
 #### The hexagonal logo
 
-This beautiful logo can be reproduced in R using [this file](https://github.com/bsvars/hex/blob/main/bvarPANELs/bvarPANELs.R).
+This beautiful logo can be reproduced in R using [this file](https://github.com/bsvars/hex/blob/main/bpvars/bvarPANELs.R).
 
 <p></p>
-<a href="https://bsvars.org/bvarPANELs/"><img src="man/figures/logo.png" height="400" alt="bvarPANELs website" /></a>
+<a href="https://bsvars.org/bpvars/"><img src="man/figures/logo.png" height="400" alt="bpvars website" /></a>
 <p></p>
 
 
@@ -127,7 +127,7 @@ This beautiful logo can be reproduced in R using [this file](https://github.com/
 
 The beginnings are as easy as ABC:
 ```{r, eval=FALSE, echo=TRUE}
-library(bvarPANELs)                                     # load the package
+library(bpvars)                                     # load the package
 
 spec = specify_bvarPANEL$new(                           # specify the model
   ilo_dynamic_panel,                                    # data
@@ -153,7 +153,7 @@ post |>                                                 # estimation output
   compute_variance_decompositions(horizon = 6) |>       # compute variance decompositions
   plot(which_c = "COL")                                 # plot variance decompositions
 ```
-The **bvarPANELs** package supports a simplified workflow using the `|>` pipe:
+The **bpvars** package supports a simplified workflow using the `|>` pipe:
 ```{r, eval=FALSE, echo=TRUE}
 ilo_dynamic_panel |>                                    # data
   specify_bvarPANEL$new(                                # specify the model
