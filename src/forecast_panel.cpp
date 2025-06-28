@@ -88,8 +88,7 @@ Rcpp::List forecast_bvarPANEL (
   
   if (show_progress) {
     Rcout << "**************************************************|" << endl;
-    Rcout << "bvarPANELs: Forecasting with Bayesian Hierarchical|" << endl;
-    Rcout << "            Panel Vector Autoregressions          |" << endl;
+    Rcout << " bpvars: Forecasting with Bayesian Panel VARs     |" << endl;
     Rcout << "**************************************************|" << endl;
     Rcout << " Progress of sampling " << S << " draws from" << endl;
     Rcout << "    the predictive density for " << C << " countries" << endl;

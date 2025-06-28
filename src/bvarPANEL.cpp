@@ -31,11 +31,8 @@ Rcpp::List bvarPANEL(
   
   if (show_progress) {
     Rcout << "**************************************************|" << endl;
-    Rcout << "bvarPANELs: Forecasting with Bayesian Hierarchical|" << endl;
-    Rcout << "            Panel Vector Autoregressions          |" << endl;
+    Rcout << "bpvars: Forecasting with Bayesian Panel VARs      |" << endl;
     Rcout << "**************************************************|" << endl;
-    // Rcout << " Gibbs sampler for the SVAR-SV model              |" << endl;
-    // Rcout << "**************************************************|" << endl;
     Rcout << " Progress of the MCMC simulation for " << S << " draws" << endl;
     Rcout << "    Every " << oo << "draw is saved via MCMC thinning" << endl;
     Rcout << " Press Esc to interrupt the computations" << endl;
