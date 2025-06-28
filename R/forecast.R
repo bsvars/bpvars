@@ -62,7 +62,7 @@
 #' @method forecast PosteriorBVARPANEL
 #' 
 #' @param posterior posterior estimation outcome - an object of class 
-#' PosteriorBVARPANEL obtained by running the \code{estimate} function.
+#' \code{PosteriorBVARPANEL} obtained by running the \code{estimate} function.
 #' @param horizon a positive integer, specifying the forecasting horizon.
 #' @param exogenous_forecast not used here ATM; included for compatibility with 
 #' generic \code{forecast}.
@@ -229,6 +229,182 @@ forecast.PosteriorBVARPANEL = function(
                         TRUE
                        )
                           
+  forecasts       = list()
+  
+  for (c in 1:C) {
+    fore            = list()
+    fore_tmp        = aperm(fff$forecasts_cpp[c,1][[1]], c(2,1,3))
+    fore$forecasts  = fore_tmp
+    
+    fmean_tmp       = aperm(fff$forecast_mean_cpp[c,1][[1]], c(2,1,3))
+    fore$forecast_mean = fmean_tmp
+    
+    cov_tmp        = array(NA, c(N, N, horizon, S))
+    for (s in 1:S) {
+      cov_tmp[,,,s] = fff$forecast_cov_cpp[c,s][[1]]
+    }
+    fore$forecast_cov = cov_tmp
+    
+    fore$Y          = t(Y_c[[c]])
+    class(fore)     = "Forecasts"
+    forecasts[[c]]  = fore
+  }
+  names(forecasts)  = c_names
+  class(forecasts)  = "ForecastsPANEL"
+  
+  return(forecasts)
+}
+
+
+
+
+#' @inherit forecast.PosteriorBVARPANEL
+#' @method forecast PosteriorBVARGROUPPANEL
+#' 
+#' @param posterior posterior estimation outcome - an object of class 
+#' \code{PosteriorBVARGROUPPANEL} obtained by running the \code{estimate} function.
+#' 
+#' @seealso \code{\link{specify_bvarGroupPANEL}}, \code{\link{estimate.PosteriorBVARGROUPPANEL}}, 
+#' \code{\link{summary.ForecastsPANEL}}, \code{\link{plot.ForecastsPANEL}}
+#'
+#' @examples
+#' # specify the model
+#' specification = specify_bvarGroupPANEL$new(
+#'                   ilo_dynamic_panel, 
+#'                   exogenous = ilo_exogenous_variables,
+#'                   group_allocation = country_grouping_incomegroup
+#'                 )
+#' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
+#' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
+#' 
+#' # forecast 6 years ahead
+#' predictive    = forecast(
+#'                   posterior, 
+#'                   horizon = 6, 
+#'                   exogenous_forecast = ilo_exogenous_forecasts
+#'                 )
+#' 
+#' # workflow with the pipe |>
+#' ############################################################
+#' set.seed(123)
+#' ilo_dynamic_panel |>
+#'   specify_bvarGroupPANEL$new(group_allocation = country_grouping_incomegroup) |>
+#'   estimate(S = 10) |> 
+#'   estimate(S = 20) |> 
+#'   forecast(horizon = 2) -> predictive
+#' 
+#' # conditional forecasting 6 years ahead conditioning on 
+#' #  provided future values for the Gross Domestic Product 
+#' #  and truncated forecasts for the rates
+#' ############################################################
+#' data(ilo_conditional_forecasts)                        # load the conditional forecasts of dgdp
+#' specification = specify_bvarGroupPANEL$new(            # specify the model
+#'                   ilo_dynamic_panel,
+#'                   type = c("real", rep("rate", 3)),
+#'                   group_allocation = country_grouping_region
+#'                 )   
+#' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
+#' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
+#' predictive    = forecast(posterior, 6, conditional_forecast = ilo_conditional_forecasts) # forecast
+#' 
+#' # workflow with the pipe |>
+#' ############################################################
+#' set.seed(123)
+#' ilo_dynamic_panel |>
+#'   specify_bvarGroupPANEL$new(
+#'             type = c("real", rep("rate", 3)),
+#'             group_allocation = country_grouping_region
+#'             ) |>
+#'   estimate(S = 10) |> 
+#'   estimate(S = 20) |> 
+#'   forecast(
+#'     horizon = 6, 
+#'     conditional_forecast = ilo_conditional_forecasts
+#'   ) -> predictive
+#' 
+#' @export
+forecast.PosteriorBVARGROUPPANEL = function(
+    posterior, 
+    horizon = 1, 
+    exogenous_forecast = NULL,
+    conditional_forecast = NULL
+) {
+  
+  posterior_A_c_cpp     = posterior$posterior$A_c_cpp
+  posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
+  X_c             = posterior$last_draw$data_matrices$X
+  Y_c             = posterior$last_draw$data_matrices$Y
+  N               = dim(Y_c[[1]])[2]
+  K               = dim(X_c[[1]])[2]
+  C               = length(Y_c)
+  S               = dim(posterior_A_c_cpp)[1]
+  c_names         = names(posterior$last_draw$data_matrices$Y)
+  
+  d               = K - N * posterior$last_draw$p - 1
+  if (d == 0 ) {
+    # this will not be used for forecasting, but needs to be provided
+    exogenous_forecast = list()
+    for (c in 1:C) exogenous_forecast[[c]] = matrix(NA, horizon, 1)
+  } else {
+    stopifnot("Forecasted values of exogenous variables are missing." 
+              = (d > 0) & !is.null(exogenous_forecast))
+    stopifnot("The matrix of exogenous_forecast does not have a correct number of columns." 
+              = unique(simplify2array(lapply(exogenous_forecast, function(x){ncol(x)}))) == d)
+    stopifnot("Provide exogenous_forecast for all forecast periods specified by argument horizon." 
+              = unique(simplify2array(lapply(exogenous_forecast, function(x){nrow(x)}))) == horizon)
+    stopifnot("Argument exogenous has to be a matrix." 
+              = all(simplify2array(lapply(exogenous_forecast, function(x){is.matrix(x) & is.numeric(x)}))))
+    stopifnot("Argument exogenous cannot include missing values." 
+              = unique(simplify2array(lapply(exogenous_forecast, function(x){any(is.na(x))}))) == FALSE)
+  }
+  
+  if ( is.null(conditional_forecast) ) {
+    conditional_forecast = list()
+    for (c in 1:C) conditional_forecast[[c]] = matrix(NA, horizon, N)
+  } else {
+    stopifnot("Argument conditional_forecast must be a list with the same countries 
+              as in the provided data." 
+              = is.list(conditional_forecast) & length(conditional_forecast) == length(Y_c)
+    )
+    stopifnot("Argument conditional_forecast must be a list with the same countries 
+              as in the provided data."
+              = all(names(Y_c) == names(conditional_forecast))
+    )
+    stopifnot("Argument conditional_forecast must be a list with matrices with numeric values."
+              = all(sapply(conditional_forecast, function(x) is.matrix(x) & is.numeric(x)))
+    )
+    stopifnot("All the matrices provided in argument conditional_forecast must have 
+              the same number of rows equal to the value of argument horizon."
+              = unique(sapply(conditional_forecast, function(x) nrow(x) )) == horizon
+    )
+    stopifnot("All the matrices provided in argument conditional_forecast must have 
+              the same number of columns equal to the number of columns in the used data."
+              = unique(sapply(conditional_forecast, function(x) ncol(x) )) == N
+    )
+  }
+  
+  type      = posterior$last_draw$data_matrices$type
+  LB        = rep(-Inf, N)
+  UB        = rep(Inf, N)
+  rates_id  = which(type == "rate")
+  if (length(rates_id) > 0) {
+    LB[rates_id] = 0
+    UB[rates_id] = 100
+  }
+  
+  # perform forecasting
+  fff           = .Call(`_bpvars_forecast_bvarPANEL`, 
+                        posterior_A_c_cpp, 
+                        posterior_Sigma_c_cpp, 
+                        X_c, 
+                        conditional_forecast, 
+                        exogenous_forecast, 
+                        horizon,
+                        LB,
+                        UB,
+                        TRUE
+  )
+  
   forecasts       = list()
   
   for (c in 1:C) {
