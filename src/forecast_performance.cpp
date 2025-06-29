@@ -67,7 +67,6 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL (
     const Rcpp::List&             starting_values,    // a list of starting values for bvarPANEL
     const arma::vec               LB,                 // Nx1 lower bounds for truncation
     const arma::vec               UB,                 // Nx1 upper bounds for truncation
-    const int                     thin,               // introduce thinning
     const bool                    show_progress,
     const arma::vec&              adptive_alpha_gamma // 2x1 vector with target acceptance rate and step size
 ) {
@@ -89,6 +88,7 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL (
   mat yy_tmp            = as<mat>(Y[0]);
   const int T           = yy_tmp.n_rows;
   const int C           = Y.length();
+  const int thin        = 1;
   const int forecasting_sample = T - max_horizon - training_sample + 1;
   
   // progress bar setup
