@@ -19,14 +19,7 @@ using expanding window samples.}
 \value{
 An object of class \code{ForecastsPOOS} containing the outcome of Bayesian
  recursive pseudo-out-of-sample forecasting exercise  using expanding window 
- samples containing elements:
-\describe{
- \item{forecasts}{an array with the draws from predictive density}
- \item{forecast_mean}{an array with the mean of the predictive densities}
- \item{forecast_cov}{an array with the covariances of the predictive densities}
- \item{estimation_data}{an array with data used for estimation for each forecasts}
- \item{evaluation_data}{an array with matched data for forecasting performance evaluation}
-}
+ samples containing elements
 }
 \description{
 Performs the recursive pseudo-out-of-sample forecasting exercise
