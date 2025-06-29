@@ -176,10 +176,10 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL (
   
   // outputs
   return List::create(
-    _["forecasts"] = forecasts,
-    _["forecast_mean"] = forecast_mean,
-    _["forecast_cov"] = forecast_cov,
-    _["estimation_data"] = estimation_data,
-    _["evaluation_data"] = evaluation_data
+    _["forecasts_cpp"]       = forecasts,
+    _["forecast_mean_cpp"]   = forecast_mean,
+    _["forecast_cov_cpp"]    = forecast_cov,
+    _["estimation_data_cpp"] = estimation_data,
+    _["evaluation_data_cpp"] = evaluation_data
   );
 } // END forecast_pseudo_out_of_sample_bvarPANEL
