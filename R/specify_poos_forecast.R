@@ -9,10 +9,10 @@
 #' 
 #' @examples 
 #' spec = specify_bvarPANEL$new(ilo_dynamic_panel)
-#' poos = specify_poos_forecast$new(spec, 5000, 1000, 1:2, 10)
+#' poos = specify_poosf_exercise$new(spec, 5000, 1000, 1:2, 10)
 #' 
 #' @export
-specify_poos_forecast = R6::R6Class(
+specify_poosf_exercise = R6::R6Class(
   "POOSForecastSetup",
   
   public = list(
@@ -54,7 +54,7 @@ specify_poos_forecast = R6::R6Class(
     #' 
     #' @examples 
     #' spec = specify_bvarPANEL$new(ilo_dynamic_panel)
-    #' poos = specify_poos_forecast$new(spec, 5000, 1000, 1:2, 10)
+    #' poos = specify_poosf_exercise$new(spec, 5000, 1000, 1:2, 10)
     #' 
     initialize = function(
       spec,
@@ -85,4 +85,10 @@ specify_poos_forecast = R6::R6Class(
       
     } # END initialize
   ) # END public
-) # END specify_poos_forecast
+) # END specify_poosf_exercise
+
+
+
+
+
+
