@@ -25,13 +25,17 @@ poos = specify_poosf_exercise$new(spec, 5000, 1000, 1:2, 10)
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{S}}{a positive integer number - the number of}
+\item{\code{S}}{a positive integer number - the number of MCMC draws from the 
+posterior distribution in the estimation for each forecasts}
 
-\item{\code{S_burn}}{a positive integer number - the number of}
+\item{\code{S_burn}}{a positive integer number - the number of MCMC draws from
+to achieve convergence in the estimation for each forecasts}
 
-\item{\code{horizons}}{a positive integer number - the number of}
+\item{\code{horizons}}{a vector with positive integer numbers - the forecast
+horizons used in the forecast performance evaluation}
 
-\item{\code{training_sample}}{a positive integer number - the number of}
+\item{\code{training_sample}}{a positive integer number - the number of of the
+first observations to be used in the estimation for the first forecast}
 }
 \if{html}{\out{</div>}}
 }

@@ -17,16 +17,20 @@ specify_poosf_exercise = R6::R6Class(
   
   public = list(
     
-    #' @field S a positive integer number - the number of
+    #' @field S a positive integer number - the number of MCMC draws from the 
+    #' posterior distribution in the estimation for each forecasts
     S = NA,
     
-    #' @field S_burn a positive integer number - the number of
+    #' @field S_burn a positive integer number - the number of MCMC draws from
+    #' to achieve convergence in the estimation for each forecasts
     S_burn = NA,
     
-    #' @field horizons a positive integer number - the number of
+    #' @field horizons a vector with positive integer numbers - the forecast
+    #' horizons used in the forecast performance evaluation
     horizons = numeric(),
     
-    #' @field training_sample a positive integer number - the number of
+    #' @field training_sample a positive integer number - the number of of the
+    #' first observations to be used in the estimation for the first forecast
     training_sample = NA,
     
     #' @description
@@ -86,9 +90,3 @@ specify_poosf_exercise = R6::R6Class(
     } # END initialize
   ) # END public
 ) # END specify_poosf_exercise
-
-
-
-
-
-
