@@ -151,17 +151,17 @@ namespace bpvars {
         return Rcpp::as<Rcpp::List >(rcpp_result_gen);
     }
 
-    inline Rcpp::List YX_subset_TT_head_cols(Rcpp::List Y, const int TT, const int beginning = 0) {
-        typedef SEXP(*Ptr_YX_subset_TT_head_cols)(SEXP,SEXP,SEXP);
-        static Ptr_YX_subset_TT_head_cols p_YX_subset_TT_head_cols = NULL;
-        if (p_YX_subset_TT_head_cols == NULL) {
-            validateSignature("Rcpp::List(*YX_subset_TT_head_cols)(Rcpp::List,const int,const int)");
-            p_YX_subset_TT_head_cols = (Ptr_YX_subset_TT_head_cols)R_GetCCallable("bpvars", "_bpvars_YX_subset_TT_head_cols");
+    inline Rcpp::List YX_subset_TT_head_rows(Rcpp::List Y, const int TT, const int beginning = 0) {
+        typedef SEXP(*Ptr_YX_subset_TT_head_rows)(SEXP,SEXP,SEXP);
+        static Ptr_YX_subset_TT_head_rows p_YX_subset_TT_head_rows = NULL;
+        if (p_YX_subset_TT_head_rows == NULL) {
+            validateSignature("Rcpp::List(*YX_subset_TT_head_rows)(Rcpp::List,const int,const int)");
+            p_YX_subset_TT_head_rows = (Ptr_YX_subset_TT_head_rows)R_GetCCallable("bpvars", "_bpvars_YX_subset_TT_head_rows");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_YX_subset_TT_head_cols(Shield<SEXP>(Rcpp::wrap(Y)), Shield<SEXP>(Rcpp::wrap(TT)), Shield<SEXP>(Rcpp::wrap(beginning)));
+            rcpp_result_gen = p_YX_subset_TT_head_rows(Shield<SEXP>(Rcpp::wrap(Y)), Shield<SEXP>(Rcpp::wrap(TT)), Shield<SEXP>(Rcpp::wrap(beginning)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();

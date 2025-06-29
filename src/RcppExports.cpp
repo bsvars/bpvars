@@ -254,23 +254,23 @@ RcppExport SEXP _bpvars_bvarPANEL_just_sv_out(SEXP SSEXP, SEXP YSEXP, SEXP XSEXP
     UNPROTECT(1);
     return rcpp_result_gen;
 }
-// YX_subset_TT_head_cols
-Rcpp::List YX_subset_TT_head_cols(Rcpp::List Y, const int TT, const int beginning);
-static SEXP _bpvars_YX_subset_TT_head_cols_try(SEXP YSEXP, SEXP TTSEXP, SEXP beginningSEXP) {
+// YX_subset_TT_head_rows
+Rcpp::List YX_subset_TT_head_rows(Rcpp::List Y, const int TT, const int beginning);
+static SEXP _bpvars_YX_subset_TT_head_rows_try(SEXP YSEXP, SEXP TTSEXP, SEXP beginningSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type Y(YSEXP);
     Rcpp::traits::input_parameter< const int >::type TT(TTSEXP);
     Rcpp::traits::input_parameter< const int >::type beginning(beginningSEXP);
-    rcpp_result_gen = Rcpp::wrap(YX_subset_TT_head_cols(Y, TT, beginning));
+    rcpp_result_gen = Rcpp::wrap(YX_subset_TT_head_rows(Y, TT, beginning));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _bpvars_YX_subset_TT_head_cols(SEXP YSEXP, SEXP TTSEXP, SEXP beginningSEXP) {
+RcppExport SEXP _bpvars_YX_subset_TT_head_rows(SEXP YSEXP, SEXP TTSEXP, SEXP beginningSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_bpvars_YX_subset_TT_head_cols_try(YSEXP, TTSEXP, beginningSEXP));
+        rcpp_result_gen = PROTECT(_bpvars_YX_subset_TT_head_rows_try(YSEXP, TTSEXP, beginningSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -958,7 +958,7 @@ static int _bpvars_RcppExport_validate(const char* sig) {
         signatures.insert("arma::vec(*mvnrnd_cond_truncated)(arma::vec,arma::vec,arma::mat,arma::vec,arma::vec)");
         signatures.insert("Rcpp::List(*forecast_bvarPANEL)(arma::field<arma::cube>&,arma::field<arma::cube>&,Rcpp::List&,Rcpp::List&,Rcpp::List&,const int,arma::vec,arma::vec,const bool)");
         signatures.insert("Rcpp::List(*bvarPANEL_just_sv_out)(const int&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const int,const arma::vec&)");
-        signatures.insert("Rcpp::List(*YX_subset_TT_head_cols)(Rcpp::List,const int,const int)");
+        signatures.insert("Rcpp::List(*YX_subset_TT_head_rows)(Rcpp::List,const int,const int)");
         signatures.insert("Rcpp::List(*forecast_pseudo_out_of_sample_bvarPANEL)(const int&,const int&,const arma::ivec,const int&,const Rcpp::List&,const Rcpp::List&,Rcpp::List&,Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec,const arma::vec,const bool,const arma::vec&)");
         signatures.insert("arma::cube(*Sigma2B_c)(arma::cube&,const bool)");
         signatures.insert("arma::field<arma::cube>(*panel_variance_decompositions)(arma::field<arma::cube>&,arma::field<arma::cube>&,arma::cube&,arma::cube&,const int,const int,const bool)");
@@ -988,7 +988,7 @@ RcppExport SEXP _bpvars_RcppExport_registerCCallable() {
     R_RegisterCCallable("bpvars", "_bpvars_mvnrnd_cond_truncated", (DL_FUNC)_bpvars_mvnrnd_cond_truncated_try);
     R_RegisterCCallable("bpvars", "_bpvars_forecast_bvarPANEL", (DL_FUNC)_bpvars_forecast_bvarPANEL_try);
     R_RegisterCCallable("bpvars", "_bpvars_bvarPANEL_just_sv_out", (DL_FUNC)_bpvars_bvarPANEL_just_sv_out_try);
-    R_RegisterCCallable("bpvars", "_bpvars_YX_subset_TT_head_cols", (DL_FUNC)_bpvars_YX_subset_TT_head_cols_try);
+    R_RegisterCCallable("bpvars", "_bpvars_YX_subset_TT_head_rows", (DL_FUNC)_bpvars_YX_subset_TT_head_rows_try);
     R_RegisterCCallable("bpvars", "_bpvars_forecast_pseudo_out_of_sample_bvarPANEL", (DL_FUNC)_bpvars_forecast_pseudo_out_of_sample_bvarPANEL_try);
     R_RegisterCCallable("bpvars", "_bpvars_Sigma2B_c", (DL_FUNC)_bpvars_Sigma2B_c_try);
     R_RegisterCCallable("bpvars", "_bpvars_panel_variance_decompositions", (DL_FUNC)_bpvars_panel_variance_decompositions_try);
@@ -1017,7 +1017,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_bpvars_mvnrnd_cond_truncated", (DL_FUNC) &_bpvars_mvnrnd_cond_truncated, 5},
     {"_bpvars_forecast_bvarPANEL", (DL_FUNC) &_bpvars_forecast_bvarPANEL, 9},
     {"_bpvars_bvarPANEL_just_sv_out", (DL_FUNC) &_bpvars_bvarPANEL_just_sv_out, 7},
-    {"_bpvars_YX_subset_TT_head_cols", (DL_FUNC) &_bpvars_YX_subset_TT_head_cols, 3},
+    {"_bpvars_YX_subset_TT_head_rows", (DL_FUNC) &_bpvars_YX_subset_TT_head_rows, 3},
     {"_bpvars_forecast_pseudo_out_of_sample_bvarPANEL", (DL_FUNC) &_bpvars_forecast_pseudo_out_of_sample_bvarPANEL, 14},
     {"_bpvars_Sigma2B_c", (DL_FUNC) &_bpvars_Sigma2B_c, 2},
     {"_bpvars_panel_variance_decompositions", (DL_FUNC) &_bpvars_panel_variance_decompositions, 7},

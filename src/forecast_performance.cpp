@@ -34,7 +34,7 @@ Rcpp::List bvarPANEL_just_sv_out (
 
 // [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
-Rcpp::List YX_subset_TT_head_cols (
+Rcpp::List YX_subset_TT_head_rows (
     Rcpp::List        Y,
     const int         TT,
     const int         beginning = 0
@@ -44,7 +44,7 @@ Rcpp::List YX_subset_TT_head_cols (
   
   for (int c=0; c<C; c++) {
     yy_tmp        = as<mat>(Y[c]);
-    Y[c]          = yy_tmp.head_cols(TT);
+    Y[c]          = yy_tmp.head_rows(TT);
   } // END c loop
   
   return Y;
@@ -86,7 +86,7 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL (
   // read and create objects
   const int max_horizon = max(horizons);
   mat yy_tmp            = as<mat>(Y[0]);
-  const int T           = yy_tmp.n_rows;
+  const int T           = yy_tmp.n_cols;
   const int C           = Y.length();
   const int thin        = 1;
   const int forecasting_sample = T - max_horizon - training_sample + 1;
@@ -120,8 +120,8 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL (
     // Check for user interrupts
     checkUserInterrupt();
     
-    List Y_i    = YX_subset_TT_head_cols(Y, training_sample + i);
-    List X_i    = YX_subset_TT_head_cols(X, training_sample + i);
+    List Y_i    = YX_subset_TT_head_rows(Y, training_sample + i);
+    List X_i    = YX_subset_TT_head_rows(X, training_sample + i);
     
     List burn   = bvarPANEL_just_sv_out( 
                     S_burn, Y_i, X_i, prior, initial_estimation, 
