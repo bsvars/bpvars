@@ -95,7 +95,7 @@ Rcpp::List forecast_bvarPANEL (
     Rcout << "    Press Esc to interrupt the computations" << endl;
     Rcout << "**************************************************|" << endl;
   }
-  Progress p(50, show_progress);
+  Progress p_forecast_bvarPANEL(50, show_progress);
 
   mat     EXcc    = as<mat>(exog_forecasts[0]);
   const int       d = EXcc.n_cols;
@@ -107,7 +107,7 @@ Rcpp::List forecast_bvarPANEL (
   for (int c=0; c<C; c++) {
     
     // Increment progress bar
-    if (any(prog_rep_points == c)) p.increment();
+    if (any(prog_rep_points == c)) p_forecast_bvarPANEL.increment();
     // Check for user interrupts
     if (c % 10 == 0) checkUserInterrupt();
     
