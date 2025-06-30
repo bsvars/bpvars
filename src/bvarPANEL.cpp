@@ -38,7 +38,7 @@ Rcpp::List bvarPANEL(
     Rcout << " Press Esc to interrupt the computations" << endl;
     Rcout << "**************************************************|" << endl;
   }
-  Progress p(50, show_progress);
+  Progress p_bvarPANEL(50, show_progress);
   
   cube    aux_A_c     = as<cube>(starting_values["A_c"]);
   cube    aux_Sigma_c = as<cube>(starting_values["Sigma_c"]);
@@ -88,7 +88,7 @@ Rcpp::List bvarPANEL(
     // Rcout << "Iteration: " << s << endl;
     
     // Increment progress bar
-    if (any(prog_rep_points == s)) p.increment();
+    if (any(prog_rep_points == s)) p_bvarPANEL.increment();
     // Check for user interrupts
     if (s % 200 == 0) checkUserInterrupt();
     
