@@ -19,11 +19,31 @@ using expanding window samples.}
 \value{
 An object of class \code{ForecastsPOOS} containing the outcome of Bayesian
  recursive pseudo-out-of-sample forecasting exercise  using expanding window 
- samples containing elements
+ samples. The object is a list with \code{forecasting_sample} elements, where
+ \code{forecasting_sample} is equal to the sample size less the maximum of
+ \code{horizons} and the \code{training_sample} plus one. Each element of the
+ list is an object of class \code{ForecastsPANEL} containing the forecasts for 
+ each country, see \code{\link{forecast.PosteriorBVARPANEL}}.
 }
 \description{
 Performs the recursive pseudo-out-of-sample forecasting exercise
 using expanding window samples.
+}
+\examples{
+spec = specify_bvarPANEL$new(ilo_dynamic_panel)           # specify the model
+poos = specify_poosf_exercise$new(                        # specify the forecasting exercise
+         spec, 
+         S = 10,                                          # use at least S = 5000
+         S_burn = 5,                                      # use at least S_burn = 1000
+         horizons = 1:2,
+         training_sample = 28
+       )   
+fore = forecast_poos_recursively(spec, poos)              # execute the forecasting exercise
+
+}
+\seealso{
+\code{\link{forecast.PosteriorBVARPANEL}}, \code{\link{specify_bvarPANEL}},
+\code{\link{specify_poosf_exercise}}, \code{\link{estimate.BVARPANEL}}
 }
 \author{
 Tomasz Woźniak \email{wozniak.tom@pm.me}
