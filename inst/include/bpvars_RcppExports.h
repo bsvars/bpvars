@@ -130,11 +130,11 @@ namespace bpvars {
         return Rcpp::as<Rcpp::List >(rcpp_result_gen);
     }
 
-    inline Rcpp::List bvarPANEL_just_sv_out(const int& S, const Rcpp::List& Y, const Rcpp::List& X, const Rcpp::List& prior, const Rcpp::List& starting_values, const int thin, const arma::vec& adptive_alpha_gamma) {
+    inline Rcpp::List bvarPANEL_just_sv_out(const int& S, const Rcpp::List Y, const Rcpp::List X, const Rcpp::List& prior, const Rcpp::List& starting_values, const int thin, const arma::vec& adptive_alpha_gamma) {
         typedef SEXP(*Ptr_bvarPANEL_just_sv_out)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_bvarPANEL_just_sv_out p_bvarPANEL_just_sv_out = NULL;
         if (p_bvarPANEL_just_sv_out == NULL) {
-            validateSignature("Rcpp::List(*bvarPANEL_just_sv_out)(const int&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const int,const arma::vec&)");
+            validateSignature("Rcpp::List(*bvarPANEL_just_sv_out)(const int&,const Rcpp::List,const Rcpp::List,const Rcpp::List&,const Rcpp::List&,const int,const arma::vec&)");
             p_bvarPANEL_just_sv_out = (Ptr_bvarPANEL_just_sv_out)R_GetCCallable("bpvars", "_bpvars_bvarPANEL_just_sv_out");
         }
         RObject rcpp_result_gen;
@@ -151,11 +151,11 @@ namespace bpvars {
         return Rcpp::as<Rcpp::List >(rcpp_result_gen);
     }
 
-    inline Rcpp::List YX_subset_TT_head_rows(Rcpp::List Y, const int TT, const int beginning = 0) {
+    inline Rcpp::List YX_subset_TT_head_rows(const Rcpp::List Y, const int TT, const int beginning = 0) {
         typedef SEXP(*Ptr_YX_subset_TT_head_rows)(SEXP,SEXP,SEXP);
         static Ptr_YX_subset_TT_head_rows p_YX_subset_TT_head_rows = NULL;
         if (p_YX_subset_TT_head_rows == NULL) {
-            validateSignature("Rcpp::List(*YX_subset_TT_head_rows)(Rcpp::List,const int,const int)");
+            validateSignature("Rcpp::List(*YX_subset_TT_head_rows)(const Rcpp::List,const int,const int)");
             p_YX_subset_TT_head_rows = (Ptr_YX_subset_TT_head_rows)R_GetCCallable("bpvars", "_bpvars_YX_subset_TT_head_rows");
         }
         RObject rcpp_result_gen;
@@ -172,11 +172,11 @@ namespace bpvars {
         return Rcpp::as<Rcpp::List >(rcpp_result_gen);
     }
 
-    inline Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL(const int& S, const int& S_burn, const arma::ivec horizons, const int& training_sample, const Rcpp::List& Y, const Rcpp::List& X, Rcpp::List& cond_forecasts, Rcpp::List& exog_forecasts, const Rcpp::List& prior, const Rcpp::List& starting_values, const arma::vec LB, const arma::vec UB, const bool show_progress, const arma::vec& adptive_alpha_gamma) {
+    inline Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL(const int& S, const int& S_burn, const arma::ivec horizons, const int& training_sample, const Rcpp::List Y, const Rcpp::List X, Rcpp::List& cond_forecasts, Rcpp::List& exog_forecasts, const Rcpp::List& prior, const Rcpp::List& starting_values, const arma::vec LB, const arma::vec UB, const bool show_progress, const arma::vec& adptive_alpha_gamma) {
         typedef SEXP(*Ptr_forecast_pseudo_out_of_sample_bvarPANEL)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_forecast_pseudo_out_of_sample_bvarPANEL p_forecast_pseudo_out_of_sample_bvarPANEL = NULL;
         if (p_forecast_pseudo_out_of_sample_bvarPANEL == NULL) {
-            validateSignature("Rcpp::List(*forecast_pseudo_out_of_sample_bvarPANEL)(const int&,const int&,const arma::ivec,const int&,const Rcpp::List&,const Rcpp::List&,Rcpp::List&,Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec,const arma::vec,const bool,const arma::vec&)");
+            validateSignature("Rcpp::List(*forecast_pseudo_out_of_sample_bvarPANEL)(const int&,const int&,const arma::ivec,const int&,const Rcpp::List,const Rcpp::List,Rcpp::List&,Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec,const arma::vec,const bool,const arma::vec&)");
             p_forecast_pseudo_out_of_sample_bvarPANEL = (Ptr_forecast_pseudo_out_of_sample_bvarPANEL)R_GetCCallable("bpvars", "_bpvars_forecast_pseudo_out_of_sample_bvarPANEL");
         }
         RObject rcpp_result_gen;
