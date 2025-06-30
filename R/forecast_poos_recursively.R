@@ -13,15 +13,33 @@
 #' 
 #' @return An object of class \code{ForecastsPOOS} containing the outcome of Bayesian
 #'  recursive pseudo-out-of-sample forecasting exercise  using expanding window 
-#'  samples containing elements
+#'  samples. The object is a list with \code{forecasting_sample} elements, where
+#'  \code{forecasting_sample} is equal to the sample size less the maximum of
+#'  \code{horizons} and the \code{training_sample} plus one. Each element of the
+#'  list is an object of class \code{ForecastsPANEL} containing the forecasts for 
+#'  each country, see \code{\link{forecast.PosteriorBVARPANEL}}.
+#'
+#' @seealso \code{\link{forecast.PosteriorBVARPANEL}}, \code{\link{specify_bvarPANEL}},
+#' \code{\link{specify_poosf_exercise}}, \code{\link{estimate.BVARPANEL}}
 #'
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
+#' 
+#' @examples
+#' spec = specify_bvarPANEL$new(ilo_dynamic_panel)           # specify the model
+#' poos = specify_poosf_exercise$new(                        # specify the forecasting exercise
+#'          spec, 
+#'          S = 10,                                          # use at least S = 5000
+#'          S_burn = 5,                                      # use at least S_burn = 1000
+#'          horizons = 1:2,
+#'          training_sample = 28
+#'        )   
+#' fore = forecast_poos_recursively(spec, poos)              # execute the forecasting exercise
 #' 
 #' @export
 forecast_poos_recursively <- function(model_spec, poos_spec, show_progress = TRUE) {
   
   # check the inputs
-  stopifnot("Argument poos_spec must be of class POOSForecastSetup." = class(poos_spec) == "POOSForecastSetup")
+  stopifnot("Argument poos_spec must be of class POOSForecastSetup." = any(class(poos_spec) == "POOSForecastSetup"))
   stopifnot("Argument show_progress must be a logical value." = is.logical(show_progress))
   
   # call method
@@ -58,7 +76,7 @@ forecast_poos_recursively.BVARPANEL <- function(
   
   C                   = length(data_matrices$Y)
   country_names       = names(data_matrices$Y)
-  T                   = nrow(model_spec$data_matrices$Y)
+  T                   = nrow(model_spec$data_matrices$Y[[1]])
   forecasting_sample  = T - max(horizons) - training_sample + 1
   
   N                   = dim(model_spec$starting_values$Sigma)[1]
@@ -72,35 +90,49 @@ forecast_poos_recursively.BVARPANEL <- function(
   }
   
   # still need to be specified
-  cond_forecasts      = vector("list")
-  exog_forecasts      = vector("list")
+  # this will not be used for forecasting, but needs to be provided
+  exogenous_forecast = list()
+  for (c in 1:C) exogenous_forecast[[c]] = matrix(NA, max(horizons), 1)
+  conditional_forecast = list()
+  for (c in 1:C) conditional_forecast[[c]] = matrix(NA, max(horizons), N)
   
-  foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvarPANEL`, S, S_burn, horizons, training_sample, data_matrices$Y, data_matrices$X, cond_forecasts, exog_forecasts, prior, starting_values, LB, UB, show_progress, adaptiveMH)
+  # form an output object
   
-  out                 = vector("list", C)
-  names(out)          = country_names
+  
+  foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvarPANEL`, S, S_burn, horizons, training_sample, data_matrices$Y, data_matrices$X, conditional_forecast, exogenous_forecast, prior, starting_values, LB, UB, show_progress, adaptiveMH)
+  
+  
+  out                 = vector("list", forecasting_sample)
+  for (i in 1:forecasting_sample) {
+
+    forecasts         = vector("list", C)
+    for (c in 1:C) {
+      
+      fore            = list()
+      
+      fore$forecasts         = aperm(foreout[[i]]$forecasts_cpp[c,1][[1]], c(2,1,3))
+      fore$forecast_mean     = aperm(foreout[[i]]$forecast_mean_cpp[c,1][[1]], c(2,1,3))
+      
+      cov_array = array(NA, c(N, N, max(horizons), S))
+      for (s in 1:S) {
+        cov_array[,,,s]       = foreout[[i]]$forecast_cov_cpp[c,s][[1]]
+      }
+      fore$forecast_cov       = cov_array
+      
+      fore$Y                  = foreout[[i]]$estimation_data_cpp[c,1][[1]]
+      fore$evaluation_data    = t(foreout[[i]]$evaluation_data_cpp[c,1][[1]])
+
+      forecasts[[c]]  = fore
+      
+    } # END c loop
+
+    names(forecasts)  = country_names
+    class(forecasts)  = "ForecastsPANEL"
+    out[[i]]          = forecasts
+
+  } # END i loop
+  
   class(out)          = "ForecastsPANELpoos"
-  
-  for (c in 1:C) {
-    
-    fore              = vector("list", forecasting_sample)
-    
-    for (i in 1:forecasting_sample) {
-      
-      fore_ci                   = list()
-      fore_ci$forecasts         = aperm(foreout$forecasts_cpp[i, c][[1]], c(2,1,3))
-      fore_ci$forecast_mean     = aperm(foreout$forecast_mean_cpp[i, c][[1]], c(2,1,3))
-      fore_ci$forecast_cov      = foreout$forecast_cov_cpp[i, c][[1]]
-      fore_ci$estimation_data   = foreout$estimation_data_cpp[i, c][[1]]
-      fore_ci$evaluation_data   = foreout$evaluation_data_cpp[i, c][[1]]
-      
-      fore[[i]]                 = fore_ci
-      
-    } # END i loop
-    
-    out[[c]]          = fore
-    
-  } # END c loop
   
   return(out)
 } # END forecast_poos_recursively.BVARPANEL
