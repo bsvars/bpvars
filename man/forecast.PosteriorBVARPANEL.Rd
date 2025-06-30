@@ -102,11 +102,6 @@ predictive normal density for such variables is truncated to values from
 interval  \eqn{[0,100]}.
 }
 \examples{
-data(ilo_dynamic_panel)                                 # load the data
-data(ilo_exogenous_variables)                           # load the exogenous variables
-data(ilo_exogenous_forecasts)                           # load the exogenous forecast
-set.seed(123)
-
 # specify the model
 specification = specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
 burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
@@ -117,7 +112,6 @@ predictive    = forecast(posterior, 6, exogenous_forecast = ilo_exogenous_foreca
 
 # workflow with the pipe |>
 ############################################################
-set.seed(123)
 ilo_dynamic_panel |>
   specify_bvarPANEL$new() |>
   estimate(S = 10) |> 
@@ -128,19 +122,18 @@ ilo_dynamic_panel |>
 #  provided future values for the Gross Domestic Product 
 #  and truncated forecasts for the rates
 ############################################################
-data(ilo_conditional_forecasts)                        # load the conditional forecasts of dgdp
 specification = specify_bvarPANEL$new(
                   ilo_dynamic_panel,
                   type = c("real", rep("rate", 3))
                 )   # specify the model
 burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
 posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
+
 # forecast 6 years ahead
 predictive    = forecast(posterior, 6, conditional_forecast = ilo_conditional_forecasts)
 
 # workflow with the pipe |>
 ############################################################
-set.seed(123)
 ilo_dynamic_panel |>
   specify_bvarPANEL$new(type = c("real", rep("rate", 3))) |>
   estimate(S = 10) |> 
