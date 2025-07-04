@@ -121,8 +121,9 @@ forecast_poos_recursively.BVARPANEL <- function(
       
       fore$Y                  = foreout[[i]]$estimation_data_cpp[c,1][[1]]
       fore$evaluation_data    = t(foreout[[i]]$evaluation_data_cpp[c,1][[1]])
-
-      forecasts[[c]]  = fore
+      
+      class(fore)             = "Forecasts"
+      forecasts[[c]]          = fore
       
     } # END c loop
 
