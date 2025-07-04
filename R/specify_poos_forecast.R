@@ -69,7 +69,7 @@ specify_poosf_exercise = R6::R6Class(
     ) {
       
       stopifnot("Argument spec must be of class BVARPANEL or BVARGROUPPANEL." 
-                = any(class(spec) == c("BVARPANEL","BVARGROUPPANEL")))
+                = any(c(class(spec) == "BVARPANEL", class(spec) == "BVARGROUPPANEL")))
       stopifnot("Argument S must be a positive integer number." 
                 = S > 0 & S %% 1 == 0)
       stopifnot("Argument S_burn must be a positive integer number." 
