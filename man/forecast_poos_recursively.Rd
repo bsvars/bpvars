@@ -30,15 +30,16 @@ Performs the recursive pseudo-out-of-sample forecasting exercise
 using expanding window samples.
 }
 \examples{
-spec = specify_bvarPANEL$new(ilo_dynamic_panel)           # specify the model
-poos = specify_poosf_exercise$new(                        # specify the forecasting exercise
+spec = specify_bvarPANEL$new(ilo_dynamic_panel)   # specify the model
+poos = specify_poosf_exercise$new(                # specify the forecasting exercise
          spec, 
-         S = 10,                                          # use at least S = 5000
-         S_burn = 5,                                      # use at least S_burn = 1000
+         S = 10,                                  # use at least S = 5000
+         S_burn = 5,                              # use at least S_burn = 1000
          horizons = 1:2,
          training_sample = 28
        )   
-fore = forecast_poos_recursively(spec, poos)              # execute the forecasting exercise
+fore = forecast_poos_recursively(spec, poos)      # execute the forecasting exercise
+plot(fore[[1]], "POL")                         # plot forecasts for the first estimation samples
 
 }
 \seealso{
