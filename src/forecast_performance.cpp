@@ -9,7 +9,8 @@
 using namespace Rcpp;
 using namespace arma;
 
-
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
 Rcpp::List bvarPANEL_noprog(
     const int&                    S,          // No. of posterior draws
     const Rcpp::List&             Y,          // a C-list of T_cxN elements
@@ -150,6 +151,8 @@ Rcpp::List bvarPANEL_noprog(
 
 
 
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
 Rcpp::List forecast_bvarPANEL_noprog (
     arma::field<arma::cube>&  posterior_A_c_cpp,      // (S)(K, N, C)
     arma::field<arma::cube>&  posterior_Sigma_c_cpp,  // (S)(N, N, C)
