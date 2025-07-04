@@ -120,7 +120,7 @@ forecast_poos_recursively.BVARPANEL <- function(
       }
       fore$forecast_cov       = cov_array
       
-      fore$Y                  = foreout[[i]]$estimation_data_cpp[c,1][[1]]
+      fore$Y                  = t(foreout[[i]]$estimation_data_cpp[c,1][[1]])
       fore$evaluation_data    = t(foreout[[i]]$evaluation_data_cpp[c,1][[1]])
       
       class(fore)             = "Forecasts"
@@ -153,6 +153,21 @@ forecast_poos_recursively.BVARPANEL <- function(
 #' specification.
 #' 
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
+#' 
+#' @examples
+#' spec = specify_bvarGroupPANEL$new(                # specify the model
+#'          ilo_dynamic_panel, 
+#'          group_allocation = country_grouping_region
+#'        )   
+#' poos = specify_poosf_exercise$new(                # specify the forecasting exercise
+#'          spec, 
+#'          S = 10,                                  # use at least S = 5000
+#'          S_burn = 5,                              # use at least S_burn = 1000
+#'          horizons = 1:2,
+#'          training_sample = 28
+#'        )   
+#' fore = forecast_poos_recursively(spec, poos)      # execute the forecasting exercise
+#' plot(fore[[1]], "POL")                         # plot forecasts for the first estimation samples
 #' 
 #' @export
 forecast_poos_recursively.BVARGROUPPANEL <- function(
@@ -220,7 +235,7 @@ forecast_poos_recursively.BVARGROUPPANEL <- function(
       }
       fore$forecast_cov       = cov_array
       
-      fore$Y                  = foreout[[i]]$estimation_data_cpp[c,1][[1]]
+      fore$Y                  = t(foreout[[i]]$estimation_data_cpp[c,1][[1]])
       fore$evaluation_data    = t(foreout[[i]]$evaluation_data_cpp[c,1][[1]])
       
       class(fore)             = "Forecasts"
