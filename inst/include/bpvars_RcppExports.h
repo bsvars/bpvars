@@ -298,6 +298,27 @@ namespace bpvars {
         return Rcpp::as<Rcpp::List >(rcpp_result_gen);
     }
 
+    inline arma::field<arma::cube> fourDarray_to_field_cube(Rcpp::NumericVector arr) {
+        typedef SEXP(*Ptr_fourDarray_to_field_cube)(SEXP);
+        static Ptr_fourDarray_to_field_cube p_fourDarray_to_field_cube = NULL;
+        if (p_fourDarray_to_field_cube == NULL) {
+            validateSignature("arma::field<arma::cube>(*fourDarray_to_field_cube)(Rcpp::NumericVector)");
+            p_fourDarray_to_field_cube = (Ptr_fourDarray_to_field_cube)R_GetCCallable("bpvars", "_bpvars_fourDarray_to_field_cube");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_fourDarray_to_field_cube(Shield<SEXP>(Rcpp::wrap(arr)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<arma::field<arma::cube> >(rcpp_result_gen);
+    }
+
     inline arma::cube Sigma2B_c(arma::cube& posterior_Sigma_c, const bool lower = true) {
         typedef SEXP(*Ptr_Sigma2B_c)(SEXP,SEXP);
         static Ptr_Sigma2B_c p_Sigma2B_c = NULL;

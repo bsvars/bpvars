@@ -544,6 +544,40 @@ RcppExport SEXP _bpvars_forecast_pseudo_out_of_sample_bvarGroupPANEL(SEXP SSEXP,
     UNPROTECT(1);
     return rcpp_result_gen;
 }
+// fourDarray_to_field_cube
+arma::field<arma::cube> fourDarray_to_field_cube(Rcpp::NumericVector arr);
+static SEXP _bpvars_fourDarray_to_field_cube_try(SEXP arrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type arr(arrSEXP);
+    rcpp_result_gen = Rcpp::wrap(fourDarray_to_field_cube(arr));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _bpvars_fourDarray_to_field_cube(SEXP arrSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_bpvars_fourDarray_to_field_cube_try(arrSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error("%s", CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
 // Sigma2B_c
 arma::cube Sigma2B_c(arma::cube& posterior_Sigma_c, const bool lower);
 static SEXP _bpvars_Sigma2B_c_try(SEXP posterior_Sigma_cSEXP, SEXP lowerSEXP) {
@@ -1172,6 +1206,7 @@ static int _bpvars_RcppExport_validate(const char* sig) {
         signatures.insert("Rcpp::List(*forecast_bvarPANEL_noprog)(arma::field<arma::cube>&,arma::field<arma::cube>&,Rcpp::List&,Rcpp::List&,Rcpp::List&,const int,arma::vec,arma::vec)");
         signatures.insert("Rcpp::List(*forecast_pseudo_out_of_sample_bvarPANEL)(const int&,const int&,const arma::ivec,const int&,const Rcpp::List,const Rcpp::List,Rcpp::List&,Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec,const arma::vec,const bool,const arma::vec&)");
         signatures.insert("Rcpp::List(*forecast_pseudo_out_of_sample_bvarGroupPANEL)(const int&,const int&,const arma::ivec,const int&,const Rcpp::List,const Rcpp::List,Rcpp::List&,Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec,const arma::vec,const bool,const arma::vec&,const bool)");
+        signatures.insert("arma::field<arma::cube>(*fourDarray_to_field_cube)(Rcpp::NumericVector)");
         signatures.insert("arma::cube(*Sigma2B_c)(arma::cube&,const bool)");
         signatures.insert("arma::field<arma::cube>(*panel_variance_decompositions)(arma::field<arma::cube>&,arma::field<arma::cube>&,arma::cube&,arma::cube&,const int,const int,const bool)");
         signatures.insert("arma::field<arma::mat>(*rmniw1)(const arma::mat&,const arma::mat&,const arma::mat&,const double&)");
@@ -1207,6 +1242,7 @@ RcppExport SEXP _bpvars_RcppExport_registerCCallable() {
     R_RegisterCCallable("bpvars", "_bpvars_forecast_bvarPANEL_noprog", (DL_FUNC)_bpvars_forecast_bvarPANEL_noprog_try);
     R_RegisterCCallable("bpvars", "_bpvars_forecast_pseudo_out_of_sample_bvarPANEL", (DL_FUNC)_bpvars_forecast_pseudo_out_of_sample_bvarPANEL_try);
     R_RegisterCCallable("bpvars", "_bpvars_forecast_pseudo_out_of_sample_bvarGroupPANEL", (DL_FUNC)_bpvars_forecast_pseudo_out_of_sample_bvarGroupPANEL_try);
+    R_RegisterCCallable("bpvars", "_bpvars_fourDarray_to_field_cube", (DL_FUNC)_bpvars_fourDarray_to_field_cube_try);
     R_RegisterCCallable("bpvars", "_bpvars_Sigma2B_c", (DL_FUNC)_bpvars_Sigma2B_c_try);
     R_RegisterCCallable("bpvars", "_bpvars_panel_variance_decompositions", (DL_FUNC)_bpvars_panel_variance_decompositions_try);
     R_RegisterCCallable("bpvars", "_bpvars_rmniw1", (DL_FUNC)_bpvars_rmniw1_try);
@@ -1241,6 +1277,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_bpvars_forecast_bvarPANEL_noprog", (DL_FUNC) &_bpvars_forecast_bvarPANEL_noprog, 8},
     {"_bpvars_forecast_pseudo_out_of_sample_bvarPANEL", (DL_FUNC) &_bpvars_forecast_pseudo_out_of_sample_bvarPANEL, 14},
     {"_bpvars_forecast_pseudo_out_of_sample_bvarGroupPANEL", (DL_FUNC) &_bpvars_forecast_pseudo_out_of_sample_bvarGroupPANEL, 15},
+    {"_bpvars_fourDarray_to_field_cube", (DL_FUNC) &_bpvars_fourDarray_to_field_cube, 1},
     {"_bpvars_Sigma2B_c", (DL_FUNC) &_bpvars_Sigma2B_c, 2},
     {"_bpvars_panel_variance_decompositions", (DL_FUNC) &_bpvars_panel_variance_decompositions, 7},
     {"_bpvars_rmniw1", (DL_FUNC) &_bpvars_rmniw1, 4},
