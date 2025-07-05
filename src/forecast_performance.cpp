@@ -785,3 +785,39 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarGroupPANEL (
   
   return out;
 } // END forecast_pseudo_out_of_sample_bvarGroupPANEL
+
+
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+arma::field<arma::cube> fourDarray_to_field_cube (
+    Rcpp::NumericVector arr
+) {
+  // returns field of cubes (S)(N,I,H) from a 4D array (N,I,H,S)
+  
+  IntegerVector dims    = arr.attr("dim");
+  int N = dims[0], I = dims[1], H = dims[2], S = dims[3];
+  arma::field<arma::cube> out(S);
+  
+  for (int s = 0; s < S; ++s) {
+    
+    cube cc(N, I, H);
+    for (int h = 0; h < H; ++h) {
+      for (int i = 0; i < I; ++i) {
+        for (int n = 0; n < N; ++n) {
+          
+          int idx       = n + N * (i + I * (h + H * s));
+          cc(n, i, h)  = arr[idx] ;
+        } // END n loop
+      } // END i loop
+    } // END h loop
+    
+    out(s) = cc;
+    
+  } // END s loop
+  
+  return out;
+} // END fourDarray_to_field_cube
+
+

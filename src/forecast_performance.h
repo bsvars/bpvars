@@ -102,4 +102,9 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarGroupPANEL (
 );
 
 
+arma::field<arma::cube> fourDarray_to_field_cube (
+    Rcpp::NumericVector arr
+);
+
+
 #endif  // _FORECAST_PERFORMANCE_H_
