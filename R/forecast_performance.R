@@ -68,6 +68,7 @@ forecast_poos_recursively.BVARPANEL <- function(
   S_burn              = poos_spec$S_burn
   horizons            = poos_spec$horizons
   training_sample     = poos_spec$training_sample
+  variable_names      = colnames(model_spec$data_matrices$Y[[1]])
   
   prior               = model_spec$prior$get_prior()
   starting_values     = model_spec$starting_values$get_starting_values()
@@ -121,7 +122,11 @@ forecast_poos_recursively.BVARPANEL <- function(
       fore$forecast_cov       = cov_array
       
       fore$Y                  = t(foreout[[i]]$estimation_data_cpp[c,1][[1]])
-      fore$evaluation_data    = t(foreout[[i]]$evaluation_data_cpp[c,1][[1]])
+      
+      evaluation_data           = t(foreout[[i]]$evaluation_data_cpp[c,1][[1]])
+      colnames(evaluation_data) = horizons
+      rownames(evaluation_data) = variable_names
+      fore$evaluation_data      = evaluation_data
       
       class(fore)             = "Forecasts"
       forecasts[[c]]          = fore
@@ -180,6 +185,7 @@ forecast_poos_recursively.BVARGROUPPANEL <- function(
   S_burn              = poos_spec$S_burn
   horizons            = poos_spec$horizons
   training_sample     = poos_spec$training_sample
+  variable_names      = colnames(model_spec$data_matrices$Y[[1]])
   
   prior               = model_spec$prior$get_prior()
   starting_values     = model_spec$starting_values$get_starting_values()
@@ -236,7 +242,11 @@ forecast_poos_recursively.BVARGROUPPANEL <- function(
       fore$forecast_cov       = cov_array
       
       fore$Y                  = t(foreout[[i]]$estimation_data_cpp[c,1][[1]])
-      fore$evaluation_data    = t(foreout[[i]]$evaluation_data_cpp[c,1][[1]])
+      
+      evaluation_data           = t(foreout[[i]]$evaluation_data_cpp[c,1][[1]])
+      colnames(evaluation_data) = horizons
+      rownames(evaluation_data) = variable_names
+      fore$evaluation_data      = evaluation_data
       
       class(fore)             = "Forecasts"
       forecasts[[c]]          = fore
