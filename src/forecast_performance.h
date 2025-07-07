@@ -107,4 +107,30 @@ arma::field<arma::cube> fourDarray_to_field_cube (
 );
 
 
+double log_dnormm_joint_s (
+    arma::vec& x,
+    arma::vec& mu,
+    arma::mat& sigma
+);
+
+
+arma::cube log_dnormm_marginal (
+    arma::mat&            x,      // (N, horizon)
+    arma::cube&           mu,     // (N, horizon, S)
+    arma::field<arma::cube>&  sigma   // array (N, N, horizon, S)&  Sigma   // array (N, N, horizon, S)
+);
+
+
+arma::mat log_dnormm_joint (
+    arma::mat&            x,      // (N, horizon)
+    arma::cube&           mu,     // (N, horizon, S)
+    arma::field<arma::cube>&  sigma   // array (N, N, horizon, S)
+);
+
+
+double log_mean (
+    arma::vec     log_density     // n x s matrix with log density ordinates
+);
+
+
 #endif  // _FORECAST_PERFORMANCE_H_

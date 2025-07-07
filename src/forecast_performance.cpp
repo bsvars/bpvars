@@ -789,7 +789,7 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarGroupPANEL (
 
 
 
-// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::interfaces(cpp,r)]]
 // [[Rcpp::export]]
 arma::field<arma::cube> fourDarray_to_field_cube (
     Rcpp::NumericVector arr
@@ -821,3 +821,99 @@ arma::field<arma::cube> fourDarray_to_field_cube (
 } // END fourDarray_to_field_cube
 
 
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+double log_dnormm_joint_s (
+    arma::vec& x,
+    arma::vec& mu,
+    arma::mat& sigma
+) {
+  
+  int N         =  x.n_elem;
+  double ld     = log_det_sympd(sigma);
+  double joint  = -0.5 * N * log(2 * M_PI);
+  joint        -= 0.5 * ld;
+  joint        -= 0.5 * as_scalar((x - mu).t() * inv_sympd(sigma) * (x - mu));
+  
+  return joint;
+} // END log_dnormm_joint_s
+
+
+
+
+// [[Rcpp::interfaces(cpp,r)]]
+// [[Rcpp::export]]
+arma::cube log_dnormm_marginal (
+    arma::mat&            x,      // (N, horizon)
+    arma::cube&           mu,     // (N, horizon, S)
+    arma::field<arma::cube>&  sigma   // array (N, N, horizon, S)&  Sigma   // array (N, N, horizon, S)
+) {
+  
+  int N           = mu.n_rows;
+  int horizon     = mu.n_cols;
+  int S           = mu.n_slices;
+  
+  cube marginal(N, horizon, S);
+
+  for (int s=0; s<S; s++) {
+    for (int h=0; h<horizon; h++) {
+      
+      vec xh      = x.col(h);
+      vec muh     = mu.slice(s).col(h);
+      vec sigmah  = sqrt(diagvec(sigma(s).slice(h)));
+      vec lp_tmp  = log_normpdf(xh, muh, sigmah);
+      marginal.slice(s).col(h) = lp_tmp;
+      
+    } // END h loop
+  } // END s loop
+  
+  return marginal;
+} // END log_dnormm_marginal
+
+
+// [[Rcpp::interfaces(cpp,r)]]
+// [[Rcpp::export]]
+arma::mat log_dnormm_joint (
+    arma::mat&            x,      // (N, horizon)
+    arma::cube&           mu,     // (N, horizon, S)
+    arma::field<arma::cube>&  sigma   // array (N, N, horizon, S)
+) {
+  
+  int horizon     = mu.n_cols;
+  int S           = mu.n_slices;
+  mat joint(horizon, S);
+  
+  for (int s=0; s<S; s++) {
+    for (int h=0; h<horizon; h++) {
+      
+      vec xh      = x.col(h);
+      vec muh     = mu.slice(s).col(h);
+      mat sigmah  = sigma(s).slice(h);
+      bool sympd  = sigmah.is_sympd();
+      if (!sympd) continue;
+      
+      joint(h,s)  = log_dnormm_joint_s(xh, muh, sigmah);
+    } // END h loop
+  } // END s loop
+  
+  return joint;
+} // END log_dnormm_joint
+
+
+
+
+/* This function was copied from package bsvars on 2025-07-07 and subsequently modified.
+ * location: bsvars/src/utils.cpp
+ */
+// [[Rcpp::interfaces(cpp,r)]]
+// [[Rcpp::export]]
+double log_mean (
+    arma::vec     log_density
+) {
+  double N              = log_density.n_elem;
+  double c_log_den      = log_density.max();
+  double log_numerator  = c_log_den - log(N) + log( accu(exp(log_density - c_log_den)) );
+  return log_numerator;
+} // log_mean 
