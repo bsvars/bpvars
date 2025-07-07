@@ -319,6 +319,90 @@ namespace bpvars {
         return Rcpp::as<arma::field<arma::cube> >(rcpp_result_gen);
     }
 
+    inline double log_dnormm_joint_s(arma::vec& x, arma::vec& mu, arma::mat& sigma) {
+        typedef SEXP(*Ptr_log_dnormm_joint_s)(SEXP,SEXP,SEXP);
+        static Ptr_log_dnormm_joint_s p_log_dnormm_joint_s = NULL;
+        if (p_log_dnormm_joint_s == NULL) {
+            validateSignature("double(*log_dnormm_joint_s)(arma::vec&,arma::vec&,arma::mat&)");
+            p_log_dnormm_joint_s = (Ptr_log_dnormm_joint_s)R_GetCCallable("bpvars", "_bpvars_log_dnormm_joint_s");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_log_dnormm_joint_s(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(mu)), Shield<SEXP>(Rcpp::wrap(sigma)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<double >(rcpp_result_gen);
+    }
+
+    inline arma::cube log_dnormm_marginal(arma::mat& x, arma::cube& mu, arma::field<arma::cube>& sigma) {
+        typedef SEXP(*Ptr_log_dnormm_marginal)(SEXP,SEXP,SEXP);
+        static Ptr_log_dnormm_marginal p_log_dnormm_marginal = NULL;
+        if (p_log_dnormm_marginal == NULL) {
+            validateSignature("arma::cube(*log_dnormm_marginal)(arma::mat&,arma::cube&,arma::field<arma::cube>&)");
+            p_log_dnormm_marginal = (Ptr_log_dnormm_marginal)R_GetCCallable("bpvars", "_bpvars_log_dnormm_marginal");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_log_dnormm_marginal(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(mu)), Shield<SEXP>(Rcpp::wrap(sigma)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<arma::cube >(rcpp_result_gen);
+    }
+
+    inline arma::mat log_dnormm_joint(arma::mat& x, arma::cube& mu, arma::field<arma::cube>& sigma) {
+        typedef SEXP(*Ptr_log_dnormm_joint)(SEXP,SEXP,SEXP);
+        static Ptr_log_dnormm_joint p_log_dnormm_joint = NULL;
+        if (p_log_dnormm_joint == NULL) {
+            validateSignature("arma::mat(*log_dnormm_joint)(arma::mat&,arma::cube&,arma::field<arma::cube>&)");
+            p_log_dnormm_joint = (Ptr_log_dnormm_joint)R_GetCCallable("bpvars", "_bpvars_log_dnormm_joint");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_log_dnormm_joint(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(mu)), Shield<SEXP>(Rcpp::wrap(sigma)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<arma::mat >(rcpp_result_gen);
+    }
+
+    inline double log_mean(arma::vec log_density) {
+        typedef SEXP(*Ptr_log_mean)(SEXP);
+        static Ptr_log_mean p_log_mean = NULL;
+        if (p_log_mean == NULL) {
+            validateSignature("double(*log_mean)(arma::vec)");
+            p_log_mean = (Ptr_log_mean)R_GetCCallable("bpvars", "_bpvars_log_mean");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_log_mean(Shield<SEXP>(Rcpp::wrap(log_density)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<double >(rcpp_result_gen);
+    }
+
     inline arma::cube Sigma2B_c(arma::cube& posterior_Sigma_c, const bool lower = true) {
         typedef SEXP(*Ptr_Sigma2B_c)(SEXP,SEXP);
         static Ptr_Sigma2B_c p_Sigma2B_c = NULL;
