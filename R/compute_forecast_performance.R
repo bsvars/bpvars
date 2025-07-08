@@ -22,15 +22,22 @@
 #' \code{\link{forecast_poos_recursively.BVARGROUPPANEL}}
 #'
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
-
+#' 
+#' @examples
+#' spec = specify_bvarPANEL$new(ilo_dynamic_panel)               # specify the model
+#' poos = specify_poosf_exercise$new(spec, 10, 5, c(1,2), 30)    # specify the forecasting  exercise
+#' fore = forecast_poos_recursively(spec, poos)                  # perform the forecasting  exercise
+#' fp   = compute_forecast_performance(fore, "pls")   # compute forecasting performance measures
+#' fp$PLS$POL                                         # print the forecasting performance measures
+#' 
 #' @export
 compute_forecast_performance <- function(
     forecasts, 
-    measures = c("lps", "rmsfe", "mafe")
+    measures = c("pls", "rmsfe", "mafe")
 ) {
   # check the inputs
-  stopifnot("Argument measures must contain any of the values `lps`, `rmsfe`, `mafe`" 
-            = any(c(unique(measures) == "lps", unique(measures) == "rmsfe", unique(measures) == "mafe")))
+  stopifnot("Argument measures must contain any of the values `pls`, `rmsfe`, `mafe`" 
+            = any(c(unique(measures) == "pls", unique(measures) == "rmsfe", unique(measures) == "mafe")))
   
   # call method
   UseMethod("compute_forecast_performance", forecasts)
@@ -50,7 +57,7 @@ compute_forecast_performance <- function(
 #' @export
 compute_forecast_performance.ForecastsPANELpoos <- function(
     forecasts, 
-    measures = c("lps", "rmsfe", "mafe")
+    measures = c("pls", "rmsfe", "mafe")
 ) {
   
   
@@ -62,66 +69,92 @@ compute_forecast_performance.ForecastsPANELpoos <- function(
   S                   = dims[3]
   
   # RMSFE and MAFE computations
-  forecast_error      = sapply(
-    1:forecasting_sample,
-    function(i) {
-      sapply( 
-        1:C, 
-        function(c) {
-          forecasts[[i]][[c]]$evaluation_data - apply(forecasts[[i]][[c]]$forecasts, 1:2, mean)
-        },
-        simplify = "array"
-      )
-    },
-    simplify = "array"
-  )
+  if (any(c(measures == "rmsfe", measures == "mafe"))) {
+    forecast_error      = sapply(
+      1:forecasting_sample,
+      function(i) {
+        sapply( 
+          1:C, 
+          function(c) {
+            forecasts[[i]][[c]]$evaluation_data - apply(forecasts[[i]][[c]]$forecasts, 1:2, mean)
+          },
+          simplify = "array"
+        )
+      },
+      simplify = "array"
+    )
+  }
   
-  rmsfe_array               = array(NA, c(N + 1, H, C + 1)) 
-  rmsfe_array[1:N,,1:C]     = apply(forecast_error, 1:3, function(x) sqrt(mean(x^2)))
-  rmsfe_array[N + 1,,1:C]   = apply(rmsfe_array[1:N,,1:C], 2:3, function(x) sqrt(mean(x^2)))
-  rmsfe_array[1:N,,C + 1]   = apply(rmsfe_array[1:N,,1:C], 1:2, function(x) sqrt(mean(x^2)))
-  rmsfe_array[N + 1,,C + 1] = apply(rmsfe_array[N + 1,,1:C], 1, function(x) sqrt(mean(x^2)))
+  if (any(measures == "rmsfe")) {
+    rmsfe_array               = array(NA, c(N + 1, H, C + 1)) 
+    rmsfe_array[1:N,,1:C]     = apply(forecast_error, 1:3, function(x) sqrt(mean(x^2)))
+    rmsfe_array[N + 1,,1:C]   = apply(
+      array(rmsfe_array[1:N,,1:C], c(N,H,C)), 
+      2:3, 
+      function(x) sqrt(mean(x^2)))
+    rmsfe_array[1:N,,C + 1]   = apply(
+      array(rmsfe_array[1:N,,1:C], c(N,H,C)),
+      1:2, 
+      function(x) sqrt(mean(x^2)))
+    rmsfe_array[N + 1,,C + 1] = apply(
+      array(rmsfe_array[N + 1,,1:C], c(1,H,C)),
+      1, 
+      function(x) sqrt(mean(x^2)))
+  }
   
-  mafe_array                = array(NA, c(N + 1, H, C + 1))
-  mafe_array[1:N,,1:C]      = apply(forecast_error, 1:3, function(x) mean(abs(x)))
-  mafe_array[N + 1,,1:C]    = apply(mafe_array[1:N,,1:C], 2:3, mean)
-  mafe_array[1:N,,C + 1]    = apply(mafe_array[1:N,,1:C], 2, mean)
-  mafe_array[N + 1,,C + 1]  = apply(mafe_array[N + 1,,1:C], 1, mean)
-    
+  if (any(measures == "mafe")) {
+    mafe_array                = array(NA, c(N + 1, H, C + 1))
+    mafe_array[1:N,,1:C]      = apply(forecast_error, 1:3, function(x) mean(abs(x)))
+    mafe_array[N + 1,,1:C]    = apply(
+      array(mafe_array[1:N,,1:C], c(N,H,C)), 
+      2:3, 
+      mean)
+    mafe_array[1:N,,C + 1]    = apply(
+      array(mafe_array[1:N,,1:C], c(N,H,C)), 
+      2, 
+      mean)
+    mafe_array[N + 1,,C + 1]  = apply(
+      array(mafe_array[N + 1,,1:C], c(1,H,C)),
+      1, 
+      mean)
+  }
+  
   # PLS computations
-  log_norm            = sapply(
-    1:forecasting_sample,
-    function(i) {
-      sapply( 
-        1:C, 
-        function(c) {
-          log_dnormm_ic           = array(NA, c(N + 1, H, S))
-          forecast_cov_ic         = .Call(`_bpvars_fourDarray_to_field_cube`, 
-                                          forecasts[[i]][[c]]$forecast_cov
-                                    )
-          log_dnormm_ic[1:N,,]    = .Call(`_bpvars_log_dnormm_marginal`,  # (N, H, S)
-                                          forecasts[[i]][[c]]$evaluation_data,
-                                          forecasts[[i]][[c]]$forecast_mean,
-                                          forecast_cov_ic      
-                                    )
-          log_dnormm_ic[N + 1,,]  = .Call(`_bpvars_log_dnormm_joint`,  # (H, S)
-                                          forecasts[[i]][[c]]$evaluation_data,
-                                          forecasts[[i]][[c]]$forecast_mean,
-                                          forecast_cov_ic      
-                                    )     
-          return(log_dnormm_ic)       
-        },
-        simplify = "array"
-      )
-    },
-    simplify = "array"
-  )
-  
-  log_mean            = function(x) {.Call("_bpvars_log_mean", as.numeric(x))}
-  lps_tmp             = apply(log_norm, c(1,2,4), log_mean)
-  pls_array           = array(NA, c(N + 1, H, C + 1))
-  pls_array[,,1:C]    = lps_tmp
-  pls_array[,,C + 1]  = apply(lps_tmp, c(1,2), log_mean)
+  if (any(measures == "pls")) {
+    log_norm            = sapply(
+      1:forecasting_sample,
+      function(i) {
+        sapply( 
+          1:C, 
+          function(c) {
+            log_dnormm_ic           = array(NA, c(N + 1, H, S))
+            forecast_cov_ic         = .Call(`_bpvars_fourDarray_to_field_cube`, 
+                                            forecasts[[i]][[c]]$forecast_cov
+            )
+            log_dnormm_ic[1:N,,]    = .Call(`_bpvars_log_dnormm_marginal`,  # (N, H, S)
+                                            forecasts[[i]][[c]]$evaluation_data,
+                                            forecasts[[i]][[c]]$forecast_mean,
+                                            forecast_cov_ic      
+            )
+            log_dnormm_ic[N + 1,,]  = .Call(`_bpvars_log_dnormm_joint`,  # (H, S)
+                                            forecasts[[i]][[c]]$evaluation_data,
+                                            forecasts[[i]][[c]]$forecast_mean,
+                                            forecast_cov_ic      
+            )     
+            return(log_dnormm_ic)       
+          },
+          simplify = "array"
+        )
+      },
+      simplify = "array"
+    )
+    
+    log_mean            = function(x) {.Call("_bpvars_log_mean", as.numeric(x))}
+    lps_tmp             = apply(log_norm, c(1,2,4), log_mean)
+    pls_array           = array(NA, c(N + 1, H, C + 1))
+    pls_array[,,1:C]    = lps_tmp
+    pls_array[,,C + 1]  = apply(lps_tmp, c(1,2), log_mean)
+  }
   
   # output
   country_names       = names(forecasts[[1]])
@@ -135,26 +168,35 @@ compute_forecast_performance.ForecastsPANELpoos <- function(
   names(RMSFE) = names(MAFE) = names(PLS) = c(country_names, "Global")
   
   for (c in 1:(C + 1)) {
+    if (any(measures == "rmsfe")) {
+      RMSFE[[c]] = matrix(rmsfe_array[,,c], ncol = H)
+      rownames(RMSFE[[c]]) = variable_names
+      colnames(RMSFE[[c]]) = horizons
+    }
     
-    RMSFE[[c]] = rmsfe_array[,,c]
-    rownames(RMSFE[[c]]) = variable_names
-    colnames(RMSFE[[c]]) = horizons
+    if (any(measures == "mafe")) {
+      MAFE[[c]]  = matrix(mafe_array[,,c], ncol = H)
+      rownames(MAFE[[c]]) = variable_names
+      colnames(MAFE[[c]]) = horizons
+    }
     
-    MAFE[[c]]  = mafe_array[,,c]
-    rownames(MAFE[[c]]) = variable_names
-    colnames(MAFE[[c]]) = horizons
-    
-    PLS[[c]]   = pls_array[,,c]
-    rownames(PLS[[c]]) = variable_names
-    colnames(PLS[[c]]) = horizons
-
+    if (any(measures == "pls")) {
+      PLS[[c]]   = matrix(pls_array[,,c], ncol = H)
+      rownames(PLS[[c]]) = variable_names
+      colnames(PLS[[c]]) = horizons
+    }
   }# END c loop
   
-  out = list(
-    RMSFE = RMSFE,
-    MAFE = MAFE,
-    PLS = PLS
-  )
+  out = list()
+  if (any(measures == "rmsfe")) {
+    out$RMSFE = RMSFE
+  }
+  if (any(measures == "mafe")) {
+    out$MAFE = MAFE
+  }
+  if (any(measures == "pls")) {
+    out$PLS = PLS
+  }
   
   return(out)
 }# END compute_forecast_performance.ForecastsPANELpoos
