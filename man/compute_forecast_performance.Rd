@@ -5,7 +5,7 @@
 \title{Computes forecasting performance measures for recursive 
 pseudo-out-of-sample forecasts}
 \usage{
-compute_forecast_performance(forecasts, measures = c("lps", "rmsfe", "mafe"))
+compute_forecast_performance(forecasts, measures = c("pls", "rmsfe", "mafe"))
 }
 \arguments{
 \item{forecasts}{an object containing the
@@ -25,6 +25,14 @@ log-predictive score \code{"lps"}, root-mean-squared-forecast error \code{"rmsfe
 mean-absolute-forecast error \code{"mafe"} from the output of the recursive 
 pseudo-out-of-sample forecastinge exercise performed using function 
 \code{\link{forecast_poos_recursively}}.
+}
+\examples{
+spec = specify_bvarPANEL$new(ilo_dynamic_panel)               # specify the model
+poos = specify_poosf_exercise$new(spec, 10, 5, c(1,2), 30)    # specify the forecasting  exercise
+fore = forecast_poos_recursively(spec, poos)                  # perform the forecasting  exercise
+fp   = compute_forecast_performance(fore, "pls")   # compute forecasting performance measures
+fp$PLS$POL                                         # print the forecasting performance measures
+
 }
 \seealso{
 \code{\link{forecast_poos_recursively}}, 
