@@ -555,23 +555,26 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL (
   List foreout;
   
   // full sample estimation - for starting values
-  Rcout << " Step 1: Estimate a model for a full sample to get" << endl;
-  Rcout << "         starting values for subsequent steps." << endl;
-  
+  if (show_progress) {
+    Rcout << " Step 1: Estimate a model for a full sample to get" << endl;
+    Rcout << "         starting values for subsequent steps." << endl;
+  }
   List initial_estimation = bvarPANEL_just_sv_out( 
                               S, Y, X, prior, starting_values, 
                                 adptive_alpha_gamma );
 
-  std::string string_iter;
-  if ( forecasting_sample == 1 ) {
-    string_iter = " sample.";
-  } else {
-    string_iter = " samples.";
+  if (show_progress) {
+    std::string string_iter;
+    if ( forecasting_sample == 1 ) {
+      string_iter = " sample.";
+    } else {
+      string_iter = " samples.";
+    }
+    
+    Rcout << " Step 2: Recursive pseudo out-of-sample" << endl;
+    Rcout << "         forecasting performed for " << forecasting_sample << string_iter << endl;
+    Rcout << "**************************************************|" << endl;
   }
-  
-  Rcout << " Step 2: Recursive pseudo out-of-sample" << endl;
-  Rcout << "         forecasting performed for " << forecasting_sample << string_iter << endl;
-  Rcout << "**************************************************|" << endl;
   
   // progress bar setup
   vec prog_rep_points = arma::round(arma::linspace(0, forecasting_sample, 10));
@@ -697,23 +700,27 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarGroupPANEL (
   List foreout;
   
   // full sample estimation - for starting values
-  Rcout << " Step 1: Estimate a model for a full sample to get" << endl;
-  Rcout << "         starting values for subsequent steps." << endl;
+  if (show_progress) {
+    Rcout << " Step 1: Estimate a model for a full sample to get" << endl;
+    Rcout << "         starting values for subsequent steps." << endl;
+  }
   
   List initial_estimation = bvarGroupPANEL_just_sv_out (S, Y, X, prior, starting_values,
                                                           adptive_alpha_gamma, estimate_groups);
     
-  
-  std::string string_iter;
-  if ( forecasting_sample == 1 ) {
-    string_iter = " sample.";
-  } else {
-    string_iter = " samples.";
+    
+  if (show_progress) {
+    std::string string_iter;
+    if ( forecasting_sample == 1 ) {
+      string_iter = " sample.";
+    } else {
+      string_iter = " samples.";
+    }
+    
+    Rcout << " Step 2: Recursive pseudo out-of-sample" << endl;
+    Rcout << "         forecasting performed for " << forecasting_sample << string_iter << endl;
+    Rcout << "**************************************************|" << endl;
   }
-  
-  Rcout << " Step 2: Recursive pseudo out-of-sample" << endl;
-  Rcout << "         forecasting performed for " << forecasting_sample << string_iter << endl;
-  Rcout << "**************************************************|" << endl;
   
   // progress bar setup
   vec prog_rep_points = arma::round(arma::linspace(0, forecasting_sample, 10));
