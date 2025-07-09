@@ -31,17 +31,14 @@ Rcpp::List bvarPANEL(
   
   if (show_progress) {
     Rcout << "**************************************************|" << endl;
-    Rcout << "bvarPANELs: Forecasting with Bayesian Hierarchical|" << endl;
-    Rcout << "            Panel Vector Autoregressions          |" << endl;
+    Rcout << "bpvars: Forecasting with Bayesian Panel VARs      |" << endl;
     Rcout << "**************************************************|" << endl;
-    // Rcout << " Gibbs sampler for the SVAR-SV model              |" << endl;
-    // Rcout << "**************************************************|" << endl;
     Rcout << " Progress of the MCMC simulation for " << S << " draws" << endl;
     Rcout << "    Every " << oo << "draw is saved via MCMC thinning" << endl;
     Rcout << " Press Esc to interrupt the computations" << endl;
     Rcout << "**************************************************|" << endl;
   }
-  Progress p(50, show_progress);
+  Progress p_bvarPANEL(50, show_progress);
   
   cube    aux_A_c     = as<cube>(starting_values["A_c"]);
   cube    aux_Sigma_c = as<cube>(starting_values["Sigma_c"]);
@@ -91,7 +88,7 @@ Rcpp::List bvarPANEL(
     // Rcout << "Iteration: " << s << endl;
     
     // Increment progress bar
-    if (any(prog_rep_points == s)) p.increment();
+    if (any(prog_rep_points == s)) p_bvarPANEL.increment();
     // Check for user interrupts
     if (s % 200 == 0) checkUserInterrupt();
     

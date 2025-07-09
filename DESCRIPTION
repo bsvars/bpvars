@@ -11,7 +11,7 @@ Authors@R: c(person(given="Tomasz", family="Woźniak", email="wozniak.tom@pm.me"
 Maintainer: Tomasz Woźniak <wozniak.tom@pm.me>
 License: GPL (>= 3)
 Depends: 
-    R (>= 2.10),
+    R (>= 4.1.0),
     bsvars (>= 3.2)
 Imports: 
     R6,
