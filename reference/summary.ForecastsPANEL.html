@@ -87,8 +87,7 @@ horizons.</p>
 <span class="r-in"><span><span class="va">specification</span> <span class="op">=</span> <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">ilo_dynamic_panel</span>, exogenous <span class="op">=</span> <span class="va">ilo_exogenous_variables</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">burn_in</span>       <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span><span class="va">specification</span>, <span class="fl">10</span><span class="op">)</span>             <span class="co"># run the burn-in</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bvarPANELs: Forecasting with Bayesian Hierarchical|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Panel Vector Autoregressions          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 10 draws</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
@@ -96,8 +95,7 @@ horizons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-in"><span><span class="va">posterior</span>     <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span><span class="va">burn_in</span>, <span class="fl">10</span><span class="op">)</span>                   <span class="co"># estimate the model</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bvarPANELs: Forecasting with Bayesian Hierarchical|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Panel Vector Autoregressions          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 10 draws</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
@@ -107,8 +105,7 @@ horizons.</p>
 <span class="r-in"><span><span class="co"># forecast 6 years ahead</span></span></span>
 <span class="r-in"><span><span class="va">predictive</span>    <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">posterior</span>, <span class="fl">6</span>, exogenous_forecast <span class="op">=</span> <span class="va">ilo_exogenous_forecasts</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bvarPANELs: Forecasting with Bayesian Hierarchical|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Panel Vector Autoregressions          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  bpvars: Forecasting with Bayesian Panel VARs     |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of sampling 10 draws from</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     the predictive density for 189 countries</span>
@@ -167,24 +164,21 @@ horizons.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>horizon <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span>which_c <span class="op">=</span> <span class="st">"POL"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bvarPANELs: Forecasting with Bayesian Hierarchical|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Panel Vector Autoregressions          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 10 draws</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bvarPANELs: Forecasting with Bayesian Hierarchical|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Panel Vector Autoregressions          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 20 draws</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bvarPANELs: Forecasting with Bayesian Hierarchical|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Panel Vector Autoregressions          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  bpvars: Forecasting with Bayesian Panel VARs     |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of sampling 20 draws from</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     the predictive density for 189 countries</span>
@@ -224,8 +218,7 @@ horizons.</p>
 <span class="r-in"><span><span class="va">specification</span> <span class="op">=</span> <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span>    <span class="co"># specify the model</span></span></span>
 <span class="r-in"><span><span class="va">burn_in</span>       <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span><span class="va">specification</span>, <span class="fl">10</span><span class="op">)</span>               <span class="co"># run the burn-in</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bvarPANELs: Forecasting with Bayesian Hierarchical|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Panel Vector Autoregressions          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 10 draws</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
@@ -233,8 +226,7 @@ horizons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-in"><span><span class="va">posterior</span>     <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span><span class="va">burn_in</span>, <span class="fl">10</span><span class="op">)</span>                     <span class="co"># estimate the model</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bvarPANELs: Forecasting with Bayesian Hierarchical|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Panel Vector Autoregressions          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 10 draws</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
@@ -243,8 +235,7 @@ horizons.</p>
 <span class="r-in"><span><span class="co"># forecast 6 years ahead</span></span></span>
 <span class="r-in"><span><span class="va">predictive</span>    <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">posterior</span>, <span class="fl">6</span>, conditional_forecast <span class="op">=</span> <span class="va">ilo_conditional_forecasts</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bvarPANELs: Forecasting with Bayesian Hierarchical|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Panel Vector Autoregressions          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  bpvars: Forecasting with Bayesian Panel VARs     |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of sampling 10 draws from</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     the predictive density for 189 countries</span>
@@ -306,24 +297,21 @@ horizons.</p>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span> </span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span>which_c <span class="op">=</span> <span class="st">"POL"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bvarPANELs: Forecasting with Bayesian Hierarchical|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Panel Vector Autoregressions          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 10 draws</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bvarPANELs: Forecasting with Bayesian Hierarchical|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Panel Vector Autoregressions          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 20 draws</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bvarPANELs: Forecasting with Bayesian Hierarchical|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Panel Vector Autoregressions          |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  bpvars: Forecasting with Bayesian Panel VARs     |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of sampling 20 draws from</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     the predictive density for 189 countries</span>

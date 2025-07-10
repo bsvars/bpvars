@@ -5,6 +5,8 @@
 <url><loc>http://bsvars.org/bpvars/index.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/news/index.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/bpvars-package.html</loc></url>
+<url><loc>http://bsvars.org/bpvars/reference/compute_forecast_performance.ForecastsPANELpoos.html</loc></url>
+<url><loc>http://bsvars.org/bpvars/reference/compute_forecast_performance.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/compute_variance_decompositions.PosteriorBVARPANEL.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/country_grouping_incomegroup.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/country_grouping_region.html</loc></url>
@@ -14,7 +16,11 @@
 <url><loc>http://bsvars.org/bpvars/reference/estimate.BVARPANEL.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/estimate.PosteriorBVARGROUPPANEL.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/estimate.PosteriorBVARPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bpvars/reference/forecast.PosteriorBVARGROUPPANEL.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/forecast.PosteriorBVARPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bpvars/reference/forecast_poos_recursively.BVARGROUPPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bpvars/reference/forecast_poos_recursively.BVARPANEL.html</loc></url>
+<url><loc>http://bsvars.org/bpvars/reference/forecast_poos_recursively.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/ilo_conditional_forecasts.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/ilo_dynamic_panel.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/ilo_exogenous_forecasts.html</loc></url>
@@ -25,6 +31,7 @@
 <url><loc>http://bsvars.org/bpvars/reference/specify_bvarGroupPANEL.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/specify_bvarPANEL.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/specify_panel_data_matrices.html</loc></url>
+<url><loc>http://bsvars.org/bpvars/reference/specify_poosf_exercise.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/specify_posterior_bvarGroupPANEL.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/specify_posterior_bvarPANEL.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/specify_prior_bvarPANEL.html</loc></url>
