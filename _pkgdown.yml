@@ -44,7 +44,13 @@ reference:
 - title: "Forecasting"
   desc: "Predict future values of your variables"
 - contents:
-  - matches("forecast")
+  - matches("forecast.Posterior")
+- title: "Pseudo-out-of-sample Forecasting"
+  desc: "Verify forecating performance of models."
+- contents:
+  - matches("specify_poosf_exercise")
+  - matches("forecast_poos_recursively")
+  - matches("compute_forecast_performance")
 - title: "Structural analyses"
   desc: "Compute interpretable outcomes"
 - contents:
