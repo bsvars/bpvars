@@ -57,6 +57,7 @@ start adapting, the initial scaling rate}
 <li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="get_prior"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-get_prior'><code>bpvars::BVARPANEL$get_prior()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="get_starting_values"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-get_starting_values'><code>bpvars::BVARPANEL$get_starting_values()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="set_adaptiveMH"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-set_adaptiveMH'><code>bpvars::BVARPANEL$set_adaptiveMH()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="set_to_Jarocinski"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-set_to_Jarocinski'><code>bpvars::BVARPANEL$set_to_Jarocinski()</code></a></span></li>
 </ul>
 </details>
 }}

@@ -16,6 +16,18 @@ spec = specify_bvarPANEL$new(
 
 
 ## ------------------------------------------------
+## Method `specify_bvarPANEL$set_to_Jarocinski`
+## ------------------------------------------------
+
+data(ilo_dynamic_panel)
+spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$set_to_Jarocinski()
+
+
+## ------------------------------------------------
 ## Method `specify_bvarPANEL$get_data_matrices`
 ## ------------------------------------------------
 
@@ -63,6 +75,14 @@ spec = specify_bvarPANEL$new(
 spec$set_adaptiveMH(c(0.6, 0.4, 10, 0.1))
 
 }
+\references{
+Jarocinski (2010). Responses to monetary policy shocks in the east and 
+the west of Europe: a comparison. \emph{Journal of Applied Econometrics}, 
+\bold{25}(5), 833-868, \doi{10.1002/jae.1082}.
+
+Dieppe, Legrand, Roye (2016). The BEAR toolbox, \emph{ECB Working Papers},
+\bold{1934}, \doi{10.2866/292952}.
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -84,6 +104,7 @@ start adapting, the initial scaling rate}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-BVARPANEL-new}{\code{specify_bvarPANEL$new()}}
+\item \href{#method-BVARPANEL-set_to_Jarocinski}{\code{specify_bvarPANEL$set_to_Jarocinski()}}
 \item \href{#method-BVARPANEL-get_data_matrices}{\code{specify_bvarPANEL$get_data_matrices()}}
 \item \href{#method-BVARPANEL-get_prior}{\code{specify_bvarPANEL$get_prior()}}
 \item \href{#method-BVARPANEL-get_starting_values}{\code{specify_bvarPANEL$get_starting_values()}}
@@ -129,6 +150,31 @@ determining the truncation of the predictive density to \code{[0, 100]} and
 \subsection{Returns}{
 A new complete specification for the Bayesian Panel VAR model BVARPANEL.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BVARPANEL-set_to_Jarocinski"></a>}}
+\if{latex}{\out{\hypertarget{method-BVARPANEL-set_to_Jarocinski}{}}}
+\subsection{Method \code{set_to_Jarocinski()}}{
+Sets the model in line with the specification by Jarocinski (2010) as presented 
+by Dieppe, Legrand, Roye (2016).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$set_to_Jarocinski()}\if{html}{\out{</div>}}
+}
+
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data(ilo_dynamic_panel)
+spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$set_to_Jarocinski()
+
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARPANEL-get_data_matrices"></a>}}
