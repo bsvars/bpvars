@@ -427,6 +427,10 @@ specify_panel_data_matrices = R6::R6Class(
 specify_bvarPANEL = R6::R6Class(
   "BVARPANEL",
   
+  private = list(
+    type  = "wozniak" # a value from set, \code{wozniak}, \code{jarocinski}, indicating model specification
+  ),
+  
   public = list(
     
     #' @field p a non-negative integer specifying the autoregressive lag order of the model. 
@@ -483,7 +487,62 @@ specify_bvarPANEL = R6::R6Class(
       self$prior           = specify_prior_bvarPANEL$new(C, N, self$p, d, stationary)
       self$starting_values = specify_starting_values_bvarPANEL$new(C, N, self$p, d)
       self$adaptiveMH      = c(0.44, 0.6)
+      
     }, # END initialize
+
+    #' @description
+    #' Sets the model in line with the specification by Jarocinski (2010) as presented 
+    #' by Dieppe, Legrand, Roye (2016).
+    #' 
+    #' @references
+    #' Jarocinski (2010). Responses to monetary policy shocks in the east and 
+    #' the west of Europe: a comparison. \emph{Journal of Applied Econometrics}, 
+    #' \bold{25}(5), 833-868, \doi{10.1002/jae.1082}.
+    #' 
+    #' Dieppe, Legrand, Roye (2016). The BEAR toolbox, \emph{ECB Working Papers},
+    #' \bold{1934}, \doi{10.2866/292952}.
+    #' 
+    #' @examples
+    #' data(ilo_dynamic_panel)
+    #' spec = specify_bvarPANEL$new(
+    #'    data = ilo_dynamic_panel,
+    #'    p = 4
+    #' )
+    #' spec$set_to_Jarocinski()
+    #' 
+    set_to_Jarocinski = function() {
+      
+      message("Setting the model in line with the specification by Jarocinski (2010).")
+      private$type                = "jarocinski"
+      
+      N                           = nrow(self$starting_values$Sigma)
+      K                           = nrow(self$prior$M)
+      
+      # values used in computations
+      self$starting_values$V      = self$prior$W  # self$starting_values$nu * self$prior$W
+      self$starting_values$s      = 1             # A_c prior overall shrinkage
+      self$prior$nu_s             = 0.001         # s prior shape
+      self$prior$s_s              = 0.001         # s prior scale
+      self$starting_values$nu     = -(N + 1)      # nu value imposing Jarocinski prior
+      
+      
+      # values NOT used
+      self$starting_values$Sigma  = diag(N)
+      self$starting_values$m      = 0
+      self$starting_values$w      = 1
+      
+      self$prior$M                = matrix(0, K, N)
+      self$prior$S_inv            = matrix(0, N, N)
+      self$prior$S_Sigma_inv      = matrix(0, N, N)
+      self$prior$eta              = 0
+      self$prior$mu_Sigma         = 0
+      self$prior$lambda           = 0
+      self$prior$mu_m             = 0
+      self$prior$sigma2_m         = 0
+      self$prior$s_w              = 0
+      self$prior$a_w              = 0
+      
+    }, # END set_prior_Jarocinski
     
     #' @description
     #' Returns the data matrices as the DataMatricesBVARPANEL object.
