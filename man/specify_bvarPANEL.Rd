@@ -64,6 +64,18 @@ spec$get_starting_values()
 
 
 ## ------------------------------------------------
+## Method `specify_bvarPANEL$get_type`
+## ------------------------------------------------
+
+data(ilo_dynamic_panel)
+spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$get_type()
+
+
+## ------------------------------------------------
 ## Method `specify_bvarPANEL$set_adaptiveMH`
 ## ------------------------------------------------
 
@@ -108,6 +120,7 @@ start adapting, the initial scaling rate}
 \item \href{#method-BVARPANEL-get_data_matrices}{\code{specify_bvarPANEL$get_data_matrices()}}
 \item \href{#method-BVARPANEL-get_prior}{\code{specify_bvarPANEL$get_prior()}}
 \item \href{#method-BVARPANEL-get_starting_values}{\code{specify_bvarPANEL$get_starting_values()}}
+\item \href{#method-BVARPANEL-get_type}{\code{specify_bvarPANEL$get_type()}}
 \item \href{#method-BVARPANEL-set_adaptiveMH}{\code{specify_bvarPANEL$set_adaptiveMH()}}
 \item \href{#method-BVARPANEL-clone}{\code{specify_bvarPANEL$clone()}}
 }
@@ -241,6 +254,30 @@ spec = specify_bvarPANEL$new(
    p = 4
 )
 spec$get_starting_values()
+
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BVARPANEL-get_type"></a>}}
+\if{latex}{\out{\hypertarget{method-BVARPANEL-get_type}{}}}
+\subsection{Method \code{get_type()}}{
+Returns the type of the model.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$get_type()}\if{html}{\out{</div>}}
+}
+
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data(ilo_dynamic_panel)
+spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$get_type()
 
 }
 \if{html}{\out{</div>}}
