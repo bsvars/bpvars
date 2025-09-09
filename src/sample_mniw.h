@@ -95,6 +95,15 @@ arma::field<arma::mat> sample_AV (
 );
 
 
+arma::field<arma::mat> sample_AV_jaro (
+    const arma::cube&   aux_A_c_cpp,      // KxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    arma::mat&          aux_A,            // KxN
+    double&             aux_s,            // scalar
+    const Rcpp::List&   prior
+);
+
+
 arma::field<arma::mat> sample_A_c_Sigma_c (
     const arma::mat&    Y_c,              // T_cxN
     const arma::mat&    X_c,              // T_cxK
