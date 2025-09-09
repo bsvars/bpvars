@@ -5,8 +5,8 @@ bvarGroupPANEL <- function(S, Y, X, prior, starting_values, thin, show_progress,
     .Call(`_bpvars_bvarGroupPANEL`, S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma, estimate_groups)
 }
 
-bvarPANEL <- function(S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma) {
-    .Call(`_bpvars_bvarPANEL`, S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma)
+bvarPANEL <- function(S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma, type_wozniak = TRUE) {
+    .Call(`_bpvars_bvarPANEL`, S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma, type_wozniak)
 }
 
 # Register entry points for exported C++ functions
