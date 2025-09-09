@@ -15,6 +15,13 @@ arma::field<arma::mat> rmniw1(
 );
 
 
+arma::mat rmn1(
+    const arma::mat& A,     // KxN
+    const arma::mat& V,     // KxK
+    const arma::mat& S      // NxN
+);
+
+
 double sample_m (
     const arma::mat&    aux_A,    // KxN
     const arma::mat&    aux_V,    // KxK
