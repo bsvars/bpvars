@@ -29,6 +29,19 @@ arma::field<arma::mat> rmniw1(
 
 // [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
+arma::mat rmn1(
+    const arma::mat& A,     // KxN
+    const arma::mat& V,     // KxK
+    const arma::mat& S      // NxN
+) {
+  mat X_tmp     = mat(size(A), fill::randn);
+  mat X         = A + chol(V).t() * X_tmp * chol(S);
+  return X;
+} // END rmn1
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
 double sample_m (
     const arma::mat&    aux_A,    // KxN
     const arma::mat&    aux_V,    // KxK
