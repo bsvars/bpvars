@@ -15,11 +15,6 @@ arma::field<arma::mat> rmniw1(
     const arma::mat& S,     // NxN
     const double&    nu     // scalar
 ) {
-  // Rcout << "  A: " << A << std::endl;
-  // Rcout << "  V: " << V.is_sympd() << std::endl;
-  // Rcout << "  S: " << S.is_sympd() << std::endl;
-  // Rcout << "  nu: " << nu << std::endl;
-  
   mat SS        = 0.5 * (S + S.t());
   mat Sigma     = iwishrnd(SS, nu);
   mat X_tmp     = mat(size(A), fill::randn);
