@@ -76,6 +76,18 @@ spec$get_type()
 
 
 ## ------------------------------------------------
+## Method `specify_bvarPANEL$set_global2pooled`
+## ------------------------------------------------
+
+data(ilo_dynamic_panel)
+spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$set_global2pooled()
+
+
+## ------------------------------------------------
 ## Method `specify_bvarPANEL$set_adaptiveMH`
 ## ------------------------------------------------
 
@@ -94,6 +106,10 @@ the west of Europe: a comparison. \emph{Journal of Applied Econometrics},
 
 Dieppe, Legrand, Roye (2016). The BEAR toolbox, \emph{ECB Working Papers},
 \bold{1934}, \doi{10.2866/292952}.
+
+Zellner, Hong (1989). Forecasting international growth rates using 
+Bayesian shrinkage and other procedures. \emph{Journal of Econometrics}, 
+\bold{40}(1), 183–202, \doi{10.1016/0304-4076(89)90036-5}.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -121,6 +137,7 @@ start adapting, the initial scaling rate}
 \item \href{#method-BVARPANEL-get_prior}{\code{specify_bvarPANEL$get_prior()}}
 \item \href{#method-BVARPANEL-get_starting_values}{\code{specify_bvarPANEL$get_starting_values()}}
 \item \href{#method-BVARPANEL-get_type}{\code{specify_bvarPANEL$get_type()}}
+\item \href{#method-BVARPANEL-set_global2pooled}{\code{specify_bvarPANEL$set_global2pooled()}}
 \item \href{#method-BVARPANEL-set_adaptiveMH}{\code{specify_bvarPANEL$set_adaptiveMH()}}
 \item \href{#method-BVARPANEL-clone}{\code{specify_bvarPANEL$clone()}}
 }
@@ -278,6 +295,40 @@ spec = specify_bvarPANEL$new(
    p = 4
 )
 spec$get_type()
+
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BVARPANEL-set_global2pooled"></a>}}
+\if{latex}{\out{\hypertarget{method-BVARPANEL-set_global2pooled}{}}}
+\subsection{Method \code{set_global2pooled()}}{
+Sets the prior mean of the global autoregressive parameters to the OLS 
+pooled panel estimator following Zellner, Hong (1989).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$set_global2pooled(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{a vector of four values setting the adaptive MH sampler for nu:
+adaptive rate, target acceptance rate, the iteration at which to 
+start adapting, the initial scaling rate}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data(ilo_dynamic_panel)
+spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$set_global2pooled()
 
 }
 \if{html}{\out{</div>}}
