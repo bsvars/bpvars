@@ -605,6 +605,43 @@ specify_bvarPANEL = R6::R6Class(
     }, # END get_starting_values
     
     #' @description
+    #' Sets the prior mean of the global autoregressive parameters to the OLS 
+    #' pooled panel estimator following Zellner, Hong (1989).
+    #' 
+    #' @param x a vector of four values setting the adaptive MH sampler for nu:
+    #' adaptive rate, target acceptance rate, the iteration at which to 
+    #' start adapting, the initial scaling rate
+    #' 
+    #' @references
+    #' Zellner, Hong (1989). Forecasting international growth rates using 
+    #' Bayesian shrinkage and other procedures. \emph{Journal of Econometrics}, 
+    #' \bold{40}(1), 183–202, \doi{10.1016/0304-4076(89)90036-5}.
+    #' 
+    #' @examples 
+    #' data(ilo_dynamic_panel)
+    #' spec = specify_bvarPANEL$new(
+    #'    data = ilo_dynamic_panel,
+    #'    p = 4
+    #' )
+    #' spec$set_global2pooled()
+    #' 
+    set_global2pooled = function(x) {
+      stopifnot("Argument x has to be a numeric vector of length 4." 
+                = private$type == "wozniak")
+      C = length(self$data_matrices$Y)
+      N = ncol(self$data_matrices$Y[[1]])
+      K = ncol(self$data_matrices$X[[1]])
+      
+      XX = matrix(0, K, K)
+      XY = matrix(0, K, N)
+      for (c in 1:C) {
+        XX = XX + crossprod(self$data_matrices$X[[c]])
+        XY = XY + crossprod(self$data_matrices$X[[c]], self$data_matrices$Y[[c]])
+      }
+      self$prior$M = solve(XX, XY)
+    }, # END set_adaptiveMH
+    
+    #' @description
     #' Sets the parameters of adaptive Metropolis-Hastings sampler for the parameter nu.
     #' 
     #' @param x a vector of four values setting the adaptive MH sampler for nu:
