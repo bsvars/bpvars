@@ -519,7 +519,7 @@ specify_bvarPANEL = R6::R6Class(
       K                           = nrow(self$prior$M)
       
       # values used in computations
-      self$starting_values$V      = self$prior$W  # self$starting_values$nu * self$prior$W
+      self$starting_values$V      = self$prior$W  # self$starting_values$s * self$prior$W
       self$starting_values$s      = 1             # A_c prior overall shrinkage
       self$prior$nu_s             = 0.001         # s prior shape
       self$prior$s_s              = 0.001         # s prior scale
@@ -527,7 +527,7 @@ specify_bvarPANEL = R6::R6Class(
       
       
       # values NOT used
-      self$starting_values$Sigma  = diag(N)
+      self$starting_values$Sigma  = matrix(0, N, N)
       self$starting_values$m      = 0
       self$starting_values$w      = 1
       
