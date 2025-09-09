@@ -361,6 +361,50 @@ arma::field<arma::mat> sample_AV (
 
 // [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
+arma::field<arma::mat> sample_AV_jaro (
+    const arma::cube&   aux_A_c_cpp,      // KxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    arma::mat&          aux_A,            // KxN
+    double&             aux_s,            // scalar
+    const Rcpp::List&   prior
+) {
+  
+  int C             = aux_A_c_cpp.n_slices;
+  int N             = aux_A_c_cpp.n_cols;
+  int K             = aux_A_c_cpp.n_rows;
+  
+  mat     prior_W   = as<mat>(prior["W"]);
+  double  prior_s_s = as<double>(prior["s_s"]);
+  double  prior_nu_s = as<double>(prior["nu_s"]);
+  
+  mat sum_Sc_inv(N, N);
+  mat sum_Sc_invAt(K, N);
+  mat sum_ASc_invAt(K, K);
+  for (int c = 0; c < C; c++) {
+    sum_Sc_inv     += aux_Sigma_c_inv.slice(c);
+    mat Sc_invAt    = aux_A_c_cpp.slice(c) * aux_Sigma_c_inv.slice(c);
+    sum_Sc_invAt   += Sc_invAt;
+    sum_ASc_invAt  += (aux_A - aux_A_c_cpp.slice(c)) * aux_Sigma_c_inv.slice(c) * trans(aux_A - aux_A_c_cpp.slice(c));
+  } // END c loop
+  
+  double s_bar      = prior_s_s + trace( diagmat(1 / prior_W.diag()) * sum_ASc_invAt );
+  aux_s             = (s_bar) / chi2rnd( prior_nu_s + C * N * K );
+  
+  mat S_bar_inv     = sum_Sc_inv;
+  mat S_bar         = inv_sympd(S_bar_inv);
+  mat A_bar         = sum_Sc_invAt * S_bar;
+  aux_A             = rmn1(A_bar, aux_s * prior_W, S_bar);
+  
+  field<mat> aux_AVs(3);
+  aux_AVs(0)        = aux_A;
+  aux_AVs(1)        = aux_s * prior_W;
+  aux_AVs(2)        = aux_s;
+  return aux_AVs;
+} // END sample_AV_jaro
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
 arma::field<arma::mat> sample_A_c_Sigma_c (
     const arma::mat&    Y_c,              // T_cxN
     const arma::mat&    X_c,              // T_cxK
