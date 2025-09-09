@@ -466,6 +466,27 @@ namespace bpvars {
         return Rcpp::as<arma::field<arma::mat> >(rcpp_result_gen);
     }
 
+    inline arma::mat rmn1(const arma::mat& A, const arma::mat& V, const arma::mat& S) {
+        typedef SEXP(*Ptr_rmn1)(SEXP,SEXP,SEXP);
+        static Ptr_rmn1 p_rmn1 = NULL;
+        if (p_rmn1 == NULL) {
+            validateSignature("arma::mat(*rmn1)(const arma::mat&,const arma::mat&,const arma::mat&)");
+            p_rmn1 = (Ptr_rmn1)R_GetCCallable("bpvars", "_bpvars_rmn1");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rmn1(Shield<SEXP>(Rcpp::wrap(A)), Shield<SEXP>(Rcpp::wrap(V)), Shield<SEXP>(Rcpp::wrap(S)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<arma::mat >(rcpp_result_gen);
+    }
+
     inline double sample_m(const arma::mat& aux_A, const arma::mat& aux_V, const double& aux_s, const double& aux_w, const Rcpp::List& prior) {
         typedef SEXP(*Ptr_sample_m)(SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_sample_m p_sample_m = NULL;
@@ -624,6 +645,27 @@ namespace bpvars {
         {
             RNGScope RCPP_rngScope_gen;
             rcpp_result_gen = p_sample_AV(Shield<SEXP>(Rcpp::wrap(aux_A_c_cpp)), Shield<SEXP>(Rcpp::wrap(aux_Sigma_c_inv)), Shield<SEXP>(Rcpp::wrap(aux_s)), Shield<SEXP>(Rcpp::wrap(aux_m)), Shield<SEXP>(Rcpp::wrap(aux_w)), Shield<SEXP>(Rcpp::wrap(prior)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<arma::field<arma::mat> >(rcpp_result_gen);
+    }
+
+    inline arma::field<arma::mat> sample_AV_jaro(const arma::cube& aux_A_c_cpp, const arma::cube& aux_Sigma_c_inv, arma::mat& aux_A, double& aux_s, const Rcpp::List& prior) {
+        typedef SEXP(*Ptr_sample_AV_jaro)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_sample_AV_jaro p_sample_AV_jaro = NULL;
+        if (p_sample_AV_jaro == NULL) {
+            validateSignature("arma::field<arma::mat>(*sample_AV_jaro)(const arma::cube&,const arma::cube&,arma::mat&,double&,const Rcpp::List&)");
+            p_sample_AV_jaro = (Ptr_sample_AV_jaro)R_GetCCallable("bpvars", "_bpvars_sample_AV_jaro");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_sample_AV_jaro(Shield<SEXP>(Rcpp::wrap(aux_A_c_cpp)), Shield<SEXP>(Rcpp::wrap(aux_Sigma_c_inv)), Shield<SEXP>(Rcpp::wrap(aux_A)), Shield<SEXP>(Rcpp::wrap(aux_s)), Shield<SEXP>(Rcpp::wrap(prior)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
