@@ -590,6 +590,21 @@ specify_bvarPANEL = R6::R6Class(
     }, # END get_starting_values
     
     #' @description
+    #' Returns the type of the model.
+    #' 
+    #' @examples 
+    #' data(ilo_dynamic_panel)
+    #' spec = specify_bvarPANEL$new(
+    #'    data = ilo_dynamic_panel,
+    #'    p = 4
+    #' )
+    #' spec$get_type()
+    #' 
+    get_type = function() {
+      private$type
+    }, # END get_starting_values
+    
+    #' @description
     #' Sets the parameters of adaptive Metropolis-Hastings sampler for the parameter nu.
     #' 
     #' @param x a vector of four values setting the adaptive MH sampler for nu:
