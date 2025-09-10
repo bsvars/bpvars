@@ -76,7 +76,8 @@
 #' }
 #'
 #' @seealso \code{\link{bpvars}}, \code{\link{specify_bvars}}, 
-#' \code{\link{specify_posterior_bvars}}, \code{\link{summary.PosteriorBVARs}}
+#' \code{\link{specify_posterior_bvars}}, \code{\link{summary.PosteriorBVARs}},
+#' \code{\link{forecast.PosteriorBVARs}}
 #'
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
 #' 
