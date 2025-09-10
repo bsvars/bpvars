@@ -81,13 +81,13 @@ specify_prior_bvars = R6::R6Class(
       self$M            = t(cbind(diag(as.numeric(!stationary)), matrix(0, N, K - N)))
       self$W            = diag(c(kronecker((1:p)^2, rep(1, N) ), rep(10, 1 + d)))
       self$S_inv        = diag(N)
-      self$lambda       = 72
+      self$lambda       = 30
       self$mu_m         = 1
-      self$sigma2_m     = 1
+      self$sigma2_m     = 0.1
       self$s_w          = 1
-      self$nu_w         = 1
+      self$nu_w         = 3
       self$s_s          = 1
-      self$a_s          = 3
+      self$a_s          = 1
     }, # END initialize
     
     #' @description
@@ -145,21 +145,21 @@ specify_starting_values_bvars = R6::R6Class(
     #' parameter \eqn{\mathbf{\Sigma}_c}. 
     Sigma_c       = array(),
     
-    #' @field nu a positive scalar with starting values for the parameter
+    #' @field nu a \code{C}-vector of positive starting values for the parameter
     #' \eqn{\nu}.
-    nu            = NA,
+    nu            = numeric(),
     
-    #' @field m a positive scalar with starting values for the hyper-parameter
+    #' @field m a \code{C}-vector of starting values for the parameter
     #' \eqn{m}.
-    m             = NA,
+    m             = numeric(),
     
-    #' @field w a positive scalar with starting values for the hyper-parameter
+    #' @field w a \code{C}-vector of positive starting values for the parameter
     #' \eqn{w}.
-    w             = NA,
+    w             = numeric(),
     
-    #' @field s a positive scalar with starting values for the hyper-parameter
+    #' @field s  a \code{C}-vector of positive starting values for the parameter
     #' \eqn{s}.
-    s             = NA,
+    s             = numeric(),
     
     #' @description
     #' Create new starting values StartingValuesBVARs
@@ -181,10 +181,10 @@ specify_starting_values_bvars = R6::R6Class(
       K               = N * p + 1 + d
       self$A_c        = array(stats::rnorm(C * K * N, sd = 0.001), c(K, N, C))
       self$Sigma_c    = stats::rWishart(C, N + 1, diag(N))
-      self$nu         = N + 1 + 0.1
-      self$m          = stats::rnorm(1, sd = 0.001)
-      self$w          = stats::rgamma(1, 1)
-      self$s          = stats::rgamma(1, 1)
+      self$nu         = rep(N + 1 + 0.1, C)
+      self$m          = stats::rnorm(C, sd = 0.001)
+      self$w          = stats::rgamma(C, 1)
+      self$s          = stats::rgamma(C, 1)
     }, # END initialize
     
     #' @description
@@ -499,7 +499,7 @@ specify_posterior_bvars = R6::R6Class(
       N = dim(specification_bvarPANEL$starting_values$A_c)[2]
       K = dim(specification_bvarPANEL$starting_values$A_c)[1]
       C = dim(specification_bvarPANEL$starting_values$A_c)[3]
-      S = dim(posterior_bvarPANEL$A)[3]
+      S = dim(posterior_bvarPANEL$nu)[2]
       
       Sigma_c           = array(NA, c(N, N, C, S))
       A_c               = array(NA, c(K, N, C, S))
