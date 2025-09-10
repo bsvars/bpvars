@@ -9,6 +9,10 @@ bvarPANEL <- function(S, Y, X, prior, starting_values, thin, show_progress, adpt
     .Call(`_bpvars_bvarPANEL`, S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma, type_wozniak)
 }
 
+bvars_cpp <- function(S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma) {
+    .Call(`_bpvars_bvars_cpp`, S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma)
+}
+
 # Register entry points for exported C++ functions
 methods::setLoadAction(function(ns) {
     .Call(`_bpvars_RcppExport_registerCCallable`)
