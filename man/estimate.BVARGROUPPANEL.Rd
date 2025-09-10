@@ -94,9 +94,6 @@ draw in the final sample. This procedure reduces the number of draws returned
 by the \code{estimate()} function.
 }
 \examples{
-data(ilo_dynamic_panel)                                 # load the data
-data(ilo_exogenous_variables)                           # load the exogenous variables
-set.seed(123)
 # specify the model
 specification = specify_bvarGroupPANEL$new(
      data = ilo_dynamic_panel,

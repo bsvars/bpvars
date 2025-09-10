@@ -25,11 +25,6 @@ Provides posterior summary of the forecasts including their
 mean, standard deviations, as well as 5 and 95 percentiles.
 }
 \examples{
-data(ilo_dynamic_panel)                                   # load the data
-data(ilo_exogenous_variables)                           # load the exogenous variables
-data(ilo_exogenous_forecasts)                           # load the exogenous forecast
-set.seed(123)
-
 # specify the model
 specification = specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
 burn_in       = estimate(specification, 10)             # run the burn-in
@@ -41,7 +36,6 @@ summary(predictive, which_c = "POL")
 
 # workflow with the pipe |>
 ############################################################
-set.seed(123)
 ilo_dynamic_panel |>
   specify_bvarPANEL$new() |>
   estimate(S = 10) |> 
@@ -53,7 +47,6 @@ ilo_dynamic_panel |>
 #  provided future values for the Gross Domestic Product 
 #  growth rate
 ############################################################
-data(ilo_conditional_forecasts)                        # load the conditional forecasts of dgdp
 specification = specify_bvarPANEL$new(ilo_dynamic_panel)    # specify the model
 burn_in       = estimate(specification, 10)               # run the burn-in
 posterior     = estimate(burn_in, 10)                     # estimate the model
@@ -63,7 +56,6 @@ summary(predictive, which_c = "POL")
 
 # workflow with the pipe |>
 ############################################################
-set.seed(123)
 ilo_dynamic_panel |>
   specify_bvarPANEL$new() |>
   estimate(S = 10) |> 

@@ -279,7 +279,6 @@ forecast.PosteriorBVARPANEL = function(
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
-#' set.seed(123)
 #' ilo_dynamic_panel |>
 #'   specify_bvarGroupPANEL$new(group_allocation = country_grouping_incomegroup) |>
 #'   estimate(S = 10) |> 
@@ -290,7 +289,6 @@ forecast.PosteriorBVARPANEL = function(
 #' #  provided future values for the Gross Domestic Product 
 #' #  and truncated forecasts for the rates
 #' ############################################################
-#' data(ilo_conditional_forecasts)                        # load the conditional forecasts of dgdp
 #' specification = specify_bvarGroupPANEL$new(            # specify the model
 #'                   ilo_dynamic_panel,
 #'                   type = c("real", rep("rate", 3)),
@@ -302,7 +300,6 @@ forecast.PosteriorBVARPANEL = function(
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
-#' set.seed(123)
 #' ilo_dynamic_panel |>
 #'   specify_bvarGroupPANEL$new(
 #'             type = c("real", rep("rate", 3)),

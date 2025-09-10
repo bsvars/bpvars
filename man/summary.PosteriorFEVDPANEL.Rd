@@ -25,11 +25,7 @@ Provides posterior means of the forecast error variance
 decompositions of each variable at all horizons.
 }
 \examples{
-# upload data
-data(ilo_dynamic_panel)
-
 # specify the model and set seed
-set.seed(123)
 specification  = specify_bvarPANEL$new(ilo_dynamic_panel, p = 1)
 
 # run the burn-in
@@ -44,7 +40,6 @@ summary(fevd, which_c = "POL")
 
 # workflow with the pipe |>
 ############################################################
-set.seed(123)
 ilo_dynamic_panel |>
   specify_bvarPANEL$new(p = 1) |>
   estimate(S = 10) |> 

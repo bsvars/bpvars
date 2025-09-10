@@ -38,7 +38,6 @@
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
-#' set.seed(123)
 #' ilo_dynamic_panel |>
 #'   specify_bvarPANEL$new() |>
 #'   estimate(S = 10) |> 
@@ -121,7 +120,6 @@ plot.ForecastsPANEL = function(
 #'
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
 #' 
-#' @examples
 #' set.seed(123)
 #' specification  = specify_bvarPANEL$new(ilo_dynamic_panel)
 #' 
@@ -137,7 +135,6 @@ plot.ForecastsPANEL = function(
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
-#' set.seed(123)
 #' ilo_dynamic_panel |>
 #'   specify_bvarPANEL$new() |>
 #'   estimate(S = 10) |> 

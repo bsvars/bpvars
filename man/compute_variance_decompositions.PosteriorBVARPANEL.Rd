@@ -26,11 +26,7 @@ of the model is transformed into a draw from the posterior distribution of the f
 error variance decomposition.
 }
 \examples{
-# upload data
-data(ilo_dynamic_panel)
-
 # specify the model and set seed
-set.seed(123)
 specification  = specify_bvarPANEL$new(ilo_dynamic_panel, p = 1)
 
 # run the burn-in
@@ -44,7 +40,6 @@ fevd           = compute_variance_decompositions(posterior, horizon = 4)
 
 # workflow with the pipe |>
 ############################################################
-set.seed(123)
 ilo_dynamic_panel |>
   specify_bvarPANEL$new(p = 1) |>
   estimate(S = 10) |> 

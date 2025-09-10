@@ -27,11 +27,7 @@
 #' Lütkepohl, H. (2017). Structural VAR Tools, Chapter 4, In: Structural vector autoregressive analysis. Cambridge University Press.
 #' 
 #' @examples
-#' # upload data
-#' data(ilo_dynamic_panel)
-#' 
 #' # specify the model and set seed
-#' set.seed(123)
 #' specification  = specify_bvarPANEL$new(ilo_dynamic_panel, p = 1)
 #' 
 #' # run the burn-in
@@ -45,7 +41,6 @@
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
-#' set.seed(123)
 #' ilo_dynamic_panel |>
 #'   specify_bvarPANEL$new(p = 1) |>
 #'   estimate(S = 10) |> 

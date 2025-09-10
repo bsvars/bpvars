@@ -93,9 +93,6 @@ draw in the final sample. This procedure reduces the number of draws returned
 by the \code{estimate()} function.
 }
 \examples{
-data(ilo_dynamic_panel)                                 # load the data
-data(ilo_exogenous_variables)                           # load the exogenous variables
-set.seed(123)
 # specify the model
 specification = specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
 burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
