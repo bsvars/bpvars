@@ -50,16 +50,16 @@ sv$set_starting_values(sv_list)      # providing to the class object
 \item{\code{Sigma_c}}{an \code{NxNxC} array of starting values for the local
 parameter \eqn{\mathbf{\Sigma}_c}.}
 
-\item{\code{nu}}{a positive scalar with starting values for the parameter
+\item{\code{nu}}{a \code{C}-vector of positive starting values for the parameter
 \eqn{\nu}.}
 
-\item{\code{m}}{a positive scalar with starting values for the hyper-parameter
+\item{\code{m}}{a \code{C}-vector of starting values for the parameter
 \eqn{m}.}
 
-\item{\code{w}}{a positive scalar with starting values for the hyper-parameter
+\item{\code{w}}{a \code{C}-vector of positive starting values for the parameter
 \eqn{w}.}
 
-\item{\code{s}}{a positive scalar with starting values for the hyper-parameter
+\item{\code{s}}{a \code{C}-vector of positive starting values for the parameter
 \eqn{s}.}
 }
 \if{html}{\out{</div>}}
