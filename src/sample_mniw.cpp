@@ -50,24 +50,55 @@ double sample_m (
     const Rcpp::List&   prior
 ) {
   
-  const int N       = aux_A.n_cols;
   mat prior_S_inv   = as<mat>(prior["S_inv"]);
   mat prior_S       = inv_sympd(prior_S_inv);
+  mat prior_M       = as<mat>(prior["M"]);
   double prior_mu_m = as<double>(prior["mu_m"]);
   double prior_sigma2_m = as<double>(prior["sigma2_m"]);
   
-  double precision_tmp  = (1 / prior_sigma2_m);
-  double mean_tmp       = (prior_mu_m / prior_sigma2_m);
-  for (int n = 0; n < N; n++) {
-    precision_tmp  += 1 / (aux_s * aux_w * prior_S(n, n) * aux_V(n, n));
-    mean_tmp       += aux_A(n, n) / (aux_s * aux_w * prior_S(n, n) * aux_V(n, n));
-  }
-  double sigma2_m_bar   = 1 / precision_tmp;
-  double mu_m_bar       = sigma2_m_bar * mean_tmp;
+  mat aux_V_inv     = inv_sympd(aux_V);
+  vec aa            = vectorise(aux_A);
+  vec mm            = vectorise(prior_M);
+  double sigma2_m_bar = 1 / ((1 / prior_sigma2_m) + as_scalar(mm.t() * kron(prior_S_inv / aux_s, aux_V_inv / aux_w) * mm));
+  double mu_m_bar       = sigma2_m_bar * ((prior_mu_m / prior_sigma2_m) + as_scalar(mm.t() * kron(prior_S_inv / aux_s, aux_V_inv / aux_w) * aa));
   
   double out        = randn( distr_param(mu_m_bar, pow(sigma2_m_bar, 0.5)) );
   return out;
 } // END sample_m
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+arma::vec sample_m_bvars (
+    const arma::cube&   aux_A_c,    // KxNxC
+    const arma::cube&   aux_Sigma_c_inv,    // KxKxC
+    const arma::vec&    aux_w,   // scalar
+    const Rcpp::List&   prior
+) {
+  
+  const int C           = aux_A_c.n_slices;
+  
+  mat prior_M           = as<mat>(prior["M"]);
+  mat prior_W           = as<mat>(prior["W"]);
+  mat prior_W_inv       = diagmat(1 / prior_W.diag());
+  double prior_mu_m     = as<double>(prior["mu_m"]);
+  double prior_sigma2_m = as<double>(prior["sigma2_m"]);
+  
+  vec out(C);
+  for (int c=0; c<C; c++) {
+    
+    vec    a_c            = vectorise(aux_A_c.slice(c));  
+    vec    m_c            = vectorise(prior_M);
+    double sigma2_m_bar   = 1 / (pow(prior_sigma2_m, -1) + as_scalar(m_c.t() * kron(aux_Sigma_c_inv.slice(c), prior_W_inv / aux_w(c)) * m_c));
+    double mu_m_bar       = sigma2_m_bar * ((prior_mu_m / prior_sigma2_m) + as_scalar(m_c.t() * kron(aux_Sigma_c_inv.slice(c), prior_W_inv / aux_w(c)) * a_c));
+    out(c)                = randn( distr_param(mu_m_bar, pow(sigma2_m_bar, 0.5)) );
+    
+  }
+  
+  return out;
+} // END sample_m_bvar\
+
+
 
 
 // [[Rcpp::interfaces(cpp)]]
@@ -90,6 +121,36 @@ double sample_w (
   double out        = randg( distr_param(a_w_bar, s_w_bar) );
   return out;
 } // END sample_w
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+arma::vec sample_w_bvars (
+    const arma::cube&   aux_A_c,          // KxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::vec&    aux_m,
+    const Rcpp::List&   prior
+) {
+  
+  const int N       = aux_A_c.n_rows;
+  const int K       = aux_A_c.n_cols;
+  const int C       = aux_A_c.n_slices;
+  
+  mat prior_M       = as<mat>(prior["M"]);
+  mat prior_W       = as<mat>(prior["W"]);
+  mat prior_W_inv   = diagmat(1 / prior_W.diag());
+  double prior_s_w  = as<double>(prior["s_w"]);
+  double prior_nu_w = as<double>(prior["nu_w"]);
+  
+  vec out(C);
+  double nu_w_bar   = prior_nu_w + N * K;
+  for (int c=0; c<C; c++) {
+    double s_w_bar  = prior_s_w + trace(aux_Sigma_c_inv.slice(c) * trans(aux_A_c.slice(c) - aux_m(c) * prior_M) * prior_W_inv * (aux_A_c.slice(c) - aux_m(c) * prior_M) );
+    out(c)          = s_w_bar /  chi2rnd(nu_w_bar);
+  }
+  
+  return out;
+} // END sample_w_bvars
 
 
 // [[Rcpp::interfaces(cpp)]]
@@ -119,6 +180,33 @@ double sample_s (
   double out        = s_s_bar / chi2rnd( nu_s_bar );
   return out;
 } // END sample_s
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+arma::vec sample_s_bvars (
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::vec&    aux_nu,           // C
+    const Rcpp::List&   prior
+) {
+  
+  const int N       = aux_Sigma_c_inv.n_rows;
+  const int C       = aux_Sigma_c_inv.n_slices;
+  
+  mat prior_S_inv   = as<mat>(prior["S_inv"]);
+  mat prior_S       = inv_sympd(prior_S_inv);
+  double prior_s_s  = as<double>(prior["s_s"]);
+  double prior_a_s  = as<double>(prior["a_s"]);
+  
+  vec a_s_bar       = prior_a_s + aux_nu * N ;
+  vec out(C);
+  for (int c=0; c<C; c++) {
+    double s_s_bar  = prior_s_s + trace(aux_Sigma_c_inv.slice(c) * prior_S);
+    out(c)          = randg( distr_param(a_s_bar(c), s_s_bar) );
+  }
+  
+  return out;
+} // END sample_s_bvars
 
 
 
@@ -162,6 +250,37 @@ double log_kernel_nu (
 
 
 
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+double log_kernel_nu_bvars (
+    const double&       aux_nu,           // scalar
+    const double&       aux_s,
+    const arma::mat&    aux_Sigma_c_cpp,  // NxNxC
+    const arma::mat&    prior_S,        // NxN
+    const double&       prior_lambda,     // scalar
+    const int&          N,                // scalar
+    const int&          K                 // scalar
+) {
+  
+  double log_kernel_nu = 0;
+  
+  log_kernel_nu      -= 0.5 * N * (K + aux_nu) * log(2);
+  log_kernel_nu      -= prior_lambda * aux_nu;
+  
+  double ldSc         = log_det_sympd(aux_Sigma_c_cpp);
+  log_kernel_nu      -= 0.5 * (aux_nu + N + K + 1) * ldSc;
+  
+  double ldS          = log_det_sympd(aux_s * prior_S);
+  log_kernel_nu      += 0.5 * aux_nu * ldS;
+  
+  for (int n = 1; n < N + 1; n++) {
+    log_kernel_nu    -= R::lgammafn(0.5 * (aux_nu + 1 - n));
+  } // EDN n loop
+  
+  return log_kernel_nu;
+} // END log_kernel_nu_bvars
+
+
 
 // [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
@@ -180,7 +299,25 @@ double cov_nu (
   Cov_nu             *= (C * N / 4);
   Cov_nu              = sqrt(1 / Cov_nu);
   return Cov_nu;
-}
+} // END cov_nu
+
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+double cov_nu_bvars (
+    const double&   aux_nu,
+    const int&      N
+) {
+  
+  double Cov_nu       = 0;
+  for (int n = 1; n < N + 1; n++) {
+    Cov_nu           += R::psigamma( 0.5 * (aux_nu + 1 - n), 1);
+  } // END n loop
+  Cov_nu             /= 4;
+  Cov_nu              = sqrt(1 / Cov_nu);
+  return Cov_nu;
+} // END cov_nu_bvars
 
 
 
@@ -230,62 +367,64 @@ arma::vec sample_nu (
   return out;
 } // END sample_nu
 
-// // [[Rcpp:interface(cpp)]]
-// // [[Rcpp::export]]
-// double sample_nu (
-//     const double&       aux_nu,           // scalar
-//     const arma::vec&    posterior_nu,     // sx1
-//     const arma::cube&   aux_Sigma_c_cpp,  // NxNxC
-//     const arma::cube&   aux_Sigma_c_inv,  // NxNxC
-//     const arma::mat&    aux_Sigma,        // NxN
-//     const Rcpp::List&   prior,
-//     const int&          iteration,        // MCMC iteration passed
-//     arma::vec&          scale,            // (Sx1) adaptive scaling
-//     const arma::vec&    rate_target_start_initial
-// ) {
-//   
-//   double prior_lambda = as<double>(prior["lambda"]);
-//   mat prior_M         = as<mat>(prior["M"]);
-//   int K               = prior_M.n_rows;
-//   int C               = aux_Sigma_c_cpp.n_slices;
-//   int N               = aux_Sigma.n_rows;
-//   
-//   // negative inverted Hessian of full conditional log-kernel
-//   double Cov_nu       = 0;
-//   for (int n = 1; n < N + 1; n++) {
-//     Cov_nu           += R::psigamma( 0.5 * (aux_nu + 1 - n), 1);
-//   } // END n loop
-//   Cov_nu             *= (C / 4);  
-//   Cov_nu             -= (C * N * aux_nu) * (2 * pow(aux_nu - N - 1, 2));
-//   Cov_nu              = sqrt(0.01 / Cov_nu);
-//   
-//   // Adaptive MH scaling
-//   double scale_s      = rate_target_start_initial(3);
-//   if (iteration > rate_target_start_initial(2)) {
-//     vec    nu_to_s    = posterior_nu.head(iteration - 1);
-//     double alpha_s    = mcmc_accpetance_rate1( nu_to_s );
-//     scale_s           = scale(iteration - 1) + pow(iteration, - rate_target_start_initial(0)) * (alpha_s - rate_target_start_initial(1));
-//   }
-//   scale(iteration)    = scale_s;
-//   
-//   // Metropolis-Hastings
-//   double aux_nu_star  = RcppTN::rtn1( aux_nu, pow(scale_s, 2) * Cov_nu, N + 1, R_PosInf );
-//   double lk_nu_star   = log_kernel_nu ( aux_nu_star, aux_Sigma_c_cpp, aux_Sigma_c_inv, aux_Sigma, prior_lambda, C, N, K );
-//   double lk_nu_old    = log_kernel_nu ( aux_nu, aux_Sigma_c_cpp, aux_Sigma_c_inv, aux_Sigma, prior_lambda, C, N, K );
-//   double cgd_ratio    = RcppTN::dtn1( aux_nu_star, aux_nu, pow(scale_s, 2) * Cov_nu, N + 1, R_PosInf ) / 
-//                           RcppTN::dtn1( aux_nu, aux_nu_star, pow(scale_s, 2) * Cov_nu, N + 1, R_PosInf );
-//   
-//   double u            = randu();
-//   double out          = 0;
-//   if (u < exp(lk_nu_star - lk_nu_old) * cgd_ratio) {
-//     out               = aux_nu_star;
-//   } else {
-//     out               = aux_nu;
-//   } // 
-//   
-//   return out;
-// } // END sample_nu
 
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+Rcpp::List sample_nu_bvars (
+    arma::vec&          aux_nu,           // C
+    arma::vec&          adaptive_scale,   // C
+    arma::vec&          aux_s,            // C
+    const arma::cube&   aux_Sigma_c_cpp,  // NxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const Rcpp::List&   prior,
+    const int&          iteration,        // MCMC iteration passed
+    const arma::vec&    adptive_alpha_gamma // 2x1 vector with target acceptance rate and step size
+) {
+
+  double  prior_lambda  = as<double>(prior["lambda"]);
+  mat     prior_S_inv   = as<mat>(prior["S_inv"]);
+  mat     prior_S       = inv_sympd(prior_S_inv);
+  mat     prior_M       = as<mat>(prior["M"]);
+  
+  int C               = aux_Sigma_c_cpp.n_slices;
+  int N               = aux_Sigma_c_cpp.n_rows;
+  int K               = prior_M.n_rows;
+
+  for (int c=0; c<C; c++) {
+    
+    // negative inverted Hessian of full conditional log-kernel
+    double Cov_nu       = cov_nu_bvars(aux_nu(c), N);
+    
+    // Candidate generating
+    double aux_nu_star  = RcppTN::rtn1( aux_nu(c), adaptive_scale(c) * Cov_nu, N + 1, R_PosInf );
+    double lk_nu_star   = log_kernel_nu_bvars( aux_nu_star, aux_s(c), aux_Sigma_c_cpp.slice(c), prior_S, prior_lambda, N, K );
+    double lk_nu_old    = log_kernel_nu_bvars( aux_nu(c), aux_s(c), aux_Sigma_c_cpp.slice(c), prior_S, prior_lambda, N, K );
+    double cgd_ratio    = RcppTN::dtn1( aux_nu_star, aux_nu(c), adaptive_scale(c) * Cov_nu, N + 1, R_PosInf ) /
+      RcppTN::dtn1( aux_nu(c), aux_nu_star, adaptive_scale(c) * Cov_nu, N + 1, R_PosInf );
+    
+    // Adaptive Metropolis-Hastings
+    
+    double alpha        = 1;
+    double kernel_ratio = exp(lk_nu_star - lk_nu_old) * cgd_ratio;
+    if ( kernel_ratio < 1 ) alpha = kernel_ratio;
+    
+    double u            = randu();
+    if ( u < alpha ) {
+      aux_nu(c)            = aux_nu_star;
+    }
+    
+    if (iteration > 1) {
+      adaptive_scale(c) = exp( log(adaptive_scale(c)) + 0.5 * log( 1 + pow(iteration, - adptive_alpha_gamma(1)) * (alpha - adptive_alpha_gamma(0))) );
+    }
+    
+  }
+
+  return List::create(
+    _["aux_nu"]         = aux_nu,
+    _["adaptive_scale"] = adaptive_scale
+  );
+} // END sample_nu_bvars
 
 
 // [[Rcpp::interfaces(cpp)]]
@@ -428,6 +567,33 @@ arma::field<arma::mat> sample_A_c_Sigma_c (
   arma::field<arma::mat> aux_A_c_Sigma_c = rmniw1( A_bar, V_bar, Sigma_bar, nu_bar );
   return aux_A_c_Sigma_c;
 } // END sample_A_c_Sigma_c
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+arma::field<arma::mat> sample_A_c_Sigma_c_bvars (
+    const arma::mat&    Y_c,              // T_cxN
+    const arma::mat&    X_c,              // T_cxK
+    const arma::mat&    aux_A,            // KxN
+    const arma::mat&    aux_V,            // KxK
+    const arma::mat&    aux_Sigma,        // NxN
+    const double&       aux_nu            // scalar
+) {
+  int T_c           = Y_c.n_rows;
+  
+  mat aux_V_inv     = inv_sympd( aux_V );
+  mat V_bar_inv     = X_c.t() * X_c + aux_V_inv;
+  mat V_bar         = inv_sympd( V_bar_inv );
+  V_bar             = 0.5 * (V_bar + V_bar.t());
+  mat A_bar         = V_bar * ( X_c.t() * Y_c + aux_V_inv * aux_A );
+  mat Sigma_bar     = aux_Sigma + Y_c.t() * Y_c + aux_A.t() * aux_V_inv * aux_A - A_bar.t() * V_bar_inv * A_bar;
+  double nu_bar     = T_c + aux_nu;
+  
+  // Rcout << "  nu_bar: " << nu_bar << std::endl;
+  // Rcout << "  Sigma_bar: " << Sigma_bar.is_sympd() << std::endl;
+  arma::field<arma::mat> aux_A_c_Sigma_c = rmniw1( A_bar, V_bar, Sigma_bar, nu_bar );
+  return aux_A_c_Sigma_c;
+} // END sample_A_c_Sigma_c_bvars
 
 
 // [[Rcpp::interfaces(cpp)]]

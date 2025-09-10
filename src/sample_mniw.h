@@ -31,8 +31,24 @@ double sample_m (
 );
 
 
+arma::vec sample_m_bvars (
+    const arma::cube&   aux_A_c,    // KxNxC
+    const arma::cube&   aux_Sigma_c_inv,    // KxKxC
+    const arma::vec&    aux_w,   // scalar
+    const Rcpp::List&   prior
+);
+
+
 double sample_w (
     const arma::mat&    aux_V,    // KxK
+    const Rcpp::List&   prior
+);
+
+
+arma::vec sample_w_bvars (
+    const arma::cube&   aux_A_c,          // KxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::vec&    aux_m,
     const Rcpp::List&   prior
 );
 
@@ -42,6 +58,13 @@ double sample_s (
     const arma::mat&    aux_V,      // KxK
     const arma::mat&    aux_Sigma,  // NxN
     const double&       aux_m,      // scalar
+    const Rcpp::List&   prior
+);
+
+
+arma::vec sample_s_bvars (
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::vec&    aux_nu,           // C
     const Rcpp::List&   prior
 );
 
@@ -58,9 +81,26 @@ double log_kernel_nu (
 );
 
 
+double log_kernel_nu_bvars (
+    const double&       aux_nu,           // scalar
+    const double&       aux_s,
+    const arma::mat&    aux_Sigma_c_cpp,  // NxNxC
+    const arma::mat&    prior_S,        // NxN
+    const double&       prior_lambda,     // scalar
+    const int&          N,                // scalar
+    const int&          K                 // scalar
+);
+
+
 double cov_nu (
     const double&   aux_nu,
     const int&      C,
+    const int&      N
+);
+
+
+double cov_nu_bvars (
+    const double&   aux_nu,
     const int&      N
 );
 
@@ -71,6 +111,18 @@ arma::vec sample_nu (
     const arma::cube&   aux_Sigma_c_cpp,  // NxNxC
     const arma::cube&   aux_Sigma_c_inv,  // NxNxC
     const arma::mat&    aux_Sigma,        // NxN
+    const Rcpp::List&   prior,
+    const int&          iteration,        // MCMC iteration passed
+    const arma::vec&    adptive_alpha_gamma // 2x1 vector with target acceptance rate and step size
+);
+
+
+Rcpp::List sample_nu_bvars (
+    arma::vec&          aux_nu,           // C
+    arma::vec&          adaptive_scale,   // C
+    arma::vec&          aux_s,            // C
+    const arma::cube&   aux_Sigma_c_cpp,  // NxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
     const Rcpp::List&   prior,
     const int&          iteration,        // MCMC iteration passed
     const arma::vec&    adptive_alpha_gamma // 2x1 vector with target acceptance rate and step size
@@ -105,6 +157,16 @@ arma::field<arma::mat> sample_AV_jaro (
 
 
 arma::field<arma::mat> sample_A_c_Sigma_c (
+    const arma::mat&    Y_c,              // T_cxN
+    const arma::mat&    X_c,              // T_cxK
+    const arma::mat&    aux_A,            // KxN
+    const arma::mat&    aux_V,            // KxK
+    const arma::mat&    aux_Sigma,        // NxN
+    const double&       aux_nu            // scalar
+);
+
+
+arma::field<arma::mat> sample_A_c_Sigma_c_bvars (
     const arma::mat&    Y_c,              // T_cxN
     const arma::mat&    X_c,              // T_cxK
     const arma::mat&    aux_A,            // KxN
