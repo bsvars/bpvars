@@ -198,6 +198,143 @@ summary.PosteriorBVARPANEL = function(
 
 
 
+
+#' @title Provides posterior estimation summary for Bayesian  
+#' Vector Autoregressions for dynamic panel data
+#'
+#' @description Provides posterior mean, standard deviations, as well as 5 and 95 
+#' percentiles of the parameters for all \code{C} countries.
+#' 
+#' @param object an object of class \code{PosteriorBVARs} obtained using the
+#' \code{estimate()} function applied to  
+#' Vector Autoregressions containing draws from the  posterior distribution of 
+#' the parameters. 
+#' @param ... additional arguments affecting the summary produced.
+#' 
+#' @return A list reporting the posterior mean, standard deviations, as well as 5 and 95 
+#' percentiles of the country-specific and global parameters.
+#' 
+#' @method summary PosteriorBVARs
+#' 
+#' @seealso \code{\link{estimate.BVARs}}, \code{\link{specify_bvars}}
+#'
+#' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
+#' 
+#' @examples
+#' # specify the model
+#' specification = specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
+#' burn_in       = estimate(specification, 10)             # run the burn-in
+#' posterior     = estimate(burn_in, 10)                   # estimate the model
+#' summary(posterior)
+#' 
+#' # workflow with the pipe |>
+#' ############################################################
+#' ilo_dynamic_panel |>
+#'   specify_bvarPANEL$new(exogenous = ilo_exogenous_variables) |>
+#'   estimate(S = 10) |> 
+#'   estimate(S = 10) |> 
+#'   summary()
+#' 
+#' @export
+summary.PosteriorBVARs = function(
+    object,
+    ...
+) {
+  
+  S         = dim(object$posterior$A_c)[4]
+  C         = dim(object$posterior$A_c)[3]
+  N         = dim(object$posterior$A_c)[2]
+  K         = dim(object$posterior$A_c)[1]
+  p         = object$last_draw$p
+  d         = K - N * p
+  
+  out       = list()
+  param     = c("A", "Sigma")
+  country_names = names(object$last_draw$data_matrices$Y)
+  
+  # country-specific parameter summary
+  for (c in 1:C) {
+    
+    out_c         = list()
+    out_c$Sigma   = list()
+    out_c$A       = list()
+    
+    for (n in 1:N) {
+      
+      Sigma_c       = matrix(object$posterior$Sigma_c[n,1:n,c,], nrow = n)
+      out_c$Sigma[[n]] = matrix(
+        cbind(
+          apply(Sigma_c, 1, mean),
+          apply(Sigma_c, 1, sd),
+          apply(Sigma_c, 1, quantile, probs = 0.05),
+          apply(Sigma_c, 1, quantile, probs = 0.95)
+        ),
+        ncol = 4
+      )
+      colnames(out_c$Sigma[[n]]) = c("mean", "sd", "5% quantile", "95% quantile")
+      rownames(out_c$Sigma[[n]]) = paste0("Sigma[", n, ",", 1:n, "]")  
+      
+      A_c      = object$posterior$A_c[,n,c,]  
+      out_c$A[[n]] = cbind(
+        apply(A_c, 1, mean),
+        apply(A_c, 1, sd),
+        apply(A_c, 1, quantile, probs = 0.05),
+        apply(A_c, 1, quantile, probs = 0.95)
+      )
+      colnames(out_c$A[[n]]) = c("mean", "sd", "5% quantile", "95% quantile")
+      
+      Anames  = c(
+        paste0(
+          rep("lag", p * N),
+          kronecker((1:p), rep(1, N)),
+          rep("_var", p * N),
+          kronecker((1:N), rep(1, p))
+        ),
+        "const"
+      )
+      if (d > 1) {
+        Anames = c(Anames, paste0("exo", 1:(d - 1)))
+      }
+      rownames(out_c$A[[n]]) = Anames
+    } # END n loop
+    
+    names(out_c$Sigma) = paste0("equation", 1:N)
+    names(out_c$A) = paste0("equation", 1:N)
+    
+    hyper         = rbind(
+        object$posterior$nu[c,],
+        object$posterior$m[c,],
+        object$posterior$w[c,],
+        object$posterior$s[c,]
+      )
+    
+    out_c$hyper  = matrix(
+      cbind(
+        apply(hyper, 1, mean),
+        apply(hyper, 1, sd),
+        apply(hyper, 1, quantile, probs = 0.05),
+        apply(hyper, 1, quantile, probs = 0.95)
+      ),
+      ncol = 4
+    )
+    colnames(out_c$hyper) = c("mean", "sd", "5% quantile", "95% quantile")
+    rownames(out_c$hyper) = c("nu", "m", "w", "s")
+    
+    out[[c]]  = out_c
+  } # END c loop
+  
+  names(out) = country_names
+
+  return(out)
+} # END summary.PosteriorBVARs
+
+
+
+
+
+
+
+
 #' @title Provides posterior summary of forecast error variance decompositions
 #'
 #' @description Provides posterior means of the forecast error variance 
