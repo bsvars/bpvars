@@ -26,12 +26,17 @@ mean, standard deviations, as well as 5 and 95 percentiles.
 }
 \examples{
 # specify the model
-specification = specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
+specification = specify_bvarPANEL$new(
+      ilo_dynamic_panel, 
+      exogenous = ilo_exogenous_variables)
 burn_in       = estimate(specification, 10)             # run the burn-in
 posterior     = estimate(burn_in, 10)                   # estimate the model
 
 # forecast 6 years ahead
-predictive    = forecast(posterior, 6, exogenous_forecast = ilo_exogenous_forecasts)
+predictive    = forecast(
+      posterior, 
+      6, 
+      exogenous_forecast = ilo_exogenous_forecasts)
 summary(predictive, which_c = "POL")
 
 # workflow with the pipe |>

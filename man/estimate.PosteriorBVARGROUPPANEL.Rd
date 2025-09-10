@@ -100,7 +100,7 @@ by the \code{estimate()} function.
 specification = specify_bvarGroupPANEL$new(
      data = ilo_dynamic_panel,
      exogenous = ilo_exogenous_variables,
-     group_allocation = rep(1:2, length.out = 189)
+     group_allocation = country_grouping_region
 )
 burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
@@ -108,7 +108,8 @@ posterior     = estimate(burn_in, 10)                   # estimate the model; us
 }
 \seealso{
 \code{\link{bpvars}}, \code{\link{specify_bvarGroupPANEL}}, 
-\code{\link{specify_posterior_bvarGroupPANEL}}, \code{\link{summary.PosteriorBVARPANEL}}
+\code{\link{specify_posterior_bvarGroupPANEL}}, \code{\link{summary.PosteriorBVARGROUPPANEL}},
+\code{\link{forecast.PosteriorBVARGROUPPANEL}}
 }
 \author{
 Tomasz Woźniak \email{wozniak.tom@pm.me}

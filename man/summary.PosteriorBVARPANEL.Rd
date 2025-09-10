@@ -25,7 +25,9 @@ percentiles of the parameters for all \code{C} countries.
 }
 \examples{
 # specify the model
-specification = specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
+specification = specify_bvarPANEL$new(
+      ilo_dynamic_panel, 
+      exogenous = ilo_exogenous_variables)
 burn_in       = estimate(specification, 10)             # run the burn-in
 posterior     = estimate(burn_in, 10)                   # estimate the model
 summary(posterior)
