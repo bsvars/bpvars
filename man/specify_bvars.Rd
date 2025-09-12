@@ -64,6 +64,18 @@ spec$get_type()
 
 
 ## ------------------------------------------------
+## Method `specify_bvars$set_prior2objective`
+## ------------------------------------------------
+
+data(ilo_dynamic_panel)
+spec = specify_bvars$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$set_prior2objective()
+
+
+## ------------------------------------------------
 ## Method `specify_bvars$set_global2pooled`
 ## ------------------------------------------------
 
@@ -88,6 +100,9 @@ spec$set_adaptiveMH(c(0.6, 0.4, 10, 0.1))
 
 }
 \references{
+Zellner (1971). \emph{An Introduction to Bayesian Inference in Econometrics}. 
+John Wiley & Sons.
+
 Zellner, Hong (1989). Forecasting international growth rates using 
 Bayesian shrinkage and other procedures. \emph{Journal of Econometrics}, 
 \bold{40}(1), 183–202, \doi{10.1016/0304-4076(89)90036-5}.
@@ -117,6 +132,7 @@ start adapting, the initial scaling rate}
 \item \href{#method-BVARs-get_prior}{\code{specify_bvars$get_prior()}}
 \item \href{#method-BVARs-get_starting_values}{\code{specify_bvars$get_starting_values()}}
 \item \href{#method-BVARs-get_type}{\code{specify_bvars$get_type()}}
+\item \href{#method-BVARs-set_prior2objective}{\code{specify_bvars$set_prior2objective()}}
 \item \href{#method-BVARs-set_global2pooled}{\code{specify_bvars$set_global2pooled()}}
 \item \href{#method-BVARs-set_adaptiveMH}{\code{specify_bvars$set_adaptiveMH()}}
 \item \href{#method-BVARs-clone}{\code{specify_bvars$clone()}}
@@ -250,6 +266,30 @@ spec = specify_bvarPANEL$new(
    p = 4
 )
 spec$get_type()
+
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BVARs-set_prior2objective"></a>}}
+\if{latex}{\out{\hypertarget{method-BVARs-set_prior2objective}{}}}
+\subsection{Method \code{set_prior2objective()}}{
+Sets the VAR model priors to objective prior by Zellner (1972).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{specify_bvars$set_prior2objective()}\if{html}{\out{</div>}}
+}
+
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data(ilo_dynamic_panel)
+spec = specify_bvars$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$set_prior2objective()
 
 }
 \if{html}{\out{</div>}}
