@@ -18,7 +18,8 @@ Rcpp::List bvars_cpp(
     const Rcpp::List&             starting_values,
     const int                     thin, // introduce thinning
     const bool                    show_progress,
-    const arma::vec&              adptive_alpha_gamma // 2x1 vector with target acceptance rate and step size
+    const arma::vec&              adptive_alpha_gamma, // 2x1 vector with target acceptance rate and step size
+    const bool                    type_objective = false
 ) {
 
   // Progress bar setup
@@ -47,13 +48,19 @@ Rcpp::List bvars_cpp(
   vec     aux_w       = as<vec>(starting_values["w"]);
   vec     aux_s       = as<vec>(starting_values["s"]);
 
-  mat     prior_M     = as<mat>(prior["M"]);
-  mat     prior_W     = as<mat>(prior["W"]);
-  mat     prior_S_inv = as<mat>(prior["S_inv"]);
-  mat     prior_S     = inv_sympd(prior_S_inv);
-  
   const int C         = aux_A_c.n_slices;
   const int N         = aux_A_c.n_cols;
+  const int K         = aux_A_c.n_rows;
+  
+  mat     prior_M     = as<mat>(prior["M"]);
+  mat     prior_W     = as<mat>(prior["W"]);
+  mat     prior_W_inv = inv_sympd(prior_W);
+
+  mat     prior_S_inv = as<mat>(prior["S_inv"]);
+  mat     prior_S(N, N);
+  if ( !type_objective ) {
+    prior_S           = inv_sympd(prior_S_inv);
+  }
   
   const int   SS    = floor(S / thin);
 
@@ -75,6 +82,7 @@ Rcpp::List bvars_cpp(
     
     // the initial value for the adaptive_scale is set to the negative inverse of
     // Hessian for the posterior log_kenel for nu
+    
     adaptive_scale(c)     = cov_nu_bvars(aux_nu(c), N);
   } // END c loop
 
@@ -91,21 +99,33 @@ Rcpp::List bvars_cpp(
     if (s % 200 == 0) checkUserInterrupt();
 
     // sample aux_m, aux_w, aux_s
-    aux_m       = sample_m_bvars(aux_A_c, aux_Sigma_c_inv, aux_w, prior);
-    aux_w       = sample_w_bvars(aux_A_c, aux_Sigma_c_inv, aux_m, prior);
-    aux_s       = sample_s_bvars(aux_Sigma_c_inv, aux_nu, prior);
+    if ( !type_objective ) {
+      aux_m       = sample_m_bvars(aux_A_c, aux_Sigma_c_inv, aux_w, prior);
+      aux_w       = sample_w_bvars(aux_A_c, aux_Sigma_c_inv, aux_m, prior);
+      aux_s       = sample_s_bvars(aux_Sigma_c_inv, aux_nu, prior);
+    }
 
     // sample aux_nu
-    aux_nu_tmp  = sample_nu_bvars ( aux_nu, adaptive_scale, aux_s, aux_Sigma_c, aux_Sigma_c_inv, prior, s, adptive_alpha_gamma );
-    aux_nu          = as<vec>(aux_nu_tmp["aux_nu"]);
-    adaptive_scale  = as<vec>(aux_nu_tmp["adaptive_scale"]);
+    if ( !type_objective ) {
+      aux_nu_tmp  = sample_nu_bvars ( aux_nu, adaptive_scale, aux_s, aux_Sigma_c, aux_Sigma_c_inv, prior, s, adptive_alpha_gamma );
+      aux_nu          = as<vec>(aux_nu_tmp["aux_nu"]);
+      adaptive_scale  = as<vec>(aux_nu_tmp["adaptive_scale"]);
+    }
 
     // sample aux_A_c, aux_Sigma_c
+    mat aux_V_inv(K, K);
+    
     for (int c=0; c<C; c++) {
-      field<mat> tmp_A_c_Sigma_c  = sample_A_c_Sigma_c_bvars( y(c), x(c), aux_m(c) * prior_M, aux_w(c) * prior_W, aux_s(c) * prior_S, aux_nu(c) );
+      
+      if ( !type_objective ) {
+        aux_V_inv = prior_W_inv / aux_w(c);
+      }
+
+      field<mat> tmp_A_c_Sigma_c  = sample_A_c_Sigma_c_bvars( y(c), x(c), aux_m(c) * prior_M, aux_V_inv, aux_s(c) * prior_S, aux_nu(c) );
       aux_A_c.slice(c)            = tmp_A_c_Sigma_c(0);
       aux_Sigma_c.slice(c)        = tmp_A_c_Sigma_c(1);
       aux_Sigma_c_inv.slice(c)    = inv_sympd( aux_Sigma_c.slice(c) );
+      
     } // END c loop
 
     
