@@ -570,7 +570,7 @@ summary.PosteriorBVARs = function(
 #'   estimate(S = 10) |> 
 #'   estimate(S = 20) |> 
 #'   compute_variance_decompositions(horizon = 4) |> 
-#'   summary(which_c = "global")
+#'   summary(which_c = "COL")
 #' 
 #' @export
 summary.PosteriorFEVDPANEL = function(

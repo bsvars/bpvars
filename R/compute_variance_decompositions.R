@@ -64,15 +64,13 @@ compute_variance_decompositions.PosteriorBVARPANEL <- function(posterior, horizo
   fff             = .Call(`_bpvars_panel_variance_decompositions`, 
                           posterior_Sigma, 
                           posterior_A, 
-                          posterior_Sg, 
-                          posterior_Ag, 
                           horizon, 
                           p, 
                           TRUE
                     )
   
   fevd            = list()
-  for (c in 1:(C + 1)) {
+  for (c in 1:C) {
     fevd_c          = array(NA, c(N, N, horizon + 1, S), dimnames = list(colnames(Y[[1]]), colnames(Y[[1]]), 0:horizon, 1:S))
     for (s in 1:S) {
       fevd_c[,,,s]  = fff[c, s][[1]]
@@ -83,7 +81,7 @@ compute_variance_decompositions.PosteriorBVARPANEL <- function(posterior, horizo
     fevd[[c]]       = fevd_c
   }
   
-  names(fevd) = c(c_names, "global")
+  names(fevd) = c_names
   
   class(fevd) <- "PosteriorFEVDPANEL"
   return(fevd)
