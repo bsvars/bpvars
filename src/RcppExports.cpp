@@ -799,26 +799,24 @@ RcppExport SEXP _bpvars_Sigma2B_c(SEXP posterior_Sigma_cSEXP, SEXP lowerSEXP) {
     return rcpp_result_gen;
 }
 // panel_variance_decompositions
-arma::field<arma::cube> panel_variance_decompositions(arma::field<arma::cube>& posterior_Sigma, arma::field<arma::cube>& posterior_A, arma::cube& global_Sigma, arma::cube& global_A, const int horizon, const int p, const bool lower);
-static SEXP _bpvars_panel_variance_decompositions_try(SEXP posterior_SigmaSEXP, SEXP posterior_ASEXP, SEXP global_SigmaSEXP, SEXP global_ASEXP, SEXP horizonSEXP, SEXP pSEXP, SEXP lowerSEXP) {
+arma::field<arma::cube> panel_variance_decompositions(arma::field<arma::cube>& posterior_Sigma, arma::field<arma::cube>& posterior_A, const int horizon, const int p, const bool lower);
+static SEXP _bpvars_panel_variance_decompositions_try(SEXP posterior_SigmaSEXP, SEXP posterior_ASEXP, SEXP horizonSEXP, SEXP pSEXP, SEXP lowerSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< arma::field<arma::cube>& >::type posterior_Sigma(posterior_SigmaSEXP);
     Rcpp::traits::input_parameter< arma::field<arma::cube>& >::type posterior_A(posterior_ASEXP);
-    Rcpp::traits::input_parameter< arma::cube& >::type global_Sigma(global_SigmaSEXP);
-    Rcpp::traits::input_parameter< arma::cube& >::type global_A(global_ASEXP);
     Rcpp::traits::input_parameter< const int >::type horizon(horizonSEXP);
     Rcpp::traits::input_parameter< const int >::type p(pSEXP);
     Rcpp::traits::input_parameter< const bool >::type lower(lowerSEXP);
-    rcpp_result_gen = Rcpp::wrap(panel_variance_decompositions(posterior_Sigma, posterior_A, global_Sigma, global_A, horizon, p, lower));
+    rcpp_result_gen = Rcpp::wrap(panel_variance_decompositions(posterior_Sigma, posterior_A, horizon, p, lower));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _bpvars_panel_variance_decompositions(SEXP posterior_SigmaSEXP, SEXP posterior_ASEXP, SEXP global_SigmaSEXP, SEXP global_ASEXP, SEXP horizonSEXP, SEXP pSEXP, SEXP lowerSEXP) {
+RcppExport SEXP _bpvars_panel_variance_decompositions(SEXP posterior_SigmaSEXP, SEXP posterior_ASEXP, SEXP horizonSEXP, SEXP pSEXP, SEXP lowerSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_bpvars_panel_variance_decompositions_try(posterior_SigmaSEXP, posterior_ASEXP, global_SigmaSEXP, global_ASEXP, horizonSEXP, pSEXP, lowerSEXP));
+        rcpp_result_gen = PROTECT(_bpvars_panel_variance_decompositions_try(posterior_SigmaSEXP, posterior_ASEXP, horizonSEXP, pSEXP, lowerSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -1737,7 +1735,7 @@ static int _bpvars_RcppExport_validate(const char* sig) {
         signatures.insert("arma::mat(*log_dnormm_joint)(arma::mat&,arma::cube&,arma::field<arma::cube>&)");
         signatures.insert("double(*log_mean)(arma::vec)");
         signatures.insert("arma::cube(*Sigma2B_c)(arma::cube&,const bool)");
-        signatures.insert("arma::field<arma::cube>(*panel_variance_decompositions)(arma::field<arma::cube>&,arma::field<arma::cube>&,arma::cube&,arma::cube&,const int,const int,const bool)");
+        signatures.insert("arma::field<arma::cube>(*panel_variance_decompositions)(arma::field<arma::cube>&,arma::field<arma::cube>&,const int,const int,const bool)");
         signatures.insert("arma::field<arma::mat>(*rmniw1)(const arma::mat&,const arma::mat&,const arma::mat&,const double&)");
         signatures.insert("arma::mat(*rmn1)(const arma::mat&,const arma::mat&,const arma::mat&)");
         signatures.insert("double(*sample_m)(const arma::mat&,const arma::mat&,const double&,const double&,const Rcpp::List&)");
@@ -1836,7 +1834,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_bpvars_log_dnormm_joint", (DL_FUNC) &_bpvars_log_dnormm_joint, 3},
     {"_bpvars_log_mean", (DL_FUNC) &_bpvars_log_mean, 1},
     {"_bpvars_Sigma2B_c", (DL_FUNC) &_bpvars_Sigma2B_c, 2},
-    {"_bpvars_panel_variance_decompositions", (DL_FUNC) &_bpvars_panel_variance_decompositions, 7},
+    {"_bpvars_panel_variance_decompositions", (DL_FUNC) &_bpvars_panel_variance_decompositions, 5},
     {"_bpvars_rmniw1", (DL_FUNC) &_bpvars_rmniw1, 4},
     {"_bpvars_rmn1", (DL_FUNC) &_bpvars_rmn1, 3},
     {"_bpvars_sample_m", (DL_FUNC) &_bpvars_sample_m, 5},

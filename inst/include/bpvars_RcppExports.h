@@ -445,17 +445,17 @@ namespace bpvars {
         return Rcpp::as<arma::cube >(rcpp_result_gen);
     }
 
-    inline arma::field<arma::cube> panel_variance_decompositions(arma::field<arma::cube>& posterior_Sigma, arma::field<arma::cube>& posterior_A, arma::cube& global_Sigma, arma::cube& global_A, const int horizon, const int p, const bool lower = true) {
-        typedef SEXP(*Ptr_panel_variance_decompositions)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+    inline arma::field<arma::cube> panel_variance_decompositions(arma::field<arma::cube>& posterior_Sigma, arma::field<arma::cube>& posterior_A, const int horizon, const int p, const bool lower = true) {
+        typedef SEXP(*Ptr_panel_variance_decompositions)(SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_panel_variance_decompositions p_panel_variance_decompositions = NULL;
         if (p_panel_variance_decompositions == NULL) {
-            validateSignature("arma::field<arma::cube>(*panel_variance_decompositions)(arma::field<arma::cube>&,arma::field<arma::cube>&,arma::cube&,arma::cube&,const int,const int,const bool)");
+            validateSignature("arma::field<arma::cube>(*panel_variance_decompositions)(arma::field<arma::cube>&,arma::field<arma::cube>&,const int,const int,const bool)");
             p_panel_variance_decompositions = (Ptr_panel_variance_decompositions)R_GetCCallable("bpvars", "_bpvars_panel_variance_decompositions");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_panel_variance_decompositions(Shield<SEXP>(Rcpp::wrap(posterior_Sigma)), Shield<SEXP>(Rcpp::wrap(posterior_A)), Shield<SEXP>(Rcpp::wrap(global_Sigma)), Shield<SEXP>(Rcpp::wrap(global_A)), Shield<SEXP>(Rcpp::wrap(horizon)), Shield<SEXP>(Rcpp::wrap(p)), Shield<SEXP>(Rcpp::wrap(lower)));
+            rcpp_result_gen = p_panel_variance_decompositions(Shield<SEXP>(Rcpp::wrap(posterior_Sigma)), Shield<SEXP>(Rcpp::wrap(posterior_A)), Shield<SEXP>(Rcpp::wrap(horizon)), Shield<SEXP>(Rcpp::wrap(p)), Shield<SEXP>(Rcpp::wrap(lower)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
