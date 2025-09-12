@@ -375,6 +375,42 @@ specify_bvars = R6::R6Class(
       private$type
     }, # END get_starting_values
     
+    
+    #' @description
+    #' Sets the VAR model priors to objective prior by Zellner (1972).
+    #' 
+    #' @references
+    #' Zellner (1971). \emph{An Introduction to Bayesian Inference in Econometrics}. 
+    #' John Wiley & Sons.
+    #' 
+    #' @examples
+    #' data(ilo_dynamic_panel)
+    #' spec = specify_bvars$new(
+    #'    data = ilo_dynamic_panel,
+    #'    p = 4
+    #' )
+    #' spec$set_prior2objective()
+    #' 
+    set_prior2objective = function() {
+      
+      stopifnot("This model cannot be adjusted. Only the default specification can." 
+                = private$type == "wozniak")
+      
+      message("Setting the model priors to objective prior by Zellner (1972).")
+      private$type                = "zellner"
+      
+      C = length(self$data_matrices$Y)
+      N = ncol(self$data_matrices$Y[[1]])
+      
+      # values used in computations
+      self$starting_values$nu   = rep(-(N + 1), C)
+      self$starting_values$m    = rep(0, C)
+      self$starting_values$w    = rep(0, C)
+      self$starting_values$s    = rep(0, C)
+      
+    }, # END set_prior2objective
+    
+    
     #' @description
     #' Sets the prior mean of the global autoregressive parameters to the OLS 
     #' pooled panel estimator following Zellner, Hong (1989).
@@ -397,7 +433,7 @@ specify_bvars = R6::R6Class(
     #' spec$set_global2pooled()
     #' 
     set_global2pooled = function(x) {
-      stopifnot("Argument x has to be a numeric vector of length 4." 
+      stopifnot("This model cannot be adjusted. Only the default specification can." 
                 = private$type == "wozniak")
       C = length(self$data_matrices$Y)
       N = ncol(self$data_matrices$Y[[1]])
