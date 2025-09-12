@@ -575,13 +575,12 @@ arma::field<arma::mat> sample_A_c_Sigma_c_bvars (
     const arma::mat&    Y_c,              // T_cxN
     const arma::mat&    X_c,              // T_cxK
     const arma::mat&    aux_A,            // KxN
-    const arma::mat&    aux_V,            // KxK
+    const arma::mat&    aux_V_inv,            // KxK
     const arma::mat&    aux_Sigma,        // NxN
     const double&       aux_nu            // scalar
 ) {
   int T_c           = Y_c.n_rows;
   
-  mat aux_V_inv     = inv_sympd( aux_V );
   mat V_bar_inv     = X_c.t() * X_c + aux_V_inv;
   mat V_bar         = inv_sympd( V_bar_inv );
   V_bar             = 0.5 * (V_bar + V_bar.t());
@@ -589,9 +588,14 @@ arma::field<arma::mat> sample_A_c_Sigma_c_bvars (
   mat Sigma_bar     = aux_Sigma + Y_c.t() * Y_c + aux_A.t() * aux_V_inv * aux_A - A_bar.t() * V_bar_inv * A_bar;
   double nu_bar     = T_c + aux_nu;
   
-  // Rcout << "  nu_bar: " << nu_bar << std::endl;
-  // Rcout << "  Sigma_bar: " << Sigma_bar.is_sympd() << std::endl;
-  arma::field<arma::mat> aux_A_c_Sigma_c = rmniw1( A_bar, V_bar, Sigma_bar, nu_bar );
+  field<mat> aux_A_c_Sigma_c(2);
+  try {
+    aux_A_c_Sigma_c = rmniw1( A_bar, V_bar, Sigma_bar, nu_bar );
+  } catch (std::runtime_error &e) {
+    Sigma_bar += 0.2 * eye(size(Sigma_bar));
+    aux_A_c_Sigma_c = rmniw1( A_bar, V_bar, Sigma_bar, nu_bar );
+  }
+  
   return aux_A_c_Sigma_c;
 } // END sample_A_c_Sigma_c_bvars
 
