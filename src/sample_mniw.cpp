@@ -592,7 +592,7 @@ arma::field<arma::mat> sample_A_c_Sigma_c_bvars (
   try {
     aux_A_c_Sigma_c = rmniw1( A_bar, V_bar, Sigma_bar, nu_bar );
   } catch (std::runtime_error &e) {
-    Sigma_bar += 0.2 * eye(size(Sigma_bar));
+    Sigma_bar += trace(Sigma_bar) * eye(size(Sigma_bar));
     aux_A_c_Sigma_c = rmniw1( A_bar, V_bar, Sigma_bar, nu_bar );
   }
   
