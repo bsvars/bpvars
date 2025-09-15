@@ -74,6 +74,7 @@ forecast_poos_recursively.BVARPANEL <- function(
   starting_values     = model_spec$starting_values$get_starting_values()
   data_matrices       = model_spec$data_matrices$get_data_matrices()
   adaptiveMH          = model_spec$adaptiveMH
+  type_wozniak        = model_spec$get_type() == "wozniak"
   thin                = 1
   
   C                   = length(data_matrices$Y)
@@ -101,7 +102,7 @@ forecast_poos_recursively.BVARPANEL <- function(
   # form an output object
   
   
-  foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvarPANEL`, S, S_burn, horizons, training_sample, data_matrices$Y, data_matrices$X, conditional_forecast, exogenous_forecast, prior, starting_values, LB, UB, show_progress, adaptiveMH)
+  foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvarPANEL`, S, S_burn, horizons, training_sample, data_matrices$Y, data_matrices$X, conditional_forecast, exogenous_forecast, prior, starting_values, LB, UB, show_progress, adaptiveMH, type_wozniak)
   
   
   out                 = vector("list", forecasting_sample)
