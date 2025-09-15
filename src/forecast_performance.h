@@ -10,17 +10,19 @@ Rcpp::List bvarPANEL_noprog(
     const Rcpp::List&             X,          // a C-list of T_cxK elements
     const Rcpp::List&             prior,      // a list of priors
     const Rcpp::List&             starting_values, 
-    const arma::vec&              adptive_alpha_gamma // 2x1 vector with target acceptance rate and step size
+    const arma::vec&              adptive_alpha_gamma, // 2x1 vector with target acceptance rate and step size
+    const bool                    type_wozniak = true
 );
 
 
 Rcpp::List bvarPANEL_just_sv_out (
     const int&                    S,          // No. of posterior draws
-    const Rcpp::List&             Y,          // a C-list of T_cxN elements
-    const Rcpp::List&             X,          // a C-list of T_cxK elements
+    const Rcpp::List              Y,          // a C-list of T_cxN elements
+    const Rcpp::List              X,          // a C-list of T_cxK elements
     const Rcpp::List&             prior,      // a list of priors
     const Rcpp::List&             starting_values, 
-    const arma::vec&              adptive_alpha_gamma // 2x1 vector with target acceptance rate and step size
+    const arma::vec&              adptive_alpha_gamma, // 2x1 vector with target acceptance rate and step size
+    const bool                    type_wozniak = true
 );
 
 
@@ -92,8 +94,8 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL (
     const int&                    S_burn,             // No. of posterior draws
     const arma::ivec              horizons,           // a vector for forecasting horizons for the application
     const int&                    training_sample,    // No. of observations for estimation (R_training_sample--)
-    const Rcpp::List&             Y,                  // a C-list of T_cxN elements
-    const Rcpp::List&             X,                  // a C-list of T_cxK elements
+    const Rcpp::List              Y,                  // a C-list of T_cxN elements
+    const Rcpp::List              X,                  // a C-list of T_cxK elements
     Rcpp::List&                   cond_forecasts,     // (C)(horizon, N)
     Rcpp::List&                   exog_forecasts,     // (C)(horizon, d)
     const Rcpp::List&             prior,              // a list of priors
@@ -101,7 +103,8 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL (
     const arma::vec               LB,                 // Nx1 lower bounds for truncation
     const arma::vec               UB,                 // Nx1 upper bounds for truncation
     const bool                    show_progress,
-    const arma::vec&              adptive_alpha_gamma // 2x1 vector with target acceptance rate and step size
+    const arma::vec&              adptive_alpha_gamma,// 2x1 vector with target acceptance rate and step size
+    const bool                    type_wozniak = true
 );
 
 
