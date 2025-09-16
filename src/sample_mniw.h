@@ -41,7 +41,7 @@ arma::vec sample_m_bvars (
 
 double sample_m_gg (
     const arma::cube&   aux_A_g,    // KxNxG
-    const arma::mat&    aux_V,    // KxK
+    const arma::mat&    aux_V_inv,    // KxK
     const double&       aux_s,   // scalar
     const Rcpp::List&   prior
 );
@@ -80,7 +80,7 @@ arma::vec sample_s_bvars (
 double sample_s_gg (
     const arma::cube&   aux_A_g,      // KxNxG
     const arma::cube&   aux_Sigma_g,  // NxNxG
-    const arma::mat&    aux_V,      // KxK
+    const arma::mat&    aux_V_inv,      // KxK
     const double&       aux_m,      // scalar
     const Rcpp::List&   prior
 );
@@ -266,6 +266,20 @@ double log_kernel_ga (
 );
 
 
+double log_kernel_ga_gg (
+    const arma::cube&   aux_A_g,          // KxNxG
+    const arma::cube&   aux_Sigma_g,      // (N, N, G)
+    const arma::cube&   aux_A_c,          // (K, N, G)
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxG
+    const arma::mat&    aux_V_inv,        // KxK
+    const arma::vec&    aux_ga,           // C
+    const double&       aux_nu,
+    const double&       aux_m,
+    const double&       aux_s,
+    const Rcpp::List&   prior
+);
+
+
 arma::vec sample_group_allocation (
     arma::vec&          aux_ga,           // (C, 1)
     const arma::cube&   yt,               // (T, N, C)
@@ -277,6 +291,20 @@ arma::vec sample_group_allocation (
     const arma::mat&    aux_Sigma,        // NxN
     const arma::mat&    aux_Sigma_inv,    // NxN
     const double&       aux_nu            // scalar
+);
+
+
+arma::vec sample_group_allocation_gg (
+    arma::vec&          aux_ga,           // C
+    const arma::cube&   aux_A_g,          // KxNxG
+    const arma::cube&   aux_Sigma_g,      // (N, N, G)
+    const arma::cube&   aux_A_c,          // (K, N, G)
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxG
+    const arma::mat&    aux_V_inv,        // KxK
+    const double&       aux_nu,
+    const double&       aux_m,
+    const double&       aux_s,
+    const Rcpp::List&   prior
 );
 
 
