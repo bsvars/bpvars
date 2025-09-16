@@ -17,7 +17,7 @@ the parameters.}
 }
 \value{
 A list reporting the posterior mean, standard deviations, as well as 5 and 95 
-percentiles of the country-specific and global parameters.
+percentiles of the country-specific parameters.
 }
 \description{
 Provides posterior mean, standard deviations, as well as 5 and 95 
