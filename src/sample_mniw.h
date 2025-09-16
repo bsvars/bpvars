@@ -39,6 +39,14 @@ arma::vec sample_m_bvars (
 );
 
 
+double sample_m_gg (
+    const arma::cube&   aux_A_g,    // KxNxG
+    const arma::mat&    aux_V,    // KxK
+    const double&       aux_s,   // scalar
+    const Rcpp::List&   prior
+);
+
+
 double sample_w (
     const arma::mat&    aux_V,    // KxK
     const Rcpp::List&   prior
@@ -69,6 +77,15 @@ arma::vec sample_s_bvars (
 );
 
 
+double sample_s_gg (
+    const arma::cube&   aux_A_g,      // KxNxG
+    const arma::cube&   aux_Sigma_g,  // NxNxG
+    const arma::mat&    aux_V,      // KxK
+    const double&       aux_m,      // scalar
+    const Rcpp::List&   prior
+);
+
+
 double log_kernel_nu (
     const double&       aux_nu,           // scalar
     const arma::cube&   aux_Sigma_c_cpp,  // NxNxC
@@ -87,6 +104,19 @@ double log_kernel_nu_bvars (
     const arma::mat&    aux_Sigma_c_cpp,  // NxNxC
     const arma::mat&    prior_S,        // NxN
     const double&       prior_lambda,     // scalar
+    const int&          N,                // scalar
+    const int&          K                 // scalar
+);
+
+
+double log_kernel_nu_gg (
+    const double&       aux_nu,           // scalar
+    const arma::cube&   aux_Sigma_c_cpp,  // NxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::cube&   aux_Sigma_g,      // NxNxG
+    const double&       prior_lambda,     // scalar
+    const arma::vec&    group_allocation, // C
+    const int&          C,                // scalar
     const int&          N,                // scalar
     const int&          K                 // scalar
 );
@@ -129,11 +159,34 @@ Rcpp::List sample_nu_bvars (
 );
 
 
+arma::vec sample_nu_gg (
+    double&             aux_nu,           // scalar
+    double&             adaptive_scale,
+    const arma::cube&   aux_Sigma_c_cpp,  // NxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::cube&   aux_Sigma_g,      // NxNxG
+    const arma::vec&    group_allocation, // C
+    const Rcpp::List&   prior,
+    const int&          iteration,        // MCMC iteration passed
+    const arma::vec&    adptive_alpha_gamma // 2x1 vector with target acceptance rate and step size
+);
+
+
 arma::mat sample_Sigma (
     const arma::cube&   aux_Sigma_c_inv,  // NxNxC
     const double&       aux_s,            // scalar
     const double&       aux_nu,           // scalar
     const Rcpp::List&   prior
+);
+
+
+arma::cube sample_Sigma_g (
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::vec&    group_allocation, // C
+    const double&       aux_s,            // scalar
+    const double&       aux_nu,           // scalar
+    const Rcpp::List&   prior,
+    const int&          G                 
 );
 
 
@@ -152,6 +205,30 @@ arma::field<arma::mat> sample_AV_jaro (
     const arma::cube&   aux_Sigma_c_inv,  // NxNxC
     arma::mat&          aux_A,            // KxN
     double&             aux_s,            // scalar
+    const Rcpp::List&   prior
+);
+
+
+arma::cube sample_A_g (
+    const arma::cube&   aux_A_c_cpp,      // KxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::mat&    aux_V,            // KxK
+    const arma::vec&    group_allocation, // C
+    const double&       aux_s,            // scalar
+    const double&       aux_m,            // scalar
+    const Rcpp::List&   prior,
+    const int&          G                 // scalar
+);
+
+
+arma::mat sample_V_gg (
+    const arma::cube&   aux_A_c_cpp,      // KxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::cube&   aux_A_g,          // KxNxG
+    const arma::vec&    group_allocation, // C
+    const double&       aux_s,            // scalar
+    const double&       aux_m,            // scalar
+    const double&       aux_w,            // scalar
     const Rcpp::List&   prior
 );
 

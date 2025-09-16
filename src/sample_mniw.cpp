@@ -100,6 +100,37 @@ arma::vec sample_m_bvars (
 
 
 
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+double sample_m_gg (
+    const arma::cube&   aux_A_g,    // KxNxG
+    const arma::mat&    aux_V,    // KxK
+    const double&       aux_s,   // scalar
+    const Rcpp::List&   prior
+) {
+  
+  const int G       = aux_A_g.n_slices;
+  mat prior_S_inv   = as<mat>(prior["S_inv"]);
+  mat prior_M       = as<mat>(prior["M"]);
+  double prior_mu_m = as<double>(prior["mu_m"]);
+  double prior_sigma2_m = as<double>(prior["sigma2_m"]);
+  
+  mat aux_V_inv     = inv_sympd(aux_V);
+  vec mm            = vectorise(prior_M);
+  double sigma2_m_bar = 1 / ((1 / prior_sigma2_m) + G * as_scalar(mm.t() * kron(prior_S_inv / aux_s, aux_V_inv) * mm));
+  double gg_sum     = 0;
+  
+  for (int g=0; g<G; g++) {
+    vec aa          = vectorise(aux_A_g.slice(g));
+    gg_sum         += as_scalar(mm.t() * kron(prior_S_inv / aux_s, aux_V_inv) * aa);
+  }
+  double mu_m_bar       = sigma2_m_bar * ((prior_mu_m / prior_sigma2_m) + gg_sum);
+  
+  double out        = randn( distr_param(mu_m_bar, pow(sigma2_m_bar, 0.5)) );
+  return out;
+} // END sample_m_gg
+
+
 
 // [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
@@ -212,6 +243,41 @@ arma::vec sample_s_bvars (
 
 // [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
+double sample_s_gg (
+    const arma::cube&   aux_A_g,      // KxNxG
+    const arma::cube&   aux_Sigma_g,  // NxNxG
+    const arma::mat&    aux_V,      // KxK
+    const double&       aux_m,      // scalar
+    const Rcpp::List&   prior
+) {
+  
+  int N             = aux_A_g.n_cols;
+  int K             = aux_A_g.n_rows;
+  int G             = aux_A_g.n_slices;
+  
+  mat prior_M       = as<mat>(prior["M"]);
+  mat prior_S_inv   = as<mat>(prior["S_inv"]);
+  mat prior_S_Sigma_inv = as<mat>(prior["S_Sigma_inv"]);
+  double prior_s_s  = as<double>(prior["s_s"]);
+  double prior_nu_s = as<double>(prior["nu_s"]);
+  double prior_mu_Sigma = as<double>(prior["mu_Sigma"]);
+  
+  double gg_sum     = 0;
+  for (int g=0; g<G; g++) {
+    mat quad_tmp1   = (aux_A_g.slice(g) - aux_m * prior_M) * prior_S_inv * trans(aux_A_g.slice(g) - aux_m * prior_M);
+    gg_sum         += trace(solve(aux_V, quad_tmp1)) + trace(prior_S_Sigma_inv * aux_Sigma_g.slice(g));
+  }
+  
+  double s_s_bar    = prior_s_s + gg_sum;
+  double nu_s_bar   = prior_nu_s + G * K * N + G * N * prior_mu_Sigma;
+  
+  double out        = s_s_bar / chi2rnd( nu_s_bar );
+  return out;
+} // END sample_s_gg
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
 double log_kernel_nu (
     const double&       aux_nu,           // scalar
     const arma::cube&   aux_Sigma_c_cpp,  // NxNxC
@@ -279,6 +345,56 @@ double log_kernel_nu_bvars (
   
   return log_kernel_nu;
 } // END log_kernel_nu_bvars
+
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+double log_kernel_nu_gg (
+    const double&       aux_nu,           // scalar
+    const arma::cube&   aux_Sigma_c_cpp,  // NxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::cube&   aux_Sigma_g,      // NxNxG
+    const double&       prior_lambda,     // scalar
+    const arma::vec&    group_allocation, // C
+    const int&          C,                // scalar
+    const int&          N,                // scalar
+    const int&          K                 // scalar
+) {
+  
+  const int G         = aux_Sigma_g.n_slices;
+  
+  double log_kernel_nu = 0;
+  
+  log_kernel_nu      -= 0.5 * C * N * (K + aux_nu) * log(2);
+  log_kernel_nu      += 0.5 * C * N * aux_nu * log(aux_nu - N - 1);
+  log_kernel_nu      -= prior_lambda * aux_nu;
+  
+  for (int g = 0; g < G; g++) {
+    
+    uvec gg           = find(group_allocation == g);
+    double ldSg       = log_det_sympd(aux_Sigma_g.slice(g));
+    log_kernel_nu    += 0.5 * aux_nu * gg.n_elem * ldSg;
+    
+    mat sum_aux_Sigma_c_inv(N, N);
+    for (int i = 0; i < gg.n_elem; i++) {
+      sum_aux_Sigma_c_inv += aux_Sigma_c_inv.slice(gg(i));
+    }
+    log_kernel_nu      -= 0.5 * (aux_nu - N - 1) * trace(aux_Sigma_g.slice(g) * sum_aux_Sigma_c_inv);
+  }
+  
+  mat sum_aux_Sigma_c_inv(N, N);
+  for (int c = 0; c < C; c++) {
+    double ldSc       = log_det_sympd(aux_Sigma_c_cpp.slice(c));
+    log_kernel_nu    -= 0.5 * (aux_nu + N + K + 1) * ldSc;
+  }
+  
+  for (int n = 1; n < N + 1; n++) {
+    log_kernel_nu    -= C * R::lgammafn(0.5 * (aux_nu + 1 - n));
+  } // EDN n loop
+  
+  return log_kernel_nu;
+} // END log_kernel_nu_gg
 
 
 
@@ -427,6 +543,56 @@ Rcpp::List sample_nu_bvars (
 } // END sample_nu_bvars
 
 
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+arma::vec sample_nu_gg (
+    double&             aux_nu,           // scalar
+    double&             adaptive_scale,
+    const arma::cube&   aux_Sigma_c_cpp,  // NxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::cube&   aux_Sigma_g,      // NxNxG
+    const arma::vec&    group_allocation, // C
+    const Rcpp::List&   prior,
+    const int&          iteration,        // MCMC iteration passed
+    const arma::vec&    adptive_alpha_gamma // 2x1 vector with target acceptance rate and step size
+) {
+  
+  double prior_lambda = as<double>(prior["lambda"]);
+  mat prior_M         = as<mat>(prior["M"]);
+  int K               = prior_M.n_rows;
+  int C               = aux_Sigma_c_cpp.n_slices;
+  int N               = aux_Sigma_g.n_rows;
+  
+  // negative inverted Hessian of full conditional log-kernel
+  double Cov_nu       = cov_nu(aux_nu, C, N);
+  
+  // Metropolis-Hastings
+  double aux_nu_star  = RcppTN::rtn1( aux_nu, adaptive_scale * Cov_nu, N + 1, R_PosInf );
+  double lk_nu_star   = log_kernel_nu_gg ( aux_nu_star, aux_Sigma_c_cpp, aux_Sigma_c_inv, aux_Sigma_g, prior_lambda, group_allocation, C, N, K );
+  double lk_nu_old    = log_kernel_nu_gg ( aux_nu, aux_Sigma_c_cpp, aux_Sigma_c_inv, aux_Sigma_g, prior_lambda, group_allocation, C, N, K );
+  double cgd_ratio    = RcppTN::dtn1( aux_nu_star, aux_nu, adaptive_scale * Cov_nu, N + 1, R_PosInf ) / 
+    RcppTN::dtn1( aux_nu, aux_nu_star, adaptive_scale * Cov_nu, N + 1, R_PosInf );
+  
+  double alpha        = 1;
+  double kernel_ratio = exp(lk_nu_star - lk_nu_old) * cgd_ratio;
+  if ( kernel_ratio < 1 ) alpha = kernel_ratio;
+  
+  double u            = randu();
+  if ( u < alpha ) {
+    aux_nu            = aux_nu_star;
+  }
+  
+  if (iteration > 1) {
+    adaptive_scale = exp( log(adaptive_scale) + 0.5 * log( 1 + pow(iteration, - adptive_alpha_gamma(1)) * (alpha - adptive_alpha_gamma(0))) );
+  }
+  
+  vec out = {aux_nu, adaptive_scale};
+  return out;
+} // END sample_nu_gg
+
+
+
 // [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
 arma::mat sample_Sigma (
@@ -453,6 +619,45 @@ arma::mat sample_Sigma (
   mat out           = wishrnd( S_Sigma_bar, mu_bar );
   return out;
 } // END sample_Sigma
+
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+arma::cube sample_Sigma_g (
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::vec&    group_allocation, // C
+    const double&       aux_s,            // scalar
+    const double&       aux_nu,           // scalar
+    const Rcpp::List&   prior,
+    const int&          G                 
+) {
+  
+  int N             = aux_Sigma_c_inv.n_rows;
+  
+  mat prior_S_Sigma_inv = as<mat>(prior["S_Sigma_inv"]);
+  double prior_mu_Sigma = as<double>(prior["mu_Sigma"]);
+  
+  cube aux_Sigma_g(N, N, G);
+  
+  for (int g=0; g<G; g++) {
+    uvec gg         = find(group_allocation == g);
+    
+    mat sum_aux_Sigma_c_inv(N, N);
+    for (int i = 0; i < gg.n_elem; i++) {
+      sum_aux_Sigma_c_inv += aux_Sigma_c_inv.slice(gg(i));
+    }
+    mat Sg_bar_inv = (prior_S_Sigma_inv / aux_s) + (aux_nu - N - 1) * sum_aux_Sigma_c_inv;
+    mat Sg_bar     = inv_sympd(Sg_bar_inv);
+    double mu_bar  = gg.n_elem * aux_nu + prior_mu_Sigma;
+    
+    aux_Sigma_g.slice(g) = wishrnd( Sg_bar, mu_bar );
+  }
+  
+  return aux_Sigma_g;
+} // END sample_Sigma_g
+
+
 
 
 // [[Rcpp::interfaces(cpp)]]
@@ -540,6 +745,95 @@ arma::field<arma::mat> sample_AV_jaro (
   aux_AVs(2)        = aux_s;
   return aux_AVs;
 } // END sample_AV_jaro
+
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+arma::cube sample_A_g (
+    const arma::cube&   aux_A_c_cpp,      // KxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::mat&    aux_V,            // KxK
+    const arma::vec&    group_allocation, // C
+    const double&       aux_s,            // scalar
+    const double&       aux_m,            // scalar
+    const Rcpp::List&   prior,
+    const int&          G                 // scalar
+) {
+  
+  int N             = aux_A_c_cpp.n_cols;
+  int K             = aux_A_c_cpp.n_rows;
+  
+  mat prior_S_inv   = as<mat>(prior["S_inv"]);
+  mat prior_M       = as<mat>(prior["M"]);
+  mat prior_W       = as<mat>(prior["W"]);
+  
+  mat sum_Sc_inv(N, N);
+  mat sum_AcSc_inv(K, N);
+  
+  cube aux_A_g(K, N, G);
+  
+  for (int g = 0; g < G; g++) {
+    uvec gg         = find(group_allocation == g);
+    for (int i = 0; i < gg.n_elem; i++) {
+      sum_Sc_inv   += aux_Sigma_c_inv.slice(gg(i));
+      sum_AcSc_inv += aux_A_c_cpp.slice(gg(i)) * aux_Sigma_c_inv.slice(gg(i));
+    }
+    
+    mat Sg_bar_inv  = (prior_S_inv / aux_s) + sum_Sc_inv;
+    mat Sg_bar      = inv_sympd(Sg_bar_inv);
+    mat Ag_bar      = ( (aux_m / aux_s) * (prior_M * prior_S_inv) + sum_AcSc_inv) * Sg_bar;
+    
+    aux_A_g.slice(g)= rmn1(Ag_bar, aux_V, Sg_bar);
+  } // END c loop
+  
+  return aux_A_g;
+} // END sample_A_g
+
+
+
+// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::export]]
+arma::mat sample_V_gg (
+    const arma::cube&   aux_A_c_cpp,      // KxNxC
+    const arma::cube&   aux_Sigma_c_inv,  // NxNxC
+    const arma::cube&   aux_A_g,          // KxNxG
+    const arma::vec&    group_allocation, // C
+    const double&       aux_s,            // scalar
+    const double&       aux_m,            // scalar
+    const double&       aux_w,            // scalar
+    const Rcpp::List&   prior
+) {
+  
+  int C             = aux_A_c_cpp.n_slices;
+  int N             = aux_A_c_cpp.n_cols;
+  int K             = aux_A_c_cpp.n_rows;
+  int G             = aux_A_g.n_slices;
+  
+  mat prior_S_inv   = as<mat>(prior["S_inv"]);
+  mat prior_M       = as<mat>(prior["M"]);
+  mat prior_W       = as<mat>(prior["W"]);
+  double prior_eta  = as<double>(prior["eta"]);
+  
+  mat sum_AcSigmaAc(K, K);
+  for (int c = 0; c < C; c++) {
+    sum_AcSigmaAc  += (aux_A_c_cpp.slice(c) - aux_A_g.slice(group_allocation(c))) * aux_Sigma_c_inv.slice(c) * trans(aux_A_c_cpp.slice(c) - aux_A_g.slice(group_allocation(c)));
+  } // END c loop
+  
+  mat sum_AgSAg(K, K);
+  for (int g = 0; g < G; g++) {
+    sum_AgSAg      += (aux_A_g.slice(g) - aux_m * prior_M) * (prior_S_inv / aux_s) * trans(aux_A_g.slice(g) - aux_m * prior_M);
+  } // END g loop
+  
+  mat S_bar         = aux_w * prior_W + sum_AcSigmaAc + sum_AgSAg;
+  S_bar             = 0.5 * (S_bar + S_bar.t());
+  double eta_bar    = prior_eta + N * G + N * C;  
+  
+  mat aux_V = iwishrnd(S_bar, eta_bar);
+  return aux_V;
+} // END sample_V_gg
+
+
 
 
 // [[Rcpp::interfaces(cpp)]]
