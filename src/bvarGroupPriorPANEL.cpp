@@ -106,9 +106,9 @@ Rcpp::List bvarGroupPriorPANEL(
     
     // sample aux_m, aux_w, aux_s
     // Rcout << "  sample aux_m, aux_w, aux_s" << endl;
-    aux_m       = sample_m_gg( aux_A_g, aux_V, aux_s, prior );
+    aux_m       = sample_m_gg( aux_A_g, aux_V_inv, aux_s, prior );
     aux_w       = sample_w( aux_V, prior );
-    aux_s       = sample_s_gg( aux_A_g, aux_Sigma_g, aux_V, aux_m, prior );
+    aux_s       = sample_s_gg( aux_A_g, aux_Sigma_g, aux_V_inv, aux_m, prior );
     
     // sample aux_nu
     // Rcout << "  sample aux_nu" << endl;
@@ -119,7 +119,8 @@ Rcpp::List bvarGroupPriorPANEL(
     // sample aux_V
     // Rcout << "  sample aux_V" << endl;
     aux_V       = sample_V_gg( aux_A_c, aux_Sigma_c_inv, aux_A_g, aux_ga, aux_s, aux_m, aux_w, prior ); 
-      
+    aux_V_inv   = inv_sympd( aux_V );
+    
     // sample aux_Sigma_g
     // Rcout << "  sample aux_Sigma_g" << endl;
     aux_Sigma_g = sample_Sigma_g( aux_Sigma_c_inv, aux_ga, aux_s, aux_nu, prior, G );
@@ -129,9 +130,9 @@ Rcpp::List bvarGroupPriorPANEL(
     aux_A_g   = sample_A_g( aux_A_c, aux_Sigma_c_inv, aux_V, aux_ga, aux_s, aux_m, prior, G );
     
     // sample aux_ga
-    // if ( estimate_groups ) {
-    //   aux_ga    = sample_group_allocation ( aux_ga, yt, xt, aux_A_g, aux_Sigma_g, aux_A, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu );
-    // }
+    if ( estimate_groups ) {
+      aux_ga    = sample_group_allocation_gg( aux_ga, aux_A_g, aux_Sigma_g, aux_A_c, aux_Sigma_c_inv, aux_V_inv, aux_nu, aux_m, aux_s, prior );
+    }
     
     // sample aux_A_c, aux_Sigma_c
     // Rcout << "  sample aux_A_c, aux_Sigma_c" << endl;
