@@ -64,11 +64,11 @@ constitute an integrated toolset.
 
   <!-- -->
 
-           Yc = Ac Xc + Ec         (VAR equation)
-      Ec | Xc ~ MN(0, Sc, I)       (error term normality)
+           Yc = Xc Ac + Ec         (VAR equation)
+      Ec | Xc ~ MN(0, I, Sc)       (error term normality)
 - The error terms feature a zero-mean matrix-variate normal distribution
   with row-specific covariance matrix `Sc` and column-specific
-  covariance equal to the identity matrix `I`.
+  covariance equal to the identity matrix of order `T`, denoted by `I`.
 - The Hierarchical Panel VAR model features a sophisticated hierarchical
   prior structure that grants the model flexibility, interpretability,
   and improved forecasting performance.
@@ -79,8 +79,8 @@ constitute an integrated toolset.
 
 <!-- -->
 
-           Yc = A Xc + Ec          (VAR equation)
-      Ec | Xc ~ MN(0, S, I)        (error term normality)
+           Yc = Xc A + Ec          (VAR equation)
+      Ec | Xc ~ MN(0, I, S)        (error term normality)
 
 - See more details in this
   [presentation](https://bsvars.org/2025-03-bvarPANELs-ilo/)
@@ -152,10 +152,7 @@ The beginnings are as easy as ABC:
 library(bpvars)                                     # load the package
 
 spec = specify_bvarPANEL$new(                           # specify the model
-  ilo_dynamic_panel,                                    # data
-  exogenous = ilo_exogenous_variables,                  # exogenous variables
-  stationary = c(FALSE, FALSE, FALSE, TRUE),            # stationarity (determines prior mean)
-  type = c("real", "rate", "rate", "rate")              # variable types
+  ilo_dynamic_panel                                     # data
 )
 
 burn = estimate(spec, S = 10000)                        # run the burn-in
@@ -163,9 +160,7 @@ post = estimate(burn, S = 10000)                        # estimate the model
 
 fore = forecast(                                        # forecast the model 
   post,                                                 # estimation output
-  horizon = 6,                                          # forecast horizon
-  exogenous_forecast = ilo_exogenous_forecasts,         # forecasts for exogenous variables
-  conditional_forecast = ilo_conditional_forecasts      # gdp projections
+  horizon = 6                                           # forecast horizon
 )
 
 plot(fore, "COL", main = "Forecasts for Colombia")
@@ -181,22 +176,16 @@ pipe:
 
 ``` r
 ilo_dynamic_panel |>                                    # data
-  specify_bvarPANEL$new(                                # specify the model
-    exogenous = ilo_exogenous_variables,                # exogenous variables
-    stationary = c(FALSE, FALSE, FALSE, TRUE),          # stationarity (determines prior mean)
-    type = c("real", "rate", "rate", "rate")            # variable types
-  ) |> 
+  specify_bvarPANEL$new() |>                            # specify the model
   estimate(S = 10000) |>                                # run the burn-in
   estimate(S = 10000) -> post                           # estimate the model
 
 post |> forecast(                                       # forecast the model 
-  horizon = 6,                                          # forecast horizon
-  exogenous_forecast = ilo_exogenous_forecasts,         # forecasts for exogenous variables
-  conditional_forecast = ilo_conditional_forecasts      # gdp projections
+  horizon = 6                                           # forecast horizon
 ) |> plot("COL", main = "Forecasts for Colombia")
 ```
 
-Now, you’re ready to analyse your model!
+Now, you’re ready to analyse your model and forecasts!
 
 ## Installation
 
@@ -216,7 +205,7 @@ and for **Linux:** install the standard development packages.
 Just open your **R** and install the package from its developer’s
 repository by typing:
 
-    devtools::install_github("bsvars/bvarPANELs")
+    devtools::install_github("bsvars/bpvars")
 
 ## Development
 
@@ -229,7 +218,7 @@ working on. Thank you!
 
 **Tomasz** is a Bayesian econometrician and a Senior Lecturer at the
 University of Melbourne. He develops methodology for empirical
-macroeconomic analyses and programs in **R** and **cpp** using **Rcpp**.
+macroeconomic analyses and programs in **R** and **C++** using **Rcpp**.
 
 <a href="mailto:twozniak@unimelb.edu.au">
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/envelope.svg" width="40" height="40"/>

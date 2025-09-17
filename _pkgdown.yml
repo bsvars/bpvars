@@ -26,6 +26,8 @@ reference:
 - contents:
   - matches("specify_bvarPANEL")
   - matches("specify_bvarGroupPANEL")
+  - matches("specify_bvarGroupPriorPANEL")
+  - matches("specify_bvars")
 - title: "More detailed model specification"
   desc: "Adjust or inspect the specified model"
 - contents:
