@@ -39,7 +39,12 @@ for which the forecast should be plotted.}
 Plots of the posterior means of the forecast error variance 
 decompositions.
 }
-\examples{
+\seealso{
+\code{\link{compute_variance_decompositions.PosteriorBVARPANEL}}
+}
+\author{
+Tomasz Woźniak \email{wozniak.tom@pm.me}
+
 set.seed(123)
 specification  = specify_bvarPANEL$new(ilo_dynamic_panel)
 
@@ -55,18 +60,10 @@ plot(fevd, which_c = "POL")
 
 # workflow with the pipe |>
 ############################################################
-set.seed(123)
 ilo_dynamic_panel |>
   specify_bvarPANEL$new() |>
   estimate(S = 10) |> 
   estimate(S = 20) |> 
   compute_variance_decompositions(horizon = 4) |>
   plot(which_c = "POL")
-
-}
-\seealso{
-\code{\link{compute_variance_decompositions.PosteriorBVARPANEL}}
-}
-\author{
-Tomasz Woźniak \email{wozniak.tom@pm.me}
 }

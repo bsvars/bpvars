@@ -19,10 +19,8 @@ arma::cube flip_cube_rows_cols (
 
 
 arma::field<arma::cube> panel_variance_decompositions (
-    arma::field<arma::cube>&  posterior_Sigma,    // (C)(N, N, S)
-    arma::field<arma::cube>&  posterior_A,        // (C)(K, N, S)
-    arma::cube&               global_Sigma,       // (N, N, S)
-    arma::cube&               global_A,           // (K, N, S)
+    arma::field<arma::cube>&  posterior_Sigma,    // (S)(N, N, C)
+    arma::field<arma::cube>&  posterior_A,        // (S)(K, N, C)
     const int     horizon,
     const int     p,
     const bool    lower = true

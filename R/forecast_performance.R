@@ -74,6 +74,7 @@ forecast_poos_recursively.BVARPANEL <- function(
   starting_values     = model_spec$starting_values$get_starting_values()
   data_matrices       = model_spec$data_matrices$get_data_matrices()
   adaptiveMH          = model_spec$adaptiveMH
+  type_wozniak        = model_spec$get_type() == "wozniak"
   thin                = 1
   
   C                   = length(data_matrices$Y)
@@ -101,7 +102,7 @@ forecast_poos_recursively.BVARPANEL <- function(
   # form an output object
   
   
-  foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvarPANEL`, S, S_burn, horizons, training_sample, data_matrices$Y, data_matrices$X, conditional_forecast, exogenous_forecast, prior, starting_values, LB, UB, show_progress, adaptiveMH)
+  foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvarPANEL`, S, S_burn, horizons, training_sample, data_matrices$Y, data_matrices$X, conditional_forecast, exogenous_forecast, prior, starting_values, LB, UB, show_progress, adaptiveMH, type_wozniak)
   
   
   out                 = vector("list", forecasting_sample)
@@ -263,3 +264,246 @@ forecast_poos_recursively.BVARGROUPPANEL <- function(
   
   return(out)
 } # END forecast_poos_recursively.BVARGROUPPANEL
+
+
+
+
+
+
+
+
+
+
+
+#' @inherit forecast_poos_recursively
+#' @method forecast_poos_recursively BVARs
+#' @param model_spec an object of class \code{BVARs} generated using the 
+#' \code{specify_bvars} function and containing the Bayesian VAR models 
+#' specification.
+#' 
+#' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
+#' 
+#' @examples
+#' spec = specify_bvars$new(ilo_dynamic_panel)       # specify the model
+#' poos = specify_poosf_exercise$new(                # specify the forecasting exercise
+#'          spec, 
+#'          S = 10,                                  # use at least S = 5000
+#'          S_burn = 5,                              # use at least S_burn = 1000
+#'          horizons = 1:2,
+#'          training_sample = 28
+#'        )   
+#' fore = forecast_poos_recursively(spec, poos)      # execute the forecasting exercise
+#' plot(fore[[1]], "POL")                         # plot forecasts for the first estimation samples
+#' 
+#' @export
+forecast_poos_recursively.BVARs <- function(
+    model_spec, 
+    poos_spec, 
+    show_progress = TRUE
+) {
+  
+  S                   = poos_spec$S
+  S_burn              = poos_spec$S_burn
+  horizons            = poos_spec$horizons
+  training_sample     = poos_spec$training_sample
+  variable_names      = colnames(model_spec$data_matrices$Y[[1]])
+  
+  prior               = model_spec$prior$get_prior()
+  starting_values     = model_spec$starting_values$get_starting_values()
+  data_matrices       = model_spec$data_matrices$get_data_matrices()
+  adaptiveMH          = model_spec$adaptiveMH
+  type_objective      = model_spec$get_type() == "zellner"
+  
+  thin                = 1
+  C                   = length(data_matrices$Y)
+  country_names       = names(data_matrices$Y)
+  T                   = nrow(model_spec$data_matrices$Y[[1]])
+  forecasting_sample  = T - max(horizons) - training_sample + 1
+  
+  N                   = ncol(model_spec$data_matrices$Y[[1]])
+  type                = model_spec$data_matrices$type
+  LB                  = rep(-Inf, N)
+  UB                  = rep(Inf, N)
+  rates_id            = which(type == "rate")
+  if (length(rates_id) > 0) {
+    LB[rates_id]      = 0
+    UB[rates_id]      = 100
+  }
+  
+  # still need to be specified
+  # this will not be used for forecasting, but needs to be provided
+  exogenous_forecast = list()
+  for (c in 1:C) exogenous_forecast[[c]] = matrix(NA, max(horizons), 1)
+  conditional_forecast = list()
+  for (c in 1:C) conditional_forecast[[c]] = matrix(NA, max(horizons), N)
+  
+  # form an output object
+  
+  
+  foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvars`, 
+                  S, S_burn, horizons, training_sample, data_matrices$Y, data_matrices$X, 
+                  conditional_forecast, exogenous_forecast, prior, starting_values, 
+                  LB, UB, show_progress, adaptiveMH, type_objective)
+  
+  out                 = vector("list", forecasting_sample)
+  for (i in 1:forecasting_sample) {
+    
+    forecasts         = vector("list", C)
+    for (c in 1:C) {
+      
+      fore            = list()
+      
+      fore$forecasts         = aperm(foreout[[i]]$forecasts_cpp[c,1][[1]], c(2,1,3))
+      fore$forecast_mean     = aperm(foreout[[i]]$forecast_mean_cpp[c,1][[1]], c(2,1,3))
+      
+      cov_array = array(NA, c(N, N, max(horizons), S))
+      for (s in 1:S) {
+        cov_array[,,,s]       = foreout[[i]]$forecast_cov_cpp[c,s][[1]]
+      }
+      fore$forecast_cov       = cov_array
+      
+      fore$Y                  = t(foreout[[i]]$estimation_data_cpp[c,1][[1]])
+      
+      evaluation_data           = t(foreout[[i]]$evaluation_data_cpp[c,1][[1]])
+      colnames(evaluation_data) = horizons
+      rownames(evaluation_data) = variable_names
+      fore$evaluation_data      = evaluation_data
+      
+      class(fore)             = "Forecasts"
+      forecasts[[c]]          = fore
+      
+    } # END c loop
+    
+    names(forecasts)  = country_names
+    class(forecasts)  = "ForecastsPANEL"
+    out[[i]]          = forecasts
+    
+  } # END i loop
+  
+  class(out)          = "ForecastsPANELpoos"
+  
+  return(out)
+} # END forecast_poos_recursively.BVARGROUPPANEL
+
+
+
+
+
+
+
+
+
+
+
+#' @inherit forecast_poos_recursively
+#' @method forecast_poos_recursively BVARGROUPPRIORPANEL
+#' @param model_spec an object of class \code{BVARGROUPPRIORPANEL} generated using the 
+#' \code{specify_bvarGroupPANEL} function and containing the Bayesian Panel VAR model 
+#' specification with group-specific global parameters.
+#' 
+#' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
+#' 
+#' @examples
+#' spec = specify_bvarGroupPriorPANEL$new(                # specify the model
+#'          ilo_dynamic_panel, 
+#'          group_allocation = country_grouping_region
+#'        )   
+#' poos = specify_poosf_exercise$new(                # specify the forecasting exercise
+#'          spec, 
+#'          S = 10,                                  # use at least S = 5000
+#'          S_burn = 5,                              # use at least S_burn = 1000
+#'          horizons = 1:2,
+#'          training_sample = 28
+#'        )   
+#' fore = forecast_poos_recursively(spec, poos)      # execute the forecasting exercise
+#' plot(fore[[1]], "POL")                         # plot forecasts for the first estimation samples
+#' 
+#' @export
+forecast_poos_recursively.BVARGROUPPRIORPANEL <- function(
+    model_spec, 
+    poos_spec, 
+    show_progress = TRUE
+) {
+  
+  S                   = poos_spec$S
+  S_burn              = poos_spec$S_burn
+  horizons            = poos_spec$horizons
+  training_sample     = poos_spec$training_sample
+  variable_names      = colnames(model_spec$data_matrices$Y[[1]])
+  
+  prior               = model_spec$prior$get_prior()
+  starting_values     = model_spec$starting_values$get_starting_values()
+  data_matrices       = model_spec$data_matrices$get_data_matrices()
+  adaptiveMH          = model_spec$adaptiveMH
+  estimate_groups     = model_spec$estimate_groups
+  
+  thin                = 1
+  C                   = length(data_matrices$Y)
+  country_names       = names(data_matrices$Y)
+  T                   = nrow(model_spec$data_matrices$Y[[1]])
+  forecasting_sample  = T - max(horizons) - training_sample + 1
+  
+  N                   = dim(model_spec$starting_values$Sigma_g)[1]
+  type                = model_spec$data_matrices$type
+  LB                  = rep(-Inf, N)
+  UB                  = rep(Inf, N)
+  rates_id            = which(type == "rate")
+  if (length(rates_id) > 0) {
+    LB[rates_id]      = 0
+    UB[rates_id]      = 100
+  }
+  
+  # still need to be specified
+  # this will not be used for forecasting, but needs to be provided
+  exogenous_forecast = list()
+  for (c in 1:C) exogenous_forecast[[c]] = matrix(NA, max(horizons), 1)
+  conditional_forecast = list()
+  for (c in 1:C) conditional_forecast[[c]] = matrix(NA, max(horizons), N)
+  
+  # form an output object
+  
+  
+  foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvarGroupPriorPANEL`, 
+                  S, S_burn, horizons, training_sample, data_matrices$Y, data_matrices$X, 
+                  conditional_forecast, exogenous_forecast, prior, starting_values, 
+                  LB, UB, show_progress, adaptiveMH, estimate_groups)
+  
+  out                 = vector("list", forecasting_sample)
+  for (i in 1:forecasting_sample) {
+    
+    forecasts         = vector("list", C)
+    for (c in 1:C) {
+      
+      fore            = list()
+      
+      fore$forecasts         = aperm(foreout[[i]]$forecasts_cpp[c,1][[1]], c(2,1,3))
+      fore$forecast_mean     = aperm(foreout[[i]]$forecast_mean_cpp[c,1][[1]], c(2,1,3))
+      
+      cov_array = array(NA, c(N, N, max(horizons), S))
+      for (s in 1:S) {
+        cov_array[,,,s]       = foreout[[i]]$forecast_cov_cpp[c,s][[1]]
+      }
+      fore$forecast_cov       = cov_array
+      
+      fore$Y                  = t(foreout[[i]]$estimation_data_cpp[c,1][[1]])
+      
+      evaluation_data           = t(foreout[[i]]$evaluation_data_cpp[c,1][[1]])
+      colnames(evaluation_data) = horizons
+      rownames(evaluation_data) = variable_names
+      fore$evaluation_data      = evaluation_data
+      
+      class(fore)             = "Forecasts"
+      forecasts[[c]]          = fore
+      
+    } # END c loop
+    
+    names(forecasts)  = country_names
+    class(forecasts)  = "ForecastsPANEL"
+    out[[i]]          = forecasts
+    
+  } # END i loop
+  
+  class(out)          = "ForecastsPANELpoos"
+  
+  return(out)
+} # END forecast_poos_recursively.BVARGROUPPRIORPANEL

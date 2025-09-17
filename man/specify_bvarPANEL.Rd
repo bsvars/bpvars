@@ -16,6 +16,18 @@ spec = specify_bvarPANEL$new(
 
 
 ## ------------------------------------------------
+## Method `specify_bvarPANEL$set_to_Jarocinski`
+## ------------------------------------------------
+
+data(ilo_dynamic_panel)
+spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$set_to_Jarocinski()
+
+
+## ------------------------------------------------
 ## Method `specify_bvarPANEL$get_data_matrices`
 ## ------------------------------------------------
 
@@ -52,6 +64,30 @@ spec$get_starting_values()
 
 
 ## ------------------------------------------------
+## Method `specify_bvarPANEL$get_type`
+## ------------------------------------------------
+
+data(ilo_dynamic_panel)
+spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$get_type()
+
+
+## ------------------------------------------------
+## Method `specify_bvarPANEL$set_global2pooled`
+## ------------------------------------------------
+
+data(ilo_dynamic_panel)
+spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$set_global2pooled()
+
+
+## ------------------------------------------------
 ## Method `specify_bvarPANEL$set_adaptiveMH`
 ## ------------------------------------------------
 
@@ -62,6 +98,18 @@ spec = specify_bvarPANEL$new(
 )
 spec$set_adaptiveMH(c(0.6, 0.4, 10, 0.1))
 
+}
+\references{
+Jarocinski (2010). Responses to monetary policy shocks in the east and 
+the west of Europe: a comparison. \emph{Journal of Applied Econometrics}, 
+\bold{25}(5), 833-868, \doi{10.1002/jae.1082}.
+
+Dieppe, Legrand, Roye (2016). The BEAR toolbox, \emph{ECB Working Papers},
+\bold{1934}, \doi{10.2866/292952}.
+
+Zellner, Hong (1989). Forecasting international growth rates using 
+Bayesian shrinkage and other procedures. \emph{Journal of Econometrics}, 
+\bold{40}(1), 183–202, \doi{10.1016/0304-4076(89)90036-5}.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -84,9 +132,12 @@ start adapting, the initial scaling rate}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-BVARPANEL-new}{\code{specify_bvarPANEL$new()}}
+\item \href{#method-BVARPANEL-set_to_Jarocinski}{\code{specify_bvarPANEL$set_to_Jarocinski()}}
 \item \href{#method-BVARPANEL-get_data_matrices}{\code{specify_bvarPANEL$get_data_matrices()}}
 \item \href{#method-BVARPANEL-get_prior}{\code{specify_bvarPANEL$get_prior()}}
 \item \href{#method-BVARPANEL-get_starting_values}{\code{specify_bvarPANEL$get_starting_values()}}
+\item \href{#method-BVARPANEL-get_type}{\code{specify_bvarPANEL$get_type()}}
+\item \href{#method-BVARPANEL-set_global2pooled}{\code{specify_bvarPANEL$set_global2pooled()}}
 \item \href{#method-BVARPANEL-set_adaptiveMH}{\code{specify_bvarPANEL$set_adaptiveMH()}}
 \item \href{#method-BVARPANEL-clone}{\code{specify_bvarPANEL$clone()}}
 }
@@ -129,6 +180,31 @@ determining the truncation of the predictive density to \code{[0, 100]} and
 \subsection{Returns}{
 A new complete specification for the Bayesian Panel VAR model BVARPANEL.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BVARPANEL-set_to_Jarocinski"></a>}}
+\if{latex}{\out{\hypertarget{method-BVARPANEL-set_to_Jarocinski}{}}}
+\subsection{Method \code{set_to_Jarocinski()}}{
+Sets the model in line with the specification by Jarocinski (2010) as presented 
+by Dieppe, Legrand, Roye (2016).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$set_to_Jarocinski()}\if{html}{\out{</div>}}
+}
+
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data(ilo_dynamic_panel)
+spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$set_to_Jarocinski()
+
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARPANEL-get_data_matrices"></a>}}
@@ -195,6 +271,64 @@ spec = specify_bvarPANEL$new(
    p = 4
 )
 spec$get_starting_values()
+
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BVARPANEL-get_type"></a>}}
+\if{latex}{\out{\hypertarget{method-BVARPANEL-get_type}{}}}
+\subsection{Method \code{get_type()}}{
+Returns the type of the model.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$get_type()}\if{html}{\out{</div>}}
+}
+
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data(ilo_dynamic_panel)
+spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$get_type()
+
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BVARPANEL-set_global2pooled"></a>}}
+\if{latex}{\out{\hypertarget{method-BVARPANEL-set_global2pooled}{}}}
+\subsection{Method \code{set_global2pooled()}}{
+Sets the prior mean of the global autoregressive parameters to the OLS 
+pooled panel estimator following Zellner, Hong (1989).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$set_global2pooled(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{a vector of four values setting the adaptive MH sampler for nu:
+adaptive rate, target acceptance rate, the iteration at which to 
+start adapting, the initial scaling rate}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data(ilo_dynamic_panel)
+spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4
+)
+spec$set_global2pooled()
 
 }
 \if{html}{\out{</div>}}

@@ -18,7 +18,8 @@ Rcpp::List bvarPANEL(
     const Rcpp::List&             starting_values, 
     const int                     thin, // introduce thinning
     const bool                    show_progress,
-    const arma::vec&              adptive_alpha_gamma // 2x1 vector with target acceptance rate and step size
+    const arma::vec&              adptive_alpha_gamma, // 2x1 vector with target acceptance rate and step size
+    const bool                    type_wozniak = true
 ) {
   
   // Progress bar setup
@@ -94,31 +95,46 @@ Rcpp::List bvarPANEL(
     
     // sample aux_m, aux_w, aux_s
     // Rcout << "  sample m" << endl;
-    aux_m       = sample_m( aux_A, aux_V, aux_s, aux_w, prior );
+    if ( type_wozniak ) {
+      aux_m       = sample_m( aux_A, aux_V, aux_s, aux_w, prior );
+    }
     
     // Rcout << "  sample w" << endl;
-    aux_w       = sample_w( aux_V, prior );
+    if ( type_wozniak ) {
+      aux_w       = sample_w( aux_V, prior );
+    }
     
     // Rcout << "  sample s" << endl;
-    aux_s       = sample_s( aux_A, aux_V, aux_Sigma, aux_m, prior );
+    if ( type_wozniak ) {
+      aux_s       = sample_s( aux_A, aux_V, aux_Sigma, aux_m, prior );
+    }
     
     // sample aux_nu
-    // Rcout << "  sample nu" << endl;
-    // aux_nu      = sample_nu( aux_nu, posterior_nu_S, aux_Sigma_c, aux_Sigma_c_inv, aux_Sigma, prior , s, scale, rate_target_start_initial);
-    aux_nu_tmp  = sample_nu ( aux_nu, adaptive_scale, aux_Sigma_c, aux_Sigma_c_inv, aux_Sigma, prior, s, adptive_alpha_gamma );
-    aux_nu      = aux_nu_tmp(0);
-    scale(s)    = aux_nu_tmp(1);
+    if ( type_wozniak ) {
+      aux_nu_tmp  = sample_nu ( aux_nu, adaptive_scale, aux_Sigma_c, aux_Sigma_c_inv, aux_Sigma, prior, s, adptive_alpha_gamma );
+      aux_nu      = aux_nu_tmp(0);
+      scale(s)    = aux_nu_tmp(1);
+    }
     
     // sample aux_Sigma
     // Rcout << "  sample Sigma" << endl;
-    aux_Sigma   = sample_Sigma( aux_Sigma_c_inv, aux_s, aux_nu, prior );
+    if ( type_wozniak ) {
+      aux_Sigma   = sample_Sigma( aux_Sigma_c_inv, aux_s, aux_nu, prior );
+    }
     
     // sample aux_A, aux_V
     // Rcout << "  sample AV" << endl;
-    field<mat> tmp_AV     = sample_AV( aux_A_c, aux_Sigma_c_inv, aux_s, aux_m, aux_w, prior );
-    aux_A       = tmp_AV(0);  
-    aux_V       = tmp_AV(1);
-    
+    if ( type_wozniak ) {
+      field<mat> tmp_AV     = sample_AV( aux_A_c, aux_Sigma_c_inv, aux_s, aux_m, aux_w, prior );
+      aux_A       = tmp_AV(0);  
+      aux_V       = tmp_AV(1);
+    } else {
+      field<mat> tmp_AV     = sample_AV_jaro( aux_A_c, aux_Sigma_c, aux_A, aux_s, prior );
+      aux_A       = tmp_AV(0);  
+      aux_V       = tmp_AV(1);
+      mat aux_s_tmp = tmp_AV(2);
+      aux_s       = aux_s_tmp(0, 0);
+    }
     // sample aux_A_c, aux_Sigma_c
     // Rcout << "  sample A_c Sigma_c" << endl;
     // Rcout << "  aux_nu: " << aux_nu << endl;

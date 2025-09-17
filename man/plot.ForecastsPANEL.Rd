@@ -59,7 +59,6 @@ plot(predictive, which_c = "POL")                                # plot forecast
 
 # workflow with the pipe |>
 ############################################################
-set.seed(123)
 ilo_dynamic_panel |>
   specify_bvarPANEL$new() |>
   estimate(S = 10) |> 

@@ -17,28 +17,23 @@ the parameters.}
 }
 \value{
 A list reporting the posterior mean, standard deviations, as well as 5 and 95 
-percentiles of the country-specific and global parameters.
+percentiles of the country-specific parameters.
 }
 \description{
 Provides posterior mean, standard deviations, as well as 5 and 95 
 percentiles of the parameters for all \code{C} countries.
 }
 \examples{
-# upload data
-data(ilo_dynamic_panel)                                   # load the data
-data(ilo_exogenous_variables)                           # load the exogenous variables
-
-set.seed(123)
-
 # specify the model
-specification = specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
+specification = specify_bvarPANEL$new(
+      ilo_dynamic_panel, 
+      exogenous = ilo_exogenous_variables)
 burn_in       = estimate(specification, 10)             # run the burn-in
 posterior     = estimate(burn_in, 10)                   # estimate the model
 summary(posterior)
 
 # workflow with the pipe |>
 ############################################################
-set.seed(123)
 ilo_dynamic_panel |>
   specify_bvarPANEL$new(exogenous = ilo_exogenous_variables) |>
   estimate(S = 10) |> 
