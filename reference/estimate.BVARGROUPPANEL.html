@@ -152,7 +152,8 @@ by the <code><a href="https://bsvars.org/bsvars/reference/estimate.html" class="
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="bpvars-package.html">bpvars</a></code>, <code><a href="specify_bvarGroupPANEL.html">specify_bvarGroupPANEL</a></code>,
-<code><a href="specify_posterior_bvarGroupPANEL.html">specify_posterior_bvarGroupPANEL</a></code>, <code><a href="summary.PosteriorBVARPANEL.html">summary.PosteriorBVARPANEL</a></code></p></div>
+<code><a href="specify_posterior_bvarGroupPANEL.html">specify_posterior_bvarGroupPANEL</a></code>, <code><a href="summary.PosteriorBVARGROUPPANEL.html">summary.PosteriorBVARGROUPPANEL</a></code>,
+<code><a href="forecast.PosteriorBVARGROUPPANEL.html">forecast.PosteriorBVARGROUPPANEL</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -161,14 +162,11 @@ by the <code><a href="https://bsvars.org/bsvars/reference/estimate.html" class="
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span>                                 <span class="co"># load the data</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_exogenous_variables</span><span class="op">)</span>                           <span class="co"># load the exogenous variables</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># specify the model</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># specify the model</span></span></span>
 <span class="r-in"><span><span class="va">specification</span> <span class="op">=</span> <span class="va"><a href="specify_bvarGroupPANEL.html">specify_bvarGroupPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
 <span class="r-in"><span>     data <span class="op">=</span> <span class="va">ilo_dynamic_panel</span>,</span></span>
 <span class="r-in"><span>     exogenous <span class="op">=</span> <span class="va">ilo_exogenous_variables</span>,</span></span>
-<span class="r-in"><span>     group_allocation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, length.out <span class="op">=</span> <span class="fl">189</span><span class="op">)</span></span></span>
+<span class="r-in"><span>     group_allocation <span class="op">=</span> <span class="va">country_grouping_region</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Country groupings have been pre-specified and will not be estimated.</span>
 <span class="r-in"><span><span class="va">burn_in</span>       <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span><span class="va">specification</span>, <span class="fl">10</span><span class="op">)</span>             <span class="co"># run the burn-in; use say S = 10000</span></span></span>

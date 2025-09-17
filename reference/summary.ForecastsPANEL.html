@@ -78,13 +78,10 @@ horizons.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span>                                   <span class="co"># load the data</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_exogenous_variables</span><span class="op">)</span>                           <span class="co"># load the exogenous variables</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_exogenous_forecasts</span><span class="op">)</span>                           <span class="co"># load the exogenous forecast</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># specify the model</span></span></span>
-<span class="r-in"><span><span class="va">specification</span> <span class="op">=</span> <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">ilo_dynamic_panel</span>, exogenous <span class="op">=</span> <span class="va">ilo_exogenous_variables</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># specify the model</span></span></span>
+<span class="r-in"><span><span class="va">specification</span> <span class="op">=</span> <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="va">ilo_dynamic_panel</span>, </span></span>
+<span class="r-in"><span>      exogenous <span class="op">=</span> <span class="va">ilo_exogenous_variables</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">burn_in</span>       <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span><span class="va">specification</span>, <span class="fl">10</span><span class="op">)</span>             <span class="co"># run the burn-in</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
@@ -103,7 +100,10 @@ horizons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># forecast 6 years ahead</span></span></span>
-<span class="r-in"><span><span class="va">predictive</span>    <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">posterior</span>, <span class="fl">6</span>, exogenous_forecast <span class="op">=</span> <span class="va">ilo_exogenous_forecasts</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">predictive</span>    <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="va">posterior</span>, </span></span>
+<span class="r-in"><span>      <span class="fl">6</span>, </span></span>
+<span class="r-in"><span>      exogenous_forecast <span class="op">=</span> <span class="va">ilo_exogenous_forecasts</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  bpvars: Forecasting with Bayesian Panel VARs     |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
@@ -119,44 +119,43 @@ horizons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean         sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 27.21313 0.02408779    27.17925     27.24678</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 27.26328 0.02872232    27.22303     27.30292</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 27.30317 0.03551064    27.25306     27.34854</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 27.32994 0.04919399    27.24869     27.37955</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 27.36593 0.05945156    27.26911     27.43259</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 27.38928 0.07178596    27.26398     27.45590</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 27.20572 0.01713435    27.17839     27.22276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 27.23621 0.02471803    27.19926     27.26745</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 27.26906 0.03790437    27.20663     27.31474</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 27.30356 0.05125057    27.23776     27.37668</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 27.33231 0.06035702    27.25292     27.41278</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 27.35248 0.06526581    27.26065     27.43027</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          mean       sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  2.40807736 2.781028  -0.4527158     6.624900</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1.24496724 4.152930  -4.1800817     6.866877</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  0.32751712 4.873760  -5.5563806     7.803907</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 -0.02704467 5.287953  -5.5903267     9.019138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 -0.69687307 6.522109  -7.9415887    10.391245</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 -0.96770355 7.034244  -8.3263700    11.054763</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       mean       sd 5% quantile 95% quantile</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2.657395 1.296731   0.8322561     4.304127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 3.371238 2.385561   0.6838957     6.542516</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 3.778699 3.424897  -1.0569508     8.345179</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2.991731 3.938224  -1.4595711     8.444515</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2.315362 4.819355  -3.6906717     9.105023</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2.071746 4.199494  -3.5932886     7.217697</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       mean       sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 57.16352 1.354577    55.11696     58.91706</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 57.91711 2.418081    54.78912     61.27896</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 58.24751 2.905088    54.08554     61.98561</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 58.65433 3.447800    53.53754     63.14947</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 59.19849 4.233077    52.57258     64.33293</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 59.35829 4.384696    52.35733     64.62232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       mean        sd 5% quantile 95% quantile</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 57.13529 0.7046672    56.17041     58.00444</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 56.85915 1.5330654    54.71749     58.62135</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 56.77072 1.9419717    54.21948     59.63737</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 57.41043 2.3975274    54.45045     60.23617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 57.77458 3.0246026    53.61735     61.00221</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 58.08162 2.8383532    54.34007     61.65279</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean        sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 58.59896 0.5860690    57.89977     59.48806</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 58.76046 0.7259160    57.75604     59.62976</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 58.58593 0.5770199    57.94370     59.47961</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 58.83867 1.2018172    57.17197     60.42921</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 59.04460 1.0839648    57.37658     60.27974</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 59.04860 1.1254583    57.43019     60.35866</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 58.75354 0.4534078    58.13107     59.38133</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 58.91937 0.6032468    57.87655     59.42175</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 59.08754 0.6026798    58.19990     59.82331</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 59.31735 0.6232068    58.41958     60.01503</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 59.32579 0.8421962    58.04522     60.39250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 59.52576 1.1836941    57.69693     61.04103</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># workflow with the pipe |&gt;</span></span></span>
 <span class="r-in"><span><span class="co">############################################################</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ilo_dynamic_panel</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span>S <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
@@ -191,30 +190,29 @@ horizons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean         sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 27.20833 0.02293060    27.17483     27.24610</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 27.24256 0.04283552    27.19347     27.31345</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 27.21471 0.02654923    27.17621     27.25369</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 27.25864 0.04002221    27.20596     27.32313</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean       sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2.997389 2.162353  -0.2098005     6.847710</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2.917226 2.761776  -1.2939859     6.878136</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2.912610 1.793348  0.01351445     5.542122</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2.599017 2.808424 -1.55231303     6.862643</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean       sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 57.07879 1.023305    55.62354     58.51224</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 57.32821 1.475303    55.56415     59.32992</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 56.93790 0.866412    55.57193     58.15785</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 57.04864 1.471670    55.23364     59.03791</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean        sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 58.90945 0.4655718    58.26047     59.50511</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 59.14221 0.6197496    58.12689     59.89945</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 58.69016 0.4247980    58.09202     59.40445</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 58.64120 0.5487356    57.97211     59.63082</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># conditional forecasting 6 years ahead conditioning on </span></span></span>
 <span class="r-in"><span><span class="co">#  provided future values for the Gross Domestic Product </span></span></span>
 <span class="r-in"><span><span class="co">#  growth rate</span></span></span>
 <span class="r-in"><span><span class="co">############################################################</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_conditional_forecasts</span><span class="op">)</span>                        <span class="co"># load the conditional forecasts of dgdp</span></span></span>
 <span class="r-in"><span><span class="va">specification</span> <span class="op">=</span> <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span>    <span class="co"># specify the model</span></span></span>
 <span class="r-in"><span><span class="va">burn_in</span>       <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span><span class="va">specification</span>, <span class="fl">10</span><span class="op">)</span>               <span class="co"># run the burn-in</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
@@ -258,35 +256,34 @@ horizons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean       sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2.973681 1.227588   1.1772623     4.507469</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2.635529 2.036198   0.6161675     5.906620</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2.000218 2.867367  -1.6123705     6.304890</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2.164576 3.533547  -3.0422035     6.899920</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2.129936 4.321618  -3.2759184     8.574320</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 1.546426 4.708485  -4.6358375     8.523238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 3.381242 1.697315  0.93017247     5.548099</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 3.494060 3.018412 -0.07421561     7.755544</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 3.431616 3.978301 -0.61876448     9.497034</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 3.406686 4.385033 -1.25295177     9.741378</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 3.233877 4.697363 -2.83257460     8.956343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2.634449 5.042335 -3.80131918     8.387920</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean        sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 56.81393 0.8889243    55.73624     58.14803</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 57.13270 1.0675554    55.86331     58.84959</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 57.72576 1.3029900    55.97061     59.32348</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 57.92379 1.5463203    55.63394     59.65388</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 58.13444 1.8713668    55.16681     60.16263</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 58.62768 2.2360629    55.00036     61.28873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 56.67397 0.8637966    55.59580     57.98038</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 56.73316 1.6669955    54.17275     58.96951</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 56.66879 2.3019324    52.98519     59.34358</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 56.52904 2.7428799    52.40603     59.64295</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 56.83278 2.8990082    52.51661     60.06281</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 57.14279 3.0047746    53.47715     61.03857</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean        sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 58.58999 0.6262652    57.68080     59.22840</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 58.75514 0.8353337    57.47879     59.67241</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 59.04369 1.0280341    57.75008     60.50436</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 59.36662 1.0051528    58.06321     60.77461</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 59.58966 1.3872397    57.71167     61.37391</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 59.74832 1.2667655    57.72392     61.17365</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 58.69842 0.6033508    57.83911     59.46098</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 58.87325 0.7829074    57.62750     59.69134</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 58.79514 0.9327940    57.39489     59.83575</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 58.62168 1.0188026    57.02006     59.94763</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 58.83143 1.3528214    56.83283     60.36296</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 58.83097 1.3459496    56.55677     60.12602</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># workflow with the pipe |&gt;</span></span></span>
 <span class="r-in"><span><span class="co">############################################################</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ilo_dynamic_panel</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span>S <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
@@ -333,30 +330,30 @@ horizons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean       sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 3.007181 1.187988   1.5496527     4.550825</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2.941522 1.411298   0.5284924     4.905178</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 3.262790 1.177452   1.3270715     4.720625</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 3.607690 1.851331   0.6629180     5.905330</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 3.782451 2.074489   0.8252096     7.410627</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 4.649671 2.701390   1.0471496     8.424909</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2.626172 1.511814   0.4110344     4.502724</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2.977185 2.410963  -2.2871937     6.046909</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2.729622 2.973580  -2.0413994     6.756203</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2.627761 4.121769  -3.5702656     7.347993</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2.635623 4.607727  -2.6762139     8.886457</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2.737346 4.990901  -3.5267335     8.468564</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean        sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 56.87378 0.7395947    55.72311     58.08833</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 57.11138 0.8707632    55.93119     58.67562</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 57.25478 0.6116271    56.38091     58.11049</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 57.26768 0.7615292    55.96141     58.59629</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 57.23646 0.9094884    55.89277     58.62619</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 56.84628 1.7019902    54.56704     59.33068</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 57.26719 0.7281697    56.03709     58.29942</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 57.26437 1.1980792    55.67203     59.87396</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 57.50356 1.5251371    55.37847     60.27276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 57.72876 2.1272563    55.13855     60.82074</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 57.82116 2.4933866    54.34246     61.36448</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 57.97642 2.7872370    54.44538     62.09246</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean        sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 58.68085 0.6007517    57.77775     59.60772</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 58.94667 0.9403155    57.85677     60.67299</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 59.31391 0.7256510    58.33254     60.67604</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 59.53577 0.9282604    58.16218     60.93928</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 59.60014 0.8710675    58.28617     61.00968</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 59.71788 1.0181446    58.28245     61.45037</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 58.88447 0.4399017    58.23702     59.50339</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 59.12074 0.4756367    58.49965     59.82913</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 59.24966 0.8035938    58.11454     60.39495</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 59.44956 0.9388350    58.33534     60.78632</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 59.56611 0.7763338    58.79451     60.41785</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 59.80011 0.8984679    58.72104     61.06092</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

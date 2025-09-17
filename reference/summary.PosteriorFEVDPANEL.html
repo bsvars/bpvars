@@ -78,11 +78,7 @@ decompositions of each variable at all horizons.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># upload data</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># specify the model and set seed</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># specify the model and set seed</span></span></span>
 <span class="r-in"><span><span class="va">specification</span>  <span class="op">=</span> <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">ilo_dynamic_panel</span>, p <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># run the burn-in</span></span></span>
@@ -115,47 +111,46 @@ decompositions of each variable at all horizons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      variance decompositions                       |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      shock1     shock2     shock3     shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 100.00000 0.00000000 0.00000000 0.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  99.87515 0.02025745 0.06437922 0.04020933</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  99.66863 0.05381938 0.17097034 0.10657629</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  99.43001 0.09263695 0.29420042 0.18315551</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  99.18411 0.13265342 0.42120808 0.26202634</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      shock1     shock2    shock3     shock4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0 100.00000 0.00000000 0.0000000 0.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  99.79993 0.03210705 0.1028280 0.06513631</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  99.45773 0.08686033 0.2783946 0.17701898</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  99.04161 0.15331417 0.4915882 0.31349043</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  98.58972 0.22539280 0.7228407 0.46204241</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     shock1    shock2   shock3   shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 88.12376 11.876236  0.00000  0.00000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 40.88596  9.421648 30.55782 19.13457</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 39.75722  9.623252 31.09809 19.52143</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 40.33802  9.544033 30.77057 19.34738</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 41.35228  9.388295 30.22801 19.03141</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0 99.73065 0.2693518  0.00000  0.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 55.29319 7.2341947 23.03395 14.43866</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 54.62936 7.2856680 23.36082 14.72415</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 55.31070 7.1505908 22.98098 14.55773</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 56.52390 6.9496573 22.33989 14.18656</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     shock1    shock2   shock3   shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 84.91026  2.596507 12.49324  0.00000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 42.23550  9.441414 30.78883 17.53426</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 38.10358 10.072567 32.83968 18.98417</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 33.83180 10.711499 34.83403 20.62267</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 32.68206 10.866973 35.18553 21.26544</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     shock1   shock2   shock3   shock4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0 81.84026 3.407535 14.75220  0.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 62.38075 6.078133 19.37605 12.16507</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 60.18669 6.436276 20.52465 12.85238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 60.82342 6.333447 20.18305 12.66008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 62.04571 6.134445 19.54332 12.27652</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     shock1    shock2   shock3   shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 12.23352 13.033412 42.06767 32.66540</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 22.85796 11.748637 37.67648 27.71693</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 29.82657 10.881674 34.80590 24.48586</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 34.81591 10.201594 32.59457 22.38792</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 39.59240  9.500662 30.33161 20.57532</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0 17.93212 12.108468 39.30618 30.65323</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 29.75670 10.571473 34.09986 25.57197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 38.29078  9.401316 30.22552 22.08238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 46.22176  8.266550 26.52685 18.98484</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 52.77477  7.316060 23.45140 16.45777</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># workflow with the pipe |&gt;</span></span></span>
 <span class="r-in"><span><span class="co">############################################################</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ilo_dynamic_panel</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>p <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span>S <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span>S <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/compute_variance_decompositions.html" class="external-link">compute_variance_decompositions</a></span><span class="op">(</span>horizon <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span>which_c <span class="op">=</span> <span class="st">"global"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span>which_c <span class="op">=</span> <span class="st">"COL"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
@@ -177,36 +172,36 @@ decompositions of each variable at all horizons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      variance decompositions                       |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      shock1   shock2   shock3     shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 100.00000 0.000000  0.00000 0.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  76.84170 3.331830 19.77031 0.05615810</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  60.84646 5.617367 33.44195 0.09422069</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  51.83992 6.901681 41.14293 0.11547298</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  46.49314 7.663984 45.71484 0.12803912</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      shock1    shock2    shock3   shock4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0 100.00000 0.0000000 0.0000000 0.000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  98.64342 0.2928631 0.6244213 0.439293</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  97.43743 0.5534665 1.1796192 0.829489</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  96.57303 0.7402989 1.5775927 1.109082</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  95.96785 0.8710975 1.8562204 1.304832</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      shock1   shock2   shock3    shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 1.7402995 98.25970  0.00000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.2495607 17.44331 82.05617 0.2509605</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.1546671 13.15761 86.42411 0.2636108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.1347491 12.35343 87.24494 0.2668775</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.1335267 12.22089 87.37772 0.2678607</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     shock1      shock2   shock3   shock4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0 99.94804  0.05195506  0.00000  0.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 58.72581  9.06306030 18.91455 13.29658</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 52.62106 10.41311717 21.72269 15.24314</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 49.63837 11.06163832 23.09223 16.20776</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 48.41385 11.31226572 23.65970 16.61419</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       shock1   shock2   shock3    shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 0.27805015  2.54906 97.17289 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.01529335 14.22832 85.52940 0.2269904</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.02904369 14.47348 85.26584 0.2316301</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.04924045 14.58606 85.13136 0.2333370</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.07540629 14.64846 85.04203 0.2341075</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     shock1    shock2   shock3   shock4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0 81.41116  6.027111 12.56173  0.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 42.50298 12.558327 26.66844 18.27025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 40.67584 12.905261 27.42690 18.99199</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 40.45484 12.940235 27.50255 19.10237</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 41.69952 12.704722 26.95453 18.64123</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         shock1   shock2   shock3    shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 0.0006177073 13.09857 86.61211 0.2887102</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.0132675315 13.59381 86.11595 0.2769717</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.0329920407 14.38525 85.32457 0.2571929</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.0544750657 14.71926 84.97774 0.2485228</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.0802603874 14.84012 84.83452 0.2451078</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     shock1   shock2   shock3   shock4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0 16.11723 16.77777 37.64082 29.46418</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 38.43299 13.09103 28.12480 20.35118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 40.93690 12.76450 27.11311 19.18550</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 41.20593 12.82933 27.06475 18.89999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 40.19174 13.11694 27.57566 19.11566</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

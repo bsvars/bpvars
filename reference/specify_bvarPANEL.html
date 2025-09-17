@@ -39,6 +39,20 @@ Vector Autoregression.</p>
 
 
     <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Jarocinski (2010). Responses to monetary policy shocks in the east and
+the west of Europe: a comparison. <em>Journal of Applied Econometrics</em>,
+<b>25</b>(5), 833-868, <a href="https://doi.org/10.1002/jae.1082" class="external-link">doi:10.1002/jae.1082</a>
+.</p>
+<p>Dieppe, Legrand, Roye (2016). The BEAR toolbox, <em>ECB Working Papers</em>,
+<b>1934</b>, <a href="https://doi.org/10.2866/292952" class="external-link">doi:10.2866/292952</a>
+.</p>
+<p>Zellner, Hong (1989). Forecasting international growth rates using
+Bayesian shrinkage and other procedures. <em>Journal of Econometrics</em>,
+<b>40</b>(1), 183–202, <a href="https://doi.org/10.1016/0304-4076%2889%2990036-5" class="external-link">doi:10.1016/0304-4076(89)90036-5</a>
+.</p>
+    </div>
+    <div class="section level2">
     <h2 id="public-fields">Public fields<a class="anchor" aria-label="anchor" href="#public-fields"></a></h2>
     <p></p><div class="r6-fields"><dl><dt><code>p</code></dt>
 <dd><p>a non-negative integer specifying the autoregressive lag order of the model.</p></dd>
@@ -71,9 +85,12 @@ start adapting, the initial scaling rate</p></dd>
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
 <ul><li><p><a href="#method-BVARPANEL-new"><code>specify_bvarPANEL$new()</code></a></p></li>
+<li><p><a href="#method-BVARPANEL-set_to_Jarocinski"><code>specify_bvarPANEL$set_to_Jarocinski()</code></a></p></li>
 <li><p><a href="#method-BVARPANEL-get_data_matrices"><code>specify_bvarPANEL$get_data_matrices()</code></a></p></li>
 <li><p><a href="#method-BVARPANEL-get_prior"><code>specify_bvarPANEL$get_prior()</code></a></p></li>
 <li><p><a href="#method-BVARPANEL-get_starting_values"><code>specify_bvarPANEL$get_starting_values()</code></a></p></li>
+<li><p><a href="#method-BVARPANEL-get_type"><code>specify_bvarPANEL$get_type()</code></a></p></li>
+<li><p><a href="#method-BVARPANEL-set_global2pooled"><code>specify_bvarPANEL$set_global2pooled()</code></a></p></li>
 <li><p><a href="#method-BVARPANEL-set_adaptiveMH"><code>specify_bvarPANEL$set_adaptiveMH()</code></a></p></li>
 <li><p><a href="#method-BVARPANEL-clone"><code>specify_bvarPANEL$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-BVARPANEL-new"></a><div class="section">
@@ -123,15 +140,35 @@ determining the truncation of the predictive density to <code>[0, 100]</code> an
 <p>A new complete specification for the Bayesian Panel VAR model BVARPANEL.</p>
 </div>
 
-</div><p></p><hr><a id="method-BVARPANEL-get_data_matrices"></a><div class="section">
-<h3 id="method-get-data-matrices-">Method <code>get_data_matrices()</code><a class="anchor" aria-label="anchor" href="#method-get-data-matrices-"></a></h3>
-<p>Returns the data matrices as the DataMatricesBVARPANEL object.</p><div class="section">
+</div><p></p><hr><a id="method-BVARPANEL-set_to_Jarocinski"></a><div class="section">
+<h3 id="method-set-to-jarocinski-">Method <code>set_to_Jarocinski()</code><a class="anchor" aria-label="anchor" href="#method-set-to-jarocinski-"></a></h3>
+<p>Sets the model in line with the specification by Jarocinski (2010) as presented
+by Dieppe, Legrand, Roye (2016).</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">get_data_matrices</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">set_to_Jarocinski</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span></span>
+<span><span class="va">spec</span> <span class="op">=</span> <span class="va"><a href="../reference/specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>   data <span class="op">=</span> <span class="va">ilo_dynamic_panel</span>,</span>
+<span>   p <span class="op">=</span> <span class="fl">4</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">spec</span><span class="op">$</span><span class="fu">set_to_Jarocinski</span><span class="op">(</span><span class="op">)</span></span>
+<span></span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-BVARPANEL-get_data_matrices"></a><div class="section">
+<h3 id="method-get-data-matrices-">Method <code>get_data_matrices()</code><a class="anchor" aria-label="anchor" href="#method-get-data-matrices-"></a></h3>
+<p>Returns the data matrices as the DataMatricesBVARPANEL object.</p><div class="section">
+<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">get_data_matrices</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span></span>
 <span><span class="va">spec</span> <span class="op">=</span> <span class="va"><a href="../reference/specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
 <span>   data <span class="op">=</span> <span class="va">ilo_dynamic_panel</span>,</span>
@@ -145,12 +182,12 @@ determining the truncation of the predictive density to <code>[0, 100]</code> an
 </div><p></p><hr><a id="method-BVARPANEL-get_prior"></a><div class="section">
 <h3 id="method-get-prior-">Method <code>get_prior()</code><a class="anchor" aria-label="anchor" href="#method-get-prior-"></a></h3>
 <p>Returns the prior specification as the PriorBVARPANEL object.</p><div class="section">
-<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">get_prior</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a></h4>
+<h4 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span></span>
 <span><span class="va">spec</span> <span class="op">=</span> <span class="va"><a href="../reference/specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
 <span>   data <span class="op">=</span> <span class="va">ilo_dynamic_panel</span>,</span>
@@ -164,12 +201,12 @@ determining the truncation of the predictive density to <code>[0, 100]</code> an
 </div><p></p><hr><a id="method-BVARPANEL-get_starting_values"></a><div class="section">
 <h3 id="method-get-starting-values-">Method <code>get_starting_values()</code><a class="anchor" aria-label="anchor" href="#method-get-starting-values-"></a></h3>
 <p>Returns the starting values as the StartingValuesBVARPANEL object.</p><div class="section">
-<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
+<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">get_starting_values</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a></h4>
+<h4 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span></span>
 <span><span class="va">spec</span> <span class="op">=</span> <span class="va"><a href="../reference/specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
 <span>   data <span class="op">=</span> <span class="va">ilo_dynamic_panel</span>,</span>
@@ -180,11 +217,31 @@ determining the truncation of the predictive density to <code>[0, 100]</code> an
 </div>
 
 
-</div><p></p><hr><a id="method-BVARPANEL-set_adaptiveMH"></a><div class="section">
-<h3 id="method-set-adaptivemh-">Method <code>set_adaptiveMH()</code><a class="anchor" aria-label="anchor" href="#method-set-adaptivemh-"></a></h3>
-<p>Sets the parameters of adaptive Metropolis-Hastings sampler for the parameter nu.</p><div class="section">
-<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">set_adaptiveMH</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><hr><a id="method-BVARPANEL-get_type"></a><div class="section">
+<h3 id="method-get-type-">Method <code>get_type()</code><a class="anchor" aria-label="anchor" href="#method-get-type-"></a></h3>
+<p>Returns the type of the model.</p><div class="section">
+<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">get_type</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a></h4>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span></span>
+<span><span class="va">spec</span> <span class="op">=</span> <span class="va"><a href="../reference/specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>   data <span class="op">=</span> <span class="va">ilo_dynamic_panel</span>,</span>
+<span>   p <span class="op">=</span> <span class="fl">4</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">spec</span><span class="op">$</span><span class="fu">get_type</span><span class="op">(</span><span class="op">)</span></span>
+<span></span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-BVARPANEL-set_global2pooled"></a><div class="section">
+<h3 id="method-set-global-pooled-">Method <code>set_global2pooled()</code><a class="anchor" aria-label="anchor" href="#method-set-global-pooled-"></a></h3>
+<p>Sets the prior mean of the global autoregressive parameters to the OLS
+pooled panel estimator following Zellner, Hong (1989).</p><div class="section">
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">set_global2pooled</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -198,7 +255,36 @@ start adapting, the initial scaling rate</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a></h4>
+<h4 id="examples-5">Examples<a class="anchor" aria-label="anchor" href="#examples-5"></a></h4>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span></span>
+<span><span class="va">spec</span> <span class="op">=</span> <span class="va"><a href="../reference/specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>   data <span class="op">=</span> <span class="va">ilo_dynamic_panel</span>,</span>
+<span>   p <span class="op">=</span> <span class="fl">4</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">spec</span><span class="op">$</span><span class="fu">set_global2pooled</span><span class="op">(</span><span class="op">)</span></span>
+<span></span></code></pre></div><p></p></div>
+</div>
+
+
+</div><p></p><hr><a id="method-BVARPANEL-set_adaptiveMH"></a><div class="section">
+<h3 id="method-set-adaptivemh-">Method <code>set_adaptiveMH()</code><a class="anchor" aria-label="anchor" href="#method-set-adaptivemh-"></a></h3>
+<p>Sets the parameters of adaptive Metropolis-Hastings sampler for the parameter nu.</p><div class="section">
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">set_adaptiveMH</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>x</code></dt>
+<dd><p>a vector of four values setting the adaptive MH sampler for nu:
+adaptive rate, target acceptance rate, the iteration at which to
+start adapting, the initial scaling rate</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="examples-6">Examples<a class="anchor" aria-label="anchor" href="#examples-6"></a></h4>
 <p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span></span>
 <span><span class="va">spec</span> <span class="op">=</span> <span class="va"><a href="../reference/specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
 <span>   data <span class="op">=</span> <span class="va">ilo_dynamic_panel</span>,</span>
@@ -212,12 +298,12 @@ start adapting, the initial scaling rate</p></dd>
 </div><p></p><hr><a id="method-BVARPANEL-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
@@ -236,6 +322,19 @@ start adapting, the initial scaling rate</p></dd>
 <span class="r-in"><span>   data <span class="op">=</span> <span class="va">ilo_dynamic_panel</span>,</span></span>
 <span class="r-in"><span>   p <span class="op">=</span> <span class="fl">4</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `specify_bvarPANEL$set_to_Jarocinski`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">spec</span> <span class="op">=</span> <span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>   data <span class="op">=</span> <span class="va">ilo_dynamic_panel</span>,</span></span>
+<span class="r-in"><span>   p <span class="op">=</span> <span class="fl">4</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">spec</span><span class="op">$</span><span class="fu">set_to_Jarocinski</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Setting the model in line with the specification by Jarocinski (2010).</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
@@ -300,19 +399,44 @@ start adapting, the initial scaling rate</p></dd>
 <span class="r-in"><span><span class="va">spec</span><span class="op">$</span><span class="fu">get_starting_values</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;StartingValuesBVARPANEL&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     A: 0.999193846313155 -0.000176656804944019 0.00027292916346 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     A_c: 0.0013106177317252 0.00092094690910458 -0.00041990974783 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Sigma: 3.29530850908816 0.241564500407962 1.85251180626374 0.01 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Sigma_c: 11.0168069833002 7.41486560775783 1.86343803664628 -0.75 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     V: 17.1443865864033 -1.03052365852677 -8.1551584086238 3.21 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     A: 1.00027546094615 -0.00104396782773321 -0.000451125086876 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     A_c: 0.000176713630489803 0.00119982467116132 9.1880175624384 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Sigma: 2.9677896769255 1.41175494060745 0.744473509708274 2.002 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Sigma_c: 6.57724226160291 0.642526063494252 5.04414606561116 3.95 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     V: 14.9111724758742 -0.751041521591868 1.86234784221944 -0. ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     get_starting_values: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (C, N, p, d = 0) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m: 0.000867367925420229</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     m: -0.000417243251157751</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     nu: 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     s: 1.84851436961589</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     s: 0.61375219715645</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     set_starting_values: function (last_draw) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     w: 0.205986636798871</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     w: 0.661147977591415</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `specify_bvarPANEL$get_type`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">spec</span> <span class="op">=</span> <span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>   data <span class="op">=</span> <span class="va">ilo_dynamic_panel</span>,</span></span>
+<span class="r-in"><span>   p <span class="op">=</span> <span class="fl">4</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">spec</span><span class="op">$</span><span class="fu">get_type</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "wozniak"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `specify_bvarPANEL$set_global2pooled`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">spec</span> <span class="op">=</span> <span class="va">specify_bvarPANEL</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>   data <span class="op">=</span> <span class="va">ilo_dynamic_panel</span>,</span></span>
+<span class="r-in"><span>   p <span class="op">=</span> <span class="fl">4</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">spec</span><span class="op">$</span><span class="fu">set_global2pooled</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
