@@ -945,7 +945,6 @@ double log_kernel_ga_gg (
     const Rcpp::List&   prior
 ) {
   
-  int K               = aux_A_g.n_rows;
   int N               = aux_A_g.n_cols;
   int G               = aux_A_g.n_slices;
   int C               = aux_ga.n_elem;
