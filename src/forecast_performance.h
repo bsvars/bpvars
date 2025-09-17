@@ -70,6 +70,28 @@ Rcpp::List bvars_just_sv_out (
 );
 
 
+Rcpp::List bvarGroupPriorPANEL_noprog(
+    const int&                    S,                    // No. of posterior draws
+    const Rcpp::List&             Y,                    // a C-list of T_cxN elements
+    const Rcpp::List&             X,                    // a C-list of T_cxK elements
+    const Rcpp::List&             prior,                // a list of priors
+    const Rcpp::List&             starting_values, 
+    const arma::vec&              adptive_alpha_gamma,  // 2x1 vector with target acceptance rate and step size
+    const bool                    estimate_groups = false // whether to estimate group-specific parameters
+);
+
+
+Rcpp::List bvarGroupPriorPANEL_just_sv_out (
+    const int&                    S,                    // No. of posterior draws
+    const Rcpp::List&             Y,                    // a C-list of T_cxN elements
+    const Rcpp::List&             X,                    // a C-list of T_cxK elements
+    const Rcpp::List&             prior,                // a list of priors
+    const Rcpp::List&             starting_values, 
+    const arma::vec&              adptive_alpha_gamma,  // 2x1 vector with target acceptance rate and step size
+    const bool                    estimate_groups = false // whether to estimate group-specific parameters
+);
+
+
 Rcpp::List YX_subset_TT_head_cols (
     Rcpp::List        Y,
     const int         TT,
@@ -143,6 +165,25 @@ Rcpp::List forecast_pseudo_out_of_sample_bvars (
     const bool                    show_progress,
     const arma::vec&              adptive_alpha_gamma, // 2x1 vector with target acceptance rate and step size
     const bool                    type_objective = false
+);
+
+
+Rcpp::List forecast_pseudo_out_of_sample_bvarGroupPriorPANEL (
+    const int&                    S,                  // No. of posterior draws
+    const int&                    S_burn,             // No. of posterior draws
+    const arma::ivec              horizons,           // a vector for forecasting horizons for the application
+    const int&                    training_sample,    // No. of observations for estimation (R_training_sample--)
+    const Rcpp::List              Y,                  // a C-list of T_cxN elements
+    const Rcpp::List              X,                  // a C-list of T_cxK elements
+    Rcpp::List&                   cond_forecasts,     // (C)(horizon, N)
+    Rcpp::List&                   exog_forecasts,     // (C)(horizon, d)
+    const Rcpp::List&             prior,              // a list of priors
+    const Rcpp::List&             starting_values,    // a list of starting values for bvarPANEL
+    const arma::vec               LB,                 // Nx1 lower bounds for truncation
+    const arma::vec               UB,                 // Nx1 upper bounds for truncation
+    const bool                    show_progress,
+    const arma::vec&              adptive_alpha_gamma,      // 2x1 vector with target acceptance rate and step size
+    const bool                    estimate_groups = false   // whether to estimate group-specific parameters
 );
 
 
