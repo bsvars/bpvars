@@ -539,6 +539,86 @@ RcppExport SEXP _bpvars_bvars_just_sv_out(SEXP SSEXP, SEXP YSEXP, SEXP XSEXP, SE
     UNPROTECT(1);
     return rcpp_result_gen;
 }
+// bvarGroupPriorPANEL_noprog
+Rcpp::List bvarGroupPriorPANEL_noprog(const int& S, const Rcpp::List& Y, const Rcpp::List& X, const Rcpp::List& prior, const Rcpp::List& starting_values, const arma::vec& adptive_alpha_gamma, const bool estimate_groups);
+static SEXP _bpvars_bvarGroupPriorPANEL_noprog_try(SEXP SSEXP, SEXP YSEXP, SEXP XSEXP, SEXP priorSEXP, SEXP starting_valuesSEXP, SEXP adptive_alpha_gammaSEXP, SEXP estimate_groupsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const int& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type prior(priorSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type starting_values(starting_valuesSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type adptive_alpha_gamma(adptive_alpha_gammaSEXP);
+    Rcpp::traits::input_parameter< const bool >::type estimate_groups(estimate_groupsSEXP);
+    rcpp_result_gen = Rcpp::wrap(bvarGroupPriorPANEL_noprog(S, Y, X, prior, starting_values, adptive_alpha_gamma, estimate_groups));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _bpvars_bvarGroupPriorPANEL_noprog(SEXP SSEXP, SEXP YSEXP, SEXP XSEXP, SEXP priorSEXP, SEXP starting_valuesSEXP, SEXP adptive_alpha_gammaSEXP, SEXP estimate_groupsSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_bpvars_bvarGroupPriorPANEL_noprog_try(SSEXP, YSEXP, XSEXP, priorSEXP, starting_valuesSEXP, adptive_alpha_gammaSEXP, estimate_groupsSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error("%s", CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// bvarGroupPriorPANEL_just_sv_out
+Rcpp::List bvarGroupPriorPANEL_just_sv_out(const int& S, const Rcpp::List& Y, const Rcpp::List& X, const Rcpp::List& prior, const Rcpp::List& starting_values, const arma::vec& adptive_alpha_gamma, const bool estimate_groups);
+static SEXP _bpvars_bvarGroupPriorPANEL_just_sv_out_try(SEXP SSEXP, SEXP YSEXP, SEXP XSEXP, SEXP priorSEXP, SEXP starting_valuesSEXP, SEXP adptive_alpha_gammaSEXP, SEXP estimate_groupsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const int& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type prior(priorSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type starting_values(starting_valuesSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type adptive_alpha_gamma(adptive_alpha_gammaSEXP);
+    Rcpp::traits::input_parameter< const bool >::type estimate_groups(estimate_groupsSEXP);
+    rcpp_result_gen = Rcpp::wrap(bvarGroupPriorPANEL_just_sv_out(S, Y, X, prior, starting_values, adptive_alpha_gamma, estimate_groups));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _bpvars_bvarGroupPriorPANEL_just_sv_out(SEXP SSEXP, SEXP YSEXP, SEXP XSEXP, SEXP priorSEXP, SEXP starting_valuesSEXP, SEXP adptive_alpha_gammaSEXP, SEXP estimate_groupsSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_bpvars_bvarGroupPriorPANEL_just_sv_out_try(SSEXP, YSEXP, XSEXP, priorSEXP, starting_valuesSEXP, adptive_alpha_gammaSEXP, estimate_groupsSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error("%s", CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
 // YX_subset_TT_head_rows
 Rcpp::List YX_subset_TT_head_rows(const Rcpp::List Y, const int TT, const int beginning);
 static SEXP _bpvars_YX_subset_TT_head_rows_try(SEXP YSEXP, SEXP TTSEXP, SEXP beginningSEXP) {
@@ -741,6 +821,54 @@ RcppExport SEXP _bpvars_forecast_pseudo_out_of_sample_bvars(SEXP SSEXP, SEXP S_b
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
         rcpp_result_gen = PROTECT(_bpvars_forecast_pseudo_out_of_sample_bvars_try(SSEXP, S_burnSEXP, horizonsSEXP, training_sampleSEXP, YSEXP, XSEXP, cond_forecastsSEXP, exog_forecastsSEXP, priorSEXP, starting_valuesSEXP, LBSEXP, UBSEXP, show_progressSEXP, adptive_alpha_gammaSEXP, type_objectiveSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error("%s", CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
+// forecast_pseudo_out_of_sample_bvarGroupPriorPANEL
+Rcpp::List forecast_pseudo_out_of_sample_bvarGroupPriorPANEL(const int& S, const int& S_burn, const arma::ivec horizons, const int& training_sample, const Rcpp::List Y, const Rcpp::List X, Rcpp::List& cond_forecasts, Rcpp::List& exog_forecasts, const Rcpp::List& prior, const Rcpp::List& starting_values, const arma::vec LB, const arma::vec UB, const bool show_progress, const arma::vec& adptive_alpha_gamma, const bool estimate_groups);
+static SEXP _bpvars_forecast_pseudo_out_of_sample_bvarGroupPriorPANEL_try(SEXP SSEXP, SEXP S_burnSEXP, SEXP horizonsSEXP, SEXP training_sampleSEXP, SEXP YSEXP, SEXP XSEXP, SEXP cond_forecastsSEXP, SEXP exog_forecastsSEXP, SEXP priorSEXP, SEXP starting_valuesSEXP, SEXP LBSEXP, SEXP UBSEXP, SEXP show_progressSEXP, SEXP adptive_alpha_gammaSEXP, SEXP estimate_groupsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const int& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< const int& >::type S_burn(S_burnSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec >::type horizons(horizonsSEXP);
+    Rcpp::traits::input_parameter< const int& >::type training_sample(training_sampleSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List >::type X(XSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type cond_forecasts(cond_forecastsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type exog_forecasts(exog_forecastsSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type prior(priorSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type starting_values(starting_valuesSEXP);
+    Rcpp::traits::input_parameter< const arma::vec >::type LB(LBSEXP);
+    Rcpp::traits::input_parameter< const arma::vec >::type UB(UBSEXP);
+    Rcpp::traits::input_parameter< const bool >::type show_progress(show_progressSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type adptive_alpha_gamma(adptive_alpha_gammaSEXP);
+    Rcpp::traits::input_parameter< const bool >::type estimate_groups(estimate_groupsSEXP);
+    rcpp_result_gen = Rcpp::wrap(forecast_pseudo_out_of_sample_bvarGroupPriorPANEL(S, S_burn, horizons, training_sample, Y, X, cond_forecasts, exog_forecasts, prior, starting_values, LB, UB, show_progress, adptive_alpha_gamma, estimate_groups));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _bpvars_forecast_pseudo_out_of_sample_bvarGroupPriorPANEL(SEXP SSEXP, SEXP S_burnSEXP, SEXP horizonsSEXP, SEXP training_sampleSEXP, SEXP YSEXP, SEXP XSEXP, SEXP cond_forecastsSEXP, SEXP exog_forecastsSEXP, SEXP priorSEXP, SEXP starting_valuesSEXP, SEXP LBSEXP, SEXP UBSEXP, SEXP show_progressSEXP, SEXP adptive_alpha_gammaSEXP, SEXP estimate_groupsSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_bpvars_forecast_pseudo_out_of_sample_bvarGroupPriorPANEL_try(SSEXP, S_burnSEXP, horizonsSEXP, training_sampleSEXP, YSEXP, XSEXP, cond_forecastsSEXP, exog_forecastsSEXP, priorSEXP, starting_valuesSEXP, LBSEXP, UBSEXP, show_progressSEXP, adptive_alpha_gammaSEXP, estimate_groupsSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -2267,11 +2395,14 @@ static int _bpvars_RcppExport_validate(const char* sig) {
         signatures.insert("Rcpp::List(*bvarGroupPANEL_just_sv_out)(const int&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec&,const bool)");
         signatures.insert("Rcpp::List(*bvars_cpp_noprog)(const int&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec&,const bool)");
         signatures.insert("Rcpp::List(*bvars_just_sv_out)(const int&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec&,const bool)");
+        signatures.insert("Rcpp::List(*bvarGroupPriorPANEL_noprog)(const int&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec&,const bool)");
+        signatures.insert("Rcpp::List(*bvarGroupPriorPANEL_just_sv_out)(const int&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec&,const bool)");
         signatures.insert("Rcpp::List(*YX_subset_TT_head_rows)(const Rcpp::List,const int,const int)");
         signatures.insert("Rcpp::List(*forecast_bvarPANEL_noprog)(arma::field<arma::cube>&,arma::field<arma::cube>&,Rcpp::List&,Rcpp::List&,Rcpp::List&,const int,arma::vec,arma::vec)");
         signatures.insert("Rcpp::List(*forecast_pseudo_out_of_sample_bvarPANEL)(const int&,const int&,const arma::ivec,const int&,const Rcpp::List,const Rcpp::List,Rcpp::List&,Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec,const arma::vec,const bool,const arma::vec&,const bool)");
         signatures.insert("Rcpp::List(*forecast_pseudo_out_of_sample_bvarGroupPANEL)(const int&,const int&,const arma::ivec,const int&,const Rcpp::List,const Rcpp::List,Rcpp::List&,Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec,const arma::vec,const bool,const arma::vec&,const bool)");
         signatures.insert("Rcpp::List(*forecast_pseudo_out_of_sample_bvars)(const int&,const int&,const arma::ivec,const int&,const Rcpp::List,const Rcpp::List,Rcpp::List&,Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec,const arma::vec,const bool,const arma::vec&,const bool)");
+        signatures.insert("Rcpp::List(*forecast_pseudo_out_of_sample_bvarGroupPriorPANEL)(const int&,const int&,const arma::ivec,const int&,const Rcpp::List,const Rcpp::List,Rcpp::List&,Rcpp::List&,const Rcpp::List&,const Rcpp::List&,const arma::vec,const arma::vec,const bool,const arma::vec&,const bool)");
         signatures.insert("arma::field<arma::cube>(*fourDarray_to_field_cube)(Rcpp::NumericVector)");
         signatures.insert("double(*log_dnormm_joint_s)(arma::vec&,arma::vec&,arma::mat&)");
         signatures.insert("arma::cube(*log_dnormm_marginal)(arma::mat&,arma::cube&,arma::field<arma::cube>&)");
@@ -2330,11 +2461,14 @@ RcppExport SEXP _bpvars_RcppExport_registerCCallable() {
     R_RegisterCCallable("bpvars", "_bpvars_bvarGroupPANEL_just_sv_out", (DL_FUNC)_bpvars_bvarGroupPANEL_just_sv_out_try);
     R_RegisterCCallable("bpvars", "_bpvars_bvars_cpp_noprog", (DL_FUNC)_bpvars_bvars_cpp_noprog_try);
     R_RegisterCCallable("bpvars", "_bpvars_bvars_just_sv_out", (DL_FUNC)_bpvars_bvars_just_sv_out_try);
+    R_RegisterCCallable("bpvars", "_bpvars_bvarGroupPriorPANEL_noprog", (DL_FUNC)_bpvars_bvarGroupPriorPANEL_noprog_try);
+    R_RegisterCCallable("bpvars", "_bpvars_bvarGroupPriorPANEL_just_sv_out", (DL_FUNC)_bpvars_bvarGroupPriorPANEL_just_sv_out_try);
     R_RegisterCCallable("bpvars", "_bpvars_YX_subset_TT_head_rows", (DL_FUNC)_bpvars_YX_subset_TT_head_rows_try);
     R_RegisterCCallable("bpvars", "_bpvars_forecast_bvarPANEL_noprog", (DL_FUNC)_bpvars_forecast_bvarPANEL_noprog_try);
     R_RegisterCCallable("bpvars", "_bpvars_forecast_pseudo_out_of_sample_bvarPANEL", (DL_FUNC)_bpvars_forecast_pseudo_out_of_sample_bvarPANEL_try);
     R_RegisterCCallable("bpvars", "_bpvars_forecast_pseudo_out_of_sample_bvarGroupPANEL", (DL_FUNC)_bpvars_forecast_pseudo_out_of_sample_bvarGroupPANEL_try);
     R_RegisterCCallable("bpvars", "_bpvars_forecast_pseudo_out_of_sample_bvars", (DL_FUNC)_bpvars_forecast_pseudo_out_of_sample_bvars_try);
+    R_RegisterCCallable("bpvars", "_bpvars_forecast_pseudo_out_of_sample_bvarGroupPriorPANEL", (DL_FUNC)_bpvars_forecast_pseudo_out_of_sample_bvarGroupPriorPANEL_try);
     R_RegisterCCallable("bpvars", "_bpvars_fourDarray_to_field_cube", (DL_FUNC)_bpvars_fourDarray_to_field_cube_try);
     R_RegisterCCallable("bpvars", "_bpvars_log_dnormm_joint_s", (DL_FUNC)_bpvars_log_dnormm_joint_s_try);
     R_RegisterCCallable("bpvars", "_bpvars_log_dnormm_marginal", (DL_FUNC)_bpvars_log_dnormm_marginal_try);
@@ -2392,11 +2526,14 @@ static const R_CallMethodDef CallEntries[] = {
     {"_bpvars_bvarGroupPANEL_just_sv_out", (DL_FUNC) &_bpvars_bvarGroupPANEL_just_sv_out, 7},
     {"_bpvars_bvars_cpp_noprog", (DL_FUNC) &_bpvars_bvars_cpp_noprog, 7},
     {"_bpvars_bvars_just_sv_out", (DL_FUNC) &_bpvars_bvars_just_sv_out, 7},
+    {"_bpvars_bvarGroupPriorPANEL_noprog", (DL_FUNC) &_bpvars_bvarGroupPriorPANEL_noprog, 7},
+    {"_bpvars_bvarGroupPriorPANEL_just_sv_out", (DL_FUNC) &_bpvars_bvarGroupPriorPANEL_just_sv_out, 7},
     {"_bpvars_YX_subset_TT_head_rows", (DL_FUNC) &_bpvars_YX_subset_TT_head_rows, 3},
     {"_bpvars_forecast_bvarPANEL_noprog", (DL_FUNC) &_bpvars_forecast_bvarPANEL_noprog, 8},
     {"_bpvars_forecast_pseudo_out_of_sample_bvarPANEL", (DL_FUNC) &_bpvars_forecast_pseudo_out_of_sample_bvarPANEL, 15},
     {"_bpvars_forecast_pseudo_out_of_sample_bvarGroupPANEL", (DL_FUNC) &_bpvars_forecast_pseudo_out_of_sample_bvarGroupPANEL, 15},
     {"_bpvars_forecast_pseudo_out_of_sample_bvars", (DL_FUNC) &_bpvars_forecast_pseudo_out_of_sample_bvars, 15},
+    {"_bpvars_forecast_pseudo_out_of_sample_bvarGroupPriorPANEL", (DL_FUNC) &_bpvars_forecast_pseudo_out_of_sample_bvarGroupPriorPANEL, 15},
     {"_bpvars_fourDarray_to_field_cube", (DL_FUNC) &_bpvars_fourDarray_to_field_cube, 1},
     {"_bpvars_log_dnormm_joint_s", (DL_FUNC) &_bpvars_log_dnormm_joint_s, 3},
     {"_bpvars_log_dnormm_marginal", (DL_FUNC) &_bpvars_log_dnormm_marginal, 3},
