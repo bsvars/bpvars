@@ -282,8 +282,8 @@ double log_kernel_ga_gg (
 
 arma::vec sample_group_allocation (
     arma::vec&          aux_ga,           // (C, 1)
-    const arma::cube&   yt,               // (T, N, C)
-    const arma::cube&   xt,               // (T, K, C)
+    const arma::field<arma::mat>&   y,    // (C)(T, N)
+    const arma::field<arma::mat>&   x,    // (C)(T, N)
     const arma::cube    aux_A_g,          // (K, N, G)
     const arma::cube    aux_Sigma_g,      // (N, N, G)
     const arma::mat&    aux_A,            // KxN
