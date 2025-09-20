@@ -9,8 +9,8 @@ bvarGroupPriorPANEL <- function(S, Y, X, prior, starting_values, thin, show_prog
     .Call(`_bpvars_bvarGroupPriorPANEL`, S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma, estimate_groups)
 }
 
-bvarPANEL <- function(S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma, type_wozniak = TRUE) {
-    .Call(`_bpvars_bvarPANEL`, S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma, type_wozniak)
+bvarPANEL <- function(S, Y, missing, exogenous, prior, starting_values, thin, show_progress, adptive_alpha_gamma, type_wozniak, p) {
+    .Call(`_bpvars_bvarPANEL`, S, Y, missing, exogenous, prior, starting_values, thin, show_progress, adptive_alpha_gamma, type_wozniak, p)
 }
 
 bvars_cpp <- function(S, Y, X, prior, starting_values, thin, show_progress, adptive_alpha_gamma, type_objective = FALSE) {
