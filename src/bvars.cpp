@@ -3,6 +3,7 @@
 #include "bsvars.h"
 
 #include "sample_mniw.h"
+#include "missing.h"
 
 using namespace Rcpp;
 using namespace arma;
@@ -12,14 +13,16 @@ using namespace arma;
 // [[Rcpp::export]]
 Rcpp::List bvars_cpp(
     const int&                    S,          // No. of posterior draws
-    const Rcpp::List&             Y,          // a C-list of T_cxN elements
-    const Rcpp::List&             X,          // a C-list of T_cxK elements
+    const Rcpp::List&             Y,          // a C-list of (T_c + p)xN elements
+    const Rcpp::List&             missing,    // a C-list of T_cxN elements - 1 for missing
+    const Rcpp::List&             exogenous,  // a C-list of (T_c + p)x(d+1) - with intercept
     const Rcpp::List&             prior,      // a list of priors
     const Rcpp::List&             starting_values,
     const int                     thin, // introduce thinning
     const bool                    show_progress,
     const arma::vec&              adptive_alpha_gamma, // 2x1 vector with target acceptance rate and step size
-    const bool                    type_objective = false
+    const bool                    type_objective,
+    const int                     p           // autoregressive lag order
 ) {
 
   // Progress bar setup
@@ -64,6 +67,8 @@ Rcpp::List bvars_cpp(
   
   const int   SS    = floor(S / thin);
 
+  
+  field<mat>  posterior_Y(C, SS);
   field<cube> posterior_A_c_cpp(SS);
   field<cube> posterior_Sigma_c_cpp(SS);
   mat         posterior_nu(C, SS);
@@ -71,13 +76,14 @@ Rcpp::List bvars_cpp(
   mat         posterior_w(C, SS);
   mat         posterior_s(C, SS);
 
+  field<mat> aux_Y(C);
   field<mat> y(C);
   field<mat> x(C);
+  
   cube  aux_Sigma_c_inv(N, N, C);
   vec   adaptive_scale(C);
   for (int c=0; c<C; c++) {
-    y(c)                  = as<mat>(Y[c]);
-    x(c)                  = as<mat>(X[c]);
+    aux_Y(c)          = as<mat>(Y[c]);
     aux_Sigma_c_inv.slice(c) = inv_sympd( aux_Sigma_c.slice(c) );
     
     // the initial value for the adaptive_scale is set to the negative inverse of
@@ -98,6 +104,27 @@ Rcpp::List bvars_cpp(
     // Check for user interrupts
     if (s % 200 == 0) checkUserInterrupt();
 
+    // sample aux_Y
+    // Rcout << " sample aux_Y" << endl;
+    for (int c=0; c<C; c++) {
+      // Rcout << " c: " << c << endl;
+      mat miss    = as<mat>(missing[c]);
+      mat exo     = as<mat>(exogenous[c]);
+      
+      mat prior_A = aux_m(c) * prior_M;
+      mat prior_SS =  aux_s(c) * prior_S;
+      // Rcout << " sample_missing" << endl;
+      try {
+        aux_Y(c)    = sample_missing( aux_Y(c), miss, exo, aux_A_c.slice(c), aux_Sigma_c.slice(c), prior_A, prior_SS );
+      } catch (std::runtime_error &e) {
+        // Rcout << "   s: " << s <<" c: "<<c << endl;
+      }
+      
+      field<mat> YXtmp = Y_c_and_X_c( aux_Y(c), exo, p );
+      y(c)        = YXtmp(0);
+      x(c)        = YXtmp(1);
+    } // END c loop
+    
     // sample aux_m, aux_w, aux_s
     if ( !type_objective ) {
       aux_m       = sample_m_bvars(aux_A_c, aux_Sigma_c_inv, aux_w, prior);
@@ -136,6 +163,9 @@ Rcpp::List bvars_cpp(
       posterior_m.col(ss)       = aux_m;
       posterior_w.col(ss)       = aux_w;
       posterior_s.col(ss)       = aux_s;
+      for (int c=0; c<C; c++) {
+        posterior_Y(c, ss) = aux_Y(c);
+      } // END c loop
 
       ss++;
     }
@@ -148,7 +178,8 @@ Rcpp::List bvars_cpp(
       _["nu"]       = aux_nu,
       _["m"]        = aux_m,
       _["w"]        = aux_w,
-      _["s"]        = aux_s
+      _["s"]        = aux_s,
+      _["Y"]        = aux_Y
     ),
     _["posterior"]  = List::create(
       _["A_c_cpp"]  = posterior_A_c_cpp,
@@ -157,7 +188,8 @@ Rcpp::List bvars_cpp(
       _["m"]        = posterior_m,
       _["w"]        = posterior_w,
       _["s"]        = posterior_s,
-      _["scale"]    = scale
+      _["scale"]    = scale,
+      _["Y"]        = posterior_Y
     )
   );
 } // END bvars_cpp
