@@ -294,9 +294,9 @@ Rcpp::List bvarGroupPANEL_noprog(
     aux_V_inv   = inv_sympd( aux_V );
     
     // sample aux_ga
-    if ( estimate_groups ) {
-      aux_ga    = sample_group_allocation ( aux_ga, yt, xt, aux_A_g, aux_Sigma_g, aux_A, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu );
-    }
+    // if ( estimate_groups ) {
+    //   aux_ga    = sample_group_allocation ( aux_ga, yt, xt, aux_A_g, aux_Sigma_g, aux_A, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu );
+    // }
     
     // sample aux_A_c, aux_Sigma_c
     for (int g=0; g<G; g++) {
