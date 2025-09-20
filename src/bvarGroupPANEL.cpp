@@ -4,6 +4,7 @@
 
 #include "sample_mniw.h"
 #include "utils.h"
+#include "missing.h"
 
 using namespace Rcpp;
 using namespace arma;
@@ -13,14 +14,16 @@ using namespace arma;
 // [[Rcpp::export]]
 Rcpp::List bvarGroupPANEL(
     const int&                    S,                    // No. of posterior draws
-    const Rcpp::List&             Y,                    // a C-list of T_cxN elements
-    const Rcpp::List&             X,                    // a C-list of T_cxK elements
+    const Rcpp::List&             Y,          // a C-list of (T_c + p)xN elements
+    const Rcpp::List&             missing,    // a C-list of T_cxN elements - 1 for missing
+    const Rcpp::List&             exogenous,  // a C-list of (T_c + p)x(d+1) - with intercept
     const Rcpp::List&             prior,                // a list of priors
     const Rcpp::List&             starting_values, 
     const int                     thin,                 // introduce thinning
     const bool                    show_progress,
     const arma::vec&              adptive_alpha_gamma,  // 2x1 vector with target acceptance rate and step size
-    const bool                    estimate_groups = false // whether to estimate group-specific parameters
+    const bool                    estimate_groups, // whether to estimate group-specific parameters
+    const int                     p           // autoregressive lag order
 ) {
   
   // Progress bar setup
@@ -40,7 +43,7 @@ Rcpp::List bvarGroupPANEL(
     Rcout << " Press Esc to interrupt the computations" << endl;
     Rcout << "**************************************************|" << endl;
   }
-  Progress p(50, show_progress);
+  Progress p_bvarPANEL(50, show_progress);
   
   cube    aux_A_c     = as<cube>(starting_values["A_c"]);
   cube    aux_Sigma_c = as<cube>(starting_values["Sigma_c"]);
@@ -63,6 +66,14 @@ Rcpp::List bvarGroupPANEL(
   const int K         = aux_A.n_rows;
   const int SS        = floor(S / thin);
   
+  field<mat> aux_Y(C);
+  field<mat> y(C);
+  field<mat> x(C);
+  for (int c=0; c<C; c++) {
+    aux_Y(c)          = as<mat>(Y[c]);
+  }
+  
+  field<mat>  posterior_Y(C, SS);
   field<cube> posterior_A_c_cpp(SS);
   field<cube> posterior_Sigma_c_cpp(SS);
   field<cube> posterior_A_g_cpp(SS);
@@ -78,24 +89,13 @@ Rcpp::List bvarGroupPANEL(
   vec         posterior_s(SS);
   
   cube    aux_Sigma_g_inv(N, N, G);
-  cube    aux_Sigma_c_inv(N, N, C);
   for (int g=0; g<G; g++) {
     aux_Sigma_g_inv.slice(g) = inv_sympd( aux_Sigma_g.slice(g) );
   }
   
-  mat y_tmp             = as<mat>(Y[0]);
-  int T                 = y_tmp.n_rows;
-  
-  cube yt(N, T, C);           // store provided data matrices
-  cube xt(K, T, C);           // store provided data matrices
-  
+  cube    aux_Sigma_c_inv(N, N, C);
   for (int c=0; c<C; c++) {
-    
     aux_Sigma_c_inv.slice(c) = aux_Sigma_g_inv.slice(aux_ga(c));
-    
-    yt.slice(c)         = trans(as<mat>(Y[c]));
-    xt.slice(c)         = trans(as<mat>(X[c]));
-    
   } // END c loop
   vec   scale(S);
   int   ss = 0;
@@ -109,9 +109,29 @@ Rcpp::List bvarGroupPANEL(
     // Rcout << "Iteration: " << s << endl;
     
     // Increment progress bar
-    if (any(prog_rep_points == s)) p.increment();
+    if (any(prog_rep_points == s)) p_bvarPANEL.increment();
     // Check for user interrupts
     if (s % 200 == 0) checkUserInterrupt();
+    
+    
+    // sample aux_Y
+    // Rcout << " sample aux_Y" << endl;
+    for (int c=0; c<C; c++) {
+      mat miss    = as<mat>(missing[c]);
+      mat exo     = as<mat>(exogenous[c]);
+      
+      try {
+        aux_Y(c)    = sample_missing( aux_Y(c), miss, exo, aux_A_c.slice(c), aux_Sigma_c.slice(c), aux_A, aux_Sigma );
+      } catch (std::runtime_error &e) {
+        // Rcout << "   s: " << s <<" c: "<<c << endl;
+      }
+      
+      field<mat> YXtmp = Y_c_and_X_c( aux_Y(c), exo, p );
+      y(c)        = YXtmp(0);
+      x(c)        = YXtmp(1);
+    } // END c loop
+    
+    
     
     // sample aux_m, aux_w, aux_s
     aux_m       = sample_m( aux_A, aux_V, aux_s, aux_w, prior );
@@ -135,15 +155,15 @@ Rcpp::List bvarGroupPANEL(
     
     // sample aux_ga
     if ( estimate_groups ) {
-      aux_ga    = sample_group_allocation ( aux_ga, yt, xt, aux_A_g, aux_Sigma_g, aux_A, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu );
+      aux_ga    = sample_group_allocation ( aux_ga, y, x, aux_A_g, aux_Sigma_g, aux_A, aux_V_inv, aux_Sigma, aux_Sigma_inv, aux_nu );
     }
     
     // sample aux_A_c, aux_Sigma_c
     for (int g=0; g<G; g++) {
     
       uvec which_in_g_cur = find(aux_ga == g);
-      mat YG              = tcube_to_mat_by_slices( yt.slices(which_in_g_cur) );
-      mat XG              = tcube_to_mat_by_slices( xt.slices(which_in_g_cur) );
+      mat YG              = field_to_mat( y, which_in_g_cur);
+      mat XG              = field_to_mat( x, which_in_g_cur);
     
       field<mat> tmp_A_g_Sigma_g  = sample_A_c_Sigma_c( YG, XG, aux_A, aux_V, aux_Sigma, aux_nu );
     
@@ -171,6 +191,9 @@ Rcpp::List bvarGroupPANEL(
       posterior_m(ss)           = aux_m;
       posterior_w(ss)           = aux_w;
       posterior_s(ss)           = aux_s;
+      for (int c=0; c<C; c++) {
+        posterior_Y(c, ss) = aux_Y(c);
+      } // END c loop
       
       ss++;
     }
@@ -189,7 +212,8 @@ Rcpp::List bvarGroupPANEL(
       _["m"]        = aux_m,
       _["w"]        = aux_w,
       _["s"]        = aux_s,
-      _["group_allocation"] = aux_ga + 1
+      _["group_allocation"] = aux_ga + 1,
+      _["Y"]        = aux_Y
     ),
     _["posterior"]  = List::create(
       _["A_c_cpp"]  = posterior_A_c_cpp,
@@ -204,7 +228,8 @@ Rcpp::List bvarGroupPANEL(
       _["w"]        = posterior_w,
       _["s"]        = posterior_s,
       _["scale"]    = scale,
-      _["group_allocation"] = posterior_ga + 1
+      _["group_allocation"] = posterior_ga + 1,
+      _["Y"]        = posterior_Y
     )
   );
 } // END bvarGroupPANEL
