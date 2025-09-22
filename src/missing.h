@@ -3,6 +3,12 @@
 
 #include <RcppArmadillo.h>
 
+
+Rcpp::List mean_field (
+    arma::field<arma::cube>  postY    // (C, S)(T_c, N)
+);
+
+
 arma::mat create_bigA (
     arma::cube  A,
     int         T
