@@ -190,4 +190,4 @@ Rcpp::List forecast_bvarPANEL (
     _["forecast_mean_cpp"]  = out_forecast_mean,
     _["forecast_cov_cpp"]   = out_forecast_cov
   );
-} // END forecast_conditional_bvarPANEL
+} // END forecast_bvarPANEL

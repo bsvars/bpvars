@@ -75,6 +75,7 @@ forecast_poos_recursively.BVARPANEL <- function(
   data_matrices       = model_spec$data_matrices$get_data_matrices()
   adaptiveMH          = model_spec$adaptiveMH
   type_wozniak        = model_spec$get_type() == "wozniak"
+  p                   = model_spec$p
   thin                = 1
   
   C                   = length(data_matrices$Y)
@@ -102,8 +103,11 @@ forecast_poos_recursively.BVARPANEL <- function(
   # form an output object
   
   
-  foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvarPANEL`, S, S_burn, horizons, training_sample, data_matrices$Y, data_matrices$X, conditional_forecast, exogenous_forecast, prior, starting_values, LB, UB, show_progress, adaptiveMH, type_wozniak)
-  
+  foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvarPANEL`, 
+                    S, S_burn, horizons, training_sample, 
+                      data_matrices$Y, data_matrices$missing, data_matrices$exogenous,
+                        conditional_forecast, exogenous_forecast, prior, starting_values, 
+                          LB, UB, show_progress, adaptiveMH, type_wozniak, p)
   
   out                 = vector("list", forecasting_sample)
   for (i in 1:forecasting_sample) {
@@ -128,6 +132,11 @@ forecast_poos_recursively.BVARPANEL <- function(
       colnames(evaluation_data) = horizons
       rownames(evaluation_data) = variable_names
       fore$evaluation_data      = evaluation_data
+      
+      evaluation_missing        = t(foreout[[i]]$evaluation_missing_cpp[c,1][[1]])
+      colnames(evaluation_missing) = horizons
+      rownames(evaluation_missing) = variable_names
+      fore$evaluation_missing      = evaluation_missing
       
       class(fore)             = "Forecasts"
       forecasts[[c]]          = fore
@@ -193,8 +202,9 @@ forecast_poos_recursively.BVARGROUPPANEL <- function(
   data_matrices       = model_spec$data_matrices$get_data_matrices()
   adaptiveMH          = model_spec$adaptiveMH
   estimate_groups     = model_spec$estimate_groups
-  
+  p                   = model_spec$p
   thin                = 1
+  
   C                   = length(data_matrices$Y)
   country_names       = names(data_matrices$Y)
   T                   = nrow(model_spec$data_matrices$Y[[1]])
@@ -221,10 +231,11 @@ forecast_poos_recursively.BVARGROUPPANEL <- function(
   
   
   foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvarGroupPANEL`, 
-                  S, S_burn, horizons, training_sample, data_matrices$Y, data_matrices$X, 
-                    conditional_forecast, exogenous_forecast, prior, starting_values, 
-                      LB, UB, show_progress, adaptiveMH, estimate_groups)
-  
+                    S, S_burn, horizons, training_sample, 
+                      data_matrices$Y, data_matrices$missing, data_matrices$exogenous,
+                        conditional_forecast, exogenous_forecast, prior, starting_values, 
+                          LB, UB, show_progress, adaptiveMH, estimate_groups, p)
+
   out                 = vector("list", forecasting_sample)
   for (i in 1:forecasting_sample) {
     
@@ -248,6 +259,11 @@ forecast_poos_recursively.BVARGROUPPANEL <- function(
       colnames(evaluation_data) = horizons
       rownames(evaluation_data) = variable_names
       fore$evaluation_data      = evaluation_data
+      
+      evaluation_missing        = t(foreout[[i]]$evaluation_missing_cpp[c,1][[1]])
+      colnames(evaluation_missing) = horizons
+      rownames(evaluation_missing) = variable_names
+      fore$evaluation_missing      = evaluation_missing
       
       class(fore)             = "Forecasts"
       forecasts[[c]]          = fore
@@ -313,8 +329,9 @@ forecast_poos_recursively.BVARs <- function(
   data_matrices       = model_spec$data_matrices$get_data_matrices()
   adaptiveMH          = model_spec$adaptiveMH
   type_objective      = model_spec$get_type() == "zellner"
-  
+  p                   = model_spec$p
   thin                = 1
+  
   C                   = length(data_matrices$Y)
   country_names       = names(data_matrices$Y)
   T                   = nrow(model_spec$data_matrices$Y[[1]])
@@ -341,10 +358,11 @@ forecast_poos_recursively.BVARs <- function(
   
   
   foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvars`, 
-                  S, S_burn, horizons, training_sample, data_matrices$Y, data_matrices$X, 
-                  conditional_forecast, exogenous_forecast, prior, starting_values, 
-                  LB, UB, show_progress, adaptiveMH, type_objective)
-  
+                    S, S_burn, horizons, training_sample, 
+                      data_matrices$Y, data_matrices$missing, data_matrices$exogenous,
+                        conditional_forecast, exogenous_forecast, prior, starting_values, 
+                          LB, UB, show_progress, adaptiveMH, type_objective, p)
+
   out                 = vector("list", forecasting_sample)
   for (i in 1:forecasting_sample) {
     
@@ -368,6 +386,11 @@ forecast_poos_recursively.BVARs <- function(
       colnames(evaluation_data) = horizons
       rownames(evaluation_data) = variable_names
       fore$evaluation_data      = evaluation_data
+      
+      evaluation_missing        = t(foreout[[i]]$evaluation_missing_cpp[c,1][[1]])
+      colnames(evaluation_missing) = horizons
+      rownames(evaluation_missing) = variable_names
+      fore$evaluation_missing      = evaluation_missing
       
       class(fore)             = "Forecasts"
       forecasts[[c]]          = fore
@@ -436,8 +459,9 @@ forecast_poos_recursively.BVARGROUPPRIORPANEL <- function(
   data_matrices       = model_spec$data_matrices$get_data_matrices()
   adaptiveMH          = model_spec$adaptiveMH
   estimate_groups     = model_spec$estimate_groups
-  
+  p                   = model_spec$p
   thin                = 1
+  
   C                   = length(data_matrices$Y)
   country_names       = names(data_matrices$Y)
   T                   = nrow(model_spec$data_matrices$Y[[1]])
@@ -464,10 +488,11 @@ forecast_poos_recursively.BVARGROUPPRIORPANEL <- function(
   
   
   foreout = .Call(`_bpvars_forecast_pseudo_out_of_sample_bvarGroupPriorPANEL`, 
-                  S, S_burn, horizons, training_sample, data_matrices$Y, data_matrices$X, 
-                  conditional_forecast, exogenous_forecast, prior, starting_values, 
-                  LB, UB, show_progress, adaptiveMH, estimate_groups)
-  
+                    S, S_burn, horizons, training_sample, 
+                      data_matrices$Y, data_matrices$missing, data_matrices$exogenous,
+                        conditional_forecast, exogenous_forecast, prior, starting_values, 
+                          LB, UB, show_progress, adaptiveMH, estimate_groups, p)
+
   out                 = vector("list", forecasting_sample)
   for (i in 1:forecasting_sample) {
     
@@ -491,6 +516,11 @@ forecast_poos_recursively.BVARGROUPPRIORPANEL <- function(
       colnames(evaluation_data) = horizons
       rownames(evaluation_data) = variable_names
       fore$evaluation_data      = evaluation_data
+      
+      evaluation_missing        = t(foreout[[i]]$evaluation_missing_cpp[c,1][[1]])
+      colnames(evaluation_missing) = horizons
+      rownames(evaluation_missing) = variable_names
+      fore$evaluation_missing      = evaluation_missing
       
       class(fore)             = "Forecasts"
       forecasts[[c]]          = fore

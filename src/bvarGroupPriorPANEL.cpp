@@ -182,12 +182,14 @@ Rcpp::List bvarGroupPriorPANEL(
     }
   } // END s loop
   
+  List aux_y_out(C);
   for (int c=0; c<C; c++) {
     cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, C);
     for (int ss=0; ss<SS; ss++) {
       posty.slice(c)      = postY(c, ss);
     }
     posterior_Y(c)        = posty;
+    aux_y_out(c)          = aux_Y(c);
   }
   
   return List::create(
@@ -202,7 +204,7 @@ Rcpp::List bvarGroupPriorPANEL(
       _["w"]        = aux_w,
       _["s"]        = aux_s,
       _["group_allocation"] = aux_ga + 1,
-      _["Y"]        = aux_Y
+      _["Y"]        = aux_y_out
     ),
     _["posterior"]  = List::create(
       _["A_c_cpp"]  = posterior_A_c_cpp,
