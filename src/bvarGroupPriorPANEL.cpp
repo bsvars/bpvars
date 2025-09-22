@@ -70,7 +70,8 @@ Rcpp::List bvarGroupPriorPANEL(
     aux_Y(c)          = as<mat>(Y[c]);
   }
   
-  field<mat>  posterior_Y(C, SS);
+  field<mat>  postY(C, SS);
+  field<cube> posterior_Y(C);
   field<cube> posterior_A_c_cpp(SS);
   field<cube> posterior_Sigma_c_cpp(SS);
   field<cube> posterior_A_g_cpp(SS);
@@ -174,12 +175,20 @@ Rcpp::List bvarGroupPriorPANEL(
       posterior_w(ss)           = aux_w;
       posterior_s(ss)           = aux_s;
       for (int c=0; c<C; c++) {
-        posterior_Y(c, ss) = aux_Y(c);
+        postY(c, ss)            = aux_Y(c);
       } // END c loop
       
       ss++;
     }
   } // END s loop
+  
+  for (int c=0; c<C; c++) {
+    cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, C);
+    for (int ss=0; ss<SS; ss++) {
+      posty.slice(c)      = postY(c, ss);
+    }
+    posterior_Y(c)        = posty;
+  }
   
   return List::create(
     _["last_draw"]  = List::create(
