@@ -149,15 +149,15 @@ forecast.PosteriorBVARPANEL = function(
   
   posterior_A_c_cpp     = posterior$posterior$A_c_cpp
   posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
-  X_c             = posterior$last_draw$data_matrices$X
-  Y_c             = posterior$last_draw$data_matrices$Y
-  N               = dim(Y_c[[1]])[2]
-  K               = dim(X_c[[1]])[2]
-  C               = length(Y_c)
+  Y_c             = posterior$posterior$Y
+  N               = dim(posterior_A_c_cpp[1,1][[1]])[2]
+  K               = dim(posterior_A_c_cpp[1,1][[1]])[1]
+  C               = dim(posterior_A_c_cpp[1,1][[1]])[3]
   S               = dim(posterior_A_c_cpp)[1]
+  p               = posterior$last_draw$p
   c_names         = names(posterior$last_draw$data_matrices$Y)
   
-  d               = K - N * posterior$last_draw$p - 1
+  d               = K - N * p - 1
   if (d == 0 ) {
     # this will not be used for forecasting, but needs to be provided
     exogenous_forecast = list()
@@ -181,11 +181,11 @@ forecast.PosteriorBVARPANEL = function(
   } else {
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data." 
-              = is.list(conditional_forecast) & length(conditional_forecast) == length(Y_c)
+              = is.list(conditional_forecast) & length(conditional_forecast) == C
     )
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data."
-              = all(names(Y_c) == names(conditional_forecast))
+              = all(c_names == names(conditional_forecast))
     )
     stopifnot("Argument conditional_forecast must be a list with matrices with numeric values."
               = all(sapply(conditional_forecast, function(x) is.matrix(x) & is.numeric(x)))
@@ -213,16 +213,18 @@ forecast.PosteriorBVARPANEL = function(
   fff           = .Call(`_bpvars_forecast_bvarPANEL`, 
                         posterior_A_c_cpp, 
                         posterior_Sigma_c_cpp, 
-                        X_c, 
+                        Y_c, 
                         conditional_forecast, 
                         exogenous_forecast, 
                         horizon,
                         LB,
                         UB,
-                        TRUE
+                        TRUE,
+                        p
                        )
                           
   forecasts       = list()
+  Ymean           = .Call(`_bpvars_mean_field`, Y_c )
   
   for (c in 1:C) {
     fore            = list()
@@ -238,7 +240,7 @@ forecast.PosteriorBVARPANEL = function(
     }
     fore$forecast_cov = cov_tmp
     
-    fore$Y          = t(Y_c[[c]])
+    fore$Y          = t(Ymean[[c]])
     class(fore)     = "Forecasts"
     forecasts[[c]]  = fore
   }
@@ -322,15 +324,16 @@ forecast.PosteriorBVARGROUPPANEL = function(
   
   posterior_A_c_cpp     = posterior$posterior$A_c_cpp
   posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
-  X_c             = posterior$last_draw$data_matrices$X
-  Y_c             = posterior$last_draw$data_matrices$Y
-  N               = dim(Y_c[[1]])[2]
-  K               = dim(X_c[[1]])[2]
-  C               = length(Y_c)
+  
+  Y_c             = posterior$posterior$Y
+  N               = dim(posterior_A_c_cpp[1,1][[1]])[2]
+  K               = dim(posterior_A_c_cpp[1,1][[1]])[1]
+  C               = dim(posterior_A_c_cpp[1,1][[1]])[3]
   S               = dim(posterior_A_c_cpp)[1]
+  p               = posterior$last_draw$p
   c_names         = names(posterior$last_draw$data_matrices$Y)
   
-  d               = K - N * posterior$last_draw$p - 1
+  d               = K - N * p - 1
   if (d == 0 ) {
     # this will not be used for forecasting, but needs to be provided
     exogenous_forecast = list()
@@ -354,11 +357,11 @@ forecast.PosteriorBVARGROUPPANEL = function(
   } else {
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data." 
-              = is.list(conditional_forecast) & length(conditional_forecast) == length(Y_c)
+              = is.list(conditional_forecast) & length(conditional_forecast) == C
     )
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data."
-              = all(names(Y_c) == names(conditional_forecast))
+              = all(c_names == names(conditional_forecast))
     )
     stopifnot("Argument conditional_forecast must be a list with matrices with numeric values."
               = all(sapply(conditional_forecast, function(x) is.matrix(x) & is.numeric(x)))
@@ -386,16 +389,18 @@ forecast.PosteriorBVARGROUPPANEL = function(
   fff           = .Call(`_bpvars_forecast_bvarPANEL`, 
                         posterior_A_c_cpp, 
                         posterior_Sigma_c_cpp, 
-                        X_c, 
+                        Y_c, 
                         conditional_forecast, 
                         exogenous_forecast, 
                         horizon,
                         LB,
                         UB,
-                        TRUE
+                        TRUE,
+                        p
   )
   
   forecasts       = list()
+  Ymean           = .Call(`_bpvars_mean_field`, Y_c )
   
   for (c in 1:C) {
     fore            = list()
@@ -411,7 +416,7 @@ forecast.PosteriorBVARGROUPPANEL = function(
     }
     fore$forecast_cov = cov_tmp
     
-    fore$Y          = t(Y_c[[c]])
+    fore$Y          = t(Ymean[[c]])
     class(fore)     = "Forecasts"
     forecasts[[c]]  = fore
   }
@@ -576,15 +581,16 @@ forecast.PosteriorBVARs = function(
   
   posterior_A_c_cpp     = posterior$posterior$A_c_cpp
   posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
-  X_c             = posterior$last_draw$data_matrices$X
-  Y_c             = posterior$last_draw$data_matrices$Y
-  N               = dim(Y_c[[1]])[2]
-  K               = dim(X_c[[1]])[2]
-  C               = length(Y_c)
+  
+  Y_c             = posterior$posterior$Y
+  N               = dim(posterior_A_c_cpp[1,1][[1]])[2]
+  K               = dim(posterior_A_c_cpp[1,1][[1]])[1]
+  C               = dim(posterior_A_c_cpp[1,1][[1]])[3]
   S               = dim(posterior_A_c_cpp)[1]
+  p               = posterior$last_draw$p
   c_names         = names(posterior$last_draw$data_matrices$Y)
   
-  d               = K - N * posterior$last_draw$p - 1
+  d               = K - N * p - 1
   if (d == 0 ) {
     # this will not be used for forecasting, but needs to be provided
     exogenous_forecast = list()
@@ -608,11 +614,11 @@ forecast.PosteriorBVARs = function(
   } else {
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data." 
-              = is.list(conditional_forecast) & length(conditional_forecast) == length(Y_c)
+              = is.list(conditional_forecast) & length(conditional_forecast) == C
     )
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data."
-              = all(names(Y_c) == names(conditional_forecast))
+              = all(c_names == names(conditional_forecast))
     )
     stopifnot("Argument conditional_forecast must be a list with matrices with numeric values."
               = all(sapply(conditional_forecast, function(x) is.matrix(x) & is.numeric(x)))
@@ -640,16 +646,18 @@ forecast.PosteriorBVARs = function(
   fff           = .Call(`_bpvars_forecast_bvarPANEL`, 
                         posterior_A_c_cpp, 
                         posterior_Sigma_c_cpp, 
-                        X_c, 
+                        Y_c, 
                         conditional_forecast, 
                         exogenous_forecast, 
                         horizon,
                         LB,
                         UB,
-                        TRUE
+                        TRUE,
+                        p
   )
   
   forecasts       = list()
+  Ymean           = .Call(`_bpvars_mean_field`, Y_c )
   
   for (c in 1:C) {
     fore            = list()
@@ -665,7 +673,7 @@ forecast.PosteriorBVARs = function(
     }
     fore$forecast_cov = cov_tmp
     
-    fore$Y          = t(Y_c[[c]])
+    fore$Y          = t(Ymean[[c]])
     class(fore)     = "Forecasts"
     forecasts[[c]]  = fore
   }
@@ -741,15 +749,16 @@ forecast.PosteriorBVARGROUPPRIORPANEL = function(
   
   posterior_A_c_cpp     = posterior$posterior$A_c_cpp
   posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
-  X_c             = posterior$last_draw$data_matrices$X
-  Y_c             = posterior$last_draw$data_matrices$Y
-  N               = dim(Y_c[[1]])[2]
-  K               = dim(X_c[[1]])[2]
-  C               = length(Y_c)
+  
+  Y_c             = posterior$posterior$Y
+  N               = dim(posterior_A_c_cpp[1,1][[1]])[2]
+  K               = dim(posterior_A_c_cpp[1,1][[1]])[1]
+  C               = dim(posterior_A_c_cpp[1,1][[1]])[3]
   S               = dim(posterior_A_c_cpp)[1]
+  p               = posterior$last_draw$p
   c_names         = names(posterior$last_draw$data_matrices$Y)
   
-  d               = K - N * posterior$last_draw$p - 1
+  d               = K - N * p - 1
   if (d == 0 ) {
     # this will not be used for forecasting, but needs to be provided
     exogenous_forecast = list()
@@ -773,11 +782,11 @@ forecast.PosteriorBVARGROUPPRIORPANEL = function(
   } else {
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data." 
-              = is.list(conditional_forecast) & length(conditional_forecast) == length(Y_c)
+              = is.list(conditional_forecast) & length(conditional_forecast) == C
     )
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data."
-              = all(names(Y_c) == names(conditional_forecast))
+              = all(c_names == names(conditional_forecast))
     )
     stopifnot("Argument conditional_forecast must be a list with matrices with numeric values."
               = all(sapply(conditional_forecast, function(x) is.matrix(x) & is.numeric(x)))
@@ -805,16 +814,18 @@ forecast.PosteriorBVARGROUPPRIORPANEL = function(
   fff           = .Call(`_bpvars_forecast_bvarPANEL`, 
                         posterior_A_c_cpp, 
                         posterior_Sigma_c_cpp, 
-                        X_c, 
+                        Y_c, 
                         conditional_forecast, 
                         exogenous_forecast, 
                         horizon,
                         LB,
                         UB,
-                        TRUE
+                        TRUE,
+                        p
   )
   
   forecasts       = list()
+  Ymean           = .Call(`_bpvars_mean_field`, Y_c )
   
   for (c in 1:C) {
     fore            = list()
@@ -830,7 +841,7 @@ forecast.PosteriorBVARGROUPPRIORPANEL = function(
     }
     fore$forecast_cov = cov_tmp
     
-    fore$Y          = t(Y_c[[c]])
+    fore$Y          = t(Ymean[[c]])
     class(fore)     = "Forecasts"
     forecasts[[c]]  = fore
   }
