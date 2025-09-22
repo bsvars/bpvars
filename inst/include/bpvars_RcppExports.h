@@ -151,17 +151,17 @@ namespace bpvars {
         return Rcpp::as<arma::vec >(rcpp_result_gen);
     }
 
-    inline Rcpp::List forecast_bvarPANEL(arma::field<arma::cube>& posterior_A_c_cpp, arma::field<arma::cube>& posterior_Sigma_c_cpp, Rcpp::List& X_c, Rcpp::List& cond_forecasts, Rcpp::List& exog_forecasts, const int horizon, arma::vec LB, arma::vec UB, const bool show_progress) {
-        typedef SEXP(*Ptr_forecast_bvarPANEL)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+    inline Rcpp::List forecast_bvarPANEL(arma::field<arma::cube>& posterior_A_c_cpp, arma::field<arma::cube>& posterior_Sigma_c_cpp, arma::field<arma::cube>& posterior_Y, Rcpp::List& cond_forecasts, Rcpp::List& exog_forecasts, const int horizon, arma::vec LB, arma::vec UB, const bool show_progress, const int p) {
+        typedef SEXP(*Ptr_forecast_bvarPANEL)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_forecast_bvarPANEL p_forecast_bvarPANEL = NULL;
         if (p_forecast_bvarPANEL == NULL) {
-            validateSignature("Rcpp::List(*forecast_bvarPANEL)(arma::field<arma::cube>&,arma::field<arma::cube>&,Rcpp::List&,Rcpp::List&,Rcpp::List&,const int,arma::vec,arma::vec,const bool)");
+            validateSignature("Rcpp::List(*forecast_bvarPANEL)(arma::field<arma::cube>&,arma::field<arma::cube>&,arma::field<arma::cube>&,Rcpp::List&,Rcpp::List&,const int,arma::vec,arma::vec,const bool,const int)");
             p_forecast_bvarPANEL = (Ptr_forecast_bvarPANEL)R_GetCCallable("bpvars", "_bpvars_forecast_bvarPANEL");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_forecast_bvarPANEL(Shield<SEXP>(Rcpp::wrap(posterior_A_c_cpp)), Shield<SEXP>(Rcpp::wrap(posterior_Sigma_c_cpp)), Shield<SEXP>(Rcpp::wrap(X_c)), Shield<SEXP>(Rcpp::wrap(cond_forecasts)), Shield<SEXP>(Rcpp::wrap(exog_forecasts)), Shield<SEXP>(Rcpp::wrap(horizon)), Shield<SEXP>(Rcpp::wrap(LB)), Shield<SEXP>(Rcpp::wrap(UB)), Shield<SEXP>(Rcpp::wrap(show_progress)));
+            rcpp_result_gen = p_forecast_bvarPANEL(Shield<SEXP>(Rcpp::wrap(posterior_A_c_cpp)), Shield<SEXP>(Rcpp::wrap(posterior_Sigma_c_cpp)), Shield<SEXP>(Rcpp::wrap(posterior_Y)), Shield<SEXP>(Rcpp::wrap(cond_forecasts)), Shield<SEXP>(Rcpp::wrap(exog_forecasts)), Shield<SEXP>(Rcpp::wrap(horizon)), Shield<SEXP>(Rcpp::wrap(LB)), Shield<SEXP>(Rcpp::wrap(UB)), Shield<SEXP>(Rcpp::wrap(show_progress)), Shield<SEXP>(Rcpp::wrap(p)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -569,6 +569,27 @@ namespace bpvars {
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
         return Rcpp::as<double >(rcpp_result_gen);
+    }
+
+    inline Rcpp::List mean_field(arma::field<arma::cube> postY) {
+        typedef SEXP(*Ptr_mean_field)(SEXP);
+        static Ptr_mean_field p_mean_field = NULL;
+        if (p_mean_field == NULL) {
+            validateSignature("Rcpp::List(*mean_field)(arma::field<arma::cube>)");
+            p_mean_field = (Ptr_mean_field)R_GetCCallable("bpvars", "_bpvars_mean_field");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_mean_field(Shield<SEXP>(Rcpp::wrap(postY)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<Rcpp::List >(rcpp_result_gen);
     }
 
     inline arma::mat create_bigA(arma::cube A, int T) {
