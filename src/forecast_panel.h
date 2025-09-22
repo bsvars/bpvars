@@ -27,13 +27,14 @@ arma::vec mvnrnd_cond_truncated (
 Rcpp::List forecast_bvarPANEL (
     arma::field<arma::cube>&  posterior_A_c_cpp,      // (S)(K, N, C)
     arma::field<arma::cube>&  posterior_Sigma_c_cpp,  // (S)(N, N, C)
-    Rcpp::List&               X_c,                    // (C)(T_c, K)
+    arma::field<arma::mat>&   posterior_Y,            // (C, S)(T_c, N)
     Rcpp::List&               cond_forecasts,         // (C)(horizon, N)
     Rcpp::List&               exog_forecasts,         // (C)(horizon, d)
     const int                 horizon,
     arma::vec                 LB,                     // Nx1 lower bounds for truncation
     arma::vec                 UB,                     // Nx1 upper bounds for truncation
-    const bool                show_progress
+    const bool                show_progress,
+    const int                 p
 );
 
 
