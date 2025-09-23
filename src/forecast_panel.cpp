@@ -122,7 +122,7 @@ Rcpp::List forecast_bvarPANEL (
     
     for (int s=0; s<S; s++) {
       
-      mat   aux_Y   = posterior_Y(s).slice(c);
+      mat   aux_Y   = posterior_Y(c).slice(s);
       int   T_c     = aux_Y.n_rows;
       
       rowvec  x_t;

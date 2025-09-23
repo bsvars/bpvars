@@ -81,7 +81,7 @@ forecast_poos_recursively.BVARPANEL <- function(
   C                   = length(data_matrices$Y)
   country_names       = names(data_matrices$Y)
   T                   = nrow(model_spec$data_matrices$Y[[1]])
-  forecasting_sample  = T - max(horizons) - training_sample + 1
+  forecasting_sample  = T - max(horizons) - training_sample
   
   N                   = dim(model_spec$starting_values$Sigma)[1]
   type                = model_spec$data_matrices$type
@@ -208,7 +208,7 @@ forecast_poos_recursively.BVARGROUPPANEL <- function(
   C                   = length(data_matrices$Y)
   country_names       = names(data_matrices$Y)
   T                   = nrow(model_spec$data_matrices$Y[[1]])
-  forecasting_sample  = T - max(horizons) - training_sample + 1
+  forecasting_sample  = T - max(horizons) - training_sample
   
   N                   = dim(model_spec$starting_values$Sigma)[1]
   type                = model_spec$data_matrices$type
@@ -335,7 +335,7 @@ forecast_poos_recursively.BVARs <- function(
   C                   = length(data_matrices$Y)
   country_names       = names(data_matrices$Y)
   T                   = nrow(model_spec$data_matrices$Y[[1]])
-  forecasting_sample  = T - max(horizons) - training_sample + 1
+  forecasting_sample  = T - max(horizons) - training_sample
   
   N                   = ncol(model_spec$data_matrices$Y[[1]])
   type                = model_spec$data_matrices$type
@@ -465,7 +465,7 @@ forecast_poos_recursively.BVARGROUPPRIORPANEL <- function(
   C                   = length(data_matrices$Y)
   country_names       = names(data_matrices$Y)
   T                   = nrow(model_spec$data_matrices$Y[[1]])
-  forecasting_sample  = T - max(horizons) - training_sample + 1
+  forecasting_sample  = T - max(horizons) - training_sample
   
   N                   = dim(model_spec$starting_values$Sigma_g)[1]
   type                = model_spec$data_matrices$type

@@ -171,9 +171,9 @@ Rcpp::List bvarPANEL_noprog(
   
   List aux_y_out(C);
   for (int c=0; c<C; c++) {
-    cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, C);
+    cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, SS);
     for (int ss=0; ss<SS; ss++) {
-      posty.slice(c)      = postY(c, ss);
+      posty.slice(ss)      = postY(c, ss);
     }
     posterior_Y(c)        = posty;
     aux_y_out(c)          = aux_Y(c);
@@ -406,9 +406,9 @@ Rcpp::List bvarGroupPANEL_noprog(
   
   List aux_y_out(C);
   for (int c=0; c<C; c++) {
-    cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, C);
+    cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, SS);
     for (int ss=0; ss<SS; ss++) {
-      posty.slice(c)      = postY(c, ss);
+      posty.slice(ss)      = postY(c, ss);
     }
     posterior_Y(c)        = posty;
     aux_y_out(c)          = aux_Y(c);
@@ -617,9 +617,9 @@ Rcpp::List bvars_cpp_noprog(
   
   List aux_y_out(C);
   for (int c=0; c<C; c++) {
-    cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, C);
+    cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, SS);
     for (int ss=0; ss<SS; ss++) {
-      posty.slice(c)      = postY(c, ss);
+      posty.slice(ss)      = postY(c, ss);
     }
     posterior_Y(c)        = posty;
     aux_y_out(c)          = aux_Y(c);
@@ -826,9 +826,9 @@ Rcpp::List bvarGroupPriorPANEL_noprog(
   
   List aux_y_out(C);
   for (int c=0; c<C; c++) {
-    cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, C);
+    cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, SS);
     for (int ss=0; ss<SS; ss++) {
-      posty.slice(c)      = postY(c, ss);
+      posty.slice(ss)      = postY(c, ss);
     }
     posterior_Y(c)        = posty;
     aux_y_out(c)          = aux_Y(c);
@@ -945,7 +945,7 @@ Rcpp::List forecast_bvarPANEL_noprog (
   field<cube>     out_forecast_cov(C,S);      // of (N, N, horizon) cubes
   
   for (int c=0; c<C; c++) {
-    
+  
     vec     Xt(K);
     cube    forecasts_c(horizon, N, S);
     cube    meanCS(horizon, N, S);
@@ -955,8 +955,8 @@ Rcpp::List forecast_bvarPANEL_noprog (
     mat     cond_fc = as<mat>(cond_forecasts[c]);
     
     for (int s=0; s<S; s++) {
-      
-      mat   aux_Y   = posterior_Y(s).slice(c);
+  
+      mat   aux_Y   = posterior_Y(c).slice(s);
       int   T_c     = aux_Y.n_rows;
       
       rowvec  x_t;
@@ -1066,7 +1066,7 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL (
   const int max_horizon = max(horizons);
   mat yy_tmp            = as<mat>(Y[0]);
   const int T           = yy_tmp.n_rows;
-  const int forecasting_sample = T - max_horizon - training_sample + 1;
+  const int forecasting_sample = T - max_horizon - training_sample;
   const int C           = Y.length();
   
   field<cube>   forecasts(C);         //of (horizon, N, S) cubes
@@ -1122,7 +1122,7 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL (
     List burn   = bvarPANEL_just_sv_out( 
                     S_burn, Y_i, miss_i, exo_i, prior, initial_estimation, 
                       adptive_alpha_gamma, type_wozniak, p );
-                
+    
     List Y_burn = as<List>(burn["Y"]);
     List post   = bvarPANEL_noprog( 
                     S, Y_burn, miss_i, exo_i, prior, burn, 
@@ -1144,21 +1144,20 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarPANEL (
 
     int ind = 0;
     for (int c=0; c<C; c++) {
-      
       for (int s=0; s<S; s++) {
         ind = s*C + c;
         // Rcout << " c, s, ind: " << c  << " " << s << " "  << ind << endl;
-        forecast_cov(c,s) = forecast_cov_tmp(ind);
+        forecast_cov(c,s) = forecast_cov_tmp(ind);  
       }
-      
+    
       estimation_data(c)  = as<mat>(Y_i[c]);
       mat Yc_tmp          = as<mat>(Y[c]);
       mat YYc_tmp         = Yc_tmp.rows(
-                              training_sample + p + i ,
-                              training_sample + p + i + max_horizon - 1
+                              training_sample + i ,
+                              training_sample + i + max_horizon - 1
                             );
       evaluation_data(c)  = YYc_tmp;
-      
+    
       mat miss_tmp        = as<mat>(missing[c]);
       mat mmiss_tmp       = miss_tmp.rows(
                               training_sample + i ,
@@ -1222,7 +1221,7 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarGroupPANEL (
   const int max_horizon = max(horizons);
   mat yy_tmp            = as<mat>(Y[0]);
   const int T           = yy_tmp.n_rows;
-  const int forecasting_sample = T - max_horizon - training_sample + 1;
+  const int forecasting_sample = T - max_horizon - training_sample;
   const int C           = Y.length();
   
   field<cube>   forecasts(C);         //of (horizon, N, S) cubes
@@ -1311,8 +1310,8 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarGroupPANEL (
       estimation_data(c)  = as<mat>(Y_i[c]);
       mat Yc_tmp          = as<mat>(Y[c]);
       mat YYc_tmp         = Yc_tmp.rows(
-        training_sample + p + i ,
-        training_sample + p + i + max_horizon - 1
+        training_sample + i ,
+        training_sample + i + max_horizon - 1
       );
       evaluation_data(c)  = YYc_tmp;
       
@@ -1379,7 +1378,7 @@ Rcpp::List forecast_pseudo_out_of_sample_bvars (
   const int max_horizon = max(horizons);
   mat yy_tmp            = as<mat>(Y[0]);
   const int T           = yy_tmp.n_rows;
-  const int forecasting_sample = T - max_horizon - training_sample + 1;
+  const int forecasting_sample = T - max_horizon - training_sample;
   const int C           = Y.length();
   
   field<cube>   forecasts(C);         //of (horizon, N, S) cubes
@@ -1432,7 +1431,7 @@ Rcpp::List forecast_pseudo_out_of_sample_bvars (
     List exo_i  = YX_subset_TT_head_rows(exogenous, training_sample + p + i);
     List miss_i = YX_subset_TT_head_rows(missing, training_sample + i);
     
-    List burn   = bvarGroupPANEL_just_sv_out( 
+    List burn   = bvars_just_sv_out( 
                     S_burn, Y_i, miss_i, exo_i, prior, initial_estimation, 
                       adptive_alpha_gamma, type_objective, p );
     
@@ -1467,8 +1466,8 @@ Rcpp::List forecast_pseudo_out_of_sample_bvars (
       estimation_data(c)  = as<mat>(Y_i[c]);
       mat Yc_tmp          = as<mat>(Y[c]);
       mat YYc_tmp         = Yc_tmp.rows(
-        training_sample + p + i ,
-        training_sample + p + i + max_horizon - 1
+        training_sample + i ,
+        training_sample + i + max_horizon - 1
       );
       evaluation_data(c)  = YYc_tmp;
       
@@ -1539,7 +1538,7 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarGroupPriorPANEL (
   const int max_horizon = max(horizons);
   mat yy_tmp            = as<mat>(Y[0]);
   const int T           = yy_tmp.n_rows;
-  const int forecasting_sample = T - max_horizon - training_sample + 1;
+  const int forecasting_sample = T - max_horizon - training_sample;
   const int C           = Y.length();
   
   field<cube>   forecasts(C);         //of (horizon, N, S) cubes
@@ -1593,7 +1592,7 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarGroupPriorPANEL (
     List exo_i  = YX_subset_TT_head_rows(exogenous, training_sample + p + i);
     List miss_i = YX_subset_TT_head_rows(missing, training_sample + i);
     
-    List burn   = bvarGroupPANEL_just_sv_out( 
+    List burn   = bvarGroupPriorPANEL_just_sv_out( 
                     S_burn, Y_i, miss_i, exo_i, prior, initial_estimation, 
                       adptive_alpha_gamma, estimate_groups, p );
     
@@ -1628,8 +1627,8 @@ Rcpp::List forecast_pseudo_out_of_sample_bvarGroupPriorPANEL (
       estimation_data(c)  = as<mat>(Y_i[c]);
       mat Yc_tmp          = as<mat>(Y[c]);
       mat YYc_tmp         = Yc_tmp.rows(
-        training_sample + p + i ,
-        training_sample + p + i + max_horizon - 1
+        training_sample + i ,
+        training_sample + i + max_horizon - 1
       );
       evaluation_data(c)  = YYc_tmp;
       

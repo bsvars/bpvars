@@ -193,9 +193,9 @@ Rcpp::List bvarPANEL(
   
   List aux_y_out(C);
   for (int c=0; c<C; c++) {
-    cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, C);
+    cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, SS);
     for (int ss=0; ss<SS; ss++) {
-      posty.slice(c)      = postY(c, ss);
+      posty.slice(ss)      = postY(c, ss);
     }
     posterior_Y(c)        = posty;
     aux_y_out(c)          = aux_Y(c);
