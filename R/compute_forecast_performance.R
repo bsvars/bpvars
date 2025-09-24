@@ -68,6 +68,12 @@ compute_forecast_performance.ForecastsPANELpoos <- function(
   H                   = dims[2]
   S                   = dims[3]
   
+  for (i in 1:forecasting_sample){
+    for (c in 1:C) {
+      forecasts[[i]][[c]]$evaluation_data[forecasts[[i]][[c]]$evaluation_missing == 1] <- NA
+    }
+  }
+  
   # RMSFE and MAFE computations
   if (any(c(measures == "rmsfe", measures == "mafe"))) {
     forecast_error      = sapply(
@@ -87,36 +93,39 @@ compute_forecast_performance.ForecastsPANELpoos <- function(
   
   if (any(measures == "rmsfe")) {
     rmsfe_array               = array(NA, c(N + 1, H, C + 1)) 
-    rmsfe_array[1:N,,1:C]     = apply(forecast_error, 1:3, function(x) sqrt(mean(x^2)))
+    rmsfe_array[1:N,,1:C]     = apply(forecast_error, 1:3, function(x) sqrt(mean(x^2, na.rm = TRUE)))
     rmsfe_array[N + 1,,1:C]   = apply(
       array(rmsfe_array[1:N,,1:C], c(N,H,C)), 
       2:3, 
-      function(x) sqrt(mean(x^2)))
+      function(x) sqrt(mean(x^2, na.rm = TRUE)))
     rmsfe_array[1:N,,C + 1]   = apply(
       array(rmsfe_array[1:N,,1:C], c(N,H,C)),
       1:2, 
-      function(x) sqrt(mean(x^2)))
+      function(x) sqrt(mean(x^2, na.rm = TRUE)))
     rmsfe_array[N + 1,,C + 1] = apply(
       array(rmsfe_array[N + 1,,1:C], c(1,H,C)),
       1, 
-      function(x) sqrt(mean(x^2)))
+      function(x) sqrt(mean(x^2, na.rm = TRUE)))
   }
   
   if (any(measures == "mafe")) {
     mafe_array                = array(NA, c(N + 1, H, C + 1))
-    mafe_array[1:N,,1:C]      = apply(forecast_error, 1:3, function(x) mean(abs(x)))
+    mafe_array[1:N,,1:C]      = apply(forecast_error, 1:3, function(x) mean(abs(x), na.rm = TRUE))
     mafe_array[N + 1,,1:C]    = apply(
       array(mafe_array[1:N,,1:C], c(N,H,C)), 
       2:3, 
-      mean)
+      mean, 
+      na.rm = TRUE)
     mafe_array[1:N,,C + 1]    = apply(
       array(mafe_array[1:N,,1:C], c(N,H,C)), 
       2, 
-      mean)
+      mean, 
+      na.rm = TRUE)
     mafe_array[N + 1,,C + 1]  = apply(
       array(mafe_array[N + 1,,1:C], c(1,H,C)),
       1, 
-      mean)
+      mean, 
+      na.rm = TRUE)
   }
   
   # PLS computations
@@ -136,6 +145,7 @@ compute_forecast_performance.ForecastsPANELpoos <- function(
                                             forecasts[[i]][[c]]$forecast_mean,
                                             forecast_cov_ic      
             )
+            
             log_dnormm_ic[N + 1,,]  = .Call(`_bpvars_log_dnormm_joint`,  # (H, S)
                                             forecasts[[i]][[c]]$evaluation_data,
                                             forecasts[[i]][[c]]$forecast_mean,
@@ -149,7 +159,13 @@ compute_forecast_performance.ForecastsPANELpoos <- function(
       simplify = "array"
     )
     
-    log_mean            = function(x) {.Call("_bpvars_log_mean", as.numeric(x))}
+    # log_mean            = function(x) {.Call("_bpvars_log_mean", as.numeric(x))}
+    log_mean            = function (log_density) {
+      N              = length(log_density)
+      c_log_den      = max(log_density, na.rm = TRUE)
+      log_numerator  = c_log_den - log(N) + log( sum(exp(log_density - c_log_den), na.rm = TRUE) );
+      return(log_numerator)
+    } 
     lps_tmp             = apply(log_norm, c(1,2,4), log_mean)
     pls_array           = array(NA, c(N + 1, H, C + 1))
     pls_array[,,1:C]    = lps_tmp
