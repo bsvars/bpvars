@@ -1767,6 +1767,13 @@ arma::mat log_dnormm_joint (
       vec xh      = x.col(h);
       vec muh     = mu.slice(s).col(h);
       mat sigmah  = sigma(s).slice(h);
+      
+      uvec ind    = find_finite(xh);
+      xh          = xh.elem(ind);
+      muh         = muh.elem(ind);
+      sigmah      = sigmah.submat(ind, ind);
+      
+      if (ind.n_elem == 0) continue;
       bool sympd  = sigmah.is_sympd();
       if (!sympd) continue;
       
