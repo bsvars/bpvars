@@ -40,52 +40,6 @@ expect_error(
 )
 
 
-# conditional forecasting
-data(ilo_conditional_forecasts)
-
-set.seed(1)
-suppressMessages(
-  specification_no1 <- specify_bvarPANEL$new(ilo_dynamic_panel)
-)
-run_no1             <- estimate(specification_no1, 3, 1, show_progress = FALSE)
-ff                  <- forecast(run_no1, 6, conditional_forecast = ilo_conditional_forecasts)
-
-set.seed(1)
-suppressMessages(
-  ff2              <- ilo_dynamic_panel |>
-    specify_bvarPANEL$new() |>
-    estimate(S = 3, thin = 1, show_progress = FALSE) |>
-    forecast(horizon = 6, conditional_forecast = ilo_conditional_forecasts)
-)
-
-
-expect_identical(
-  ff[[1]]$forecasts[1,1,1], ff2[[1]]$forecasts[1,1,1],
-  info = "conditional forecast: forecast identical for normal and pipe workflow."
-)
-
-expect_equivalent(
-  ilo_conditional_forecasts[[1]][1,1], ff2[[1]]$forecasts[1,1,1],
-  info = "conditional forecast: forecasts and provided conditional forecasts identical."
-)
-
-expect_true(
-  is.numeric(ff[[1]]$forecasts) & is.array(ff[[1]]$forecasts),
-  info = "conditional forecast: returns numeric array."
-)
-
-expect_error(
-  forecast(run_no1, horizon = 4, conditional_forecast = ilo_conditional_forecasts),
-  pattern = "horizon",
-  info = "conditional forecast: provided forecasts different from horizon."
-)
-
-expect_error(
-  forecast(run_no1, horizon = 6, conditional_forecast = ilo_conditional_forecasts[-1]),
-  info = "conditional forecast: uneven number of countries in forecasts and data."
-)
-
-
 # exogenous variables
 data("ilo_exogenous_variables")
 data("ilo_exogenous_forecasts")
@@ -95,14 +49,14 @@ suppressMessages(
   specification_no1 <- specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
 )
 run_no1             <- estimate(specification_no1, 3, 1, show_progress = FALSE)
-ff                  <- forecast(run_no1, 6, exogenous_forecast = ilo_exogenous_forecasts)
+ff                  <- forecast(run_no1, 5, exogenous_forecast = ilo_exogenous_forecasts)
 
 set.seed(1)
 suppressMessages(
   ff2              <- ilo_dynamic_panel |>
     specify_bvarPANEL$new(exogenous = ilo_exogenous_variables) |>
     estimate(S = 3, thin = 1, show_progress = FALSE) |>
-    forecast(horizon = 6, exogenous_forecast = ilo_exogenous_forecasts)
+    forecast(horizon = 5, exogenous_forecast = ilo_exogenous_forecasts)
 )
 
 
@@ -131,7 +85,7 @@ expect_error(
 
 ilo_exogenous_forecasts[[1]][1,1] = NA
 expect_error(
-  forecast(run_no1, horizon = 6, exogenous_forecast = ilo_exogenous_forecasts),
+  forecast(run_no1, horizon = 5, exogenous_forecast = ilo_exogenous_forecasts),
   pattern = "values",
   info = "exogenous forecast: provided exogenous forecasts contain missing values."
 )

@@ -110,8 +110,8 @@ specification = specify_bvarGroupPriorPANEL$new(
 burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
 
-# forecast 6 years ahead
-predictive    = forecast(posterior, horizon = 6)
+# forecast 5 years ahead
+predictive    = forecast(posterior, horizon = 5)
 
 # workflow with the pipe |>
 ############################################################
@@ -121,9 +121,7 @@ ilo_dynamic_panel |>
   estimate(S = 20) |> 
   forecast(horizon = 2) -> predictive
 
-# conditional forecasting 6 years ahead conditioning on 
-#  provided future values for the Gross Domestic Product 
-#  and truncated forecasts for the rates
+# truncated forecasts for the rates
 ############################################################
 specification = specify_bvarGroupPriorPANEL$new(       # specify the model
                   ilo_dynamic_panel,
@@ -132,7 +130,7 @@ specification = specify_bvarGroupPriorPANEL$new(       # specify the model
                 )   
 burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
 posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
-predictive    = forecast(posterior, 6) # forecast
+predictive    = forecast(posterior, 5) # forecast
 
 # workflow with the pipe |>
 ############################################################
@@ -143,7 +141,7 @@ ilo_dynamic_panel |>
             ) |>
   estimate(S = 10) |> 
   estimate(S = 20) |> 
-  forecast(horizon = 6) -> predictive
+  forecast(horizon = 5) -> predictive
 
 }
 \references{

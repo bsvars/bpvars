@@ -30,6 +30,7 @@ according to their geographical location. The categories are:
   \item{10}{Eastern Asia}
   \item{11}{Northern Africa}
 }
+Last data update was implemented on 2025-09-26.
 }
 \examples{
 data(country_grouping_subregionbroad)   # upload the data

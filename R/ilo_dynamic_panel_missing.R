@@ -1,18 +1,17 @@
 
 #' @title A 4-variable annual system for forecasting labour market outcomes 
-#' for 189 countries from 1991 to 2024
+#' for 189 countries to 2024 containing only actual observations
 #'
-#' @description For each of the countries a time series of 34 observations on 4 
+#' @description For each of the countries a time series of observations on 4 
 #' variables including the logarithm of Gross Domestic Product (gdp), as well as
 #' the labour market outcomes including the unemployment rate (UR), employment 
-#' rate (EPR), labour force participation rate (LFPR). The missing observations 
-#' are filled using imputation method.
+#' rate (EPR), labour force participation rate (LFPR). The series are of various
+#' lengths and contain missing values due to data availability.
 #' Last data update was implemented on 2025-09-26.
 #'
-#' @usage data(ilo_dynamic_panel)
+#' @usage data(ilo_dynamic_panel_missing)
 #' 
-#' @format A list of 189 \code{ts} objects with time series of 34 observations 
-#' on 4 variables:
+#' @format A list of 189 \code{ts} objects with time series on 4 variables:
 #' \describe{
 #'   \item{gdp}{logarithm of gross domestic product}
 #'   \item{UR}{annual unemployment rate}
@@ -25,6 +24,6 @@
 #' ILOSTAT [database]. Available from \url{https://ilostat.ilo.org/data/}.
 #' 
 #' @examples 
-#' data(ilo_dynamic_panel)   # upload the data
+#' data(ilo_dynamic_panel_missing)   # upload the data
 #' 
-"ilo_dynamic_panel"
+"ilo_dynamic_panel_missing"

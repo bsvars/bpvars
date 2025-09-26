@@ -103,8 +103,8 @@
 #' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
 #' 
-#' # forecast 6 years ahead
-#' predictive    = forecast(posterior, 6, exogenous_forecast = ilo_exogenous_forecasts)
+#' # forecast 5 years ahead
+#' predictive    = forecast(posterior, 5, exogenous_forecast = ilo_exogenous_forecasts)
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -114,9 +114,7 @@
 #'   estimate(S = 20) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
-#' # conditional forecasting 6 years ahead conditioning on 
-#' #  provided future values for the Gross Domestic Product 
-#' #  and truncated forecasts for the rates
+#' # forecasting with truncated forecasts for the rates
 #' ############################################################
 #' specification = specify_bvarPANEL$new(
 #'                   ilo_dynamic_panel,
@@ -125,8 +123,8 @@
 #' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
 #' 
-#' # forecast 6 years ahead
-#' predictive    = forecast(posterior, 6, conditional_forecast = ilo_conditional_forecasts)
+#' # forecast 5 years ahead
+#' predictive    = forecast(posterior, 5)
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -134,10 +132,7 @@
 #'   specify_bvarPANEL$new(type = c("real", rep("rate", 3))) |>
 #'   estimate(S = 10) |> 
 #'   estimate(S = 20) |> 
-#'   forecast(
-#'     horizon = 6, 
-#'     conditional_forecast = ilo_conditional_forecasts
-#'   ) -> predictive
+#'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARPANEL = function(
@@ -272,10 +267,10 @@ forecast.PosteriorBVARPANEL = function(
 #' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
 #' 
-#' # forecast 6 years ahead
+#' # forecast 5 years ahead
 #' predictive    = forecast(
 #'                   posterior, 
-#'                   horizon = 6, 
+#'                   horizon = 5, 
 #'                   exogenous_forecast = ilo_exogenous_forecasts
 #'                 )
 #' 
@@ -287,9 +282,7 @@ forecast.PosteriorBVARPANEL = function(
 #'   estimate(S = 20) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
-#' # conditional forecasting 6 years ahead conditioning on 
-#' #  provided future values for the Gross Domestic Product 
-#' #  and truncated forecasts for the rates
+#' # truncated forecasts for the rates
 #' ############################################################
 #' specification = specify_bvarGroupPANEL$new(            # specify the model
 #'                   ilo_dynamic_panel,
@@ -298,7 +291,7 @@ forecast.PosteriorBVARPANEL = function(
 #'                 )   
 #' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
-#' predictive    = forecast(posterior, 6, conditional_forecast = ilo_conditional_forecasts) # forecast
+#' predictive    = forecast(posterior, 5) # forecast
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -309,10 +302,7 @@ forecast.PosteriorBVARPANEL = function(
 #'             ) |>
 #'   estimate(S = 10) |> 
 #'   estimate(S = 20) |> 
-#'   forecast(
-#'     horizon = 6, 
-#'     conditional_forecast = ilo_conditional_forecasts
-#'   ) -> predictive
+#'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARGROUPPANEL = function(
@@ -535,8 +525,8 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
 #' 
-#' # forecast 6 years ahead
-#' predictive    = forecast(posterior, 6, exogenous_forecast = ilo_exogenous_forecasts)
+#' # forecast 5 years ahead
+#' predictive    = forecast(posterior, 5, exogenous_forecast = ilo_exogenous_forecasts)
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -546,9 +536,7 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #'   estimate(S = 20) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
-#' # conditional forecasting 6 years ahead conditioning on 
-#' #  provided future values for the Gross Domestic Product 
-#' #  and truncated forecasts for the rates
+#' # truncated forecasts for the rates
 #' ############################################################
 #' specification = specify_bvars$new(
 #'                   ilo_dynamic_panel,
@@ -557,8 +545,8 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
 #' 
-#' # forecast 6 years ahead
-#' predictive    = forecast(posterior, 6, conditional_forecast = ilo_conditional_forecasts)
+#' # forecast 5 years ahead
+#' predictive    = forecast(posterior, 5)
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -566,10 +554,7 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #'   specify_bvars$new(type = c("real", rep("rate", 3))) |>
 #'   estimate(S = 10) |> 
 #'   estimate(S = 20) |> 
-#'   forecast(
-#'     horizon = 6, 
-#'     conditional_forecast = ilo_conditional_forecasts
-#'   ) -> predictive
+#'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARs = function(
@@ -704,8 +689,8 @@ forecast.PosteriorBVARs = function(
 #' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
 #' 
-#' # forecast 6 years ahead
-#' predictive    = forecast(posterior, horizon = 6)
+#' # forecast 5 years ahead
+#' predictive    = forecast(posterior, horizon = 5)
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -715,9 +700,7 @@ forecast.PosteriorBVARs = function(
 #'   estimate(S = 20) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
-#' # conditional forecasting 6 years ahead conditioning on 
-#' #  provided future values for the Gross Domestic Product 
-#' #  and truncated forecasts for the rates
+#' # truncated forecasts for the rates
 #' ############################################################
 #' specification = specify_bvarGroupPriorPANEL$new(       # specify the model
 #'                   ilo_dynamic_panel,
@@ -726,7 +709,7 @@ forecast.PosteriorBVARs = function(
 #'                 )   
 #' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
-#' predictive    = forecast(posterior, 6) # forecast
+#' predictive    = forecast(posterior, 5) # forecast
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -737,7 +720,7 @@ forecast.PosteriorBVARs = function(
 #'             ) |>
 #'   estimate(S = 10) |> 
 #'   estimate(S = 20) |> 
-#'   forecast(horizon = 6) -> predictive
+#'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARGROUPPRIORPANEL = function(

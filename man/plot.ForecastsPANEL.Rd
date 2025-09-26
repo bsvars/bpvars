@@ -53,8 +53,8 @@ specification = specify_bvarPANEL$new(ilo_dynamic_panel)  # specify the model
 burn_in       = estimate(specification, 10)               # run the burn-in
 posterior     = estimate(burn_in, 10)                     # estimate the model
 
-# forecast 6 years ahead
-predictive    = forecast(posterior, 6, conditional_forecast = ilo_conditional_forecasts)
+# forecast 5 years ahead
+predictive    = forecast(posterior, 6)
 plot(predictive, which_c = "POL")                                # plot forecasts
 
 # workflow with the pipe |>
@@ -63,7 +63,7 @@ ilo_dynamic_panel |>
   specify_bvarPANEL$new() |>
   estimate(S = 10) |> 
   estimate(S = 10) |> 
-  forecast(horizon = 6, conditional_forecast = ilo_conditional_forecasts) |>
+  forecast(horizon = 5) |>
   plot(which_c = 135)
 
 }

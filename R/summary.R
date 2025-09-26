@@ -589,7 +589,7 @@ summary.PosteriorFEVDPANEL = function(
 #' # forecast 6 years ahead
 #' predictive    = forecast(
 #'       posterior, 
-#'       6, 
+#'       5, 
 #'       exogenous_forecast = ilo_exogenous_forecasts)
 #' summary(predictive, which_c = "POL")
 #' 
@@ -599,30 +599,7 @@ summary.PosteriorFEVDPANEL = function(
 #'   specify_bvarPANEL$new() |>
 #'   estimate(S = 10) |> 
 #'   estimate(S = 20) |> 
-#'   forecast(horizon = 2) |> 
-#'   summary(which_c = "POL")
-#' 
-#' # conditional forecasting 6 years ahead conditioning on 
-#' #  provided future values for the Gross Domestic Product 
-#' #  growth rate
-#' ############################################################
-#' specification = specify_bvarPANEL$new(ilo_dynamic_panel)    # specify the model
-#' burn_in       = estimate(specification, 10)               # run the burn-in
-#' posterior     = estimate(burn_in, 10)                     # estimate the model
-#' # forecast 6 years ahead
-#' predictive    = forecast(posterior, 6, conditional_forecast = ilo_conditional_forecasts)
-#' summary(predictive, which_c = "POL")
-#' 
-#' # workflow with the pipe |>
-#' ############################################################
-#' ilo_dynamic_panel |>
-#'   specify_bvarPANEL$new() |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 20) |> 
-#'   forecast(
-#'     horizon = 6, 
-#'     conditional_forecast = ilo_conditional_forecasts
-#'   ) |> 
+#'   forecast(horizon = 5, exogenous_forecast = ilo_exogenous_forecasts) |> 
 #'   summary(which_c = "POL")
 #' 
 #' @export
