@@ -435,15 +435,31 @@ specify_bvars = R6::R6Class(
     set_global2pooled = function(x) {
       stopifnot("This model cannot be adjusted. Only the default specification can." 
                 = private$type == "wozniak")
+      
       C = length(self$data_matrices$Y)
       N = ncol(self$data_matrices$Y[[1]])
-      K = ncol(self$data_matrices$X[[1]])
+      d = ncol(self$data_matrices$exogenous[[1]])
+      p = self$p
+      K = N * p + d
       
       XX = matrix(0, K, K)
       XY = matrix(0, K, N)
       for (c in 1:C) {
-        XX = XX + crossprod(self$data_matrices$X[[c]])
-        XY = XY + crossprod(self$data_matrices$X[[c]], self$data_matrices$Y[[c]])
+        XcYc_tmp = .Call(`_bpvars_Y_c_and_X_c`, 
+                         self$data_matrices$Y[[c]], 
+                         self$data_matrices$exogenous[[c]],
+                         p)
+        
+        Yc = XcYc_tmp[1,][[1]]
+        Xc = XcYc_tmp[2,][[1]]
+        
+        not_missing = !apply(self$data_matrices$missing[[c]], 1, \(x)(any(x == 1)))
+        if (sum(not_missing) != 0) {
+          Yc = Yc[not_missing,]
+          Xc = Xc[not_missing,]
+          XX = XX + crossprod(Xc)
+          XY = XY + crossprod(Xc, Yc)
+        }
       }
       self$prior$M = solve(XX, XY)
     }, # END set_adaptiveMH
