@@ -10,6 +10,7 @@
 #'   \item{4}{Arab States}
 #'   \item{5}{Americas}
 #' }
+#' Last data update was implemented on 2025-09-26.
 #' 
 #' @usage data(country_grouping_region)
 #' 

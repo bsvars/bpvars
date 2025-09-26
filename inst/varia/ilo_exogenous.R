@@ -21,14 +21,13 @@ for (c in 1:length(ilo_dynamic_panel)) {
 
 # dummy panel forecasts
 ################################################
-data(ilo_conditional_forecasts)
-
-dummy_forecasts     = matrix(0, nrow(ilo_conditional_forecasts$POL), 3)
+horizon             = 5
+dummy_forecasts     = matrix(0, horizon, 3)
 colnames(dummy_forecasts) = c("2008", "2020", "2021")
-dummy_forecasts     = ts(dummy_forecasts, start = 2024, frequency = 1)
+dummy_forecasts     = ts(dummy_forecasts, start = 2025, frequency = 1)
 
 ilo_exogenous_forecasts             = list()
-for (c in 1:length(ilo_conditional_forecasts)) {
+for (c in 1:length(ilo_dynamic_panel)) {
   ilo_exogenous_forecasts[[c]]      = dummy_forecasts
   names(ilo_exogenous_forecasts)[c] = countries[c]
 }
