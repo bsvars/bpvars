@@ -10,13 +10,13 @@ Rcpp::List mean_field (
     arma::field<arma::cube>  postY    // (C, S)(T_c, N)
 ) {
   // computes the means of the aux_Y draws
-  int C       = postY(0).n_slices;
-  int S       = postY.n_elem;
+  int C       = postY.n_rows;
+  int S       = postY(0).n_slices;
   List out(C);
   for (int c=0; c<C; c++) {
     mat Ymean(size(postY(0).slice(0)));
     for (int s=0; s<S; s++) {
-      Ymean += postY(s).slice(c);
+      Ymean += postY(c).slice(s);
     }
     Ymean /= S;
     out[c] = Ymean;
