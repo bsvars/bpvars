@@ -8,6 +8,12 @@ arma::mat tcube_to_mat_by_slices (
 );
 
 
+arma::mat field_to_mat (
+    const arma::field<arma::mat>&   Y,
+    const arma::uvec&               which
+);
+
+
 int sample_arma (
     arma::vec y,
     arma::vec probabilities

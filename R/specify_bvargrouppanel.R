@@ -290,8 +290,60 @@ specify_bvarGroupPANEL = R6::R6Class(
       self$prior           = specify_prior_bvarPANEL$new(C, N, self$p, d, stationary)
       self$starting_values = specify_starting_values_bvarGroupPANEL$new(group_allocation, C, self$G, N, self$p, d)
       self$adaptiveMH      = c(0.44, 0.6)
-    }#, # END initialize
+    }, # END initialize
     
+    #' @description
+    #' Sets the prior mean of the global autoregressive parameters to the OLS 
+    #' pooled panel estimator following Zellner, Hong (1989).
+    #' 
+    #' @param x a vector of four values setting the adaptive MH sampler for nu:
+    #' adaptive rate, target acceptance rate, the iteration at which to 
+    #' start adapting, the initial scaling rate
+    #' 
+    #' @references
+    #' Zellner, Hong (1989). Forecasting international growth rates using 
+    #' Bayesian shrinkage and other procedures. \emph{Journal of Econometrics}, 
+    #' \bold{40}(1), 183–202, \doi{10.1016/0304-4076(89)90036-5}.
+    #' 
+    #' @examples 
+    #' spec = specify_bvarGroupPANEL$new(
+    #'    data = ilo_dynamic_panel,
+    #'    p = 4,
+    #'    G = 2
+    #' )
+    #' spec$set_global2pooled()
+    #' 
+    set_global2pooled = function(x) {
+      stopifnot("Argument x has to be a numeric vector of length 4." 
+                = private$type == "wozniak")
+      
+      C = length(self$data_matrices$Y)
+      N = ncol(self$data_matrices$Y[[1]])
+      d = ncol(self$data_matrices$exogenous[[1]])
+      p = self$p
+      K = N * p + d
+      
+      XX = matrix(0, K, K)
+      XY = matrix(0, K, N)
+      for (c in 1:C) {
+        XcYc_tmp = .Call(`_bpvars_Y_c_and_X_c`, 
+                         self$data_matrices$Y[[c]], 
+                         self$data_matrices$exogenous[[c]],
+                         p)
+        
+        Yc = XcYc_tmp[1,][[1]]
+        Xc = XcYc_tmp[2,][[1]]
+        
+        not_missing = !apply(self$data_matrices$missing[[c]], 1, \(x)(any(x == 1)))
+        if (sum(not_missing) != 0) {
+          Yc = Yc[not_missing,]
+          Xc = Xc[not_missing,]
+          XX = XX + crossprod(Xc)
+          XY = XY + crossprod(Xc, Yc)
+        }
+      }
+      self$prior$M = solve(XX, XY)
+    } # END set_global2pooled
   ) # END public
 ) # END specify_bvarGroupPANEL
 

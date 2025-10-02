@@ -3,6 +3,7 @@
 #include "bsvars.h"
 
 #include "sample_mniw.h"
+#include "missing.h"
 
 using namespace Rcpp;
 using namespace arma;
@@ -12,14 +13,16 @@ using namespace arma;
 // [[Rcpp::export]]
 Rcpp::List bvarPANEL(
     const int&                    S,          // No. of posterior draws
-    const Rcpp::List&             Y,          // a C-list of T_cxN elements
-    const Rcpp::List&             X,          // a C-list of T_cxK elements
+    const Rcpp::List&             Y,          // a C-list of (T_c + p)xN elements
+    const Rcpp::List&             missing,    // a C-list of T_cxN elements - 1 for missing
+    const Rcpp::List&             exogenous,  // a C-list of (T_c + p)x(d+1) - with intercept
     const Rcpp::List&             prior,      // a list of priors
     const Rcpp::List&             starting_values, 
     const int                     thin, // introduce thinning
     const bool                    show_progress,
     const arma::vec&              adptive_alpha_gamma, // 2x1 vector with target acceptance rate and step size
-    const bool                    type_wozniak = true
+    const bool                    type_wozniak,
+    const int                     p           // autoregressive lag order
 ) {
   
   // Progress bar setup
@@ -54,26 +57,29 @@ Rcpp::List bvarPANEL(
   const int C         = aux_A_c.n_slices;
   const int N         = aux_A.n_cols;
   const int K         = aux_A.n_rows;
+  const int SS        = floor(S / thin);
   
-  const int   SS    = floor(S / thin);
+  field<mat> aux_Y(C);
+  field<mat> y(C);
+  field<mat> x(C);
+  for (int c=0; c<C; c++) {
+    aux_Y(c)          = as<mat>(Y[c]);
+  }
   
+  field<mat>  postY(C, SS);
+  field<cube> posterior_Y(C);
   field<cube> posterior_A_c_cpp(SS);
   field<cube> posterior_Sigma_c_cpp(SS);
   cube        posterior_A(K, N, SS);
   cube        posterior_V(K, K, SS);
   cube        posterior_Sigma(N, N, SS);
   vec         posterior_nu(SS);
-  vec         posterior_nu_S(S);
   vec         posterior_m(SS);
   vec         posterior_w(SS);
   vec         posterior_s(SS);
   
-  field<mat> y(C);
-  field<mat> x(C);
   cube aux_Sigma_c_inv(N, N, C);
   for (int c=0; c<C; c++) {
-    y(c)                  = as<mat>(Y[c]);
-    x(c)                  = as<mat>(X[c]);
     aux_Sigma_c_inv.slice(c) = inv_sympd( aux_Sigma_c.slice(c) );
   } // END c loop
   
@@ -85,6 +91,7 @@ Rcpp::List bvarPANEL(
   double adaptive_scale = cov_nu(aux_nu, C, N);
   vec aux_nu_tmp(2);
 
+  // Rcout << " 1" << endl;
   for (int s=0; s<S; s++) {
     // Rcout << "Iteration: " << s << endl;
     
@@ -92,6 +99,25 @@ Rcpp::List bvarPANEL(
     if (any(prog_rep_points == s)) p_bvarPANEL.increment();
     // Check for user interrupts
     if (s % 200 == 0) checkUserInterrupt();
+    
+    // sample aux_Y
+    // Rcout << " sample aux_Y" << endl;
+    for (int c=0; c<C; c++) {
+      // Rcout << " c: " << c << endl;
+      mat miss    = as<mat>(missing[c]);
+      mat exo     = as<mat>(exogenous[c]);
+      
+      // Rcout << " sample_missing" << endl;
+      try {
+        aux_Y(c)    = sample_missing( aux_Y(c), miss, exo, aux_A_c.slice(c), aux_Sigma_c.slice(c), aux_A, aux_Sigma );
+      } catch (std::runtime_error &e) {
+        // Rcout << "   s: " << s <<" c: "<<c << endl;
+      }
+      
+      field<mat> YXtmp = Y_c_and_X_c( aux_Y(c), exo, p );
+      y(c)        = YXtmp(0);
+      x(c)        = YXtmp(1);
+    } // END c loop
     
     // sample aux_m, aux_w, aux_s
     // Rcout << "  sample m" << endl;
@@ -110,6 +136,7 @@ Rcpp::List bvarPANEL(
     }
     
     // sample aux_nu
+    // Rcout << "  sample nu" << endl;
     if ( type_wozniak ) {
       aux_nu_tmp  = sample_nu ( aux_nu, adaptive_scale, aux_Sigma_c, aux_Sigma_c_inv, aux_Sigma, prior, s, adptive_alpha_gamma );
       aux_nu      = aux_nu_tmp(0);
@@ -137,7 +164,6 @@ Rcpp::List bvarPANEL(
     }
     // sample aux_A_c, aux_Sigma_c
     // Rcout << "  sample A_c Sigma_c" << endl;
-    // Rcout << "  aux_nu: " << aux_nu << endl;
     for (int c=0; c<C; c++) {
       field<mat> tmp_A_c_Sigma_c  = sample_A_c_Sigma_c( y(c), x(c), aux_A, aux_V, aux_Sigma, aux_nu );
       aux_A_c.slice(c)            = tmp_A_c_Sigma_c(0);
@@ -145,8 +171,8 @@ Rcpp::List bvarPANEL(
       aux_Sigma_c_inv.slice(c)    = inv_sympd( aux_Sigma_c.slice(c) );
     } // END c loop
     
-    posterior_nu_S(s) = aux_nu;
     
+    // Rcout << "  post" << endl;
     if (s % thin == 0) {
       posterior_A_c_cpp(ss)     = aux_A_c;
       posterior_Sigma_c_cpp(ss) = aux_Sigma_c;
@@ -157,10 +183,23 @@ Rcpp::List bvarPANEL(
       posterior_m(ss)           = aux_m;
       posterior_w(ss)           = aux_w;
       posterior_s(ss)           = aux_s;
+      for (int c=0; c<C; c++) {
+        postY(c, ss)            = aux_Y(c);
+      } // END c loop
       
       ss++;
     }
   } // END s loop
+  
+  List aux_y_out(C);
+  for (int c=0; c<C; c++) {
+    cube posty            = zeros<cube>(aux_Y(c).n_rows, aux_Y(c).n_cols, SS);
+    for (int ss=0; ss<SS; ss++) {
+      posty.slice(ss)      = postY(c, ss);
+    }
+    posterior_Y(c)        = posty;
+    aux_y_out(c)          = aux_Y(c);
+  }
   
   return List::create(
     _["last_draw"]  = List::create(
@@ -172,7 +211,8 @@ Rcpp::List bvarPANEL(
       _["nu"]       = aux_nu,
       _["m"]        = aux_m,
       _["w"]        = aux_w,
-      _["s"]        = aux_s
+      _["s"]        = aux_s,
+      _["Y"]        = aux_y_out
     ),
     _["posterior"]  = List::create(
       _["A_c_cpp"]  = posterior_A_c_cpp,
@@ -184,7 +224,8 @@ Rcpp::List bvarPANEL(
       _["m"]        = posterior_m,
       _["w"]        = posterior_w,
       _["s"]        = posterior_s,
-      _["scale"]    = scale
+      _["scale"]    = scale,
+      _["Y"]        = posterior_Y
     )
   );
 } // END bvarPANEL

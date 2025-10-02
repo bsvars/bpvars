@@ -211,7 +211,7 @@
 #' plot(predictive, which_c = "POL")
 #' 
 #' # Full estimation and forecasting example with 
-#' #   exogenous variables, conditional forecasts, and truncation for rates
+#' #   exogenous variables and truncation for rates
 #' ############################################################
 #' specification = specify_bvarPANEL$new(
 #'                   ilo_dynamic_panel,
@@ -222,9 +222,8 @@
 #' posterior     = estimate(burn_in, S = 10)               # estimate the model; use say S = 10000
 #' predictive    = forecast(
 #'                   posterior, 
-#'                   horizon = 6,
-#'                   exogenous_forecast = ilo_exogenous_forecasts,
-#'                   conditional_forecast = ilo_conditional_forecasts
+#'                   horizon = 5,
+#'                   exogenous_forecast = ilo_exogenous_forecasts
 #'                 )
 #'                 
 #' plot(predictive, which_c = "POL")

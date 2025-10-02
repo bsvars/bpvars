@@ -115,9 +115,10 @@ estimate.BVARGROUPPRIORPANEL <- function(
   adaptiveMH          = specification$adaptiveMH
   estimate_groups     = specification$estimate_groups
   G                   = specification$G
+  p                   = specification$p
   
   # estimation
-  qqq                 = .Call(`_bpvars_bvarGroupPriorPANEL`, S, data_matrices$Y, data_matrices$X, prior, starting_values, thin, show_progress, adaptiveMH, estimate_groups)
+  qqq                 = .Call(`_bpvars_bvarGroupPriorPANEL`, S, data_matrices$Y, data_matrices$missing, data_matrices$exogenous, prior, starting_values, thin, show_progress, adaptiveMH, estimate_groups, p)
     
   specification$starting_values$set_starting_values(qqq$last_draw)
   output              = specify_posterior_bvarGroupPriorPANEL$new(specification, qqq$posterior)
@@ -151,9 +152,10 @@ estimate.PosteriorBVARGROUPPRIORPANEL <- function(
   adaptiveMH          = specification$last_draw$adaptiveMH
   estimate_groups     = specification$last_draw$estimate_groups
   G                   = specification$last_draw$G
+  p                   = specification$last_draw$p
   
   # estimation
-  qqq                 = .Call(`_bpvars_bvarGroupPriorPANEL`, S, data_matrices$Y, data_matrices$X, prior, starting_values, thin, show_progress, adaptiveMH, estimate_groups)
+  qqq                 = .Call(`_bpvars_bvarGroupPriorPANEL`, S, data_matrices$Y, data_matrices$missing, data_matrices$exogenous, prior, starting_values, thin, show_progress, adaptiveMH, estimate_groups, p)
     
   specification$last_draw$starting_values$set_starting_values(qqq$last_draw)
   output              = specify_posterior_bvarGroupPriorPANEL$new(specification$last_draw, qqq$posterior)

@@ -23,6 +23,7 @@ according to their geographical location. The categories are:
   \item{3}{Upper-middle-income countries}
   \item{4}{High-income countries}
 }
+Last data update was implemented on 2025-09-26.
 }
 \examples{
 data(country_grouping_incomegroup)   # upload the data

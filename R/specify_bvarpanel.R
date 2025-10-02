@@ -297,18 +297,23 @@ specify_panel_data_matrices = R6::R6Class(
   
   public = list(
     
-    #' @field Y a list with \code{C} elements with \code{T_c x N} matrices of 
-    #' dependent variables, \eqn{\mathbf{Y}_c}. 
-    Y     = list(),
+    #' @field Y a list with \code{C} elements with \code{(T_c + p) x N} matrices 
+    #' of dependent variables, \eqn{\mathbf{Y}_c}, possibly with missing 
+    #' observations given by \code{NA}. 
+    Y       = list(),
     
-    #' @field X a list with \code{C} elements with \code{T_c x K} matrices of 
-    #' regressors, \eqn{\mathbf{X}_c}. 
-    X     = list(),
+    #' @field missing a list with \code{C} elements with \code{T_c x N} matrices
+    #' containing value \code{1} for missing observation and \code{0} otherwise.
+    missing = list(),
     
     #' @field type an \code{N} character vector with elements set to "rate" or "real"
     #' determining the truncation of the predictive density to \code{[0, 100]} and
     #' \code{(-Inf, Inf)} (no truncation) for each of the variables.
     type  = character(),
+    
+    #' @field exogenous a list with \code{C} elements with \code{(T_c + p) x N} 
+    #' matrices of exogenous variables. 
+    exogenous = list(),
     
     #' @description
     #' Create new data matrices DataMatricesBVARPANEL
@@ -328,7 +333,6 @@ specify_panel_data_matrices = R6::R6Class(
       } else {
         stopifnot("Argument data has to be a list of matrices." = is.list(data) & all(simplify2array(lapply(data, function(x){is.matrix(x) & is.numeric(x)}))))
         stopifnot("Argument data has to contain matrices with the same number of columns." = length(unique(simplify2array(lapply(data, ncol)))) == 1)
-        stopifnot("Argument data cannot include missing values." = all(simplify2array(lapply(data, function(x){!any(is.na(x))}))))
       }
       stopifnot("Argument p must be a positive integer number." = p > 0 & p %% 1 == 0)
       
@@ -356,34 +360,52 @@ specify_panel_data_matrices = R6::R6Class(
       }
       
       for (c in 1:C) {
-        TT            = nrow(data[[c]])
-        T_c           = TT - p
+        T             = nrow(data[[c]])
+        y             = data[[c]]
+        missing_c     = matrix(
+          as.numeric(is.na(y)), 
+          ncol = ncol(y)
+        )
+        my            = colMeans(y, na.rm = TRUE)
+        y             = sapply(
+          1:ncol(y), 
+          function(i){
+            y[is.na(y[,i]),i] <- my[i]
+            y[,i]
+          }
+        )
+        y = rbind(matrix(rep(my, p), nrow = p, byrow = TRUE), y)
         
-        Y             = data[[c]][(p + 1):TT,]
-        rownames(Y)   = 1:T_c
-        colnames(Y)   = paste0("v", 1:ncol(Y))
+        rownames(y)   = c(rep("", p), 1:T)
+        colnames(y)   = paste0("v", 1:ncol(y))
         
         if ( any(class(data[[c]]) == "ts") ) {
-          rownames(Y) = as.numeric(time(data[[c]]))[(p + 1):TT]
+          rownames(y) = c(rep(NA, p), as.numeric(time(data[[c]])))
         }  
         if ( !is.null(colnames(data[[c]])) ) {
-          colnames(Y) = colnames(data[[c]])
+          colnames(y) = colnames(data[[c]])
         }
         
-        self$Y[[c]]   = Y
+        exo = as.matrix(rep(1, T + p))
+        if ( !is.null(exogenous) ) {
+          exo = cbind(
+            exo, 
+            rbind(
+              matrix(0, nrow = p, ncol = d),
+              exogenous[[c]]
+            )
+          )
+        }
         
-        X             = matrix(0, T_c, 0)
-        for (i in 1:p) {
-          X           = cbind(X, data[[c]][(p + 1):TT - i,])
-        }
-        X             = cbind(X, rep(1, T_c))
-        if (!is.null(exogenous)) {
-          X           = cbind(X, exogenous[[c]][(p + 1):TT,])
-        }
-        self$X[[c]]   = X
+        self$Y[[c]]         = y
+        self$missing[[c]]   = missing_c
+        self$exogenous[[c]] = exo
+        
       } # END c loop
-      names(self$Y)   = names(self$X) = names(data)
-      self$type       = type
+      names(self$Y)         = names(data)
+      names(self$missing)   = names(data)
+      names(self$exogenous) = names(data)
+      self$type             = type
     }, # END initialize
     
     #' @description
@@ -396,9 +418,10 @@ specify_panel_data_matrices = R6::R6Class(
     #' 
     get_data_matrices = function() {
       list(
-        Y = self$Y,
-        X = self$X,
-        type = self$type
+        Y       = self$Y,
+        missing = self$missing,
+        exogenous = self$exogenous,
+        type    = self$type
       )
     } # END get_data_matrices
   ) # END public
@@ -626,17 +649,33 @@ specify_bvarPANEL = R6::R6Class(
     #' spec$set_global2pooled()
     #' 
     set_global2pooled = function(x) {
-      stopifnot("Argument x has to be a numeric vector of length 4." 
+      stopifnot("This model does feature such a specification." 
                 = private$type == "wozniak")
+      
       C = length(self$data_matrices$Y)
       N = ncol(self$data_matrices$Y[[1]])
-      K = ncol(self$data_matrices$X[[1]])
+      d = ncol(self$data_matrices$exogenous[[1]])
+      p = self$p
+      K = N * p + d
       
       XX = matrix(0, K, K)
       XY = matrix(0, K, N)
       for (c in 1:C) {
-        XX = XX + crossprod(self$data_matrices$X[[c]])
-        XY = XY + crossprod(self$data_matrices$X[[c]], self$data_matrices$Y[[c]])
+        XcYc_tmp = .Call(`_bpvars_Y_c_and_X_c`, 
+                         self$data_matrices$Y[[c]], 
+                         self$data_matrices$exogenous[[c]],
+                         p)
+        
+        Yc = XcYc_tmp[1,][[1]]
+        Xc = XcYc_tmp[2,][[1]]
+        
+        not_missing = !apply(self$data_matrices$missing[[c]], 1, \(x)(any(x == 1)))
+        if (sum(not_missing) != 0) {
+          Yc = Yc[not_missing,]
+          Xc = Xc[not_missing,]
+          XX = XX + crossprod(Xc)
+          XY = XY + crossprod(Xc, Yc)
+        }
       }
       self$prior$M = solve(XX, XY)
     }, # END set_adaptiveMH

@@ -103,9 +103,10 @@ estimate.BVARs <- function(
   data_matrices       = specification$data_matrices$get_data_matrices()
   adaptiveMH          = specification$adaptiveMH
   type_objective      = specification$get_type() == "zellner"
+  p                   = specification$p
   
   # estimation
-  qqq                 = .Call(`_bpvars_bvars_cpp`, S, data_matrices$Y, data_matrices$X, prior, starting_values, thin, show_progress, adaptiveMH, type_objective)
+  qqq                 = .Call(`_bpvars_bvars_cpp`, S, data_matrices$Y, data_matrices$missing, data_matrices$exogenous, prior, starting_values, thin, show_progress, adaptiveMH, type_objective, p)
   
   specification$starting_values$set_starting_values(qqq$last_draw)
   output              = specify_posterior_bvars$new(specification, qqq$posterior)
@@ -138,9 +139,10 @@ estimate.PosteriorBVARs <- function(
   data_matrices       = specification$last_draw$data_matrices$get_data_matrices()
   adaptiveMH          = specification$last_draw$adaptiveMH
   type_objective      = specification$last_draw$get_type() == "zellner"
+  p                   = specification$last_draw$p
   
   # estimation
-  qqq                 = .Call(`_bpvars_bvars_cpp`, S, data_matrices$Y, data_matrices$X, prior, starting_values, thin, show_progress, adaptiveMH, type_objective)
+  qqq                 = .Call(`_bpvars_bvars_cpp`, S, data_matrices$Y, data_matrices$missing, data_matrices$exogenous, prior, starting_values, thin, show_progress, adaptiveMH, type_objective, p)
   
   specification$last_draw$starting_values$set_starting_values(qqq$last_draw)
   output              = specify_posterior_bvars$new(specification$last_draw, qqq$posterior)

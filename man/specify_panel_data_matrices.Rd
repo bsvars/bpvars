@@ -26,15 +26,19 @@ YX$get_data_matrices()
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{Y}}{a list with \code{C} elements with \code{T_c x N} matrices of 
-dependent variables, \eqn{\mathbf{Y}_c}.}
+\item{\code{Y}}{a list with \code{C} elements with \code{(T_c + p) x N} matrices 
+of dependent variables, \eqn{\mathbf{Y}_c}, possibly with missing 
+observations given by \code{NA}.}
 
-\item{\code{X}}{a list with \code{C} elements with \code{T_c x K} matrices of 
-regressors, \eqn{\mathbf{X}_c}.}
+\item{\code{missing}}{a list with \code{C} elements with \code{T_c x N} matrices
+containing value \code{1} for missing observation and \code{0} otherwise.}
 
 \item{\code{type}}{an \code{N} character vector with elements set to "rate" or "real"
 determining the truncation of the predictive density to \code{[0, 100]} and
 \code{(-Inf, Inf)} (no truncation) for each of the variables.}
+
+\item{\code{exogenous}}{a list with \code{C} elements with \code{(T_c + p) x N} 
+matrices of exogenous variables.}
 }
 \if{html}{\out{</div>}}
 }

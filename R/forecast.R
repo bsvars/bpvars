@@ -103,8 +103,8 @@
 #' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
 #' 
-#' # forecast 6 years ahead
-#' predictive    = forecast(posterior, 6, exogenous_forecast = ilo_exogenous_forecasts)
+#' # forecast 5 years ahead
+#' predictive    = forecast(posterior, 5, exogenous_forecast = ilo_exogenous_forecasts)
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -114,9 +114,7 @@
 #'   estimate(S = 20) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
-#' # conditional forecasting 6 years ahead conditioning on 
-#' #  provided future values for the Gross Domestic Product 
-#' #  and truncated forecasts for the rates
+#' # forecasting with truncated forecasts for the rates
 #' ############################################################
 #' specification = specify_bvarPANEL$new(
 #'                   ilo_dynamic_panel,
@@ -125,8 +123,8 @@
 #' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
 #' 
-#' # forecast 6 years ahead
-#' predictive    = forecast(posterior, 6, conditional_forecast = ilo_conditional_forecasts)
+#' # forecast 5 years ahead
+#' predictive    = forecast(posterior, 5)
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -134,10 +132,7 @@
 #'   specify_bvarPANEL$new(type = c("real", rep("rate", 3))) |>
 #'   estimate(S = 10) |> 
 #'   estimate(S = 20) |> 
-#'   forecast(
-#'     horizon = 6, 
-#'     conditional_forecast = ilo_conditional_forecasts
-#'   ) -> predictive
+#'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARPANEL = function(
@@ -149,15 +144,15 @@ forecast.PosteriorBVARPANEL = function(
   
   posterior_A_c_cpp     = posterior$posterior$A_c_cpp
   posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
-  X_c             = posterior$last_draw$data_matrices$X
-  Y_c             = posterior$last_draw$data_matrices$Y
-  N               = dim(Y_c[[1]])[2]
-  K               = dim(X_c[[1]])[2]
-  C               = length(Y_c)
+  Y_c             = posterior$posterior$Y
+  N               = dim(posterior_A_c_cpp[1,1][[1]])[2]
+  K               = dim(posterior_A_c_cpp[1,1][[1]])[1]
+  C               = dim(posterior_A_c_cpp[1,1][[1]])[3]
   S               = dim(posterior_A_c_cpp)[1]
+  p               = posterior$last_draw$p
   c_names         = names(posterior$last_draw$data_matrices$Y)
   
-  d               = K - N * posterior$last_draw$p - 1
+  d               = K - N * p - 1
   if (d == 0 ) {
     # this will not be used for forecasting, but needs to be provided
     exogenous_forecast = list()
@@ -181,11 +176,11 @@ forecast.PosteriorBVARPANEL = function(
   } else {
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data." 
-              = is.list(conditional_forecast) & length(conditional_forecast) == length(Y_c)
+              = is.list(conditional_forecast) & length(conditional_forecast) == C
     )
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data."
-              = all(names(Y_c) == names(conditional_forecast))
+              = all(c_names == names(conditional_forecast))
     )
     stopifnot("Argument conditional_forecast must be a list with matrices with numeric values."
               = all(sapply(conditional_forecast, function(x) is.matrix(x) & is.numeric(x)))
@@ -213,16 +208,18 @@ forecast.PosteriorBVARPANEL = function(
   fff           = .Call(`_bpvars_forecast_bvarPANEL`, 
                         posterior_A_c_cpp, 
                         posterior_Sigma_c_cpp, 
-                        X_c, 
+                        Y_c, 
                         conditional_forecast, 
                         exogenous_forecast, 
                         horizon,
                         LB,
                         UB,
-                        TRUE
+                        TRUE,
+                        p
                        )
                           
   forecasts       = list()
+  Ymean           = .Call(`_bpvars_mean_field`, Y_c )
   
   for (c in 1:C) {
     fore            = list()
@@ -238,7 +235,7 @@ forecast.PosteriorBVARPANEL = function(
     }
     fore$forecast_cov = cov_tmp
     
-    fore$Y          = t(Y_c[[c]])
+    fore$Y          = t(Ymean[[c]])
     class(fore)     = "Forecasts"
     forecasts[[c]]  = fore
   }
@@ -270,10 +267,10 @@ forecast.PosteriorBVARPANEL = function(
 #' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
 #' 
-#' # forecast 6 years ahead
+#' # forecast 5 years ahead
 #' predictive    = forecast(
 #'                   posterior, 
-#'                   horizon = 6, 
+#'                   horizon = 5, 
 #'                   exogenous_forecast = ilo_exogenous_forecasts
 #'                 )
 #' 
@@ -285,9 +282,7 @@ forecast.PosteriorBVARPANEL = function(
 #'   estimate(S = 20) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
-#' # conditional forecasting 6 years ahead conditioning on 
-#' #  provided future values for the Gross Domestic Product 
-#' #  and truncated forecasts for the rates
+#' # truncated forecasts for the rates
 #' ############################################################
 #' specification = specify_bvarGroupPANEL$new(            # specify the model
 #'                   ilo_dynamic_panel,
@@ -296,7 +291,7 @@ forecast.PosteriorBVARPANEL = function(
 #'                 )   
 #' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
-#' predictive    = forecast(posterior, 6, conditional_forecast = ilo_conditional_forecasts) # forecast
+#' predictive    = forecast(posterior, 5) # forecast
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -307,10 +302,7 @@ forecast.PosteriorBVARPANEL = function(
 #'             ) |>
 #'   estimate(S = 10) |> 
 #'   estimate(S = 20) |> 
-#'   forecast(
-#'     horizon = 6, 
-#'     conditional_forecast = ilo_conditional_forecasts
-#'   ) -> predictive
+#'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARGROUPPANEL = function(
@@ -322,15 +314,16 @@ forecast.PosteriorBVARGROUPPANEL = function(
   
   posterior_A_c_cpp     = posterior$posterior$A_c_cpp
   posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
-  X_c             = posterior$last_draw$data_matrices$X
-  Y_c             = posterior$last_draw$data_matrices$Y
-  N               = dim(Y_c[[1]])[2]
-  K               = dim(X_c[[1]])[2]
-  C               = length(Y_c)
+  
+  Y_c             = posterior$posterior$Y
+  N               = dim(posterior_A_c_cpp[1,1][[1]])[2]
+  K               = dim(posterior_A_c_cpp[1,1][[1]])[1]
+  C               = dim(posterior_A_c_cpp[1,1][[1]])[3]
   S               = dim(posterior_A_c_cpp)[1]
+  p               = posterior$last_draw$p
   c_names         = names(posterior$last_draw$data_matrices$Y)
   
-  d               = K - N * posterior$last_draw$p - 1
+  d               = K - N * p - 1
   if (d == 0 ) {
     # this will not be used for forecasting, but needs to be provided
     exogenous_forecast = list()
@@ -354,11 +347,11 @@ forecast.PosteriorBVARGROUPPANEL = function(
   } else {
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data." 
-              = is.list(conditional_forecast) & length(conditional_forecast) == length(Y_c)
+              = is.list(conditional_forecast) & length(conditional_forecast) == C
     )
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data."
-              = all(names(Y_c) == names(conditional_forecast))
+              = all(c_names == names(conditional_forecast))
     )
     stopifnot("Argument conditional_forecast must be a list with matrices with numeric values."
               = all(sapply(conditional_forecast, function(x) is.matrix(x) & is.numeric(x)))
@@ -386,16 +379,18 @@ forecast.PosteriorBVARGROUPPANEL = function(
   fff           = .Call(`_bpvars_forecast_bvarPANEL`, 
                         posterior_A_c_cpp, 
                         posterior_Sigma_c_cpp, 
-                        X_c, 
+                        Y_c, 
                         conditional_forecast, 
                         exogenous_forecast, 
                         horizon,
                         LB,
                         UB,
-                        TRUE
+                        TRUE,
+                        p
   )
   
   forecasts       = list()
+  Ymean           = .Call(`_bpvars_mean_field`, Y_c )
   
   for (c in 1:C) {
     fore            = list()
@@ -411,7 +406,7 @@ forecast.PosteriorBVARGROUPPANEL = function(
     }
     fore$forecast_cov = cov_tmp
     
-    fore$Y          = t(Y_c[[c]])
+    fore$Y          = t(Ymean[[c]])
     class(fore)     = "Forecasts"
     forecasts[[c]]  = fore
   }
@@ -530,8 +525,8 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
 #' 
-#' # forecast 6 years ahead
-#' predictive    = forecast(posterior, 6, exogenous_forecast = ilo_exogenous_forecasts)
+#' # forecast 5 years ahead
+#' predictive    = forecast(posterior, 5, exogenous_forecast = ilo_exogenous_forecasts)
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -541,9 +536,7 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #'   estimate(S = 20) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
-#' # conditional forecasting 6 years ahead conditioning on 
-#' #  provided future values for the Gross Domestic Product 
-#' #  and truncated forecasts for the rates
+#' # truncated forecasts for the rates
 #' ############################################################
 #' specification = specify_bvars$new(
 #'                   ilo_dynamic_panel,
@@ -552,8 +545,8 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
 #' 
-#' # forecast 6 years ahead
-#' predictive    = forecast(posterior, 6, conditional_forecast = ilo_conditional_forecasts)
+#' # forecast 5 years ahead
+#' predictive    = forecast(posterior, 5)
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -561,10 +554,7 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #'   specify_bvars$new(type = c("real", rep("rate", 3))) |>
 #'   estimate(S = 10) |> 
 #'   estimate(S = 20) |> 
-#'   forecast(
-#'     horizon = 6, 
-#'     conditional_forecast = ilo_conditional_forecasts
-#'   ) -> predictive
+#'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARs = function(
@@ -576,15 +566,16 @@ forecast.PosteriorBVARs = function(
   
   posterior_A_c_cpp     = posterior$posterior$A_c_cpp
   posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
-  X_c             = posterior$last_draw$data_matrices$X
-  Y_c             = posterior$last_draw$data_matrices$Y
-  N               = dim(Y_c[[1]])[2]
-  K               = dim(X_c[[1]])[2]
-  C               = length(Y_c)
+  
+  Y_c             = posterior$posterior$Y
+  N               = dim(posterior_A_c_cpp[1,1][[1]])[2]
+  K               = dim(posterior_A_c_cpp[1,1][[1]])[1]
+  C               = dim(posterior_A_c_cpp[1,1][[1]])[3]
   S               = dim(posterior_A_c_cpp)[1]
+  p               = posterior$last_draw$p
   c_names         = names(posterior$last_draw$data_matrices$Y)
   
-  d               = K - N * posterior$last_draw$p - 1
+  d               = K - N * p - 1
   if (d == 0 ) {
     # this will not be used for forecasting, but needs to be provided
     exogenous_forecast = list()
@@ -608,11 +599,11 @@ forecast.PosteriorBVARs = function(
   } else {
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data." 
-              = is.list(conditional_forecast) & length(conditional_forecast) == length(Y_c)
+              = is.list(conditional_forecast) & length(conditional_forecast) == C
     )
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data."
-              = all(names(Y_c) == names(conditional_forecast))
+              = all(c_names == names(conditional_forecast))
     )
     stopifnot("Argument conditional_forecast must be a list with matrices with numeric values."
               = all(sapply(conditional_forecast, function(x) is.matrix(x) & is.numeric(x)))
@@ -640,16 +631,18 @@ forecast.PosteriorBVARs = function(
   fff           = .Call(`_bpvars_forecast_bvarPANEL`, 
                         posterior_A_c_cpp, 
                         posterior_Sigma_c_cpp, 
-                        X_c, 
+                        Y_c, 
                         conditional_forecast, 
                         exogenous_forecast, 
                         horizon,
                         LB,
                         UB,
-                        TRUE
+                        TRUE,
+                        p
   )
   
   forecasts       = list()
+  Ymean           = .Call(`_bpvars_mean_field`, Y_c )
   
   for (c in 1:C) {
     fore            = list()
@@ -665,7 +658,7 @@ forecast.PosteriorBVARs = function(
     }
     fore$forecast_cov = cov_tmp
     
-    fore$Y          = t(Y_c[[c]])
+    fore$Y          = t(Ymean[[c]])
     class(fore)     = "Forecasts"
     forecasts[[c]]  = fore
   }
@@ -696,8 +689,8 @@ forecast.PosteriorBVARs = function(
 #' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
 #' 
-#' # forecast 6 years ahead
-#' predictive    = forecast(posterior, horizon = 6)
+#' # forecast 5 years ahead
+#' predictive    = forecast(posterior, horizon = 5)
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -707,9 +700,7 @@ forecast.PosteriorBVARs = function(
 #'   estimate(S = 20) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
-#' # conditional forecasting 6 years ahead conditioning on 
-#' #  provided future values for the Gross Domestic Product 
-#' #  and truncated forecasts for the rates
+#' # truncated forecasts for the rates
 #' ############################################################
 #' specification = specify_bvarGroupPriorPANEL$new(       # specify the model
 #'                   ilo_dynamic_panel,
@@ -718,7 +709,7 @@ forecast.PosteriorBVARs = function(
 #'                 )   
 #' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
 #' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
-#' predictive    = forecast(posterior, 6) # forecast
+#' predictive    = forecast(posterior, 5) # forecast
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
@@ -729,7 +720,7 @@ forecast.PosteriorBVARs = function(
 #'             ) |>
 #'   estimate(S = 10) |> 
 #'   estimate(S = 20) |> 
-#'   forecast(horizon = 6) -> predictive
+#'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARGROUPPRIORPANEL = function(
@@ -741,15 +732,16 @@ forecast.PosteriorBVARGROUPPRIORPANEL = function(
   
   posterior_A_c_cpp     = posterior$posterior$A_c_cpp
   posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
-  X_c             = posterior$last_draw$data_matrices$X
-  Y_c             = posterior$last_draw$data_matrices$Y
-  N               = dim(Y_c[[1]])[2]
-  K               = dim(X_c[[1]])[2]
-  C               = length(Y_c)
+  
+  Y_c             = posterior$posterior$Y
+  N               = dim(posterior_A_c_cpp[1,1][[1]])[2]
+  K               = dim(posterior_A_c_cpp[1,1][[1]])[1]
+  C               = dim(posterior_A_c_cpp[1,1][[1]])[3]
   S               = dim(posterior_A_c_cpp)[1]
+  p               = posterior$last_draw$p
   c_names         = names(posterior$last_draw$data_matrices$Y)
   
-  d               = K - N * posterior$last_draw$p - 1
+  d               = K - N * p - 1
   if (d == 0 ) {
     # this will not be used for forecasting, but needs to be provided
     exogenous_forecast = list()
@@ -773,11 +765,11 @@ forecast.PosteriorBVARGROUPPRIORPANEL = function(
   } else {
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data." 
-              = is.list(conditional_forecast) & length(conditional_forecast) == length(Y_c)
+              = is.list(conditional_forecast) & length(conditional_forecast) == C
     )
     stopifnot("Argument conditional_forecast must be a list with the same countries 
               as in the provided data."
-              = all(names(Y_c) == names(conditional_forecast))
+              = all(c_names == names(conditional_forecast))
     )
     stopifnot("Argument conditional_forecast must be a list with matrices with numeric values."
               = all(sapply(conditional_forecast, function(x) is.matrix(x) & is.numeric(x)))
@@ -805,16 +797,18 @@ forecast.PosteriorBVARGROUPPRIORPANEL = function(
   fff           = .Call(`_bpvars_forecast_bvarPANEL`, 
                         posterior_A_c_cpp, 
                         posterior_Sigma_c_cpp, 
-                        X_c, 
+                        Y_c, 
                         conditional_forecast, 
                         exogenous_forecast, 
                         horizon,
                         LB,
                         UB,
-                        TRUE
+                        TRUE,
+                        p
   )
   
   forecasts       = list()
+  Ymean           = .Call(`_bpvars_mean_field`, Y_c )
   
   for (c in 1:C) {
     fore            = list()
@@ -830,7 +824,7 @@ forecast.PosteriorBVARGROUPPRIORPANEL = function(
     }
     fore$forecast_cov = cov_tmp
     
-    fore$Y          = t(Y_c[[c]])
+    fore$Y          = t(Ymean[[c]])
     class(fore)     = "Forecasts"
     forecasts[[c]]  = fore
   }

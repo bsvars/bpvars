@@ -69,13 +69,14 @@ arma::vec mvnrnd_cond_truncated (
 Rcpp::List forecast_bvarPANEL (
     arma::field<arma::cube>&  posterior_A_c_cpp,      // (S)(K, N, C)
     arma::field<arma::cube>&  posterior_Sigma_c_cpp,  // (S)(N, N, C)
-    Rcpp::List&               X_c,                    // (C)(T_c, K)
+    arma::field<arma::cube>&  posterior_Y,            // (S)(T_c, N, C)
     Rcpp::List&               cond_forecasts,         // (C)(horizon, N)
     Rcpp::List&               exog_forecasts,         // (C)(horizon, d)
     const int                 horizon,
     arma::vec                 LB,                     // Nx1 lower bounds for truncation
     arma::vec                 UB,                     // Nx1 upper bounds for truncation
-    const bool                show_progress
+    const bool                show_progress,
+    const int                 p
 ) {
   
   const int       S = posterior_A_c_cpp.n_elem;
@@ -111,24 +112,27 @@ Rcpp::List forecast_bvarPANEL (
     // Check for user interrupts
     if (c % 10 == 0) checkUserInterrupt();
     
-    mat     XXcc    = as<mat>(X_c[c]);
-    mat     EXcc    = as<mat>(exog_forecasts[c]);
-    bool    do_exog = EXcc.is_finite();
-    mat     cond_fc = as<mat>(cond_forecasts[c]);
-    
-    rowvec  x_t;
-    if ( do_exog ) {
-      x_t = XXcc.tail_rows(1).cols(0, K - 1 - d);
-    } else {
-      x_t = XXcc.tail_rows(1).cols(0, K - 1);
-    }
-    
     vec     Xt(K);
     cube    forecasts_c(horizon, N, S);
     cube    meanCS(horizon, N, S);
     
+    EXcc            = as<mat>(exog_forecasts[c]);
+    bool    do_exog = EXcc.is_finite();
+    mat     cond_fc = as<mat>(cond_forecasts[c]);
+    
     for (int s=0; s<S; s++) {
       
+      mat   aux_Y   = posterior_Y(c).slice(s);
+      int   T_c     = aux_Y.n_rows;
+      
+      rowvec  x_t;
+      x_t = aux_Y.row(T_c - 1);
+      if ( p > 1 ) {
+        for (int i=1; i<p; i++) {
+          x_t = join_rows(x_t, aux_Y.row(T_c - 1 - i));
+        }
+      }
+      x_t = join_rows(x_t, ones<rowvec>(1));
       
       if ( do_exog ) {
         Xt          = trans(join_rows(x_t, EXcc.row(0)));
@@ -186,4 +190,4 @@ Rcpp::List forecast_bvarPANEL (
     _["forecast_mean_cpp"]  = out_forecast_mean,
     _["forecast_cov_cpp"]   = out_forecast_cov
   );
-} // END forecast_conditional_bvarPANEL
+} // END forecast_bvarPANEL

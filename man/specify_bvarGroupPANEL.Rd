@@ -18,6 +18,23 @@ spec = specify_bvarGroupPANEL$new(
    G = 2
 )
 
+
+## ------------------------------------------------
+## Method `specify_bvarGroupPANEL$set_global2pooled`
+## ------------------------------------------------
+
+spec = specify_bvarGroupPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4,
+   G = 2
+)
+spec$set_global2pooled()
+
+}
+\references{
+Zellner, Hong (1989). Forecasting international growth rates using 
+Bayesian shrinkage and other procedures. \emph{Journal of Econometrics}, 
+\bold{40}(1), 183–202, \doi{10.1016/0304-4076(89)90036-5}.
 }
 \section{Super class}{
 \code{bpvars::BVARPANEL} -> \code{BVARGROUPPANEL}
@@ -47,6 +64,7 @@ start adapting, the initial scaling rate}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-BVARGROUPPANEL-new}{\code{specify_bvarGroupPANEL$new()}}
+\item \href{#method-BVARGROUPPANEL-set_global2pooled}{\code{specify_bvarGroupPANEL$set_global2pooled()}}
 \item \href{#method-BVARGROUPPANEL-clone}{\code{specify_bvarGroupPANEL$clone()}}
 }
 }
@@ -58,7 +76,6 @@ start adapting, the initial scaling rate}
 <li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="get_starting_values"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-get_starting_values'><code>bpvars::BVARPANEL$get_starting_values()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="get_type"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-get_type'><code>bpvars::BVARPANEL$get_type()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="set_adaptiveMH"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-set_adaptiveMH'><code>bpvars::BVARPANEL$set_adaptiveMH()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="set_global2pooled"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-set_global2pooled'><code>bpvars::BVARPANEL$set_global2pooled()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="bpvars" data-topic="BVARPANEL" data-id="set_to_Jarocinski"><a href='../../bpvars/html/BVARPANEL.html#method-BVARPANEL-set_to_Jarocinski'><code>bpvars::BVARPANEL$set_to_Jarocinski()</code></a></span></li>
 </ul>
 </details>
@@ -116,6 +133,40 @@ if the country groups are to be estimated.}
 \subsection{Returns}{
 A new complete specification for the Bayesian Panel VAR model BVARPANEL.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BVARGROUPPANEL-set_global2pooled"></a>}}
+\if{latex}{\out{\hypertarget{method-BVARGROUPPANEL-set_global2pooled}{}}}
+\subsection{Method \code{set_global2pooled()}}{
+Sets the prior mean of the global autoregressive parameters to the OLS 
+pooled panel estimator following Zellner, Hong (1989).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{specify_bvarGroupPANEL$set_global2pooled(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{a vector of four values setting the adaptive MH sampler for nu:
+adaptive rate, target acceptance rate, the iteration at which to 
+start adapting, the initial scaling rate}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{spec = specify_bvarGroupPANEL$new(
+   data = ilo_dynamic_panel,
+   p = 4,
+   G = 2
+)
+spec$set_global2pooled()
+
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARGROUPPANEL-clone"></a>}}

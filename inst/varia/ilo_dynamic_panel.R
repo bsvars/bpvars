@@ -8,7 +8,7 @@ colnames(all_cv) = c("year", "iso3code", "country", "GDP", "UR", "EPR", "LFPR", 
 
 # all variables all countries
 data_cv <- all_cv %>% 
-  filter(year <= 2023) %>% 
+  filter(year <= 2024) %>% 
   mutate(gdp = log(GDP)) %>% 
   select(year, iso3code, gdp, UR, EPR, LFPR)
 

@@ -1,17 +1,17 @@
 
 #' @title Data containing future observations for 189 United Nations countries 
-#' from 2024 to 2029 to be used to forecast with models with 
+#' from 2025 to 2029 to be used to forecast with models with 
 #' \code{ilo_exogenous_variables}
 #'
-#' @description For each of the countries a time series of 6 observations on 
+#' @description For each of the countries a time series of 5 observations on 
 #' On the dummies is provided. These future values are all equal to zero. They 
 #' provide benchmark for the objects to be used when \code{exogenous_variables} 
 #' are used. 
-#' Last data update was implemented on 2024-05-11.
+#' Last data update was implemented on 2025-09-26.
 #'
 #' @usage data(ilo_exogenous_forecasts)
 #' 
-#' @format A list of 189 \code{ts} objects with time series of 6 observations 
+#' @format A list of 189 \code{ts} objects with time series of 5 observations 
 #' on 3 variables:
 #' \describe{
 #'   \item{2008}{the aftermath of the Global Financial Crisis}

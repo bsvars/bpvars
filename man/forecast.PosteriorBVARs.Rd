@@ -107,8 +107,8 @@ specification = specify_bvars$new(ilo_dynamic_panel, exogenous = ilo_exogenous_v
 burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
 
-# forecast 6 years ahead
-predictive    = forecast(posterior, 6, exogenous_forecast = ilo_exogenous_forecasts)
+# forecast 5 years ahead
+predictive    = forecast(posterior, 5, exogenous_forecast = ilo_exogenous_forecasts)
 
 # workflow with the pipe |>
 ############################################################
@@ -118,9 +118,7 @@ ilo_dynamic_panel |>
   estimate(S = 20) |> 
   forecast(horizon = 2) -> predictive
 
-# conditional forecasting 6 years ahead conditioning on 
-#  provided future values for the Gross Domestic Product 
-#  and truncated forecasts for the rates
+# truncated forecasts for the rates
 ############################################################
 specification = specify_bvars$new(
                   ilo_dynamic_panel,
@@ -129,8 +127,8 @@ specification = specify_bvars$new(
 burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
 posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
 
-# forecast 6 years ahead
-predictive    = forecast(posterior, 6, conditional_forecast = ilo_conditional_forecasts)
+# forecast 5 years ahead
+predictive    = forecast(posterior, 5)
 
 # workflow with the pipe |>
 ############################################################
@@ -138,10 +136,7 @@ ilo_dynamic_panel |>
   specify_bvars$new(type = c("real", rep("rate", 3))) |>
   estimate(S = 10) |> 
   estimate(S = 20) |> 
-  forecast(
-    horizon = 6, 
-    conditional_forecast = ilo_conditional_forecasts
-  ) -> predictive
+  forecast(horizon = 5) -> predictive
 
 }
 \references{
