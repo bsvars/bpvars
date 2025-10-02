@@ -15,7 +15,7 @@ forecast_poos_recursively.'><meta property="og:image" content="http://bsvars.org
 
     <a class="navbar-brand me-2" href="../index.html">bpvars</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,16 +97,16 @@ to be computed.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Step 1: Estimate a model for a full sample to get</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          starting values for subsequent steps.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Step 2: Recursive pseudo out-of-sample</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          forecasting performed for 1 sample.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          forecasting performed for 3 samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-in"><span><span class="va">fp</span>   <span class="op">=</span> <span class="fu">compute_forecast_performance</span><span class="op">(</span><span class="va">fore</span>, <span class="st">"pls"</span><span class="op">)</span>   <span class="co"># compute forecasting performance measures</span></span></span>
 <span class="r-in"><span><span class="va">fp</span><span class="op">$</span><span class="va">PLS</span><span class="op">$</span><span class="va">POL</span>                                         <span class="co"># print the forecasting performance measures</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                1          2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gdp    -2.926050  0.6578061</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> UR     -1.437732 -1.6811470</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> EPR    -1.959798 -1.2013436</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LFPR   -3.575390 -0.5325106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> joint -11.221487 -2.3019171</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gdp    1.6008013  2.0370218</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> UR    -1.5390652 -2.0699215</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> EPR   -0.9440508 -1.3578859</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LFPR  -0.2009084 -0.7501996</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> joint  1.6468165 -0.7953090</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

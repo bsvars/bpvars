@@ -53,7 +53,7 @@ toolset. Copyright: 2024 International Labour Organization."><meta property="og:
 
     <a class="navbar-brand me-2" href="../index.html">bpvars</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -309,7 +309,7 @@ in: <em>Handbook of Economic Forecasting</em>, Elsevier. volume <b>2</b>, 791–
 <span class="r-plt img"><img src="bpvars-package-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Full estimation and forecasting example with </span></span></span>
-<span class="r-in"><span><span class="co">#   exogenous variables, conditional forecasts, and truncation for rates</span></span></span>
+<span class="r-in"><span><span class="co">#   exogenous variables and truncation for rates</span></span></span>
 <span class="r-in"><span><span class="co">############################################################</span></span></span>
 <span class="r-in"><span><span class="va">specification</span> <span class="op">=</span> <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
 <span class="r-in"><span>                  <span class="va">ilo_dynamic_panel</span>,</span></span>
@@ -334,9 +334,8 @@ in: <em>Handbook of Economic Forecasting</em>, Elsevier. volume <b>2</b>, 791–
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-in"><span><span class="va">predictive</span>    <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>                  <span class="va">posterior</span>, </span></span>
-<span class="r-in"><span>                  horizon <span class="op">=</span> <span class="fl">6</span>,</span></span>
-<span class="r-in"><span>                  exogenous_forecast <span class="op">=</span> <span class="va">ilo_exogenous_forecasts</span>,</span></span>
-<span class="r-in"><span>                  conditional_forecast <span class="op">=</span> <span class="va">ilo_conditional_forecasts</span></span></span>
+<span class="r-in"><span>                  horizon <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>                  exogenous_forecast <span class="op">=</span> <span class="va">ilo_exogenous_forecasts</span></span></span>
 <span class="r-in"><span>                <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  bpvars: Forecasting with Bayesian Panel VARs     |</span>

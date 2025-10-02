@@ -9,7 +9,7 @@ Vector Autoregressions for cubic data."><meta property="og:image" content="http:
 
     <a class="navbar-brand me-2" href="../index.html">bpvars</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -330,11 +330,12 @@ start adapting, the initial scaling rate</p></dd>
 <span class="r-in"><span><span class="va">spec</span><span class="op">$</span><span class="fu">get_data_matrices</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;DataMatricesBVARPANEL&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     X: list</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Y: list</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     exogenous: list</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     get_data_matrices: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (data, p = 1L, exogenous = NULL, type = rep("real", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     missing: list</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     type: real real real real</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
@@ -380,19 +381,19 @@ start adapting, the initial scaling rate</p></dd>
 <span class="r-in"><span><span class="va">spec</span><span class="op">$</span><span class="fu">get_starting_values</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;StartingValuesBVARPANEL&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Public:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     A: 1.00029076141563 -0.00189551199734767 -0.001796973535318 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     A_c: 0.0003078650973037 0.000865390022633297 -0.0010391294416 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Sigma: 7.15815288506605 3.09591137590929 0.79261096446978 -3.12 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Sigma_c: 6.07442307057109 2.9395930709221 1.71477341589363 -1.128 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     V: 15.5414800800959 5.97837277683288 -3.00313874893715 -3.0 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     A: 0.999886768355647 -0.000138857547087093 -0.0014872568280 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     A_c: 0.000285310550831959 -0.00126085352375624 -0.00041142686 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Sigma: 3.3241594394414 -0.662355402534803 -1.68551919882717 0.1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Sigma_c: 4.81830309830798 0.839464635336795 -1.38664902195596 -4. ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     V: 12.7575683842514 2.93365107399473 -5.4701524580877 -5.30 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     clone: function (deep = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     get_starting_values: function () </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     initialize: function (C, N, p, d = 0) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m: -0.000585616091919759</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     m: -0.000691588376780355</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     nu: 5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     s: 0.435343608430345</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     s: 0.415564010992555</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     set_starting_values: function (last_draw) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     w: 0.0994080711252476</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     w: 0.32673488605282</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>

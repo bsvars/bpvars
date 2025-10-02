@@ -31,10 +31,11 @@
 <url><loc>http://bsvars.org/bpvars/reference/forecast_poos_recursively.BVARPANEL.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/forecast_poos_recursively.BVARs.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/forecast_poos_recursively.html</loc></url>
-<url><loc>http://bsvars.org/bpvars/reference/ilo_conditional_forecasts.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/ilo_dynamic_panel.html</loc></url>
+<url><loc>http://bsvars.org/bpvars/reference/ilo_dynamic_panel_missing.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/ilo_exogenous_forecasts.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/ilo_exogenous_variables.html</loc></url>
+<url><loc>http://bsvars.org/bpvars/reference/ilo_exogenous_variables_missing.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/index.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/plot.ForecastsPANEL.html</loc></url>
 <url><loc>http://bsvars.org/bpvars/reference/plot.PosteriorFEVDPANEL.html</loc></url>
