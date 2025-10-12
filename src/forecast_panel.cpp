@@ -85,18 +85,18 @@ Rcpp::List forecast_bvarPANEL (
   const int       C = posterior_A_c_cpp(0).n_slices;
   
   // Progress bar setup
-  vec prog_rep_points = arma::round(arma::linspace(0, C, 50));
-  
-  if (show_progress) {
-    Rcout << "**************************************************|" << endl;
-    Rcout << " bpvars: Forecasting with Bayesian Panel VARs     |" << endl;
-    Rcout << "**************************************************|" << endl;
-    Rcout << " Progress of sampling " << S << " draws from" << endl;
-    Rcout << "    the predictive density for " << C << " countries" << endl;
-    Rcout << "    Press Esc to interrupt the computations" << endl;
-    Rcout << "**************************************************|" << endl;
-  }
-  Progress p_forecast_bvarPANEL(50, show_progress);
+  // vec prog_rep_points = arma::round(arma::linspace(0, C, 50));
+  // 
+  // if (show_progress) {
+  //   Rcout << "**************************************************|" << endl;
+  //   Rcout << " bpvars: Forecasting with Bayesian Panel VARs     |" << endl;
+  //   Rcout << "**************************************************|" << endl;
+  //   Rcout << " Progress of sampling " << S << " draws from" << endl;
+  //   Rcout << "    the predictive density for " << C << " countries" << endl;
+  //   Rcout << "    Press Esc to interrupt the computations" << endl;
+  //   Rcout << "**************************************************|" << endl;
+  // }
+  // Progress p_forecast_bvarPANEL(50, show_progress);
 
   mat     EXcc    = as<mat>(exog_forecasts[0]);
   const int       d = EXcc.n_cols;
@@ -105,12 +105,13 @@ Rcpp::List forecast_bvarPANEL (
   field<cube>     out_forecast_mean(C);       // of (horizon, N, S) cubes
   field<cube>     out_forecast_cov(C,S);      // of (N, N, horizon) cubes
   
+  #pragma omp parallel for
   for (int c=0; c<C; c++) {
     
-    // Increment progress bar
-    if (any(prog_rep_points == c)) p_forecast_bvarPANEL.increment();
-    // Check for user interrupts
-    if (c % 10 == 0) checkUserInterrupt();
+    // // Increment progress bar
+    // if (any(prog_rep_points == c)) p_forecast_bvarPANEL.increment();
+    // // Check for user interrupts
+    // if (c % 10 == 0) checkUserInterrupt();
     
     vec     Xt(K);
     cube    forecasts_c(horizon, N, S);
