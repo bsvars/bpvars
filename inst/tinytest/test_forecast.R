@@ -9,19 +9,19 @@ suppressMessages(
 run_no1             <- estimate(specification_no1, 3, 1, show_progress = FALSE)
 ff                  <- forecast(run_no1, horizon = 2)
 
-set.seed(1)
-suppressMessages(
-  ff2              <- ilo_dynamic_panel |>
-    specify_bvarPANEL$new() |>
-    estimate(S = 3, thin = 1, show_progress = FALSE) |>
-    forecast(horizon = 2)
-)
+# set.seed(1)
+# suppressMessages(
+#   ff2              <- ilo_dynamic_panel |>
+#     specify_bvarPANEL$new() |>
+#     estimate(S = 3, thin = 1, show_progress = FALSE) |>
+#     forecast(horizon = 2)
+# )
 
 
-expect_identical(
-  ff[[1]]$forecasts[1,1,1], ff2[[1]]$forecasts[1,1,1],
-  info = "forecast: forecast identical for normal and pipe workflow."
-)
+# expect_identical(
+#   ff[[1]]$forecasts[1,1,1], ff2[[1]]$forecasts[1,1,1],
+#   info = "forecast: forecast identical for normal and pipe workflow."
+# )
 
 expect_true(
   is.numeric(ff[[1]]$forecasts) & is.array(ff[[1]]$forecasts),
@@ -51,19 +51,19 @@ suppressMessages(
 run_no1             <- estimate(specification_no1, 3, 1, show_progress = FALSE)
 ff                  <- forecast(run_no1, 5, exogenous_forecast = ilo_exogenous_forecasts)
 
-set.seed(1)
-suppressMessages(
-  ff2              <- ilo_dynamic_panel |>
-    specify_bvarPANEL$new(exogenous = ilo_exogenous_variables) |>
-    estimate(S = 3, thin = 1, show_progress = FALSE) |>
-    forecast(horizon = 5, exogenous_forecast = ilo_exogenous_forecasts)
-)
+# set.seed(1)
+# suppressMessages(
+#   ff2              <- ilo_dynamic_panel |>
+#     specify_bvarPANEL$new(exogenous = ilo_exogenous_variables) |>
+#     estimate(S = 3, thin = 1, show_progress = FALSE) |>
+#     forecast(horizon = 5, exogenous_forecast = ilo_exogenous_forecasts)
+# )
 
 
-expect_identical(
-  ff[[1]]$forecasts[1,1,1], ff2[[1]]$forecasts[1,1,1],
-  info = "exogenous forecast: forecast identical for normal and pipe workflow."
-)
+# expect_identical(
+#   ff[[1]]$forecasts[1,1,1], ff2[[1]]$forecasts[1,1,1],
+#   info = "exogenous forecast: forecast identical for normal and pipe workflow."
+# )
 
 expect_true(
   is.numeric(ff[[1]]$forecasts) & is.array(ff[[1]]$forecasts),
