@@ -11,15 +11,10 @@ Note that due to the thinning of the MCMC output the starting value in element
 element \code{posterior}.
 }
 \examples{
-# This is a function that is used within estimate()
-data(ilo_dynamic_panel)
-set.seed(123)
 specification = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+   data = ilo_dynamic_panel
 )
-
-posterior       = estimate(specification, 50)
+posterior       = estimate(specification, 5)
 class(posterior)
 
 
@@ -27,14 +22,10 @@ class(posterior)
 ## Method `specify_posterior_bvarPANEL$get_posterior`
 ## ------------------------------------------------
 
-data(ilo_dynamic_panel)
-set.seed(123)
 specification = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+   data = ilo_dynamic_panel
 )
-
-posterior       = estimate(specification, 50)
+posterior       = estimate(specification, 5)
 posterior$get_posterior()
 
 
@@ -42,18 +33,11 @@ posterior$get_posterior()
 ## Method `specify_posterior_bvarPANEL$get_last_draw`
 ## ------------------------------------------------
 
-data(ilo_dynamic_panel)
-set.seed(123)
 specification = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+   data = ilo_dynamic_panel
 )
-
-# run the burn-in
-burn_in        = estimate(specification, 10)
-
-# estimate the model
-posterior      = estimate(burn_in, 10)
+burn_in        = estimate(specification, 5)
+posterior      = estimate(burn_in, 5)
 
 }
 \seealso{
@@ -113,14 +97,10 @@ Returns a list containing Bayesian estimation output.
 
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{data(ilo_dynamic_panel)
-set.seed(123)
-specification = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+\preformatted{specification = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel
 )
-
-posterior       = estimate(specification, 50)
+posterior       = estimate(specification, 5)
 posterior$get_posterior()
 
 }
@@ -142,18 +122,11 @@ MCMC estimation using \code{estimate()}.
 
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{data(ilo_dynamic_panel)
-set.seed(123)
-specification = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+\preformatted{specification = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel
 )
-
-# run the burn-in
-burn_in        = estimate(specification, 10)
-
-# estimate the model
-posterior      = estimate(burn_in, 10)
+burn_in        = estimate(specification, 5)
+posterior      = estimate(burn_in, 5)
 
 }
 \if{html}{\out{</div>}}

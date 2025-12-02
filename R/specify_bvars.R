@@ -242,10 +242,8 @@ specify_starting_values_bvars = R6::R6Class(
 #' Vector Autoregressions for cubic data.
 #' 
 #' @examples 
-#' data(ilo_dynamic_panel)
 #' spec = specify_bvars$new(
-#'    data = ilo_dynamic_panel,
-#'    p = 4
+#'    data = ilo_dynamic_panel
 #' )
 #' 
 #' @export
@@ -319,10 +317,8 @@ specify_bvars = R6::R6Class(
     #' Returns the data matrices as the DataMatricesBVARPANEL object.
     #' 
     #' @examples
-    #' data(ilo_dynamic_panel)
     #' spec = specify_bvarPANEL$new(
-    #'    data = ilo_dynamic_panel,
-    #'    p = 4
+    #'    data = ilo_dynamic_panel
     #' )
     #' spec$get_data_matrices()
     #' 
@@ -334,10 +330,8 @@ specify_bvars = R6::R6Class(
     #' Returns the prior specification as the PriorBVARPANEL object.
     #' 
     #' @examples 
-    #' data(ilo_dynamic_panel)
     #' spec = specify_bvarPANEL$new(
-    #'    data = ilo_dynamic_panel,
-    #'    p = 4
+    #'    data = ilo_dynamic_panel
     #' )
     #' spec$get_prior()
     #' 
@@ -349,10 +343,8 @@ specify_bvars = R6::R6Class(
     #' Returns the starting values as the StartingValuesBVARPANEL object.
     #' 
     #' @examples 
-    #' data(ilo_dynamic_panel)
     #' spec = specify_bvarPANEL$new(
-    #'    data = ilo_dynamic_panel,
-    #'    p = 4
+    #'    data = ilo_dynamic_panel
     #' )
     #' spec$get_starting_values()
     #' 
@@ -364,10 +356,8 @@ specify_bvars = R6::R6Class(
     #' Returns the type of the model.
     #' 
     #' @examples 
-    #' data(ilo_dynamic_panel)
     #' spec = specify_bvarPANEL$new(
-    #'    data = ilo_dynamic_panel,
-    #'    p = 4
+    #'    data = ilo_dynamic_panel
     #' )
     #' spec$get_type()
     #' 
@@ -384,10 +374,8 @@ specify_bvars = R6::R6Class(
     #' John Wiley & Sons.
     #' 
     #' @examples
-    #' data(ilo_dynamic_panel)
     #' spec = specify_bvars$new(
-    #'    data = ilo_dynamic_panel,
-    #'    p = 4
+    #'    data = ilo_dynamic_panel
     #' )
     #' spec$set_prior2objective()
     #' 
@@ -425,10 +413,8 @@ specify_bvars = R6::R6Class(
     #' \bold{40}(1), 183–202, \doi{10.1016/0304-4076(89)90036-5}.
     #' 
     #' @examples 
-    #' data(ilo_dynamic_panel)
     #' spec = specify_bvarPANEL$new(
-    #'    data = ilo_dynamic_panel,
-    #'    p = 4
+    #'    data = ilo_dynamic_panel
     #' )
     #' spec$set_global2pooled()
     #' 
@@ -472,10 +458,8 @@ specify_bvars = R6::R6Class(
     #' start adapting, the initial scaling rate
     #' 
     #' @examples 
-    #' data(ilo_dynamic_panel)
     #' spec = specify_bvarPANEL$new(
-    #'    data = ilo_dynamic_panel,
-    #'    p = 4
+    #'    data = ilo_dynamic_panel
     #' )
     #' spec$set_adaptiveMH(c(0.6, 0.4, 10, 0.1))
     #' 
@@ -505,15 +489,10 @@ specify_bvars = R6::R6Class(
 #' @seealso \code{\link{specify_bvars}}
 #' 
 #' @examples 
-#' # This is a function that is used within estimate()
-#' data(ilo_dynamic_panel)
-#' set.seed(123)
 #' specification = specify_bvars$new(
-#'    data = ilo_dynamic_panel,
-#'    p = 4
+#'    data = ilo_dynamic_panel
 #' )
-#' 
-#' posterior       = estimate(specification, 50)
+#' posterior       = estimate(specification, 5)
 #' class(posterior)
 #' 
 #' @export
@@ -569,14 +548,10 @@ specify_posterior_bvars = R6::R6Class(
     #' Returns a list containing Bayesian estimation output.
     #' 
     #' @examples 
-    #' data(ilo_dynamic_panel)
-    #' set.seed(123)
     #' specification = specify_bvars$new(
-    #'    data = ilo_dynamic_panel,
-    #'    p = 4
+    #'    data = ilo_dynamic_panel
     #' )
-    #' 
-    #' posterior       = estimate(specification, 50)
+    #' posterior       = estimate(specification, 5)
     #' posterior$get_posterior()
     #' 
     get_posterior       = function(){
@@ -589,18 +564,11 @@ specify_posterior_bvars = R6::R6Class(
     #' MCMC estimation using \code{estimate()}.
     #' 
     #' @examples
-    #' data(ilo_dynamic_panel)
-    #' set.seed(123)
     #' specification = specify_bvars$new(
-    #'    data = ilo_dynamic_panel,
-    #'    p = 4
+    #'    data = ilo_dynamic_panel
     #' )
-    #' 
-    #' # run the burn-in
-    #' burn_in        = estimate(specification, 10)
-    #' 
-    #' # estimate the model
-    #' posterior      = estimate(burn_in, 10)
+    #' burn_in        = estimate(specification, 5)
+    #' posterior      = estimate(burn_in, 5)
     #' 
     get_last_draw      = function(){
       self$last_draw$clone()

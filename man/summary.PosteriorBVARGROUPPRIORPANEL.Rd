@@ -29,8 +29,8 @@ specification = specify_bvarGroupPriorPANEL$new(
       data = ilo_dynamic_panel,
       group_allocation = country_grouping_region
 )
-burn_in       = estimate(specification, 10)             # run the burn-in
-posterior     = estimate(burn_in, 10)                   # estimate the model
+burn_in       = estimate(specification, 5)             # run the burn-in
+posterior     = estimate(burn_in, 5)                   # estimate the model
 summary(posterior)
 
 # workflow with the pipe |>
@@ -39,8 +39,8 @@ ilo_dynamic_panel |>
   specify_bvarGroupPriorPANEL$new(
         exogenous = ilo_exogenous_variables, 
         group_allocation = country_grouping_region) |>
-  estimate(S = 10) |> 
-  estimate(S = 10) |> 
+  estimate(S = 5) |> 
+  estimate(S = 5) |> 
   summary()
 
 }

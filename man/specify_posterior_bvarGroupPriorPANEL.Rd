@@ -11,14 +11,11 @@ Note that due to the thinning of the MCMC output the starting value in element
 element \code{posterior}.
 }
 \examples{
-# This is a function that is used within estimate()
 spec = specify_bvarGroupPriorPANEL$new(
    data = ilo_dynamic_panel,
-   p = 4,
    G = 2
 )
-
-#posterior       = estimate(specification, 50)
+#posterior       = estimate(specification, 5)
 #class(posterior)
 
 }
