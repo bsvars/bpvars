@@ -119,26 +119,6 @@ generics::forecast
 #'   estimate(S = 5) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
-#' # forecasting with truncated forecasts for the rates
-#' ############################################################
-#' specification = specify_bvarPANEL$new(
-#'                   ilo_dynamic_panel,
-#'                   type = c("real", rep("rate", 3))
-#'                 )   # specify the model
-#' burn_in       = estimate(specification, 5)            # run the burn-in; use say S = 10000
-#' posterior     = estimate(burn_in, 5)                  # estimate the model; use say S = 10000
-#' 
-#' # forecast 5 years ahead
-#' predictive    = forecast(posterior, 5)
-#' 
-#' # workflow with the pipe |>
-#' ############################################################
-#' ilo_dynamic_panel |>
-#'   specify_bvarPANEL$new(type = c("real", rep("rate", 3))) |>
-#'   estimate(S = 5) |> 
-#'   estimate(S = 5) |> 
-#'   forecast(horizon = 5) -> predictive
-#' 
 #' @export
 forecast.PosteriorBVARPANEL = function(
     object, 
@@ -292,28 +272,6 @@ forecast.PosteriorBVARPANEL = function(
 #'   estimate(S = 5) |> 
 #'   estimate(S = 5) |> 
 #'   forecast(horizon = 2) -> predictive
-#' 
-#' # truncated forecasts for the rates
-#' ############################################################
-#' specification = specify_bvarGroupPANEL$new(            # specify the model
-#'                   ilo_dynamic_panel,
-#'                   type = c("real", rep("rate", 3)),
-#'                   group_allocation = country_grouping_region
-#'                 )   
-#' burn_in       = estimate(specification, 5)            # run the burn-in; use say S = 10000
-#' posterior     = estimate(burn_in, 5)                  # estimate the model; use say S = 10000
-#' predictive    = forecast(posterior, 5) # forecast
-#' 
-#' # workflow with the pipe |>
-#' ############################################################
-#' ilo_dynamic_panel |>
-#'   specify_bvarGroupPANEL$new(
-#'             type = c("real", rep("rate", 3)),
-#'             group_allocation = country_grouping_region
-#'             ) |>
-#'   estimate(S = 5) |> 
-#'   estimate(S = 5) |> 
-#'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARGROUPPANEL = function(
@@ -554,26 +512,6 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #'   estimate(S = 5) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
-#' # truncated forecasts for the rates
-#' ############################################################
-#' specification = specify_bvars$new(
-#'                   ilo_dynamic_panel,
-#'                   type = c("real", rep("rate", 3))
-#'                 )   # specify the model
-#' burn_in       = estimate(specification, 5)            # run the burn-in; use say S = 10000
-#' posterior     = estimate(burn_in, 5)                  # estimate the model; use say S = 10000
-#' 
-#' # forecast 5 years ahead
-#' predictive    = forecast(posterior, 5)
-#' 
-#' # workflow with the pipe |>
-#' ############################################################
-#' ilo_dynamic_panel |>
-#'   specify_bvars$new(type = c("real", rep("rate", 3))) |>
-#'   estimate(S = 5) |> 
-#'   estimate(S = 5) |> 
-#'   forecast(horizon = 5) -> predictive
-#' 
 #' @export
 forecast.PosteriorBVARs = function(
     object, 
@@ -723,28 +661,6 @@ forecast.PosteriorBVARs = function(
 #'   estimate(S = 5) |> 
 #'   estimate(S = 5) |> 
 #'   forecast(horizon = 2) -> predictive
-#' 
-#' # truncated forecasts for the rates
-#' ############################################################
-#' specification = specify_bvarGroupPriorPANEL$new(       # specify the model
-#'                   ilo_dynamic_panel,
-#'                   type = c("real", rep("rate", 3)),
-#'                   group_allocation = country_grouping_region
-#'                 )   
-#' burn_in       = estimate(specification, 5)            # run the burn-in; use say S = 10000
-#' posterior     = estimate(burn_in, 5)                  # estimate the model; use say S = 10000
-#' predictive    = forecast(posterior, 5) # forecast
-#' 
-#' # workflow with the pipe |>
-#' ############################################################
-#' ilo_dynamic_panel |>
-#'   specify_bvarGroupPriorPANEL$new(
-#'             type = c("real", rep("rate", 3)),
-#'             group_allocation = country_grouping_region
-#'             ) |>
-#'   estimate(S = 5) |> 
-#'   estimate(S = 5) |> 
-#'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARGROUPPRIORPANEL = function(

@@ -29,10 +29,9 @@ pseudo-out-of-sample forecastinge exercise performed using function
 }
 \examples{
 spec = specify_bvarPANEL$new(ilo_dynamic_panel)               # specify the model
-poos = specify_poosf_exercise$new(spec, 5, 5, 1, 30)    # specify the forecasting  exercise
+poos = specify_poosf_exercise$new(spec, 2, 5, 1, 30)    # specify the forecasting  exercise
 fore = forecast_poos_recursively(spec, poos)                  # perform the forecasting  exercise
 fp   = compute_forecast_performance(fore, "pls")   # compute forecasting performance measures
-fp$PLS$POL                                         # print the forecasting performance measures
 
 }
 \seealso{

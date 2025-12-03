@@ -38,15 +38,6 @@ posterior      = estimate(burn_in, 5)
 fevd           = compute_variance_decompositions(posterior, horizon = 4)
 summary(fevd, which_c = "POL")
 
-# workflow with the pipe |>
-############################################################
-ilo_dynamic_panel |>
-  specify_bvarPANEL$new(p = 1) |>
-  estimate(S = 5) |> 
-  estimate(S = 5) |> 
-  compute_variance_decompositions(horizon = 4) |> 
-  summary(which_c = "COL")
-
 }
 \seealso{
 \code{\link{compute_variance_decompositions.PosteriorBVARPANEL}}, \code{\link{plot}}

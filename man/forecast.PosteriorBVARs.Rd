@@ -121,26 +121,6 @@ ilo_dynamic_panel |>
   estimate(S = 5) |> 
   forecast(horizon = 2) -> predictive
 
-# truncated forecasts for the rates
-############################################################
-specification = specify_bvars$new(
-                  ilo_dynamic_panel,
-                  type = c("real", rep("rate", 3))
-                )   # specify the model
-burn_in       = estimate(specification, 5)            # run the burn-in; use say S = 10000
-posterior     = estimate(burn_in, 5)                  # estimate the model; use say S = 10000
-
-# forecast 5 years ahead
-predictive    = forecast(posterior, 5)
-
-# workflow with the pipe |>
-############################################################
-ilo_dynamic_panel |>
-  specify_bvars$new(type = c("real", rep("rate", 3))) |>
-  estimate(S = 5) |> 
-  estimate(S = 5) |> 
-  forecast(horizon = 5) -> predictive
-
 }
 \references{
 Waggoner, D. F., & Zha, T. (1999) 

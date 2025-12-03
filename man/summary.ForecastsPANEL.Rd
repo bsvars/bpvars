@@ -39,15 +39,6 @@ predictive    = forecast(
       exogenous_forecast = ilo_exogenous_forecasts)
 summary(predictive, which_c = "POL")
 
-# workflow with the pipe |>
-############################################################
-ilo_dynamic_panel |>
-  specify_bvarPANEL$new() |>
-  estimate(S = 5) |> 
-  estimate(S = 5) |> 
-  forecast(horizon = 5, exogenous_forecast = ilo_exogenous_forecasts) |> 
-  summary(which_c = "POL")
-
 }
 \seealso{
 \code{\link{forecast.PosteriorBVARPANEL}}, \code{\link{plot}}

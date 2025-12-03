@@ -35,7 +35,7 @@ spec = specify_bvarPANEL$new(ilo_dynamic_panel)   # specify the model
 poos = specify_poosf_exercise$new(                # specify the forecasting exercise
          spec, 
          S = 5,                                   # use at least S = 5000
-         S_burn = 5,                              # use at least S_burn = 1000
+         S_burn = 2,                              # use at least S_burn = 1000
          horizons = 1,
          training_sample = 30
        )   
