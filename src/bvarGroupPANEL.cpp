@@ -145,14 +145,22 @@ Rcpp::List bvarGroupPANEL(
     scale(s)    = aux_nu_tmp(1);
     
     // sample aux_Sigma
-    aux_Sigma     = sample_Sigma( aux_Sigma_g_inv, aux_s, aux_nu, prior );
-    aux_Sigma_inv = inv_sympd( aux_Sigma );
+    try {
+      aux_Sigma     = sample_Sigma( aux_Sigma_g_inv, aux_s, aux_nu, prior );
+      aux_Sigma_inv = inv_sympd( aux_Sigma );
+    } catch (std::runtime_error &e) {
+      // Rcout << "   s: " << s <<" c: "<<c << endl;
+    }
     
     // sample aux_A, aux_V
-    field<mat> tmp_AV     = sample_AV( aux_A_g, aux_Sigma_g_inv, aux_s, aux_m, aux_w, prior );
-    aux_A       = tmp_AV(0);  
-    aux_V       = tmp_AV(1);
-    aux_V_inv   = inv_sympd( aux_V );
+    try {
+      field<mat> tmp_AV     = sample_AV( aux_A_g, aux_Sigma_g_inv, aux_s, aux_m, aux_w, prior );
+      aux_A       = tmp_AV(0);  
+      aux_V       = tmp_AV(1);
+      aux_V_inv   = inv_sympd( aux_V );
+    } catch (std::runtime_error &e) {
+      // Rcout << "   s: " << s <<" c: "<<c << endl;
+    }
     
     // sample aux_ga
     if ( estimate_groups ) {

@@ -174,10 +174,8 @@ specify_starting_values_bvarGroupPANEL = R6::R6Class(
 #' and the argument \code{group_allocation} to be left empty.
 #' 
 #' @examples 
-#' data(ilo_dynamic_panel)
 #' spec = specify_bvarGroupPANEL$new(
 #'    data = ilo_dynamic_panel,
-#'    p = 4,
 #'    G = 2
 #' )
 #' 
@@ -308,7 +306,6 @@ specify_bvarGroupPANEL = R6::R6Class(
     #' @examples 
     #' spec = specify_bvarGroupPANEL$new(
     #'    data = ilo_dynamic_panel,
-    #'    p = 4,
     #'    G = 2
     #' )
     #' spec$set_global2pooled()
@@ -361,16 +358,11 @@ specify_bvarGroupPANEL = R6::R6Class(
 #' @seealso \code{\link{specify_bvarGroupPANEL}}
 #' 
 #' @examples 
-#' # This is a function that is used within estimate()
-#' data(ilo_dynamic_panel)
-#' set.seed(123)
 #' spec = specify_bvarGroupPANEL$new(
 #'    data = ilo_dynamic_panel,
-#'    p = 4,
 #'    G = 2
 #' )
-#' 
-#' #posterior       = estimate(specification, 50)
+#' #posterior       = estimate(specification, 5)
 #' #class(posterior)
 #' 
 #' @export

@@ -148,11 +148,15 @@ Rcpp::List bvars_cpp(
       if ( !type_objective ) {
         aux_V_inv = prior_W_inv / aux_w(c);
       }
+      try {
+        field<mat> tmp_A_c_Sigma_c  = sample_A_c_Sigma_c_bvars( y(c), x(c), aux_m(c) * prior_M, aux_V_inv, aux_s(c) * prior_S, aux_nu(c) );
+        aux_A_c.slice(c)            = tmp_A_c_Sigma_c(0);
+        aux_Sigma_c.slice(c)        = tmp_A_c_Sigma_c(1);
+        aux_Sigma_c_inv.slice(c)    = inv_sympd( aux_Sigma_c.slice(c) );
+      } catch (std::runtime_error &e) {
+        // Rcout << "   s: " << s <<" c: "<<c << endl;
+      }
 
-      field<mat> tmp_A_c_Sigma_c  = sample_A_c_Sigma_c_bvars( y(c), x(c), aux_m(c) * prior_M, aux_V_inv, aux_s(c) * prior_S, aux_nu(c) );
-      aux_A_c.slice(c)            = tmp_A_c_Sigma_c(0);
-      aux_Sigma_c.slice(c)        = tmp_A_c_Sigma_c(1);
-      aux_Sigma_c_inv.slice(c)    = inv_sympd( aux_Sigma_c.slice(c) );
       
     } // END c loop
 

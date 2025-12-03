@@ -26,16 +26,16 @@
 #' specification = specify_bvarPANEL$new(
 #'       ilo_dynamic_panel, 
 #'       exogenous = ilo_exogenous_variables)
-#' burn_in       = estimate(specification, 10)             # run the burn-in
-#' posterior     = estimate(burn_in, 10)                   # estimate the model
+#' burn_in       = estimate(specification, 5)             # run the burn-in
+#' posterior     = estimate(burn_in, 5)                   # estimate the model
 #' summary(posterior)
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
 #' ilo_dynamic_panel |>
 #'   specify_bvarPANEL$new(exogenous = ilo_exogenous_variables) |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 10) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   summary()
 #' 
 #' @export
@@ -145,8 +145,8 @@ summary.PosteriorBVARPANEL = function(
 #'       exogenous = ilo_exogenous_variables,
 #'       group_allocation = country_grouping_region
 #' )
-#' burn_in       = estimate(specification, 10)             # run the burn-in
-#' posterior     = estimate(burn_in, 10)                   # estimate the model
+#' burn_in       = estimate(specification, 5)             # run the burn-in
+#' posterior     = estimate(burn_in, 5)                   # estimate the model
 #' summary(posterior)
 #' 
 #' # workflow with the pipe |>
@@ -155,8 +155,8 @@ summary.PosteriorBVARPANEL = function(
 #'   specify_bvarGroupPANEL$new(
 #'         exogenous = ilo_exogenous_variables, 
 #'         group_allocation = country_grouping_region) |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 10) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   summary()
 #' 
 #' @export
@@ -271,8 +271,8 @@ summary.PosteriorBVARGROUPPANEL = function(
 #'       data = ilo_dynamic_panel,
 #'       group_allocation = country_grouping_region
 #' )
-#' burn_in       = estimate(specification, 10)             # run the burn-in
-#' posterior     = estimate(burn_in, 10)                   # estimate the model
+#' burn_in       = estimate(specification, 5)             # run the burn-in
+#' posterior     = estimate(burn_in, 5)                   # estimate the model
 #' summary(posterior)
 #' 
 #' # workflow with the pipe |>
@@ -281,8 +281,8 @@ summary.PosteriorBVARGROUPPANEL = function(
 #'   specify_bvarGroupPriorPANEL$new(
 #'         exogenous = ilo_exogenous_variables, 
 #'         group_allocation = country_grouping_region) |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 10) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   summary()
 #' 
 #' @export
@@ -396,16 +396,16 @@ summary.PosteriorBVARGROUPPRIORPANEL = function(
 #' specification = specify_bvarPANEL$new(
 #'       ilo_dynamic_panel, 
 #'       exogenous = ilo_exogenous_variables)
-#' burn_in       = estimate(specification, 10)             # run the burn-in
-#' posterior     = estimate(burn_in, 10)                   # estimate the model
+#' burn_in       = estimate(specification, 5)             # run the burn-in
+#' posterior     = estimate(burn_in, 5)                   # estimate the model
 #' summary(posterior)
 #' 
 #' # workflow with the pipe |>
 #' ############################################################
 #' ilo_dynamic_panel |>
 #'   specify_bvarPANEL$new(exogenous = ilo_exogenous_variables) |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 10) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   summary()
 #' 
 #' @export
@@ -515,10 +515,10 @@ summary.PosteriorBVARs = function(
 #' specification  = specify_bvarPANEL$new(ilo_dynamic_panel, p = 1)
 #' 
 #' # run the burn-in
-#' burn_in        = estimate(specification, 10)
+#' burn_in        = estimate(specification, 5)
 #' 
 #' # estimate the model
-#' posterior      = estimate(burn_in, 20)
+#' posterior      = estimate(burn_in, 5)
 #' 
 #' # compute forecast error variance decomposition 4 years ahead
 #' fevd           = compute_variance_decompositions(posterior, horizon = 4)
@@ -528,8 +528,8 @@ summary.PosteriorBVARs = function(
 #' ############################################################
 #' ilo_dynamic_panel |>
 #'   specify_bvarPANEL$new(p = 1) |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 20) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   compute_variance_decompositions(horizon = 4) |> 
 #'   summary(which_c = "COL")
 #' 
@@ -583,8 +583,8 @@ summary.PosteriorFEVDPANEL = function(
 #' specification = specify_bvarPANEL$new(
 #'       ilo_dynamic_panel, 
 #'       exogenous = ilo_exogenous_variables)
-#' burn_in       = estimate(specification, 10)             # run the burn-in
-#' posterior     = estimate(burn_in, 10)                   # estimate the model
+#' burn_in       = estimate(specification, 5)             # run the burn-in
+#' posterior     = estimate(burn_in, 5)                   # estimate the model
 #' 
 #' # forecast 6 years ahead
 #' predictive    = forecast(
@@ -597,8 +597,8 @@ summary.PosteriorFEVDPANEL = function(
 #' ############################################################
 #' ilo_dynamic_panel |>
 #'   specify_bvarPANEL$new() |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 20) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   forecast(horizon = 5, exogenous_forecast = ilo_exogenous_forecasts) |> 
 #'   summary(which_c = "POL")
 #' 

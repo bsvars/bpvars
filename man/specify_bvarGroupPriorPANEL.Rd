@@ -11,10 +11,8 @@ which requires the argument \code{G} for the number of groups to be provided
 and the argument \code{group_allocation} to be left empty.
 }
 \examples{
-data(ilo_dynamic_panel)
 spec = specify_bvarGroupPriorPANEL$new(
    data = ilo_dynamic_panel,
-   p = 4,
    G = 2
 )
 
@@ -23,10 +21,8 @@ spec = specify_bvarGroupPriorPANEL$new(
 ## Method `specify_bvarGroupPriorPANEL$get_data_matrices`
 ## ------------------------------------------------
 
-data(ilo_dynamic_panel)
 spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+   data = ilo_dynamic_panel
 )
 spec$get_data_matrices()
 
@@ -35,10 +31,8 @@ spec$get_data_matrices()
 ## Method `specify_bvarGroupPriorPANEL$get_prior`
 ## ------------------------------------------------
 
-data(ilo_dynamic_panel)
 spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+   data = ilo_dynamic_panel
 )
 spec$get_prior()
 
@@ -47,10 +41,8 @@ spec$get_prior()
 ## Method `specify_bvarGroupPriorPANEL$get_starting_values`
 ## ------------------------------------------------
 
-data(ilo_dynamic_panel)
 spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+   data = ilo_dynamic_panel
 )
 spec$get_starting_values()
 
@@ -59,10 +51,8 @@ spec$get_starting_values()
 ## Method `specify_bvarGroupPriorPANEL$get_type`
 ## ------------------------------------------------
 
-data(ilo_dynamic_panel)
 spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+   data = ilo_dynamic_panel
 )
 spec$get_type()
 
@@ -71,10 +61,8 @@ spec$get_type()
 ## Method `specify_bvarGroupPriorPANEL$set_global2pooled`
 ## ------------------------------------------------
 
-data(ilo_dynamic_panel)
 spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+   data = ilo_dynamic_panel
 )
 spec$set_global2pooled()
 
@@ -83,10 +71,8 @@ spec$set_global2pooled()
 ## Method `specify_bvarGroupPriorPANEL$set_adaptiveMH`
 ## ------------------------------------------------
 
-data(ilo_dynamic_panel)
 spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+   data = ilo_dynamic_panel
 )
 spec$set_adaptiveMH(c(0.6, 0.4, 10, 0.1))
 
@@ -195,10 +181,8 @@ Returns the data matrices as the DataMatricesBVARPANEL object.
 
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{data(ilo_dynamic_panel)
-spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+\preformatted{spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel
 )
 spec$get_data_matrices()
 
@@ -219,10 +203,8 @@ Returns the prior specification as the PriorBVARPANEL object.
 
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{data(ilo_dynamic_panel)
-spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+\preformatted{spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel
 )
 spec$get_prior()
 
@@ -243,10 +225,8 @@ Returns the starting values as the StartingValuesBVARPANEL object.
 
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{data(ilo_dynamic_panel)
-spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+\preformatted{spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel
 )
 spec$get_starting_values()
 
@@ -267,10 +247,8 @@ Returns the type of the model.
 
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{data(ilo_dynamic_panel)
-spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+\preformatted{spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel
 )
 spec$get_type()
 
@@ -301,10 +279,8 @@ start adapting, the initial scaling rate}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{data(ilo_dynamic_panel)
-spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+\preformatted{spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel
 )
 spec$set_global2pooled()
 
@@ -334,10 +310,8 @@ start adapting, the initial scaling rate}
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{data(ilo_dynamic_panel)
-spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel,
-   p = 4
+\preformatted{spec = specify_bvarPANEL$new(
+   data = ilo_dynamic_panel
 )
 spec$set_adaptiveMH(c(0.6, 0.4, 10, 0.1))
 

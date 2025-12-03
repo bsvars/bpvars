@@ -146,29 +146,43 @@ Rcpp::List bvarPANEL(
     // sample aux_Sigma
     // Rcout << "  sample Sigma" << endl;
     if ( type_wozniak ) {
-      aux_Sigma   = sample_Sigma( aux_Sigma_c_inv, aux_s, aux_nu, prior );
+      try {
+        aux_Sigma   = sample_Sigma( aux_Sigma_c_inv, aux_s, aux_nu, prior );
+      } catch (std::runtime_error &e) {
+        // Rcout << "   s: " << s <<" c: "<<c << endl;
+      }
     }
     
     // sample aux_A, aux_V
     // Rcout << "  sample AV" << endl;
     if ( type_wozniak ) {
-      field<mat> tmp_AV     = sample_AV( aux_A_c, aux_Sigma_c_inv, aux_s, aux_m, aux_w, prior );
-      aux_A       = tmp_AV(0);  
-      aux_V       = tmp_AV(1);
+      try {
+        field<mat> tmp_AV     = sample_AV( aux_A_c, aux_Sigma_c_inv, aux_s, aux_m, aux_w, prior );
+        aux_A       = tmp_AV(0);  
+        aux_V       = tmp_AV(1);
+      } catch (std::runtime_error &e) {}
     } else {
-      field<mat> tmp_AV     = sample_AV_jaro( aux_A_c, aux_Sigma_c, aux_A, aux_s, prior );
-      aux_A       = tmp_AV(0);  
-      aux_V       = tmp_AV(1);
-      mat aux_s_tmp = tmp_AV(2);
-      aux_s       = aux_s_tmp(0, 0);
+      try {
+        field<mat> tmp_AV     = sample_AV_jaro( aux_A_c, aux_Sigma_c, aux_A, aux_s, prior );
+        aux_A       = tmp_AV(0);  
+        aux_V       = tmp_AV(1);
+        mat aux_s_tmp = tmp_AV(2);
+        aux_s       = aux_s_tmp(0, 0);
+      } catch (std::runtime_error &e) {
+        // Rcout << "   s: " << s <<" c: "<<c << endl;
+      }
     }
     // sample aux_A_c, aux_Sigma_c
     // Rcout << "  sample A_c Sigma_c" << endl;
     for (int c=0; c<C; c++) {
-      field<mat> tmp_A_c_Sigma_c  = sample_A_c_Sigma_c( y(c), x(c), aux_A, aux_V, aux_Sigma, aux_nu );
-      aux_A_c.slice(c)            = tmp_A_c_Sigma_c(0);
-      aux_Sigma_c.slice(c)        = tmp_A_c_Sigma_c(1);
-      aux_Sigma_c_inv.slice(c)    = inv_sympd( aux_Sigma_c.slice(c) );
+      try {
+        field<mat> tmp_A_c_Sigma_c  = sample_A_c_Sigma_c( y(c), x(c), aux_A, aux_V, aux_Sigma, aux_nu );
+        aux_A_c.slice(c)            = tmp_A_c_Sigma_c(0);
+        aux_Sigma_c.slice(c)        = tmp_A_c_Sigma_c(1);
+        aux_Sigma_c_inv.slice(c)    = inv_sympd( aux_Sigma_c.slice(c) );
+      } catch (std::runtime_error &e) {
+        // Rcout << "   s: " << s <<" c: "<<c << endl;
+      }
     } // END c loop
     
     

@@ -137,16 +137,28 @@ Rcpp::List bvarGroupPriorPANEL(
     
     // sample aux_V
     // Rcout << "  sample aux_V" << endl;
-    aux_V       = sample_V_gg( aux_A_c, aux_Sigma_c_inv, aux_A_g, aux_ga, aux_s, aux_m, aux_w, prior ); 
-    aux_V_inv   = inv_sympd( aux_V );
+    try {
+      aux_V       = sample_V_gg( aux_A_c, aux_Sigma_c_inv, aux_A_g, aux_ga, aux_s, aux_m, aux_w, prior ); 
+      aux_V_inv   = inv_sympd( aux_V );
+    } catch (std::runtime_error &e) {
+      // Rcout << "   s: " << s <<" c: "<<c << endl;
+    }
     
     // sample aux_Sigma_g
     // Rcout << "  sample aux_Sigma_g" << endl;
-    aux_Sigma_g = sample_Sigma_g( aux_Sigma_c_inv, aux_ga, aux_s, aux_nu, prior, G );
+    try {
+      aux_Sigma_g = sample_Sigma_g( aux_Sigma_c_inv, aux_ga, aux_s, aux_nu, prior, G );
+    } catch (std::runtime_error &e) {
+      // Rcout << "   s: " << s <<" c: "<<c << endl;
+    }
     
     // sample aux_A_g
     // Rcout << "  sample aux_A" << endl;
-    aux_A_g   = sample_A_g( aux_A_c, aux_Sigma_c_inv, aux_V, aux_ga, aux_s, aux_m, prior, G );
+    try {
+      aux_A_g   = sample_A_g( aux_A_c, aux_Sigma_c_inv, aux_V, aux_ga, aux_s, aux_m, prior, G );
+    } catch (std::runtime_error &e) {
+      // Rcout << "   s: " << s <<" c: "<<c << endl;
+    }
     
     // sample aux_ga
     if ( estimate_groups ) {

@@ -14,7 +14,7 @@ Rcpp::List mean_field (
   int S       = postY(0).n_slices;
   List out(C);
   for (int c=0; c<C; c++) {
-    mat Ymean(size(postY(0).slice(0)));
+    mat Ymean(size(postY(c).slice(0)));
     for (int s=0; s<S; s++) {
       Ymean += postY(c).slice(s);
     }

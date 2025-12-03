@@ -5,14 +5,15 @@
 \title{Forecasting using Hierarchical Panel Vector Autoregressions}
 \usage{
 \method{forecast}{PosteriorBVARPANEL}(
-  posterior,
+  object,
   horizon = 1,
   exogenous_forecast = NULL,
-  conditional_forecast = NULL
+  conditional_forecast = NULL,
+  ...
 )
 }
 \arguments{
-\item{posterior}{posterior estimation outcome - an object of class 
+\item{object}{posterior estimation outcome - an object of class 
 \code{PosteriorBVARPANEL} obtained by running the \code{estimate} function.}
 
 \item{horizon}{a positive integer, specifying the forecasting horizon.}
@@ -25,6 +26,8 @@ generic \code{forecast}.}
 These matrices should only contain \code{numeric} or \code{NA} values. The 
 entries with \code{NA} values correspond to the values that are forecasted 
 conditionally on the realisations provided as \code{numeric} values.}
+
+\item{...}{not used}
 }
 \value{
 A list of class \code{ForecastsPANEL} with \code{C} elements containing 
@@ -104,8 +107,8 @@ interval  \eqn{[0,100]}.
 \examples{
 # specify the model
 specification = specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
-burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
-posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
+burn_in       = estimate(specification, 5)             # run the burn-in; use say S = 10000
+posterior     = estimate(burn_in, 5)                   # estimate the model; use say S = 10000
 
 # forecast 5 years ahead
 predictive    = forecast(posterior, 5, exogenous_forecast = ilo_exogenous_forecasts)
@@ -114,8 +117,8 @@ predictive    = forecast(posterior, 5, exogenous_forecast = ilo_exogenous_foreca
 ############################################################
 ilo_dynamic_panel |>
   specify_bvarPANEL$new() |>
-  estimate(S = 10) |> 
-  estimate(S = 20) |> 
+  estimate(S = 5) |> 
+  estimate(S = 5) |> 
   forecast(horizon = 2) -> predictive
 
 # forecasting with truncated forecasts for the rates
@@ -124,8 +127,8 @@ specification = specify_bvarPANEL$new(
                   ilo_dynamic_panel,
                   type = c("real", rep("rate", 3))
                 )   # specify the model
-burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
-posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
+burn_in       = estimate(specification, 5)            # run the burn-in; use say S = 10000
+posterior     = estimate(burn_in, 5)                  # estimate the model; use say S = 10000
 
 # forecast 5 years ahead
 predictive    = forecast(posterior, 5)
@@ -134,8 +137,8 @@ predictive    = forecast(posterior, 5)
 ############################################################
 ilo_dynamic_panel |>
   specify_bvarPANEL$new(type = c("real", rep("rate", 3))) |>
-  estimate(S = 10) |> 
-  estimate(S = 20) |> 
+  estimate(S = 5) |> 
+  estimate(S = 5) |> 
   forecast(horizon = 5) -> predictive
 
 }

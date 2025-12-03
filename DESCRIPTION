@@ -18,7 +18,8 @@ Imports:
     Rcpp (>= 1.0.12),
     RcppProgress,
     RcppTN,
-    tmvtnsim
+    tmvtnsim,
+    generics
 LinkingTo: 
     bsvars, 
     Rcpp, 
@@ -30,4 +31,4 @@ URL: http://bsvars.org/bpvars/
 BugReports: https://github.com/bsvars/bpvars/issues
 LazyData: true
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3

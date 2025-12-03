@@ -1,3 +1,7 @@
+
+#' @export
+generics::forecast
+
 #' @title Forecasting using Hierarchical Panel Vector Autoregressions
 #'
 #' @description Samples from the joint predictive density of the dependent 
@@ -61,7 +65,7 @@
 #' 
 #' @method forecast PosteriorBVARPANEL
 #' 
-#' @param posterior posterior estimation outcome - an object of class 
+#' @param object posterior estimation outcome - an object of class 
 #' \code{PosteriorBVARPANEL} obtained by running the \code{estimate} function.
 #' @param horizon a positive integer, specifying the forecasting horizon.
 #' @param exogenous_forecast not used here ATM; included for compatibility with 
@@ -71,6 +75,7 @@
 #' These matrices should only contain \code{numeric} or \code{NA} values. The 
 #' entries with \code{NA} values correspond to the values that are forecasted 
 #' conditionally on the realisations provided as \code{numeric} values.
+#' @param ... not used
 #' 
 #' @return A list of class \code{ForecastsPANEL} with \code{C} elements containing 
 #' the draws from the country-specific predictive density and data in a form of 
@@ -100,8 +105,8 @@
 #' @examples
 #' # specify the model
 #' specification = specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
-#' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
-#' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
+#' burn_in       = estimate(specification, 5)             # run the burn-in; use say S = 10000
+#' posterior     = estimate(burn_in, 5)                   # estimate the model; use say S = 10000
 #' 
 #' # forecast 5 years ahead
 #' predictive    = forecast(posterior, 5, exogenous_forecast = ilo_exogenous_forecasts)
@@ -110,8 +115,8 @@
 #' ############################################################
 #' ilo_dynamic_panel |>
 #'   specify_bvarPANEL$new() |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 20) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
 #' # forecasting with truncated forecasts for the rates
@@ -120,8 +125,8 @@
 #'                   ilo_dynamic_panel,
 #'                   type = c("real", rep("rate", 3))
 #'                 )   # specify the model
-#' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
-#' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
+#' burn_in       = estimate(specification, 5)            # run the burn-in; use say S = 10000
+#' posterior     = estimate(burn_in, 5)                  # estimate the model; use say S = 10000
 #' 
 #' # forecast 5 years ahead
 #' predictive    = forecast(posterior, 5)
@@ -130,27 +135,33 @@
 #' ############################################################
 #' ilo_dynamic_panel |>
 #'   specify_bvarPANEL$new(type = c("real", rep("rate", 3))) |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 20) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARPANEL = function(
-    posterior, 
+    object, 
     horizon = 1, 
     exogenous_forecast = NULL,
-    conditional_forecast = NULL
+    conditional_forecast = NULL,
+    ...
 ) {
   
-  posterior_A_c_cpp     = posterior$posterior$A_c_cpp
-  posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
-  Y_c             = posterior$posterior$Y
+  stopifnot(
+    "Argument horizon must be a positive integer number." = 
+      horizon > 0 & horizon %% 1 == 0
+  )
+  
+  posterior_A_c_cpp     = object$posterior$A_c_cpp
+  posterior_Sigma_c_cpp = object$posterior$Sigma_c_cpp
+  Y_c             = object$posterior$Y
   N               = dim(posterior_A_c_cpp[1,1][[1]])[2]
   K               = dim(posterior_A_c_cpp[1,1][[1]])[1]
   C               = dim(posterior_A_c_cpp[1,1][[1]])[3]
   S               = dim(posterior_A_c_cpp)[1]
-  p               = posterior$last_draw$p
-  c_names         = names(posterior$last_draw$data_matrices$Y)
+  p               = object$last_draw$p
+  c_names         = names(object$last_draw$data_matrices$Y)
   
   d               = K - N * p - 1
   if (d == 0 ) {
@@ -195,7 +206,7 @@ forecast.PosteriorBVARPANEL = function(
     )
   }
   
-  type      = posterior$last_draw$data_matrices$type
+  type      = object$last_draw$data_matrices$type
   LB        = rep(-Inf, N)
   UB        = rep(Inf, N)
   rates_id  = which(type == "rate")
@@ -251,7 +262,7 @@ forecast.PosteriorBVARPANEL = function(
 #' @inherit forecast.PosteriorBVARPANEL
 #' @method forecast PosteriorBVARGROUPPANEL
 #' 
-#' @param posterior posterior estimation outcome - an object of class 
+#' @param object posterior estimation outcome - an object of class 
 #' \code{PosteriorBVARGROUPPANEL} obtained by running the \code{estimate} function.
 #' 
 #' @seealso \code{\link{specify_bvarGroupPANEL}}, \code{\link{estimate.PosteriorBVARGROUPPANEL}}, 
@@ -264,8 +275,8 @@ forecast.PosteriorBVARPANEL = function(
 #'                   exogenous = ilo_exogenous_variables,
 #'                   group_allocation = country_grouping_incomegroup
 #'                 )
-#' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
-#' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
+#' burn_in       = estimate(specification, 5)             # run the burn-in; use say S = 10000
+#' posterior     = estimate(burn_in, 5)                   # estimate the model; use say S = 10000
 #' 
 #' # forecast 5 years ahead
 #' predictive    = forecast(
@@ -278,8 +289,8 @@ forecast.PosteriorBVARPANEL = function(
 #' ############################################################
 #' ilo_dynamic_panel |>
 #'   specify_bvarGroupPANEL$new(group_allocation = country_grouping_incomegroup) |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 20) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
 #' # truncated forecasts for the rates
@@ -289,8 +300,8 @@ forecast.PosteriorBVARPANEL = function(
 #'                   type = c("real", rep("rate", 3)),
 #'                   group_allocation = country_grouping_region
 #'                 )   
-#' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
-#' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
+#' burn_in       = estimate(specification, 5)            # run the burn-in; use say S = 10000
+#' posterior     = estimate(burn_in, 5)                  # estimate the model; use say S = 10000
 #' predictive    = forecast(posterior, 5) # forecast
 #' 
 #' # workflow with the pipe |>
@@ -300,28 +311,34 @@ forecast.PosteriorBVARPANEL = function(
 #'             type = c("real", rep("rate", 3)),
 #'             group_allocation = country_grouping_region
 #'             ) |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 20) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARGROUPPANEL = function(
-    posterior, 
+    object, 
     horizon = 1, 
     exogenous_forecast = NULL,
-    conditional_forecast = NULL
+    conditional_forecast = NULL,
+    ...
 ) {
   
-  posterior_A_c_cpp     = posterior$posterior$A_c_cpp
-  posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
+  stopifnot(
+    "Argument horizon must be a positive integer number." = 
+      horizon > 0 & horizon %% 1 == 0
+  )
   
-  Y_c             = posterior$posterior$Y
+  posterior_A_c_cpp     = object$posterior$A_c_cpp
+  posterior_Sigma_c_cpp = object$posterior$Sigma_c_cpp
+  
+  Y_c             = object$posterior$Y
   N               = dim(posterior_A_c_cpp[1,1][[1]])[2]
   K               = dim(posterior_A_c_cpp[1,1][[1]])[1]
   C               = dim(posterior_A_c_cpp[1,1][[1]])[3]
   S               = dim(posterior_A_c_cpp)[1]
-  p               = posterior$last_draw$p
-  c_names         = names(posterior$last_draw$data_matrices$Y)
+  p               = object$last_draw$p
+  c_names         = names(object$last_draw$data_matrices$Y)
   
   d               = K - N * p - 1
   if (d == 0 ) {
@@ -366,7 +383,7 @@ forecast.PosteriorBVARGROUPPANEL = function(
     )
   }
   
-  type      = posterior$last_draw$data_matrices$type
+  type      = object$last_draw$data_matrices$type
   LB        = rep(-Inf, N)
   UB        = rep(Inf, N)
   rates_id  = which(type == "rate")
@@ -483,7 +500,7 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #' 
 #' @method forecast PosteriorBVARs
 #' 
-#' @param posterior posterior estimation outcome - an object of class 
+#' @param object posterior estimation outcome - an object of class 
 #' \code{PosteriorBVARs} obtained by running the \code{estimate} function.
 #' @param horizon a positive integer, specifying the forecasting horizon.
 #' @param exogenous_forecast not used here ATM; included for compatibility with 
@@ -493,6 +510,7 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #' These matrices should only contain \code{numeric} or \code{NA} values. The 
 #' entries with \code{NA} values correspond to the values that are forecasted 
 #' conditionally on the realisations provided as \code{numeric} values.
+#' @param ... not used
 #' 
 #' @return A list of class \code{ForecastsPANEL} with \code{C} elements containing 
 #' the draws from the country-specific predictive density and data in a form of 
@@ -522,8 +540,8 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #' @examples
 #' # specify the model
 #' specification = specify_bvars$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
-#' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
-#' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
+#' burn_in       = estimate(specification, 5)             # run the burn-in; use say S = 10000
+#' posterior     = estimate(burn_in, 5)                   # estimate the model; use say S = 10000
 #' 
 #' # forecast 5 years ahead
 #' predictive    = forecast(posterior, 5, exogenous_forecast = ilo_exogenous_forecasts)
@@ -532,8 +550,8 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #' ############################################################
 #' ilo_dynamic_panel |>
 #'   specify_bvars$new() |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 20) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
 #' # truncated forecasts for the rates
@@ -542,8 +560,8 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #'                   ilo_dynamic_panel,
 #'                   type = c("real", rep("rate", 3))
 #'                 )   # specify the model
-#' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
-#' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
+#' burn_in       = estimate(specification, 5)            # run the burn-in; use say S = 10000
+#' posterior     = estimate(burn_in, 5)                  # estimate the model; use say S = 10000
 #' 
 #' # forecast 5 years ahead
 #' predictive    = forecast(posterior, 5)
@@ -552,28 +570,34 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #' ############################################################
 #' ilo_dynamic_panel |>
 #'   specify_bvars$new(type = c("real", rep("rate", 3))) |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 20) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARs = function(
-    posterior, 
+    object, 
     horizon = 1, 
     exogenous_forecast = NULL,
-    conditional_forecast = NULL
+    conditional_forecast = NULL,
+    ...
 ) {
   
-  posterior_A_c_cpp     = posterior$posterior$A_c_cpp
-  posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
+  stopifnot(
+    "Argument horizon must be a positive integer number." = 
+      horizon > 0 & horizon %% 1 == 0
+  )
   
-  Y_c             = posterior$posterior$Y
+  posterior_A_c_cpp     = object$posterior$A_c_cpp
+  posterior_Sigma_c_cpp = object$posterior$Sigma_c_cpp
+  
+  Y_c             = object$posterior$Y
   N               = dim(posterior_A_c_cpp[1,1][[1]])[2]
   K               = dim(posterior_A_c_cpp[1,1][[1]])[1]
   C               = dim(posterior_A_c_cpp[1,1][[1]])[3]
   S               = dim(posterior_A_c_cpp)[1]
-  p               = posterior$last_draw$p
-  c_names         = names(posterior$last_draw$data_matrices$Y)
+  p               = object$last_draw$p
+  c_names         = names(object$last_draw$data_matrices$Y)
   
   d               = K - N * p - 1
   if (d == 0 ) {
@@ -618,7 +642,7 @@ forecast.PosteriorBVARs = function(
     )
   }
   
-  type      = posterior$last_draw$data_matrices$type
+  type      = object$last_draw$data_matrices$type
   LB        = rep(-Inf, N)
   UB        = rep(Inf, N)
   rates_id  = which(type == "rate")
@@ -674,7 +698,7 @@ forecast.PosteriorBVARs = function(
 #' @inherit forecast.PosteriorBVARPANEL
 #' @method forecast PosteriorBVARGROUPPRIORPANEL
 #' 
-#' @param posterior posterior estimation outcome - an object of class 
+#' @param object posterior estimation outcome - an object of class 
 #' \code{PosteriorBVARGROUPPRIORPANEL} obtained by running the \code{estimate} function.
 #' 
 #' @seealso \code{\link{specify_bvarGroupPriorPANEL}}, \code{\link{estimate.PosteriorBVARGROUPPRIORPANEL}}, 
@@ -686,8 +710,8 @@ forecast.PosteriorBVARs = function(
 #'                   ilo_dynamic_panel,
 #'                   group_allocation = country_grouping_incomegroup
 #'                 )
-#' burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
-#' posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
+#' burn_in       = estimate(specification, 5)             # run the burn-in; use say S = 10000
+#' posterior     = estimate(burn_in, 5)                   # estimate the model; use say S = 10000
 #' 
 #' # forecast 5 years ahead
 #' predictive    = forecast(posterior, horizon = 5)
@@ -696,8 +720,8 @@ forecast.PosteriorBVARs = function(
 #' ############################################################
 #' ilo_dynamic_panel |>
 #'   specify_bvarGroupPriorPANEL$new(group_allocation = country_grouping_incomegroup) |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 20) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   forecast(horizon = 2) -> predictive
 #' 
 #' # truncated forecasts for the rates
@@ -707,8 +731,8 @@ forecast.PosteriorBVARs = function(
 #'                   type = c("real", rep("rate", 3)),
 #'                   group_allocation = country_grouping_region
 #'                 )   
-#' burn_in       = estimate(specification, 10)            # run the burn-in; use say S = 10000
-#' posterior     = estimate(burn_in, 10)                  # estimate the model; use say S = 10000
+#' burn_in       = estimate(specification, 5)            # run the burn-in; use say S = 10000
+#' posterior     = estimate(burn_in, 5)                  # estimate the model; use say S = 10000
 #' predictive    = forecast(posterior, 5) # forecast
 #' 
 #' # workflow with the pipe |>
@@ -718,28 +742,34 @@ forecast.PosteriorBVARs = function(
 #'             type = c("real", rep("rate", 3)),
 #'             group_allocation = country_grouping_region
 #'             ) |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 20) |> 
+#'   estimate(S = 5) |> 
+#'   estimate(S = 5) |> 
 #'   forecast(horizon = 5) -> predictive
 #' 
 #' @export
 forecast.PosteriorBVARGROUPPRIORPANEL = function(
-    posterior, 
+    object, 
     horizon = 1, 
     exogenous_forecast = NULL,
-    conditional_forecast = NULL
+    conditional_forecast = NULL,
+    ...
 ) {
   
-  posterior_A_c_cpp     = posterior$posterior$A_c_cpp
-  posterior_Sigma_c_cpp = posterior$posterior$Sigma_c_cpp
+  stopifnot(
+    "Argument horizon must be a positive integer number." = 
+      horizon > 0 & horizon %% 1 == 0
+  )
   
-  Y_c             = posterior$posterior$Y
+  posterior_A_c_cpp     = object$posterior$A_c_cpp
+  posterior_Sigma_c_cpp = object$posterior$Sigma_c_cpp
+  
+  Y_c             = object$posterior$Y
   N               = dim(posterior_A_c_cpp[1,1][[1]])[2]
   K               = dim(posterior_A_c_cpp[1,1][[1]])[1]
   C               = dim(posterior_A_c_cpp[1,1][[1]])[3]
   S               = dim(posterior_A_c_cpp)[1]
-  p               = posterior$last_draw$p
-  c_names         = names(posterior$last_draw$data_matrices$Y)
+  p               = object$last_draw$p
+  c_names         = names(object$last_draw$data_matrices$Y)
   
   d               = K - N * p - 1
   if (d == 0 ) {
@@ -784,7 +814,7 @@ forecast.PosteriorBVARGROUPPRIORPANEL = function(
     )
   }
   
-  type      = posterior$last_draw$data_matrices$type
+  type      = object$last_draw$data_matrices$type
   LB        = rep(-Inf, N)
   UB        = rep(Inf, N)
   rates_id  = which(type == "rate")
