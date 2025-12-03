@@ -39,7 +39,6 @@ poos = specify_poosf_exercise$new(                # specify the forecasting exer
          training_sample = 30
        )   
 fore = forecast_poos_recursively(spec, poos)      # execute the forecasting exercise
-plot(fore[[1]], "POL")                         # plot forecasts for the first estimation samples
 
 }
 \seealso{

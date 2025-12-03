@@ -208,8 +208,6 @@
 #'   estimate(S = 5) |> 
 #'   estimate(S = 5) |> 
 #'   forecast(horizon = 2) -> predictive
-#'   
-#' plot(predictive, which_c = "POL")
 #' 
 #' # Full estimation and forecasting example with 
 #' #   exogenous variables and truncation for rates
@@ -226,7 +224,5 @@
 #'                   horizon = 5,
 #'                   exogenous_forecast = ilo_exogenous_forecasts
 #'                 )
-#'                 
-#' plot(predictive, which_c = "POL")
 #' 
 "_PACKAGE"
