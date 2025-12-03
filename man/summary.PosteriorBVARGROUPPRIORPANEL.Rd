@@ -26,8 +26,8 @@ percentiles of the parameters for all \code{C} countries.
 \examples{
 # specify the model
 specification = specify_bvarGroupPriorPANEL$new(
-      data = ilo_dynamic_panel,
-      group_allocation = country_grouping_region
+      data = ilo_dynamic_panel[1:5],
+      group_allocation = country_grouping_region[1:5]
 )
 burn_in       = estimate(specification, 5)             # run the burn-in
 posterior     = estimate(burn_in, 5)                   # estimate the model

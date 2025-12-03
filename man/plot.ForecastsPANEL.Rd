@@ -49,22 +49,13 @@ Plots of fitted values of dependent variables including their
 median and percentiles.
 }
 \examples{
-specification = specify_bvarPANEL$new(ilo_dynamic_panel)  # specify the model
+specification = specify_bvarPANEL$new(ilo_dynamic_panel[1:5])  # specify the model
 burn_in       = estimate(specification, 10)               # run the burn-in
 posterior     = estimate(burn_in, 10)                     # estimate the model
 
 # forecast 5 years ahead
 predictive    = forecast(posterior, 6)
-plot(predictive, which_c = "POL")                                # plot forecasts
-
-# workflow with the pipe |>
-############################################################
-ilo_dynamic_panel |>
-  specify_bvarPANEL$new() |>
-  estimate(S = 10) |> 
-  estimate(S = 10) |> 
-  forecast(horizon = 5) |>
-  plot(which_c = 135)
+plot(predictive, which_c = "ARG")                                # plot forecasts
 
 }
 \seealso{

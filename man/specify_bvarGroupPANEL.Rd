@@ -12,7 +12,7 @@ and the argument \code{group_allocation} to be left empty.
 }
 \examples{
 spec = specify_bvarGroupPANEL$new(
-   data = ilo_dynamic_panel,
+   data = ilo_dynamic_panel[1:5],
    G = 2
 )
 
@@ -22,7 +22,7 @@ spec = specify_bvarGroupPANEL$new(
 ## ------------------------------------------------
 
 spec = specify_bvarGroupPANEL$new(
-   data = ilo_dynamic_panel,
+   data = ilo_dynamic_panel[1:5],
    G = 2
 )
 spec$set_global2pooled()
@@ -153,7 +153,7 @@ start adapting, the initial scaling rate}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{spec = specify_bvarGroupPANEL$new(
-   data = ilo_dynamic_panel,
+   data = ilo_dynamic_panel[1:5],
    G = 2
 )
 spec$set_global2pooled()

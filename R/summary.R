@@ -24,8 +24,8 @@
 #' @examples
 #' # specify the model
 #' specification = specify_bvarPANEL$new(
-#'       ilo_dynamic_panel, 
-#'       exogenous = ilo_exogenous_variables)
+#'       ilo_dynamic_panel[1:5], 
+#'       exogenous = ilo_exogenous_variables[1:5])
 #' burn_in       = estimate(specification, 5)             # run the burn-in
 #' posterior     = estimate(burn_in, 5)                   # estimate the model
 #' summary(posterior)
@@ -133,9 +133,9 @@ summary.PosteriorBVARPANEL = function(
 #' @examples
 #' # specify the model
 #' specification = specify_bvarGroupPANEL$new(
-#'       data = ilo_dynamic_panel,
-#'       exogenous = ilo_exogenous_variables,
-#'       group_allocation = country_grouping_region
+#'       data = ilo_dynamic_panel[1:5],
+#'       exogenous = ilo_exogenous_variables[1:5],
+#'       group_allocation = country_grouping_region[1:5]
 #' )
 #' burn_in       = estimate(specification, 5)             # run the burn-in
 #' posterior     = estimate(burn_in, 5)                   # estimate the model
@@ -250,8 +250,8 @@ summary.PosteriorBVARGROUPPANEL = function(
 #' @examples
 #' # specify the model
 #' specification = specify_bvarGroupPriorPANEL$new(
-#'       data = ilo_dynamic_panel,
-#'       group_allocation = country_grouping_region
+#'       data = ilo_dynamic_panel[1:5],
+#'       group_allocation = country_grouping_region[1:5]
 #' )
 #' burn_in       = estimate(specification, 5)             # run the burn-in
 #' posterior     = estimate(burn_in, 5)                   # estimate the model
@@ -366,8 +366,8 @@ summary.PosteriorBVARGROUPPRIORPANEL = function(
 #' @examples
 #' # specify the model
 #' specification = specify_bvarPANEL$new(
-#'       ilo_dynamic_panel, 
-#'       exogenous = ilo_exogenous_variables)
+#'       ilo_dynamic_panel[1:5], 
+#'       exogenous = ilo_exogenous_variables[1:5])
 #' burn_in       = estimate(specification, 5)             # run the burn-in
 #' posterior     = estimate(burn_in, 5)                   # estimate the model
 #' summary(posterior)
@@ -476,7 +476,7 @@ summary.PosteriorBVARs = function(
 #' 
 #' @examples
 #' # specify the model and set seed
-#' specification  = specify_bvarPANEL$new(ilo_dynamic_panel, p = 1)
+#' specification  = specify_bvarPANEL$new(ilo_dynamic_panel[1:5], p = 1)
 #' 
 #' # run the burn-in
 #' burn_in        = estimate(specification, 5)
@@ -486,7 +486,7 @@ summary.PosteriorBVARs = function(
 #' 
 #' # compute forecast error variance decomposition 4 years ahead
 #' fevd           = compute_variance_decompositions(posterior, horizon = 4)
-#' summary(fevd, which_c = "POL")
+#' summary(fevd, which_c = "ARG")
 #' 
 #' @export
 summary.PosteriorFEVDPANEL = function(
@@ -536,8 +536,8 @@ summary.PosteriorFEVDPANEL = function(
 #' @examples
 #' # specify the model
 #' specification = specify_bvarPANEL$new(
-#'       ilo_dynamic_panel, 
-#'       exogenous = ilo_exogenous_variables)
+#'       ilo_dynamic_panel[1:5], 
+#'       exogenous = ilo_exogenous_variables[1:5])
 #' burn_in       = estimate(specification, 5)             # run the burn-in
 #' posterior     = estimate(burn_in, 5)                   # estimate the model
 #' 
@@ -545,8 +545,8 @@ summary.PosteriorFEVDPANEL = function(
 #' predictive    = forecast(
 #'       posterior, 
 #'       5, 
-#'       exogenous_forecast = ilo_exogenous_forecasts)
-#' summary(predictive, which_c = "POL")
+#'       exogenous_forecast = ilo_exogenous_forecasts[1:5])
+#' summary(predictive, which_c = "ARG")
 #' 
 #' @export
 summary.ForecastsPANEL = function(

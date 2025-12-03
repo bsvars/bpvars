@@ -28,7 +28,7 @@ pseudo-out-of-sample forecastinge exercise performed using function
 \code{\link{forecast_poos_recursively}}.
 }
 \examples{
-spec = specify_bvarPANEL$new(ilo_dynamic_panel)               # specify the model
+spec = specify_bvarPANEL$new(ilo_dynamic_panel[1:5])               # specify the model
 poos = specify_poosf_exercise$new(spec, 2, 5, 1, 30)    # specify the forecasting  exercise
 fore = forecast_poos_recursively(spec, poos)                  # perform the forecasting  exercise
 fp   = compute_forecast_performance(fore, "pls")   # compute forecasting performance measures

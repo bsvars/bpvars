@@ -107,22 +107,14 @@ interval  \eqn{[0,100]}.
 \examples{
 # specify the model
 specification = specify_bvarGroupPriorPANEL$new(
-                  ilo_dynamic_panel,
-                  group_allocation = country_grouping_incomegroup
+                  ilo_dynamic_panel[1:5],
+                  group_allocation = country_grouping_incomegroup[1:5]
                 )
 burn_in       = estimate(specification, 5)             # run the burn-in; use say S = 10000
 posterior     = estimate(burn_in, 5)                   # estimate the model; use say S = 10000
 
 # forecast 5 years ahead
 predictive    = forecast(posterior, horizon = 5)
-
-# workflow with the pipe |>
-############################################################
-ilo_dynamic_panel |>
-  specify_bvarGroupPriorPANEL$new(group_allocation = country_grouping_incomegroup) |>
-  estimate(S = 5) |> 
-  estimate(S = 5) |> 
-  forecast(horizon = 2) -> predictive
 
 }
 \references{

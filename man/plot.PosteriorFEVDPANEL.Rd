@@ -46,7 +46,7 @@ decompositions.
 Tomasz Woźniak \email{wozniak.tom@pm.me}
 
 set.seed(123)
-specification  = specify_bvarPANEL$new(ilo_dynamic_panel)
+specification  = specify_bvarPANEL$new(ilo_dynamic_panel[1:5])
 
 # run the burn-in
 burn_in        = estimate(specification, 10)
@@ -56,14 +56,5 @@ posterior      = estimate(burn_in, 20)
 
 # compute forecast error variance decomposition 4 years ahead
 fevd           = compute_variance_decompositions(posterior, horizon = 4)
-plot(fevd, which_c = "POL")
-
-# workflow with the pipe |>
-############################################################
-ilo_dynamic_panel |>
-  specify_bvarPANEL$new() |>
-  estimate(S = 10) |> 
-  estimate(S = 20) |> 
-  compute_variance_decompositions(horizon = 4) |>
-  plot(which_c = "POL")
+plot(fevd, which_c = "ARG")
 }

@@ -107,9 +107,9 @@ interval  \eqn{[0,100]}.
 \examples{
 # specify the model
 specification = specify_bvarGroupPANEL$new(
-                  ilo_dynamic_panel, 
-                  exogenous = ilo_exogenous_variables,
-                  group_allocation = country_grouping_incomegroup
+                  ilo_dynamic_panel[1:5], 
+                  exogenous = ilo_exogenous_variables[1:5],
+                  group_allocation = country_grouping_incomegroup[1:5]
                 )
 burn_in       = estimate(specification, 5)             # run the burn-in; use say S = 10000
 posterior     = estimate(burn_in, 5)                   # estimate the model; use say S = 10000
@@ -118,16 +118,8 @@ posterior     = estimate(burn_in, 5)                   # estimate the model; use
 predictive    = forecast(
                   posterior, 
                   horizon = 5, 
-                  exogenous_forecast = ilo_exogenous_forecasts
+                  exogenous_forecast = ilo_exogenous_forecasts[1:5]
                 )
-
-# workflow with the pipe |>
-############################################################
-ilo_dynamic_panel |>
-  specify_bvarGroupPANEL$new(group_allocation = country_grouping_incomegroup) |>
-  estimate(S = 5) |> 
-  estimate(S = 5) |> 
-  forecast(horizon = 2) -> predictive
 
 }
 \references{

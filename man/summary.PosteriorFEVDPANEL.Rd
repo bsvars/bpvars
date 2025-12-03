@@ -26,7 +26,7 @@ decompositions of each variable at all horizons.
 }
 \examples{
 # specify the model and set seed
-specification  = specify_bvarPANEL$new(ilo_dynamic_panel, p = 1)
+specification  = specify_bvarPANEL$new(ilo_dynamic_panel[1:5], p = 1)
 
 # run the burn-in
 burn_in        = estimate(specification, 5)
@@ -36,7 +36,7 @@ posterior      = estimate(burn_in, 5)
 
 # compute forecast error variance decomposition 4 years ahead
 fevd           = compute_variance_decompositions(posterior, horizon = 4)
-summary(fevd, which_c = "POL")
+summary(fevd, which_c = "ARG")
 
 }
 \seealso{

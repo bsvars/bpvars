@@ -72,7 +72,7 @@ spec$set_global2pooled()
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel
+   data = ilo_dynamic_panel[1:5]
 )
 spec$set_adaptiveMH(c(0.6, 0.4, 10, 0.1))
 
@@ -311,7 +311,7 @@ start adapting, the initial scaling rate}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{spec = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel
+   data = ilo_dynamic_panel[1:5]
 )
 spec$set_adaptiveMH(c(0.6, 0.4, 10, 0.1))
 

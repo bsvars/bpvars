@@ -12,7 +12,7 @@ element \code{posterior}.
 }
 \examples{
 specification = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel
+   data = ilo_dynamic_panel[1:5]
 )
 posterior       = estimate(specification, 5)
 class(posterior)
@@ -23,7 +23,7 @@ class(posterior)
 ## ------------------------------------------------
 
 specification = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel
+   data = ilo_dynamic_panel[1:5]
 )
 posterior       = estimate(specification, 5)
 posterior$get_posterior()
@@ -34,7 +34,7 @@ posterior$get_posterior()
 ## ------------------------------------------------
 
 specification = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel
+   data = ilo_dynamic_panel[1:5]
 )
 burn_in        = estimate(specification, 5)
 posterior      = estimate(burn_in, 5)
@@ -98,7 +98,7 @@ Returns a list containing Bayesian estimation output.
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{specification = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel
+   data = ilo_dynamic_panel[1:5]
 )
 posterior       = estimate(specification, 5)
 posterior$get_posterior()
@@ -123,7 +123,7 @@ MCMC estimation using \code{estimate()}.
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{specification = specify_bvarPANEL$new(
-   data = ilo_dynamic_panel
+   data = ilo_dynamic_panel[1:5]
 )
 burn_in        = estimate(specification, 5)
 posterior      = estimate(burn_in, 5)

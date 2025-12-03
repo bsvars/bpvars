@@ -159,33 +159,17 @@ This package is currently in active development.
 \examples{
 # Basic estimation and forecasting example
 ############################################################
-specification = specify_bvarPANEL$new(ilo_dynamic_panel) # specify the model
+specification = specify_bvarPANEL$new(ilo_dynamic_panel[1:5]) # specify the model
 burn_in       = estimate(specification, S = 5)          # run the burn-in; use say S = 10000
 posterior     = estimate(burn_in, S = 5)                # estimate the model; use say S = 10000
 predictive    = forecast(posterior, 2)                  # forecast the future       
 
 # workflow with the pipe |>
-ilo_dynamic_panel |>
+ilo_dynamic_panel[1:5] |>
   specify_bvarPANEL$new() |>
   estimate(S = 5) |> 
   estimate(S = 5) |> 
   forecast(horizon = 2) -> predictive
-
-# Full estimation and forecasting example with 
-#   exogenous variables and truncation for rates
-############################################################
-specification = specify_bvarPANEL$new(
-                  ilo_dynamic_panel,
-                  exogenous = ilo_exogenous_variables,
-                  type = c("real", rep("rate", 3))
-                )
-burn_in       = estimate(specification, S = 5)         # run the burn-in; use say S = 10000
-posterior     = estimate(burn_in, S = 5)               # estimate the model; use say S = 10000
-predictive    = forecast(
-                  posterior, 
-                  horizon = 5,
-                  exogenous_forecast = ilo_exogenous_forecasts
-                )
 
 }
 \references{

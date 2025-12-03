@@ -32,8 +32,8 @@ using expanding window samples.
 }
 \examples{
 spec = specify_bvarGroupPANEL$new(                # specify the model
-         ilo_dynamic_panel, 
-         group_allocation = country_grouping_region
+         ilo_dynamic_panel[1:5], 
+         group_allocation = country_grouping_region[1:5]
        )   
 poos = specify_poosf_exercise$new(                # specify the forecasting exercise
          spec, 

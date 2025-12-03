@@ -26,7 +26,7 @@ error variance decomposition.
 }
 \examples{
 # specify the model and set seed
-specification  = specify_bvars$new(ilo_dynamic_panel) # specify the model
+specification  = specify_bvars$new(ilo_dynamic_panel[1:5]) # specify the model
 
 # run the burn-in
 burn_in        = estimate(specification, 5)
@@ -36,14 +36,6 @@ posterior      = estimate(burn_in, 5)
 
 # compute forecast error variance decomposition 4 years ahead
 fevd           = compute_variance_decompositions(posterior, horizon = 4)
-
-# workflow with the pipe |>
-############################################################
-ilo_dynamic_panel |>
-  specify_bvars$new() |>
-  estimate(S = 5) |> 
-  estimate(S = 5) |> 
-  compute_variance_decompositions(horizon = 4) -> fevd
 
 }
 \references{

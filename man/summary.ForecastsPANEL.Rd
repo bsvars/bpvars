@@ -27,8 +27,8 @@ mean, standard deviations, as well as 5 and 95 percentiles.
 \examples{
 # specify the model
 specification = specify_bvarPANEL$new(
-      ilo_dynamic_panel, 
-      exogenous = ilo_exogenous_variables)
+      ilo_dynamic_panel[1:5], 
+      exogenous = ilo_exogenous_variables[1:5])
 burn_in       = estimate(specification, 5)             # run the burn-in
 posterior     = estimate(burn_in, 5)                   # estimate the model
 
@@ -36,8 +36,8 @@ posterior     = estimate(burn_in, 5)                   # estimate the model
 predictive    = forecast(
       posterior, 
       5, 
-      exogenous_forecast = ilo_exogenous_forecasts)
-summary(predictive, which_c = "POL")
+      exogenous_forecast = ilo_exogenous_forecasts[1:5])
+summary(predictive, which_c = "ARG")
 
 }
 \seealso{

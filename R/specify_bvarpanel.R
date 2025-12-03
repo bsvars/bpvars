@@ -706,7 +706,7 @@ specify_bvarPANEL = R6::R6Class(
 #' 
 #' @examples 
 #' specification = specify_bvarPANEL$new(
-#'    data = ilo_dynamic_panel
+#'    data = ilo_dynamic_panel[1:5]
 #' )
 #' posterior       = estimate(specification, 5)
 #' class(posterior)
@@ -765,7 +765,7 @@ specify_posterior_bvarPANEL = R6::R6Class(
     #' 
     #' @examples 
     #' specification = specify_bvarPANEL$new(
-    #'    data = ilo_dynamic_panel
+    #'    data = ilo_dynamic_panel[1:5]
     #' )
     #' posterior       = estimate(specification, 5)
     #' posterior$get_posterior()
@@ -781,7 +781,7 @@ specify_posterior_bvarPANEL = R6::R6Class(
     #' 
     #' @examples
     #' specification = specify_bvarPANEL$new(
-    #'    data = ilo_dynamic_panel
+    #'    data = ilo_dynamic_panel[1:5]
     #' )
     #' burn_in        = estimate(specification, 5)
     #' posterior      = estimate(burn_in, 5)

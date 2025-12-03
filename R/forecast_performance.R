@@ -25,7 +25,7 @@
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
 #' 
 #' @examples
-#' spec = specify_bvarPANEL$new(ilo_dynamic_panel)   # specify the model
+#' spec = specify_bvarPANEL$new(ilo_dynamic_panel[1:5])   # specify the model
 #' poos = specify_poosf_exercise$new(                # specify the forecasting exercise
 #'          spec, 
 #'          S = 5,                                   # use at least S = 5000
@@ -170,8 +170,8 @@ forecast_poos_recursively.BVARPANEL <- function(
 #' 
 #' @examples
 #' spec = specify_bvarGroupPANEL$new(                # specify the model
-#'          ilo_dynamic_panel, 
-#'          group_allocation = country_grouping_region
+#'          ilo_dynamic_panel[1:5], 
+#'          group_allocation = country_grouping_region[1:5]
 #'        )   
 #' poos = specify_poosf_exercise$new(                # specify the forecasting exercise
 #'          spec, 
@@ -298,7 +298,7 @@ forecast_poos_recursively.BVARGROUPPANEL <- function(
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
 #' 
 #' @examples
-#' spec = specify_bvars$new(ilo_dynamic_panel)       # specify the model
+#' spec = specify_bvars$new(ilo_dynamic_panel[1:5])  # specify the model
 #' poos = specify_poosf_exercise$new(                # specify the forecasting exercise
 #'          spec, 
 #'          S = 5,                                  # use at least S = 5000
@@ -425,8 +425,8 @@ forecast_poos_recursively.BVARs <- function(
 #' 
 #' @examples
 #' spec = specify_bvarGroupPriorPANEL$new(                # specify the model
-#'          ilo_dynamic_panel, 
-#'          group_allocation = country_grouping_region
+#'          ilo_dynamic_panel[1:5], 
+#'          group_allocation = country_grouping_region[1:5]
 #'        )   
 #' poos = specify_poosf_exercise$new(                # specify the forecasting exercise
 #'          spec, 

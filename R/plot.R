@@ -28,22 +28,13 @@
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
 #' 
 #' @examples
-#' specification = specify_bvarPANEL$new(ilo_dynamic_panel)  # specify the model
+#' specification = specify_bvarPANEL$new(ilo_dynamic_panel[1:5])  # specify the model
 #' burn_in       = estimate(specification, 10)               # run the burn-in
 #' posterior     = estimate(burn_in, 10)                     # estimate the model
 #'
 #' # forecast 5 years ahead
 #' predictive    = forecast(posterior, 6)
-#' plot(predictive, which_c = "POL")                                # plot forecasts
-#' 
-#' # workflow with the pipe |>
-#' ############################################################
-#' ilo_dynamic_panel |>
-#'   specify_bvarPANEL$new() |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 10) |> 
-#'   forecast(horizon = 5) |>
-#'   plot(which_c = 135)
+#' plot(predictive, which_c = "ARG")                                # plot forecasts
 #' 
 #' @export
 plot.ForecastsPANEL = function(
@@ -121,7 +112,7 @@ plot.ForecastsPANEL = function(
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
 #' 
 #' set.seed(123)
-#' specification  = specify_bvarPANEL$new(ilo_dynamic_panel)
+#' specification  = specify_bvarPANEL$new(ilo_dynamic_panel[1:5])
 #' 
 #' # run the burn-in
 #' burn_in        = estimate(specification, 10)
@@ -131,16 +122,7 @@ plot.ForecastsPANEL = function(
 #' 
 #' # compute forecast error variance decomposition 4 years ahead
 #' fevd           = compute_variance_decompositions(posterior, horizon = 4)
-#' plot(fevd, which_c = "POL")
-#' 
-#' # workflow with the pipe |>
-#' ############################################################
-#' ilo_dynamic_panel |>
-#'   specify_bvarPANEL$new() |>
-#'   estimate(S = 10) |> 
-#'   estimate(S = 20) |> 
-#'   compute_variance_decompositions(horizon = 4) |>
-#'   plot(which_c = "POL")
+#' plot(fevd, which_c = "ARG")
 #' 
 #' @export
 plot.PosteriorFEVDPANEL = function(

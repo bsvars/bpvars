@@ -27,8 +27,8 @@ error variance decomposition.
 \examples{
 # specify the model and set seed
 specification  = specify_bvarGroupPANEL$new(            # specify the model
-                  ilo_dynamic_panel,
-                  group_allocation = country_grouping_region
+                  ilo_dynamic_panel[1:5],
+                  group_allocation = country_grouping_region[1:5]
                 )
 
 # run the burn-in
@@ -39,14 +39,6 @@ posterior      = estimate(burn_in, 5)
 
 # compute forecast error variance decomposition 4 years ahead
 fevd           = compute_variance_decompositions(posterior, horizon = 4)
-
-# workflow with the pipe |>
-############################################################
-ilo_dynamic_panel |>
-  specify_bvarGroupPANEL$new(group_allocation = country_grouping_region) |>
-  estimate(S = 5) |> 
-  estimate(S = 5) |> 
-  compute_variance_decompositions(horizon = 4) -> fevd
 
 }
 \references{

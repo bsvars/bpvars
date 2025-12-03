@@ -12,7 +12,7 @@ element \code{posterior}.
 }
 \examples{
 spec = specify_bvarGroupPriorPANEL$new(
-   data = ilo_dynamic_panel,
+   data = ilo_dynamic_panel[1:5],
    G = 2
 )
 #posterior       = estimate(specification, 5)

@@ -175,7 +175,7 @@ specify_starting_values_bvarGroupPANEL = R6::R6Class(
 #' 
 #' @examples 
 #' spec = specify_bvarGroupPANEL$new(
-#'    data = ilo_dynamic_panel,
+#'    data = ilo_dynamic_panel[1:5],
 #'    G = 2
 #' )
 #' 
@@ -305,7 +305,7 @@ specify_bvarGroupPANEL = R6::R6Class(
     #' 
     #' @examples 
     #' spec = specify_bvarGroupPANEL$new(
-    #'    data = ilo_dynamic_panel,
+    #'    data = ilo_dynamic_panel[1:5],
     #'    G = 2
     #' )
     #' spec$set_global2pooled()
@@ -359,7 +359,7 @@ specify_bvarGroupPANEL = R6::R6Class(
 #' 
 #' @examples 
 #' spec = specify_bvarGroupPANEL$new(
-#'    data = ilo_dynamic_panel,
+#'    data = ilo_dynamic_panel[1:5],
 #'    G = 2
 #' )
 #' #posterior       = estimate(specification, 5)
