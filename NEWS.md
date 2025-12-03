@@ -12,4 +12,7 @@
 9. The package features a hexagonal logo [#26](https://github.com/bsvars/bpvars/issues/26) with the [code for reproduction](https://github.com/bsvars/hex)
 10. The package includes a **pkgdown** website [#26](https://github.com/bsvars/bpvars/issues/26)
 11. The package is featured at [bsvars.org](https://bsvars.org/)
-
+12. Included several simple models like that by Jarociński (2010) and country-specific VARs for dynamic panel data [#34](https://github.com/bsvars/bpvars/issues/34)
+13. Included a model with group-specific prior [#29](https://github.com/bsvars/bpvars/issues/29)
+14. Included functionality for pseudo-out-of-sample forecasting and forecast performance evaluation [#28](https://github.com/bsvars/bpvars/issues/28)
+15. Included missing variable treatment for all models [#36](https://github.com/bsvars/bpvars/issues/36)
