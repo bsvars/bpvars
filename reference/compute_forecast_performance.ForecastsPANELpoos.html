@@ -87,7 +87,7 @@ to be computed.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">spec</span> <span class="op">=</span> <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span>               <span class="co"># specify the model</span></span></span>
-<span class="r-in"><span><span class="va">poos</span> <span class="op">=</span> <span class="va"><a href="specify_poosf_exercise.html">specify_poosf_exercise</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">spec</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">1</span>, <span class="fl">30</span><span class="op">)</span>    <span class="co"># specify the forecasting  exercise</span></span></span>
+<span class="r-in"><span><span class="va">poos</span> <span class="op">=</span> <span class="va"><a href="specify_poosf_exercise.html">specify_poosf_exercise</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">spec</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">1</span>, <span class="fl">30</span><span class="op">)</span>    <span class="co"># specify the forecasting  exercise</span></span></span>
 <span class="r-in"><span><span class="va">fore</span> <span class="op">=</span> <span class="fu"><a href="forecast_poos_recursively.html">forecast_poos_recursively</a></span><span class="op">(</span><span class="va">spec</span>, <span class="va">poos</span><span class="op">)</span>                  <span class="co"># perform the forecasting  exercise</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  bpvars: Forecasting with Bayesian Panel VARs     |</span>
@@ -102,13 +102,6 @@ to be computed.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          forecasting performed for 4 samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-in"><span><span class="va">fp</span>   <span class="op">=</span> <span class="fu"><a href="compute_forecast_performance.html">compute_forecast_performance</a></span><span class="op">(</span><span class="va">fore</span>, <span class="st">"pls"</span><span class="op">)</span>   <span class="co"># compute forecasting performance measures</span></span></span>
-<span class="r-in"><span><span class="va">fp</span><span class="op">$</span><span class="va">PLS</span><span class="op">$</span><span class="va">POL</span>                                         <span class="co"># print the forecasting performance measures</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gdp    1.6127497</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> UR    -1.5603778</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> EPR   -1.0025824</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LFPR  -0.2106171</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> joint  2.0449036</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

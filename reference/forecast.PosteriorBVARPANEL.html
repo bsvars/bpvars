@@ -223,54 +223,6 @@ Conditional forecasts in dynamic multivariate models,
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># forecasting with truncated forecasts for the rates</span></span></span>
-<span class="r-in"><span><span class="co">############################################################</span></span></span>
-<span class="r-in"><span><span class="va">specification</span> <span class="op">=</span> <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
-<span class="r-in"><span>                  <span class="va">ilo_dynamic_panel</span>,</span></span>
-<span class="r-in"><span>                  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"real"</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"rate"</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>                <span class="op">)</span>   <span class="co"># specify the model</span></span></span>
-<span class="r-in"><span><span class="va">burn_in</span>       <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span><span class="va">specification</span>, <span class="fl">5</span><span class="op">)</span>            <span class="co"># run the burn-in; use say S = 10000</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 5 draws</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-in"><span><span class="va">posterior</span>     <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span><span class="va">burn_in</span>, <span class="fl">5</span><span class="op">)</span>                  <span class="co"># estimate the model; use say S = 10000</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 5 draws</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># forecast 5 years ahead</span></span></span>
-<span class="r-in"><span><span class="va">predictive</span>    <span class="op">=</span> <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">posterior</span>, <span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># workflow with the pipe |&gt;</span></span></span>
-<span class="r-in"><span><span class="co">############################################################</span></span></span>
-<span class="r-in"><span><span class="va">ilo_dynamic_panel</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"real"</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"rate"</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span>S <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span>S <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>horizon <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">predictive</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 5 draws</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 5 draws</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

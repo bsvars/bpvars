@@ -45,7 +45,7 @@ Tomasz Woźniak <wozniak.tom@pm.me>
 
 ``` r
 spec = specify_bvarPANEL$new(ilo_dynamic_panel)               # specify the model
-poos = specify_poosf_exercise$new(spec, 5, 5, 1, 30)    # specify the forecasting  exercise
+poos = specify_poosf_exercise$new(spec, 2, 5, 1, 30)    # specify the forecasting  exercise
 fore = forecast_poos_recursively(spec, poos)                  # perform the forecasting  exercise
 #> **************************************************|
 #>  bpvars: Forecasting with Bayesian Panel VARs     |
@@ -60,11 +60,4 @@ fore = forecast_poos_recursively(spec, poos)                  # perform the fore
 #>          forecasting performed for 4 samples.
 #> **************************************************|
 fp   = compute_forecast_performance(fore, "pls")   # compute forecasting performance measures
-fp$PLS$POL                                         # print the forecasting performance measures
-#>                1
-#> gdp    1.6127497
-#> UR    -1.5603778
-#> EPR   -1.0025824
-#> LFPR  -0.2106171
-#> joint  2.0449036
 ```

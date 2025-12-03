@@ -111,97 +111,36 @@ decompositions of each variable at all horizons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      variance decompositions                       |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      shock1     shock2    shock3    shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 100.00000 0.00000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  99.59812 0.06772478 0.2125492 0.1216021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  99.45324 0.09218893 0.2891802 0.1653911</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  99.38073 0.10444518 0.3275450 0.1872812</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  99.33713 0.11182316 0.3506194 0.2004240</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $variable2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     shock1     shock2   shock3   shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 99.52470  0.4753016  0.00000  0.00000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 41.79728 10.6651609 30.31614 17.22142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 39.16076 11.1170395 31.77679 17.94541</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 40.18405 10.9165639 31.35720 17.54219</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 42.03202 10.5777624 30.49259 16.89763</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $variable3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     shock1    shock2   shock3   shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 65.27792  6.594273 28.12781  0.00000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 32.21698 11.237817 33.50312 23.04208</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 42.64930  9.585919 28.51257 19.25221</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 52.32955  8.022830 23.89672 15.75090</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 59.80043  6.803949 20.28602 13.10961</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $variable4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     shock1    shock2   shock3   shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 11.36900 13.226675 42.05641 33.34792</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 17.58202 12.167679 38.59639 31.65391</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 34.68870  9.595301 30.26002 25.45599</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 52.47720  6.971404 21.85938 18.69202</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 66.41838  4.937447 15.41068 13.23350</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># workflow with the pipe |&gt;</span></span></span>
-<span class="r-in"><span><span class="co">############################################################</span></span></span>
-<span class="r-in"><span><span class="va">ilo_dynamic_panel</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>p <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span>S <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span>S <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/compute_variance_decompositions.html" class="external-link">compute_variance_decompositions</a></span><span class="op">(</span>horizon <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span>which_c <span class="op">=</span> <span class="st">"COL"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 5 draws</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 5 draws</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  bsvars: Bayesian Structural Vector Autoregressions|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Posterior means of forecast error               |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      variance decompositions                       |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $variable1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      shock1    shock2    shock3    shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 100.00000 0.0000000 0.0000000 0.0000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  99.34101 0.1436800 0.3060778 0.2092293</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  98.60471 0.3050962 0.6484033 0.4417860</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  97.93265 0.4530401 0.9611559 0.6531493</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  97.32124 0.5879804 1.2458985 0.8448825</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      shock1     shock2     shock3     shock4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0 100.00000 0.00000000 0.00000000 0.00000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  99.83585 0.02682889 0.08431266 0.05300554</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  99.67847 0.05224017 0.16450330 0.10478298</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  99.56014 0.07125628 0.22456785 0.14403857</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  99.48440 0.08337824 0.26290372 0.16932244</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     shock1    shock2   shock3   shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 95.55691  4.443086  0.00000  0.00000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 34.68620 13.806434 30.21847 21.28890</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 33.40147 14.207752 30.77032 21.62045</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 33.60323 14.234388 30.67289 21.48949</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 35.11282 13.966472 29.99428 20.92643</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0 99.37742 0.6225757  0.00000  0.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 49.37474 8.0418340 26.35049 16.23294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 46.36159 8.4566029 27.89829 17.28352</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 48.27001 8.1841703 26.83524 16.71059</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 50.22249 7.9144370 25.77072 16.09235</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     shock1   shock2   shock3   shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0 71.46275  9.22731 19.30994  0.00000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 30.04119 15.49471 32.94110 21.52300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 31.19309 15.16039 32.28098 21.36554</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 33.11932 14.69911 31.32902 20.85256</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 35.43518 14.16762 30.21931 20.17788</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     shock1   shock2    shock3   shock4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0 88.67535 2.219918  9.104734  0.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 52.13302 7.908355 24.939039 15.01959</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 50.75247 8.067261 25.484042 15.69623</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 46.86590 8.655342 27.426515 17.05224</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 42.80855 9.286821 29.476047 18.42858</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      shock1   shock2   shock3   shock4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0  1.958007 19.19473 43.81183 35.03543</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 26.906438 15.42877 33.46219 24.20260</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 26.758225 15.89042 33.86430 23.48706</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 26.005417 16.32925 34.45434 23.21099</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 25.616855 16.56772 34.77934 23.03609</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     shock1    shock2   shock3   shock4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0 18.45476 11.907125 38.95375 30.68437</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 32.37528 10.383045 33.51708 23.72460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 38.60182  9.558236 30.71933 21.12062</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 43.19425  8.892766 28.51016 19.40283</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 46.84133  8.352305 26.72707 18.07929</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
