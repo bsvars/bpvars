@@ -52,7 +52,7 @@ Tomasz Woźniak <wozniak.tom@pm.me>
 ## Examples
 
 ``` r
-spec = specify_bvars$new(ilo_dynamic_panel)       # specify the model
+spec = specify_bvars$new(ilo_dynamic_panel[1:5])  # specify the model
 poos = specify_poosf_exercise$new(                # specify the forecasting exercise
          spec, 
          S = 5,                                  # use at least S = 5000

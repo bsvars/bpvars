@@ -160,9 +160,9 @@ Tomasz Woźniak <wozniak.tom@pm.me>
 ``` r
 # specify the model
 specification = specify_bvarGroupPANEL$new(
-     data = ilo_dynamic_panel,
-     exogenous = ilo_exogenous_variables,
-     group_allocation = country_grouping_region
+     data = ilo_dynamic_panel[1:5],
+     exogenous = ilo_exogenous_variables[1:5],
+     group_allocation = country_grouping_region[1:5]
 )
 #> Country groupings have been pre-specified and will not be estimated.
 burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000

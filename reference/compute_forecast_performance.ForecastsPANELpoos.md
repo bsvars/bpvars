@@ -44,7 +44,7 @@ Tomasz Woźniak <wozniak.tom@pm.me>
 ## Examples
 
 ``` r
-spec = specify_bvarPANEL$new(ilo_dynamic_panel)               # specify the model
+spec = specify_bvarPANEL$new(ilo_dynamic_panel[1:5])               # specify the model
 poos = specify_poosf_exercise$new(spec, 2, 5, 1, 30)    # specify the forecasting  exercise
 fore = forecast_poos_recursively(spec, poos)                  # perform the forecasting  exercise
 #> **************************************************|

@@ -153,8 +153,8 @@ Tomasz Woźniak <wozniak.tom@pm.me>
 ``` r
 # specify the model
 specification = specify_bvarGroupPriorPANEL$new(
-                  ilo_dynamic_panel,
-                  group_allocation = country_grouping_incomegroup
+                  ilo_dynamic_panel[1:5],
+                  group_allocation = country_grouping_incomegroup[1:5]
                 )
 #> Country groupings have been pre-specified and will not be estimated.
 burn_in       = estimate(specification, 5)             # run the burn-in; use say S = 10000
@@ -176,27 +176,4 @@ posterior     = estimate(burn_in, 5)                   # estimate the model; use
 
 # forecast 5 years ahead
 predictive    = forecast(posterior, horizon = 5)
-
-# workflow with the pipe |>
-############################################################
-ilo_dynamic_panel |>
-  specify_bvarGroupPriorPANEL$new(group_allocation = country_grouping_incomegroup) |>
-  estimate(S = 5) |> 
-  estimate(S = 5) |> 
-  forecast(horizon = 2) -> predictive
-#> Country groupings have been pre-specified and will not be estimated.
-#> **************************************************|
-#>  bpvars: Forecasting with Bayesian Panel VARs     |
-#> **************************************************|
-#>  Progress of the MCMC simulation for 5 draws
-#>     Every draw is saved via MCMC thinning
-#>  Press Esc to interrupt the computations
-#> **************************************************|
-#> **************************************************|
-#>  bpvars: Forecasting with Bayesian Panel VARs     |
-#> **************************************************|
-#>  Progress of the MCMC simulation for 5 draws
-#>     Every draw is saved via MCMC thinning
-#>  Press Esc to interrupt the computations
-#> **************************************************|
 ```

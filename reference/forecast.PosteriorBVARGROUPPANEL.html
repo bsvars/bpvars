@@ -181,9 +181,9 @@ Conditional forecasts in dynamic multivariate models,
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># specify the model</span></span></span>
 <span class="r-in"><span><span class="va">specification</span> <span class="op">=</span> <span class="va"><a href="specify_bvarGroupPANEL.html">specify_bvarGroupPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
-<span class="r-in"><span>                  <span class="va">ilo_dynamic_panel</span>, </span></span>
-<span class="r-in"><span>                  exogenous <span class="op">=</span> <span class="va">ilo_exogenous_variables</span>,</span></span>
-<span class="r-in"><span>                  group_allocation <span class="op">=</span> <span class="va">country_grouping_incomegroup</span></span></span>
+<span class="r-in"><span>                  <span class="va">ilo_dynamic_panel</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, </span></span>
+<span class="r-in"><span>                  exogenous <span class="op">=</span> <span class="va">ilo_exogenous_variables</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>                  group_allocation <span class="op">=</span> <span class="va">country_grouping_incomegroup</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></span>
 <span class="r-in"><span>                <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Country groupings have been pre-specified and will not be estimated.</span>
 <span class="r-in"><span><span class="va">burn_in</span>       <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span><span class="va">specification</span>, <span class="fl">5</span><span class="op">)</span>             <span class="co"># run the burn-in; use say S = 10000</span></span></span>
@@ -207,31 +207,8 @@ Conditional forecasts in dynamic multivariate models,
 <span class="r-in"><span><span class="va">predictive</span>    <span class="op">=</span> <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>                  <span class="va">posterior</span>, </span></span>
 <span class="r-in"><span>                  horizon <span class="op">=</span> <span class="fl">5</span>, </span></span>
-<span class="r-in"><span>                  exogenous_forecast <span class="op">=</span> <span class="va">ilo_exogenous_forecasts</span></span></span>
+<span class="r-in"><span>                  exogenous_forecast <span class="op">=</span> <span class="va">ilo_exogenous_forecasts</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></span>
 <span class="r-in"><span>                <span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># workflow with the pipe |&gt;</span></span></span>
-<span class="r-in"><span><span class="co">############################################################</span></span></span>
-<span class="r-in"><span><span class="va">ilo_dynamic_panel</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="va"><a href="specify_bvarGroupPANEL.html">specify_bvarGroupPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>group_allocation <span class="op">=</span> <span class="va">country_grouping_incomegroup</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span>S <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span>S <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>horizon <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">predictive</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Country groupings have been pre-specified and will not be estimated.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  bpvars: Forecasting with Bayesian Panel VARs     |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 5 draws</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  bpvars: Forecasting with Bayesian Panel VARs     |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Progress of the MCMC simulation for 5 draws</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Every draw is saved via MCMC thinning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

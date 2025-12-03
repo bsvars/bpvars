@@ -85,7 +85,7 @@ The objects of this class are cloneable with this method.
 
 ``` r
 spec = specify_bvarGroupPANEL$new(
-   data = ilo_dynamic_panel,
+   data = ilo_dynamic_panel[1:5],
    G = 2
 )
 #> Country groupings will be estimated.

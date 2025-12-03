@@ -150,7 +150,10 @@ by the <code><a href="https://bsvars.org/bsvars/reference/estimate.html" class="
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># specify the model</span></span></span>
-<span class="r-in"><span><span class="va">specification</span> <span class="op">=</span> <span class="va"><a href="specify_bvars.html">specify_bvars</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">ilo_dynamic_panel</span>, exogenous <span class="op">=</span> <span class="va">ilo_exogenous_variables</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">specification</span> <span class="op">=</span> <span class="va"><a href="specify_bvars.html">specify_bvars</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">ilo_dynamic_panel</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, </span></span>
+<span class="r-in"><span>  exogenous <span class="op">=</span> <span class="va">ilo_exogenous_variables</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">burn_in</span>       <span class="op">=</span> <span class="fu"><a href="https://bsvars.org/bsvars/reference/estimate.html" class="external-link">estimate</a></span><span class="op">(</span><span class="va">specification</span>, <span class="fl">10</span><span class="op">)</span>             <span class="co"># run the burn-in; use say S = 10000</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> bpvars: Forecasting with Bayesian Panel VARs      |</span>

@@ -156,7 +156,10 @@ Tomasz Woźniak <wozniak.tom@pm.me>
 
 ``` r
 # specify the model
-specification = specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
+specification = specify_bvarPANEL$new(
+  ilo_dynamic_panel[1:5], 
+  exogenous = ilo_exogenous_variables[1:5]
+)
 burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 #> **************************************************|
 #> bpvars: Forecasting with Bayesian Panel VARs      |

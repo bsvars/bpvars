@@ -149,7 +149,10 @@ Tomasz Woźniak <wozniak.tom@pm.me>
 
 ``` r
 # specify the model
-specification = specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
+specification = specify_bvarPANEL$new(
+  ilo_dynamic_panel[1:5], 
+  exogenous = ilo_exogenous_variables[1:5]
+)
 burn_in       = estimate(specification, 5)             # run the burn-in; use say S = 10000
 #> **************************************************|
 #> bpvars: Forecasting with Bayesian Panel VARs      |
@@ -168,27 +171,5 @@ posterior     = estimate(burn_in, 5)                   # estimate the model; use
 #> **************************************************|
 
 # forecast 5 years ahead
-predictive    = forecast(posterior, 5, exogenous_forecast = ilo_exogenous_forecasts)
-
-# workflow with the pipe |>
-############################################################
-ilo_dynamic_panel |>
-  specify_bvarPANEL$new() |>
-  estimate(S = 5) |> 
-  estimate(S = 5) |> 
-  forecast(horizon = 2) -> predictive
-#> **************************************************|
-#> bpvars: Forecasting with Bayesian Panel VARs      |
-#> **************************************************|
-#>  Progress of the MCMC simulation for 5 draws
-#>     Every draw is saved via MCMC thinning
-#>  Press Esc to interrupt the computations
-#> **************************************************|
-#> **************************************************|
-#> bpvars: Forecasting with Bayesian Panel VARs      |
-#> **************************************************|
-#>  Progress of the MCMC simulation for 5 draws
-#>     Every draw is saved via MCMC thinning
-#>  Press Esc to interrupt the computations
-#> **************************************************|
+predictive    = forecast(posterior, 5, exogenous_forecast = ilo_exogenous_forecasts[1:5])
 ```

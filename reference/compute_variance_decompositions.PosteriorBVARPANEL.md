@@ -49,7 +49,7 @@ Tomasz Woźniak <wozniak.tom@pm.me>
 
 ``` r
 # specify the model and set seed
-specification  = specify_bvarPANEL$new(ilo_dynamic_panel, p = 1)
+specification  = specify_bvarPANEL$new(ilo_dynamic_panel[1:5], p = 1)
 
 # run the burn-in
 burn_in        = estimate(specification, 5)
@@ -73,26 +73,4 @@ posterior      = estimate(burn_in, 5)
 
 # compute forecast error variance decomposition 4 years ahead
 fevd           = compute_variance_decompositions(posterior, horizon = 4)
-
-# workflow with the pipe |>
-############################################################
-ilo_dynamic_panel |>
-  specify_bvarPANEL$new(p = 1) |>
-  estimate(S = 5) |> 
-  estimate(S = 5) |> 
-  compute_variance_decompositions(horizon = 4) -> fevd
-#> **************************************************|
-#> bpvars: Forecasting with Bayesian Panel VARs      |
-#> **************************************************|
-#>  Progress of the MCMC simulation for 5 draws
-#>     Every draw is saved via MCMC thinning
-#>  Press Esc to interrupt the computations
-#> **************************************************|
-#> **************************************************|
-#> bpvars: Forecasting with Bayesian Panel VARs      |
-#> **************************************************|
-#>  Progress of the MCMC simulation for 5 draws
-#>     Every draw is saved via MCMC thinning
-#>  Press Esc to interrupt the computations
-#> **************************************************|
 ```

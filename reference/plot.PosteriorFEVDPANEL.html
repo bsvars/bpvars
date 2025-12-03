@@ -99,22 +99,14 @@ for which the forecast should be plotted.</p></dd>
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>Tomasz Woźniak <a href="mailto:wozniak.tom@pm.me">wozniak.tom@pm.me</a></p>
 <p>set.seed(123)
-specification  = specify_bvarPANEL$new(ilo_dynamic_panel)</p>
+specification  = specify_bvarPANEL$new(ilo_dynamic_panel[1:5])</p>
 <p># run the burn-in
 burn_in        = estimate(specification, 10)</p>
 <p># estimate the model
 posterior      = estimate(burn_in, 20)</p>
 <p># compute forecast error variance decomposition 4 years ahead
 fevd           = compute_variance_decompositions(posterior, horizon = 4)
-plot(fevd, which_c = "POL")</p>
-<p># workflow with the pipe |&gt;
-############################################################
-ilo_dynamic_panel |&gt;
-  specify_bvarPANEL$new() |&gt;
-  estimate(S = 10) |&gt;
-  estimate(S = 20) |&gt;
-  compute_variance_decompositions(horizon = 4) |&gt;
-  plot(which_c = "POL")</p>
+plot(fevd, which_c = "ARG")</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

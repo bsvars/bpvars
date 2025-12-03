@@ -85,7 +85,7 @@ using expanding window samples.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">spec</span> <span class="op">=</span> <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">)</span>   <span class="co"># specify the model</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">spec</span> <span class="op">=</span> <span class="va"><a href="specify_bvarPANEL.html">specify_bvarPANEL</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">ilo_dynamic_panel</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>   <span class="co"># specify the model</span></span></span>
 <span class="r-in"><span><span class="va">poos</span> <span class="op">=</span> <span class="va"><a href="specify_poosf_exercise.html">specify_poosf_exercise</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>                <span class="co"># specify the forecasting exercise</span></span></span>
 <span class="r-in"><span>         <span class="va">spec</span>, </span></span>
 <span class="r-in"><span>         S <span class="op">=</span> <span class="fl">5</span>,                                   <span class="co"># use at least S = 5000</span></span></span>
