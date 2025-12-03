@@ -1,13 +1,40 @@
 Package: bpvars
 Type: Package
 Title: Forecasting with Bayesian Panel Vector Autoregressions
-Description: Provides Bayesian estimation and forecasting of dynamic panel data using Bayesian Panel Vector Autoregressions with hierarchical prior distributions. The model includes country-specific VARs that share a global prior distribution. Under this prior expected value, each country's system follows a global VAR with country-invariant parameters. Further flexibility is provided by the hierarchical prior structure that retains the Minnesota prior interpretation for the global VAR and features estimated prior covariance matrices, shrinkage, and persistence levels. Bayesian forecasting is developed for models including exogenous variables, allowing conditional forecasts given the future trajectories of some variables and restricted forecasts assuring that rates are forecasted to stay positive and less than 100. The package implements the model specification, estimation, and forecasting routines, facilitating coherent workflows and reproducibility. Beautiful plots, informative summary functions, and extensive documentation complement all this. An extraordinary computational speed is achieved thanks to employing frontier econometric and numerical techniques and algorithms written in C++. The 'bpvars' package is aligned regarding objects, workflows, and code structure with the R packages 'bsvars' by Woźniak (2024) <doi:10.32614/CRAN.package.bsvars> and 'bsvarSIGNs' by Wang & Woźniak (2025) <doi:10.32614/CRAN.package.bsvarSIGNs>, and they constitute an integrated toolset. Copyright: 2025 International Labour Organization.
+Description: 
+  Provides Bayesian estimation and forecasting of dynamic panel data using 
+  Bayesian Panel Vector Autoregressions with hierarchical prior distributions. 
+  The models include country-specific VARs that share a global prior 
+  distribution that extend the model by Jarociński (2010) <doi:10.1002/jae.1082>. 
+  Under this prior expected value, each country's system follows 
+  a global VAR with country-invariant parameters. Further flexibility is 
+  provided by the hierarchical prior structure that retains the Minnesota prior 
+  interpretation for the global VAR and features estimated prior covariance 
+  matrices, shrinkage, and persistence levels. Bayesian forecasting is developed 
+  for models including exogenous variables, allowing conditional forecasts given 
+  the future trajectories of some variables and restricted forecasts assuring 
+  that rates are forecasted to stay positive and less than 100. The package 
+  implements the model specification, estimation, and forecasting routines, 
+  facilitating coherent workflows and reproducibility. It also includes automated
+  pseudo-out-of-sample forecasting and computation of forecasting performance 
+  measures. Beautiful plots, 
+  informative summary functions, and extensive documentation complement all 
+  this. An extraordinary computational speed is achieved thanks to employing 
+  frontier econometric and numerical techniques and algorithms written in 'C++'. 
+  The 'bpvars' package is aligned regarding objects, workflows, and code 
+  structure with the 'R' packages 'bsvars' by 
+  Woźniak (2024) <doi:10.32614/CRAN.package.bsvars> and 'bsvarSIGNs' by 
+  Wang & Woźniak (2025) <doi:10.32614/CRAN.package.bsvarSIGNs>, and they 
+  constitute an integrated toolset. Copyright: 2025 International Labour 
+  Organization.
 Version: 1.0
-Date: 2025-09-30
-Authors@R: c(person(given="Tomasz", family="Woźniak", email="wozniak.tom@pm.me", role =
-         c("aut", "cre"), comment = c(ORCID = "0000-0003-2212-2378")),
-         person(given="Miguel", family="Sanchez-Martinez", role = "ctb"),
-         person(given="International Labour Organization", role = "cph"))
+Date: 2025-12-02
+Authors@R: 
+  c(
+    person(given="Tomasz", family="Woźniak", email="wozniak.tom@pm.me", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-2212-2378")),
+    person(given="Miguel", family="Sanchez-Martinez", role = "ctb"),
+    person(given="International Labour Organization", role = "cph")
+  )
 Maintainer: Tomasz Woźniak <wozniak.tom@pm.me>
 License: GPL (>= 3)
 Depends: 
@@ -27,7 +54,7 @@ LinkingTo:
     RcppProgress, 
     RcppTN
 Suggests: tinytest
-URL: http://bsvars.org/bpvars/
+URL: https://bsvars.org/bpvars/
 BugReports: https://github.com/bsvars/bpvars/issues
 LazyData: true
 Encoding: UTF-8

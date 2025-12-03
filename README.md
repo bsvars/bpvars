@@ -1,5 +1,5 @@
 
-# bpvars <a href="http://bsvars.org/bpvars/"><img src="man/figures/logo.png" align="right" height="139" alt="bpvars website" /></a>
+# bpvars <a href="https://bsvars.org/bpvars/"><img src="man/figures/logo.png" align="right" height="139" alt="bpvars website" /></a>
 
 An **R** package for Forecasting with Bayesian Panel Vector
 Autoregressions
@@ -28,9 +28,9 @@ all this. An extraordinary computational speed is achieved thanks to
 employing frontier econometric and numerical techniques and algorithms
 written in **C++**. The **bpvars** package is aligned regarding objects,
 workflows, and code structure with the **R** packages **bsvars** by
-[Woźniak (2024)](http://doi.org/10.32614/CRAN.package.bsvars) and
+[Woźniak (2024)](https://cran.r-project.org/package=bsvars) and
 **bsvarSIGNs** by [Wang & Woźniak
-(2024)](http://doi.org/10.32614/CRAN.package.bsvarSIGNs), and they
+(2024)](https://cran.r-project.org/package=bsvarSIGNs), and they
 constitute an integrated toolset.
 
 <a href="https://bsvars.org">
@@ -140,8 +140,8 @@ file](https://github.com/bsvars/hex/blob/main/bpvars/bpvars.R).
 - a [reference manual](https://bsvars.org/extra/bvarPANELs_0.2.pdf)
 - a website of the family of packages [bsvars.org](https://bsvars.org/)
 - presentations:
-  - for the [International Labour Organization](https://ilo.org/) given
-    March 2025 [featuring **bvarPANELs**
+  - for the [International Labour Organization](https://www.ilo.org/)
+    given March 2025 [featuring **bvarPANELs**
     0.2](https://bsvars.org/2025-03-bvarPANELs-ilo/)\]
 
 ## Start your Bayesian analysis of data
@@ -202,8 +202,11 @@ and for **Linux:** install the standard development packages.
 
 #### Once that’s done:
 
-Just open your **R** and install the package from its developer’s
-repository by typing:
+Just open your **R** and install the package by running:
+
+    instal.packages("bpvars")
+
+To install the package from its developer’s repository just type:
 
     devtools::install_github("bsvars/bpvars")
 
@@ -228,7 +231,8 @@ macroeconomic analyses and programs in **R** and **C++** using **Rcpp**.
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/orcid.svg" width="40" height="40"/>
 </a> <a href="https://www.linkedin.com/in/tomaszwwozniak">
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/linkedin.svg" width="40" height="40"/>
-</a> <a href="http://scholar.google.com/citations?user=2uWpFrYAAAAJ&hl">
+</a>
+<a href="https://scholar.google.com/citations?user=2uWpFrYAAAAJ&hl">
 <img src="https://raw.githubusercontent.com/jpswalsh/academicons/refs/heads/master/svg/google-scholar-square.svg" width="40" height="40"/>
 </a> <a href="https://arxiv.org/a/wozniak_t_1">
 <img src="https://raw.githubusercontent.com/jpswalsh/academicons/refs/heads/master/svg/arxiv-square.svg" width="40" height="40"/>

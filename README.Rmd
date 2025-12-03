@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# bpvars <a href="http://bsvars.org/bpvars/"><img src="man/figures/logo.png" align="right" height="139" alt="bpvars website" /></a>
+# bpvars <a href="https://bsvars.org/bpvars/"><img src="man/figures/logo.png" align="right" height="139" alt="bpvars website" /></a>
 
 An **R** package for Forecasting with Bayesian Panel Vector Autoregressions
 
@@ -19,7 +19,7 @@ An **R** package for Forecasting with Bayesian Panel Vector Autoregressions
 [![R-CMD-check](https://github.com/bsvars/bpvars/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bsvars/bpvars/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-Provides Bayesian estimation and forecasting of dynamic panel data using Bayesian Panel Vector Autoregressions with hierarchical prior distributions. The model includes country-specific VARs that share a global prior distribution. Under this prior expected value, each country's system follows a global VAR with country-invariant parameters. Further flexibility is provided by the hierarchical prior structure that retains the Minnesota prior interpretation for the global VAR and features estimated prior covariance matrices, shrinkage, and persistence levels. Bayesian forecasting is developed for models including exogenous variables, allowing conditional forecasts given the future trajectories of some variables and restricted forecasts assuring that rates are forecasted to stay positive and less than 100. The package implements the model specification, estimation, and forecasting routines, facilitating coherent workflows and reproducibility. Beautiful plots, informative summary functions, and extensive documentation complement all this. An extraordinary computational speed is achieved thanks to employing frontier econometric and numerical techniques and algorithms written in **C++**. The **bpvars** package is aligned regarding objects, workflows, and code structure with the **R** packages **bsvars** by [Woźniak (2024)](http://doi.org/10.32614/CRAN.package.bsvars) and **bsvarSIGNs** by [Wang & Woźniak (2024)](http://doi.org/10.32614/CRAN.package.bsvarSIGNs), and they constitute an integrated toolset.
+Provides Bayesian estimation and forecasting of dynamic panel data using Bayesian Panel Vector Autoregressions with hierarchical prior distributions. The model includes country-specific VARs that share a global prior distribution. Under this prior expected value, each country's system follows a global VAR with country-invariant parameters. Further flexibility is provided by the hierarchical prior structure that retains the Minnesota prior interpretation for the global VAR and features estimated prior covariance matrices, shrinkage, and persistence levels. Bayesian forecasting is developed for models including exogenous variables, allowing conditional forecasts given the future trajectories of some variables and restricted forecasts assuring that rates are forecasted to stay positive and less than 100. The package implements the model specification, estimation, and forecasting routines, facilitating coherent workflows and reproducibility. Beautiful plots, informative summary functions, and extensive documentation complement all this. An extraordinary computational speed is achieved thanks to employing frontier econometric and numerical techniques and algorithms written in **C++**. The **bpvars** package is aligned regarding objects, workflows, and code structure with the **R** packages **bsvars** by [Woźniak (2024)](https://cran.r-project.org/package=bsvars) and **bsvarSIGNs** by [Wang & Woźniak (2024)](https://cran.r-project.org/package=bsvarSIGNs), and they constitute an integrated toolset.
 
 
 <a href="https://bsvars.org"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/house.svg" width="40" height="40"/> </a> 
@@ -120,7 +120,7 @@ This beautiful logo can be reproduced in R using [this file](https://github.com/
 - a [reference manual](https://bsvars.org/extra/bvarPANELs_0.2.pdf)
 - a website of the family of packages [bsvars.org](https://bsvars.org/)
 - presentations:
-  - for the [International Labour Organization](https://ilo.org/) given March 2025 [featuring **bvarPANELs** 0.2](https://bsvars.org/2025-03-bvarPANELs-ilo/)]
+  - for the [International Labour Organization](https://www.ilo.org/) given March 2025 [featuring **bvarPANELs** 0.2](https://bsvars.org/2025-03-bvarPANELs-ilo/)]
 
 
 ## Start your Bayesian analysis of data
@@ -171,7 +171,12 @@ You must have a **cpp** compiler. Follow the instructions from [Section 1.3. by 
 
 #### Once that's done:
 
-Just open your **R** and install the package from its developer's repository by typing:
+Just open your **R** and install the package by running:
+```
+instal.packages("bpvars")
+```
+
+To install the package from its developer's repository just type:
 ```
 devtools::install_github("bsvars/bpvars")
 ```
@@ -188,7 +193,7 @@ The package is under intensive development. Your help is most welcome! Please, h
 <a href="https://github.com/donotdespair"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/github.svg" width="40" height="40"/> </a> 
 <a href="https://orcid.org/0000-0003-2212-2378"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/orcid.svg" width="40" height="40"/> </a> 
 <a href="https://www.linkedin.com/in/tomaszwwozniak"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/linkedin.svg" width="40" height="40"/> </a>
-<a href="http://scholar.google.com/citations?user=2uWpFrYAAAAJ&hl"> <img src="https://raw.githubusercontent.com/jpswalsh/academicons/refs/heads/master/svg/google-scholar-square.svg" width="40" height="40"/> </a> 
+<a href="https://scholar.google.com/citations?user=2uWpFrYAAAAJ&hl"> <img src="https://raw.githubusercontent.com/jpswalsh/academicons/refs/heads/master/svg/google-scholar-square.svg" width="40" height="40"/> </a> 
 <a href="https://arxiv.org/a/wozniak_t_1"> <img src="https://raw.githubusercontent.com/jpswalsh/academicons/refs/heads/master/svg/arxiv-square.svg" width="40" height="40"/> </a> 
 <a href="https://fosstodon.org/@tomaszwozniak"> <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/mastodon.svg" width="40" height="40"/> </a>
 <a href="https://bsky.app/profile/tomaszwozniak.bsky.social"> <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg" width="40" height="40"/> </a>

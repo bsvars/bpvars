@@ -6,28 +6,30 @@
 \alias{bpvars}
 \title{Forecasting with Bayesian Panel Vector Autoregressions}
 \description{
-Provides Bayesian estimation and forecasting of dynamic panel 
-data using Bayesian Panel Vector Autoregressions with hierarchical prior 
-distributions. The model 
-includes country-specific VARs that share a global prior distribution. Under 
-this prior expected value, each country's system follows a global VAR with 
-country-invariant parameters. Further flexibility is provided by the 
-hierarchical prior structure that retains the Minnesota prior interpretation 
-for the global VAR and features estimated prior covariance matrices, 
-shrinkage, and persistence levels. Bayesian forecasting is developed for 
-models including exogenous variables, allowing conditional forecasts given 
+Provides Bayesian estimation and forecasting of dynamic panel data using 
+Bayesian Panel Vector Autoregressions with hierarchical prior distributions. 
+The models include country-specific VARs that share a global prior 
+distribution that extend the model by Jarociński (2010) \doi{10.1002/jae.1082}. 
+Under this prior expected value, each country's system follows 
+a global VAR with country-invariant parameters. Further flexibility is 
+provided by the hierarchical prior structure that retains the Minnesota prior 
+interpretation for the global VAR and features estimated prior covariance 
+matrices, shrinkage, and persistence levels. Bayesian forecasting is developed 
+for models including exogenous variables, allowing conditional forecasts given 
 the future trajectories of some variables and restricted forecasts assuring 
 that rates are forecasted to stay positive and less than 100. The package 
 implements the model specification, estimation, and forecasting routines, 
-facilitating coherent workflows and reproducibility. Beautiful plots, 
+facilitating coherent workflows and reproducibility. It also includes automated
+pseudo-out-of-sample forecasting and computation of forecasting performance 
+measures. Beautiful plots, 
 informative summary functions, and extensive documentation complement all 
 this. An extraordinary computational speed is achieved thanks to employing 
 frontier econometric and numerical techniques and algorithms written in 'C++'. 
 The 'bpvars' package is aligned regarding objects, workflows, and code 
 structure with the R packages 'bsvars' by Woźniak (2024) 
-\doi{10.32614/CRAN.package.bsvars} and 'bsvarSIGNs' by Wang & Woźniak (2024) 
+\doi{10.32614/CRAN.package.bsvars} and 'bsvarSIGNs' by Wang & Woźniak (2025) 
 \doi{10.32614/CRAN.package.bsvarSIGNs}, and they constitute an integrated 
-toolset. Copyright: 2024 International Labour Organization.
+toolset. Copyright: 2025 International Labour Organization.
 }
 \details{
 The package provides a set of functions for predictive analysis with the 
@@ -187,6 +189,10 @@ predictive    = forecast(
 
 }
 \references{
+Jarociński, M. (2010). Responses to Monetary Policy Shocks in the East and 
+the West of Europe: a Comparison. Journal of Applied Econometrics, 25(5), 
+833-868, \doi{10.1002/jae.1082}.
+
 Karlsson, S. (2013). Forecasting with Bayesian Vector Autoregression, 
 in: \emph{Handbook of Economic Forecasting}, Elsevier. volume \bold{2}, 791–897,
 \doi{10.1016/B978-0-444-62731-5.00015-4}.
