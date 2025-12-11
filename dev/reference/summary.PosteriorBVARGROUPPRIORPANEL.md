@@ -1,0 +1,366 @@
+# Provides posterior estimation summary for Bayesian Hierarchical Panel Vector Autoregressions with group-specific global prior
+
+Provides posterior mean, standard deviations, as well as 5 and 95
+percentiles of the parameters for all `C` countries.
+
+## Usage
+
+``` r
+# S3 method for class 'PosteriorBVARGROUPPRIORPANEL'
+summary(object, ...)
+```
+
+## Arguments
+
+- object:
+
+  an object of class `PosteriorBVARGROUPPRIORPANEL` obtained using the
+  [`estimate()`](https://bsvars.org/bsvars/reference/estimate.html)
+  function applied to Vector Autoregressions containing draws from the
+  posterior distribution of the parameters.
+
+- ...:
+
+  additional arguments affecting the summary produced.
+
+## Value
+
+A list reporting the posterior mean, standard deviations, as well as 5
+and 95 percentiles of the country-specific parameters.
+
+## See also
+
+[`estimate.BVARGROUPPRIORPANEL`](http://bsvars.org/bpvars/dev/reference/estimate.BVARGROUPPRIORPANEL.md),
+[`specify_bvarGroupPriorPANEL`](http://bsvars.org/bpvars/dev/reference/specify_bvarGroupPriorPANEL.md)
+
+## Author
+
+Tomasz Woźniak <wozniak.tom@pm.me>
+
+## Examples
+
+``` r
+# specify the model
+specification = specify_bvarGroupPriorPANEL$new(
+      data = ilo_dynamic_panel[1:5],
+      group_allocation = country_grouping_region[1:5]
+)
+#> Country groupings have been pre-specified and will not be estimated.
+burn_in       = estimate(specification, 5)             # run the burn-in
+#> **************************************************|
+#>  bpvars: Forecasting with Bayesian Panel VARs     |
+#> **************************************************|
+#>  Progress of the MCMC simulation for 5 draws
+#>     Every draw is saved via MCMC thinning
+#>  Press Esc to interrupt the computations
+#> **************************************************|
+posterior     = estimate(burn_in, 5)                   # estimate the model
+#> **************************************************|
+#>  bpvars: Forecasting with Bayesian Panel VARs     |
+#> **************************************************|
+#>  Progress of the MCMC simulation for 5 draws
+#>     Every draw is saved via MCMC thinning
+#>  Press Esc to interrupt the computations
+#> **************************************************|
+summary(posterior)
+#> $AFG
+#> $AFG$Sigma
+#> $AFG$Sigma$equation1
+#>                  mean         sd 5% quantile 95% quantile
+#> Sigma[1,1] 0.05359122 0.03745967  0.01018184   0.08918193
+#> 
+#> $AFG$Sigma$equation2
+#>                  mean         sd 5% quantile 95% quantile
+#> Sigma[2,1] -0.0404693 0.02630631 -0.07368189  -0.01457246
+#> Sigma[2,2]  0.2255041 0.06157542  0.16801533   0.30205864
+#> 
+#> $AFG$Sigma$equation3
+#>                  mean         sd   5% quantile 95% quantile
+#> Sigma[3,1]  0.0579652 0.06120156  0.0001085729    0.1378963
+#> Sigma[3,2] -0.2509082 0.12197558 -0.4025342832   -0.1456071
+#> Sigma[3,3]  0.4773352 0.25626113  0.2744648278    0.7991029
+#> 
+#> $AFG$Sigma$equation4
+#>                  mean         sd 5% quantile 95% quantile
+#> Sigma[4,1]  0.0512962 0.06026527 -0.00188315   0.13126455
+#> Sigma[4,2] -0.1804247 0.11133450 -0.31588573  -0.08171069
+#> Sigma[4,3]  0.4289788 0.23723105  0.24440416   0.72138317
+#> Sigma[4,4]  0.4085895 0.22089022  0.24065172   0.67512799
+#> 
+#> 
+#> $AFG$A
+#> $AFG$A$equation1
+#>                 mean        sd 5% quantile 95% quantile
+#> lag1_var1  0.6344828 0.2435327  0.38174055    0.9402753
+#> lag1_var2  0.4403928 0.4246126 -0.05585946    0.9045939
+#> lag1_var3  0.7557534 0.8532877 -0.19066839    1.7339529
+#> lag1_var4 -0.6388927 0.7543100 -1.50620540    0.1888178
+#> const      2.2461244 1.0220338  1.18270391    3.4325044
+#> 
+#> $AFG$A$equation2
+#>                  mean        sd 5% quantile 95% quantile
+#> lag1_var1  0.54530155 0.3030997   0.1501019    0.8169085
+#> lag1_var2 -0.01457259 0.1476438  -0.1652500    0.1663076
+#> lag1_var3 -2.04176989 0.1954523  -2.3071721   -1.8857396
+#> lag1_var4  1.77677407 0.2243258   1.6120540    2.0791408
+#> const      0.47672996 3.2601830  -2.2729367    4.8601518
+#> 
+#> $AFG$A$equation3
+#>                 mean        sd 5% quantile 95% quantile
+#> lag1_var1 -0.5935395 0.3249877  -0.9586722   -0.2541025
+#> lag1_var2  1.2740065 0.3771669   0.7569927    1.5420274
+#> lag1_var3  4.2577699 0.5571699   3.5567893    4.8221566
+#> lag1_var4 -2.9704667 0.5408186  -3.6108718   -2.3776107
+#> const      2.0612751 1.7852426   0.3323070    4.3677555
+#> 
+#> $AFG$A$equation4
+#>                 mean        sd 5% quantile 95% quantile
+#> lag1_var1 -0.4373383 0.2699661  -0.7782514   -0.1649578
+#> lag1_var2  1.2576433 0.3871809   0.7313002    1.5207466
+#> lag1_var3  3.3062884 0.6560331   2.4382618    3.9111195
+#> lag1_var4 -2.0169906 0.6207298  -2.6866193   -1.2545975
+#> const     -1.2641035 2.4892820  -3.7289320    1.5572340
+#> 
+#> 
+#> 
+#> $AGO
+#> $AGO$Sigma
+#> $AGO$Sigma$equation1
+#>                  mean          sd 5% quantile 95% quantile
+#> Sigma[1,1] 0.01221866 0.002959113 0.009442517   0.01604208
+#> 
+#> $AGO$Sigma$equation2
+#>                  mean          sd 5% quantile 95% quantile
+#> Sigma[2,1] -0.0267119 0.005753342 -0.03125695  -0.01888339
+#> Sigma[2,2]  0.1743143 0.048105996  0.11790934   0.22488387
+#> 
+#> $AGO$Sigma$equation3
+#>                    mean         sd  5% quantile 95% quantile
+#> Sigma[3,1]  0.007241194 0.01077936 -0.004961969   0.01896500
+#> Sigma[3,2] -0.109395983 0.07079312 -0.191816182  -0.05109957
+#> Sigma[3,3]  0.354015775 0.07185483  0.276518899   0.43217845
+#> 
+#> $AGO$Sigma$equation4
+#>                   mean         sd 5% quantile 95% quantile
+#> Sigma[4,1] -0.01117587 0.00882297 -0.02100704 -0.001724686
+#> Sigma[4,2]  0.02015258 0.06327495 -0.04338515  0.099049982
+#> Sigma[4,3]  0.31371433 0.02664099  0.28184910  0.342124222
+#> Sigma[4,4]  0.37977010 0.04233364  0.33390512  0.428568909
+#> 
+#> 
+#> $AGO$A
+#> $AGO$A$equation1
+#>                 mean         sd 5% quantile 95% quantile
+#> lag1_var1  0.8952575 0.02223004   0.8703917    0.9218784
+#> lag1_var2  0.3942166 0.03490221   0.3562551    0.4337877
+#> lag1_var3  0.4867335 0.07606286   0.3953055    0.5653030
+#> lag1_var4 -0.4615841 0.07912250  -0.5363785   -0.3638014
+#> const      0.3653706 0.79076723  -0.5437885    1.2967561
+#> 
+#> $AGO$A$equation2
+#>                 mean        sd 5% quantile 95% quantile
+#> lag1_var1  0.3696850 0.1199958   0.2497428    0.5236797
+#> lag1_var2 -0.6145489 0.1831627  -0.8334603   -0.4268538
+#> lag1_var3 -1.9631689 0.3051228  -2.3064467   -1.6011962
+#> lag1_var4  1.8931740 0.3104249   1.5499292    2.2545196
+#> const     -2.0596880 1.9925481  -4.2219857    0.2982202
+#> 
+#> $AGO$A$equation3
+#>                 mean        sd 5% quantile 95% quantile
+#> lag1_var1 -0.3540391 0.1256084  -0.4829003    -0.196151
+#> lag1_var2  1.4237401 0.3076822   1.0216528     1.704131
+#> lag1_var3  2.7075974 0.5297474   2.0217498     3.199090
+#> lag1_var4 -1.6951509 0.5237464  -2.1611224    -1.020907
+#> const      5.9609153 1.8754464   3.9421028     8.227679
+#> 
+#> $AGO$A$equation4
+#>                 mean         sd 5% quantile 95% quantile
+#> lag1_var1 -0.2052074 0.06888368  -0.2603193   -0.1134049
+#> lag1_var2  0.9839031 0.24623283   0.6491609    1.1726397
+#> lag1_var3  1.2405586 0.47692736   0.6155840    1.6464068
+#> lag1_var4 -0.1977150 0.43677869  -0.5525395    0.3738116
+#> const      1.2281604 2.51722562  -1.1319888    4.0656292
+#> 
+#> 
+#> 
+#> $ALB
+#> $ALB$Sigma
+#> $ALB$Sigma$equation1
+#>                   mean           sd 5% quantile 95% quantile
+#> Sigma[1,1] 0.002422156 0.0005471259  0.00174219  0.002927825
+#> 
+#> $ALB$Sigma$equation2
+#>                   mean         sd 5% quantile 95% quantile
+#> Sigma[2,1] -0.03920579 0.02459686 -0.06395954 -0.009418697
+#> Sigma[2,2]  9.16296060 1.57748270  7.56866382 11.170177900
+#> 
+#> $ALB$Sigma$equation3
+#>                   mean         sd 5% quantile 95% quantile
+#> Sigma[3,1]  0.06003594 0.04894356  0.02311375    0.1268537
+#> Sigma[3,2] -2.94596547 2.90057928 -4.77888857    0.9761935
+#> Sigma[3,3]  8.07753353 4.96155965  4.09702091   14.8279331
+#> 
+#> $ALB$Sigma$equation4
+#>                   mean         sd 5% quantile 95% quantile
+#> Sigma[4,1]  0.03905667  0.0738886   -0.012933    0.1405893
+#> Sigma[4,2]  3.69969243  4.4487573    1.248104    9.8396274
+#> Sigma[4,3]  7.10158993  7.9787056    1.571658   18.0707366
+#> Sigma[4,4] 11.16300929 12.7753317    2.885061   28.7822128
+#> 
+#> 
+#> $ALB$A
+#> $ALB$A$equation1
+#>                   mean         sd 5% quantile 95% quantile
+#> lag1_var1  1.000257189 0.01484213  0.98429732   1.01675431
+#> lag1_var2 -0.004330172 0.02045099 -0.02214968   0.02282831
+#> lag1_var3 -0.018518077 0.03048339 -0.04595029   0.02147405
+#> lag1_var4  0.012946732 0.02808129 -0.02445844   0.03656601
+#> const      0.264962963 0.31819335 -0.06047191   0.64341747
+#> 
+#> $ALB$A$equation2
+#>                mean         sd 5% quantile 95% quantile
+#> lag1_var1 -2.464713  0.9111566   -3.217890    -1.241241
+#> lag1_var2  3.438683  1.8404859    1.666299     5.720191
+#> lag1_var3  4.693212  2.8976372    1.809583     8.168835
+#> lag1_var4 -3.887875  2.5049200   -6.866808    -1.374725
+#> const     14.072732 29.6697811  -18.154307    50.597553
+#> 
+#> $ALB$A$equation3
+#>                mean        sd 5% quantile 95% quantile
+#> lag1_var1  2.298539  1.259833   0.8163265     3.737311
+#> lag1_var2 -2.744134  1.167641  -3.7562291    -1.203533
+#> lag1_var3 -3.941465  1.718948  -5.5438320    -1.710335
+#> lag1_var4  3.839314  1.728713   1.5607900     5.274993
+#> const      9.717942 26.050406 -13.6575766    44.449026
+#> 
+#> $ALB$A$equation4
+#>                 mean        sd 5% quantile 95% quantile
+#> lag1_var1  0.7362711  1.582786   -1.096169     2.495793
+#> lag1_var2 -1.0072856  2.217747   -3.422345     1.632323
+#> lag1_var3 -1.6384671  3.645950   -5.634611     2.500638
+#> lag1_var4  2.0532588  3.336155   -1.966238     5.584107
+#> const     18.3301853 28.849220   -6.426097    56.088846
+#> 
+#> 
+#> 
+#> $ARE
+#> $ARE$Sigma
+#> $ARE$Sigma$equation1
+#>                   mean           sd 5% quantile 95% quantile
+#> Sigma[1,1] 0.001588221 0.0008119536 0.000985215  0.002694081
+#> 
+#> $ARE$Sigma$equation2
+#>                   mean          sd 5% quantile 95% quantile
+#> Sigma[2,1] -0.00703583 0.003470091 -0.01136036 -0.003335294
+#> Sigma[2,2]  0.27082199 0.107774937  0.16580453  0.409529118
+#> 
+#> $ARE$Sigma$equation3
+#>                    mean          sd 5% quantile 95% quantile
+#> Sigma[3,1]  0.007539863 0.003760243  0.00342481   0.01212909
+#> Sigma[3,2] -0.245299904 0.104933204 -0.37093848  -0.12669349
+#> Sigma[3,3]  0.392807992 0.062759883  0.31646859   0.46239422
+#> 
+#> $ARE$Sigma$equation4
+#>                    mean          sd   5% quantile 95% quantile
+#> Sigma[4,1]  0.002036703 0.002174516 -0.0009631309  0.003494575
+#> Sigma[4,2] -0.034253436 0.030185942 -0.0615874848  0.004560268
+#> Sigma[4,3]  0.205035530 0.021723381  0.1763867789  0.223840129
+#> Sigma[4,4]  0.181893685 0.039620619  0.1378321597  0.229319225
+#> 
+#> 
+#> $ARE$A
+#> $ARE$A$equation1
+#>                 mean         sd 5% quantile 95% quantile
+#> lag1_var1  0.9729490 0.04132695   0.9455797    1.0295118
+#> lag1_var2  0.2182834 0.06109158   0.1349014    0.2632361
+#> lag1_var3  0.2650286 0.07347543   0.1653932    0.3237625
+#> lag1_var4 -0.2608907 0.06434620  -0.3191113   -0.1772437
+#> const      0.3928624 0.24345467   0.0796006    0.6285923
+#> 
+#> $ARE$A$equation2
+#>                  mean        sd 5% quantile 95% quantile
+#> lag1_var1 -0.02231333 0.4683750  -0.6425913    0.3816611
+#> lag1_var2  0.90336017 0.8874297   0.2022274    2.0675115
+#> lag1_var3  0.62613248 1.1630982  -0.4670982    2.0490842
+#> lag1_var4 -0.60714061 1.1145580  -1.9103937    0.4177259
+#> const      0.54898127 3.1323299  -2.9770866    4.2654272
+#> 
+#> $ARE$A$equation3
+#>                 mean        sd 5% quantile 95% quantile
+#> lag1_var1  0.9731344 0.7094714  0.06499162   1.57039069
+#> lag1_var2 -1.5173929 1.3869211 -3.07200557  -0.08199901
+#> lag1_var3 -1.2028868 1.4659192 -2.78432903   0.31781839
+#> lag1_var4  1.8610688 1.2550958  0.62418650   3.24945895
+#> const      0.2689557 3.4545147 -4.32681376   3.39765157
+#> 
+#> $ARE$A$equation4
+#>                 mean        sd 5% quantile 95% quantile
+#> lag1_var1  0.9718012 0.7056401   0.2933184    1.7302785
+#> lag1_var2 -0.9034621 1.7745525  -2.8636242    0.8744624
+#> lag1_var3 -0.8097762 2.2183172  -3.1730377    1.3976008
+#> lag1_var4  1.5004922 1.9981253  -0.5238628    3.6026732
+#> const     -1.0696952 1.5542930  -2.8754828    0.7203656
+#> 
+#> 
+#> 
+#> $ARG
+#> $ARG$Sigma
+#> $ARG$Sigma$equation1
+#>                   mean          sd 5% quantile 95% quantile
+#> Sigma[1,1] 0.005577829 0.003628617 0.002271627   0.01024779
+#> 
+#> $ARG$Sigma$equation2
+#>                   mean        sd 5% quantile 95% quantile
+#> Sigma[2,1] -0.06273003 0.0158986 -0.08225806  -0.04691635
+#> Sigma[2,2]  3.15858359 0.3688066  2.75690486   3.52124363
+#> 
+#> $ARG$Sigma$equation3
+#>                  mean         sd 5% quantile 95% quantile
+#> Sigma[3,1]  0.0539142 0.02371161  0.02942769   0.07783697
+#> Sigma[3,2] -2.4250547 0.44407889 -2.81528596  -1.92927161
+#> Sigma[3,3]  2.5881558 0.43297342  2.08856775   3.01104618
+#> 
+#> $ARG$Sigma$equation4
+#>                  mean         sd  5% quantile 95% quantile
+#> Sigma[4,1]  0.0186884 0.01785933 -0.002841287   0.03418971
+#> Sigma[4,2] -0.5619792 0.28405243 -0.863213535  -0.25288171
+#> Sigma[4,3]  1.2479729 0.20249836  1.022324081   1.48658417
+#> Sigma[4,4]  1.0196595 0.09239221  0.907315397   1.11409356
+#> 
+#> 
+#> $ARG$A
+#> $ARG$A$equation1
+#>                 mean        sd 5% quantile 95% quantile
+#> lag1_var1  0.8169769 0.1372768   0.6589414    0.9267174
+#> lag1_var2  0.4442440 0.3465777   0.1426276    0.8696408
+#> lag1_var3  0.7307132 0.5689677   0.2358342    1.4227440
+#> lag1_var4 -0.6684476 0.5148032  -1.2972838   -0.2215728
+#> const      1.1677147 0.5230520   0.5466167    1.7504405
+#> 
+#> $ARG$A$equation2
+#>                 mean        sd 5% quantile 95% quantile
+#> lag1_var1 -0.8109656 0.8197942   -1.762292  -0.09115725
+#> lag1_var2  0.1261154 3.0300011   -3.483036   3.35718354
+#> lag1_var3 -1.0361583 4.9325134   -6.890007   4.26797458
+#> lag1_var4  1.4291043 4.5528133   -3.382955   6.93299522
+#> const      0.4045019 6.7351264   -8.644349   6.08389868
+#> 
+#> $ARG$A$equation3
+#>                  mean        sd 5% quantile 95% quantile
+#> lag1_var1 -0.03203523 0.8027221  -0.7722862    0.9712219
+#> lag1_var2  2.90434442 2.9687216  -0.2925858    6.5696807
+#> lag1_var3  5.40433450 4.8518310   0.1752277   11.3724666
+#> lag1_var4 -4.60393210 4.5422063 -10.2620349    0.1924633
+#> const     10.81720151 4.1071672   5.9767339   15.2719059
+#> 
+#> $ARG$A$equation4
+#>                 mean       sd 5% quantile 95% quantile
+#> lag1_var1 -0.6271559 0.427936  -0.9927575  -0.05167309
+#> lag1_var2  3.0732554 1.304662   1.6134746   4.62661053
+#> lag1_var3  4.9068077 2.132577   2.5268764   7.44601722
+#> lag1_var4 -3.7926854 2.043092  -6.2401743  -1.54417898
+#> const      9.1664499 5.798479   1.8464471  15.15956330
+#> 
+#> 
+#> 
+```
