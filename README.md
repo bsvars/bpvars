@@ -11,27 +11,27 @@ Autoregressions
 
 Provides Bayesian estimation and forecasting of dynamic panel data using
 Bayesian Panel Vector Autoregressions with hierarchical prior
-distributions. The model includes country-specific VARs that share a
-global prior distribution. Under this prior expected value, each
-country’s system follows a global VAR with country-invariant parameters.
-Further flexibility is provided by the hierarchical prior structure that
-retains the Minnesota prior interpretation for the global VAR and
-features estimated prior covariance matrices, shrinkage, and persistence
-levels. Bayesian forecasting is developed for models including exogenous
-variables, allowing conditional forecasts given the future trajectories
-of some variables and restricted forecasts assuring that rates are
-forecasted to stay positive and less than 100. The package implements
-the model specification, estimation, and forecasting routines,
-facilitating coherent workflows and reproducibility. Beautiful plots,
-informative summary functions, and extensive documentation complement
-all this. An extraordinary computational speed is achieved thanks to
-employing frontier econometric and numerical techniques and algorithms
-written in **C++**. The **bpvars** package is aligned regarding objects,
-workflows, and code structure with the **R** packages **bsvars** by
-[Woźniak (2024)](https://cran.r-project.org/package=bsvars) and
-**bsvarSIGNs** by [Wang & Woźniak
-(2024)](https://cran.r-project.org/package=bsvarSIGNs), and they
-constitute an integrated toolset.
+distributions. The model includes country-specific Vector
+Autoregressions (VARs) that share a global prior distribution. Under
+this prior expected value, each country’s system follows a global VAR
+with country-invariant parameters. Further flexibility is provided by
+the hierarchical prior structure that retains the Minnesota prior
+interpretation for the global VAR and features estimated prior
+covariance matrices, shrinkage, and persistence levels. Bayesian
+forecasting is developed for models including exogenous variables,
+allowing conditional forecasts given the future trajectories of some
+variables and restricted forecasts assuring that rates are forecasted to
+stay positive and less than 100. The package implements the model
+specification, estimation, and forecasting routines, facilitating
+coherent workflows and reproducibility. Beautiful plots, informative
+summary functions, and extensive documentation complement all this.
+Extraordinary computational speed is achieved thanks to employing
+frontier econometric and numerical techniques and algorithms written in
+**C++**. The **bpvars** package is aligned regarding objects, workflows,
+and code structure with the **R** packages **bsvars** by [Woźniak
+(2024)](https://cran.r-project.org/package=bsvars) and **bsvarSIGNs** by
+[Wang & Woźniak (2024)](https://cran.r-project.org/package=bsvarSIGNs),
+and they constitute an integrated toolset.
 
 <a href="https://bsvars.org">
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/house.svg" width="40" height="40"/>
