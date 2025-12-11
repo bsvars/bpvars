@@ -8,7 +8,7 @@
 \description{
 Provides Bayesian estimation and forecasting of dynamic panel data using 
 Bayesian Panel Vector Autoregressions with hierarchical prior distributions. 
-The models include country-specific VARs that share a global prior 
+The models include country-specific Vector Autoregressions (VARs) that share a global prior 
 distribution that extend the model by Jarociński (2010) \doi{10.1002/jae.1082}. 
 Under this prior expected value, each country's system follows 
 a global VAR with country-invariant parameters. Further flexibility is 
@@ -23,13 +23,15 @@ facilitating coherent workflows and reproducibility. It also includes automated
 pseudo-out-of-sample forecasting and computation of forecasting performance 
 measures. Beautiful plots, 
 informative summary functions, and extensive documentation complement all 
-this. An extraordinary computational speed is achieved thanks to employing 
+this. Extraordinary computational speed is achieved thanks to employing 
 frontier econometric and numerical techniques and algorithms written in 'C++'. 
 The 'bpvars' package is aligned regarding objects, workflows, and code 
 structure with the R packages 'bsvars' by Woźniak (2024) 
 \doi{10.32614/CRAN.package.bsvars} and 'bsvarSIGNs' by Wang & Woźniak (2025) 
 \doi{10.32614/CRAN.package.bsvarSIGNs}, and they constitute an integrated 
-toolset. Copyright: 2025 International Labour Organization.
+toolset. Copyright: 2025 International Labour Organization. The International 
+Labour Organization should not be held responsible for any issues arising 
+from the use of the 'bpvars' package or from the results obtained with it.
 }
 \details{
 The package provides a set of functions for predictive analysis with the 

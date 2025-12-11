@@ -21,3 +21,11 @@ Possibly misspelled words in DESCRIPTION:
   toolset (28:28)
 ```
 We are happy about all of these.
+
+## Feedback from Konstanze Lauseker on CRAN Submission bpvars 1.0
+
+```
+Please always explain all acronyms in the description text. -> VAR
+```
+
+All DONE!
