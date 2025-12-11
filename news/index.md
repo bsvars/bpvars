@@ -2,6 +2,8 @@
 
 ## bpvars 1.0
 
+CRAN release: 2025-12-11
+
 1.  This package is alive!
     [\#1](https://github.com/bsvars/bpvars/issues/1)
 2.  The package includes the Gibbs sampler for a Bayesian Hierarchical

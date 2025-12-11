@@ -7,7 +7,10 @@
 
 - **Miguel Sanchez-Martinez**. Contributor.
 
-- **International Labour Organization**. Copyright holder.
+- **International Labour Organization**. Copyright holder.  
+  The International Labour Organization should not be held responsible
+  for any issues arising from the use of the 'bpvars' package or from
+  the results obtained with it.
 
 ## Citation
 
