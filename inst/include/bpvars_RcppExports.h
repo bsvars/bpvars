@@ -109,11 +109,11 @@ namespace bpvars {
         return Rcpp::as<Rcpp::List >(rcpp_result_gen);
     }
 
-    inline arma::vec mvnrnd_truncated(arma::vec mu, arma::mat Sigma, arma::vec LB, arma::vec UB) {
+    inline arma::vec mvnrnd_truncated(const arma::vec& mu, const arma::mat& Sigma, const arma::vec& LB, const arma::vec& UB) {
         typedef SEXP(*Ptr_mvnrnd_truncated)(SEXP,SEXP,SEXP,SEXP);
         static Ptr_mvnrnd_truncated p_mvnrnd_truncated = NULL;
         if (p_mvnrnd_truncated == NULL) {
-            validateSignature("arma::vec(*mvnrnd_truncated)(arma::vec,arma::mat,arma::vec,arma::vec)");
+            validateSignature("arma::vec(*mvnrnd_truncated)(const arma::vec&,const arma::mat&,const arma::vec&,const arma::vec&)");
             p_mvnrnd_truncated = (Ptr_mvnrnd_truncated)R_GetCCallable("bpvars", "_bpvars_mvnrnd_truncated");
         }
         RObject rcpp_result_gen;
