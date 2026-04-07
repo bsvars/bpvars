@@ -4,7 +4,6 @@
 #include "bsvars.h"
 #include "forecast_panel.h"
 #include "sample_mniw.h"
-#include "rtmvtnorm.h"
 #include "utils.h"
 #include "missing.h"
 
