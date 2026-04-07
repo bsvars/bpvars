@@ -196,8 +196,8 @@
 #' @importFrom Rcpp sourceCpp
 #' @importFrom R6 R6Class
 #' @importFrom RcppTN rtn dtn
+#' @importFrom TruncatedNormal mvrandn
 #' @importFrom stats sd quantile
-#' @importFrom tmvtnsim rtmvnorm
 #' @importFrom generics forecast
 #' @import RcppProgress
 #' @note This package is currently in active development.

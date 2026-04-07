@@ -47,8 +47,8 @@ Imports:
     Rcpp (>= 1.0.12),
     RcppProgress,
     RcppTN,
-    tmvtnsim,
-    generics
+    generics,
+    TruncatedNormal
 LinkingTo: 
     bsvars, 
     Rcpp, 
