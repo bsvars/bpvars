@@ -17,14 +17,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/bsvars/bpvars/blob/master/DESCRIPTION)
 
-Woźniak T (2025). *bpvars: Forecasting with Bayesian Panel Vector
+Woźniak T (2026). *bpvars: Forecasting with Bayesian Panel Vector
 Autoregressions*. R package version 1.0.0.9000,
 <https://bsvars.org/bpvars/>.
 
     @Manual{,
       title = {bpvars: Forecasting with Bayesian Panel Vector Autoregressions},
       author = {Tomasz Woźniak},
-      year = {2025},
+      year = {2026},
       note = {R package version 1.0.0.9000},
       url = {https://bsvars.org/bpvars/},
     }
