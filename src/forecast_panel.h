@@ -7,11 +7,11 @@ using namespace Rcpp;
 using namespace arma;
 
 
-arma::vec mvnrnd_truncated (
-    arma::vec     mu,       // Nx1 mean vector
-    arma::mat     Sigma,    // NxN covariance matrix
-    arma::vec     LB,       // Nx1 lower bounds for truncation
-    arma::vec     UB        // Nx1 upper bounds for truncation
+arma::vec mvnrnd_truncated(
+    const arma::vec& mu,
+    const arma::mat& Sigma,
+    const arma::vec& LB,
+    const arma::vec& UB
 );
 
 

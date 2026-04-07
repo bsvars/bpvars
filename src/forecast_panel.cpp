@@ -2,29 +2,37 @@
 #include <RcppArmadillo.h>
 #include <bsvars.h>
 #include "progress.hpp"
-#include "rtmvtnorm.h"
 
 using namespace Rcpp;
 using namespace arma;
 
 
+Environment pkg         = Environment::namespace_env("TruncatedNormal");
+Function    my_mvrandn  = pkg["mvrandn"];
+
 
 // [[Rcpp::interfaces(cpp)]]
 // [[Rcpp::export]]
-arma::vec mvnrnd_truncated (
-    arma::vec     mu,       // Nx1 mean vector
-    arma::mat     Sigma,    // NxN covariance matrix
-    arma::vec     LB,       // Nx1 lower bounds for truncation
-    arma::vec     UB        // Nx1 upper bounds for truncation
+arma::vec mvnrnd_truncated(
+    const arma::vec& mu,
+    const arma::mat& Sigma,
+    const arma::vec& LB,
+    const arma::vec& UB
 ) {
+  const int N = mu.n_elem;
+  uvec lb_inf = find_nonfinite(LB);
+  uvec ub_inf = find_nonfinite(UB);
   
-  int     N = mu.n_elem;
-  mat     blc(N, N, fill::eye);
-  rowvec  init(N);
+  vec out; 
+  if (lb_inf.n_elem == N && ub_inf.n_elem == N) {
+    out             = mvnrnd(mu, Sigma);
+  } else {
+    NumericVector o = my_mvrandn(LB, UB, Sigma, 1, mu);
+    out             = as<vec>(o);
+  }
   
-  mat out = rtmvnormcpp(mu.t(), Sigma, blc, LB.t(), UB.t(), init, 10);
-  return out.t();
-} // END mvnrnd_truncated
+  return out;
+}
 
 
 
@@ -105,7 +113,7 @@ Rcpp::List forecast_bvarPANEL (
   field<cube>     out_forecast_mean(C);       // of (horizon, N, S) cubes
   field<cube>     out_forecast_cov(C,S);      // of (N, N, horizon) cubes
   
-  #pragma omp parallel for
+  // #pragma omp parallel for
   for (int c=0; c<C; c++) {
     
     // // Increment progress bar
