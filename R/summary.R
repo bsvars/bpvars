@@ -541,10 +541,10 @@ summary.PosteriorFEVDPANEL = function(
 #' burn_in       = estimate(specification, 5)             # run the burn-in
 #' posterior     = estimate(burn_in, 5)                   # estimate the model
 #' 
-#' # forecast 6 years ahead
+#' # forecast 3 years ahead
 #' predictive    = forecast(
 #'       posterior, 
-#'       5, 
+#'       3, 
 #'       exogenous_forecast = ilo_exogenous_forecasts[1:5])
 #' summary(predictive, which_c = "ARG")
 #' 

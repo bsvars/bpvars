@@ -114,10 +114,10 @@ specification = specify_bvarGroupPANEL$new(
 burn_in       = estimate(specification, 5)             # run the burn-in; use say S = 10000
 posterior     = estimate(burn_in, 5)                   # estimate the model; use say S = 10000
 
-# forecast 5 years ahead
+# forecast 3 years ahead
 predictive    = forecast(
                   posterior, 
-                  horizon = 5, 
+                  horizon = 3, 
                   exogenous_forecast = ilo_exogenous_forecasts[1:5]
                 )
 

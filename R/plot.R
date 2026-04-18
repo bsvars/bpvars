@@ -32,7 +32,7 @@
 #' burn_in       = estimate(specification, 10)               # run the burn-in
 #' posterior     = estimate(burn_in, 10)                     # estimate the model
 #'
-#' # forecast 5 years ahead
+#' # forecast 6 years ahead
 #' predictive    = forecast(posterior, 6)
 #' plot(predictive, which_c = "ARG")                                # plot forecasts
 #' 

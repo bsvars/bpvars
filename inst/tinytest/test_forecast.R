@@ -49,7 +49,7 @@ suppressMessages(
   specification_no1 <- specify_bvarPANEL$new(ilo_dynamic_panel, exogenous = ilo_exogenous_variables)
 )
 run_no1             <- estimate(specification_no1, 3, 1, show_progress = FALSE)
-ff                  <- forecast(run_no1, 5, exogenous_forecast = ilo_exogenous_forecasts)
+ff                  <- forecast(run_no1, 3, exogenous_forecast = ilo_exogenous_forecasts)
 
 # set.seed(1)
 # suppressMessages(
@@ -85,7 +85,7 @@ expect_error(
 
 ilo_exogenous_forecasts[[1]][1,1] = NA
 expect_error(
-  forecast(run_no1, horizon = 5, exogenous_forecast = ilo_exogenous_forecasts),
+  forecast(run_no1, horizon = 3, exogenous_forecast = ilo_exogenous_forecasts),
   pattern = "values",
   info = "exogenous forecast: provided exogenous forecasts contain missing values."
 )
@@ -119,3 +119,4 @@ expect_true(
   all(ff$POL$forecasts[2,,] >= 0),
   info = "truncated forecast: unemployment rates forecasts are non-negative."
 )
+
