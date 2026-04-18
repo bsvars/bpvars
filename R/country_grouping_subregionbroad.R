@@ -16,7 +16,7 @@
 #'   \item{10}{Eastern Asia}
 #'   \item{11}{Northern Africa}
 #' }
-#' Last data update was implemented on 2025-09-26.
+#' Last data update was implemented on 2026-04-18.
 #' 
 #' @usage data(country_grouping_subregionbroad)
 #' 

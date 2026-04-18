@@ -39,7 +39,7 @@ according to their geographical location. The categories are:
   \item{19}{Northern Africa}
   \item{20}{Central Asia}
 }
-Last data update was implemented on 2025-09-26.
+Last data update was implemented on 2026-04-18.
 }
 \examples{
 data(country_grouping_subregiondetailed)   # upload the data

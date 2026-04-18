@@ -28,7 +28,7 @@ variables including the logarithm of Gross Domestic Product (gdp), as well as
 the labour market outcomes including the unemployment rate (UR), employment 
 rate (EPR), labour force participation rate (LFPR). The missing observations 
 are filled using imputation method.
-Last data update was implemented on 2025-09-26.
+Last data update was implemented on 2026-04-18.
 }
 \examples{
 data(ilo_dynamic_panel)   # upload the data
