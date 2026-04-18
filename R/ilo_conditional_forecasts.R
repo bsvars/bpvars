@@ -1,0 +1,25 @@
+
+#' @title Data containing future observations for 189 countries 
+#' from 2025 to 2027 to be used for conditional forecasts given 
+#' the future values of gdp.
+#'
+#' @description For each of the countries a time series of 3 observations on 
+#' the future values of gdp is provided. These future values are taken from 
+#' IMF projections. The future values of other variables are set to \code{NA}.
+#' Last data update was implemented on 2026-04-18.
+#'
+#' @usage data(ilo_conditional_forecasts)
+#' 
+#' @format A list of 189 \code{ts} objects with time series of 3 observations 
+#' on 4 variables:
+#' \describe{
+#'   \item{gdp}{logarithm of gross domestic product}
+#'   \item{UR}{annual unemployment rate}
+#'   \item{EPR}{annual employment rate}
+#'   \item{LFPR}{annual labour force participation rate}
+#' }
+#' 
+#' @examples 
+#' data(ilo_conditional_forecasts)   # upload the data
+#' 
+"ilo_conditional_forecasts"
