@@ -3,11 +3,11 @@
 \docType{data}
 \name{ilo_exogenous_forecasts}
 \alias{ilo_exogenous_forecasts}
-\title{Data containing future observations for 189 United Nations countries 
-from 2025 to 2029 to be used to forecast with models with 
+\title{Data containing future observations for 189 countries 
+from 2025 to 2027 to be used to forecast with models with 
 \code{ilo_exogenous_variables}}
 \format{
-A list of 189 \code{ts} objects with time series of 5 observations 
+A list of 189 \code{ts} objects with time series of 3 observations 
 on 3 variables:
 \describe{
   \item{2008}{the aftermath of the Global Financial Crisis}
@@ -19,11 +19,11 @@ on 3 variables:
 data(ilo_exogenous_forecasts)
 }
 \description{
-For each of the countries a time series of 5 observations on 
+For each of the countries a time series of 3 observations on 
 On the dummies is provided. These future values are all equal to zero. They 
 provide benchmark for the objects to be used when \code{exogenous_variables} 
 are used. 
-Last data update was implemented on 2025-09-26.
+Last data update was implemented on 2026-04-18.
 }
 \examples{
 data(ilo_exogenous_forecasts)   # upload the data

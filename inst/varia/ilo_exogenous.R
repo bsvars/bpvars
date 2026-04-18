@@ -21,7 +21,7 @@ for (c in 1:length(ilo_dynamic_panel)) {
 
 # dummy panel forecasts
 ################################################
-horizon             = 5
+horizon             = 3
 dummy_forecasts     = matrix(0, horizon, 3)
 colnames(dummy_forecasts) = c("2008", "2020", "2021")
 dummy_forecasts     = ts(dummy_forecasts, start = 2025, frequency = 1)
