@@ -170,6 +170,6 @@ posterior     = estimate(burn_in, 5)                   # estimate the model; use
 #>  Press Esc to interrupt the computations
 #> **************************************************|
 
-# forecast 5 years ahead
-predictive    = forecast(posterior, 5, exogenous_forecast = ilo_exogenous_forecasts[1:5])
+# forecast 3 years ahead
+predictive    = forecast(posterior, 3, exogenous_forecast = ilo_exogenous_forecasts[1:5])
 ```

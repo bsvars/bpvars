@@ -23,7 +23,7 @@ to their geographical location. The categories are:
 
   Americas
 
-Last data update was implemented on 2025-09-26.
+Last data update was implemented on 2026-04-18.
 
 ## Usage
 

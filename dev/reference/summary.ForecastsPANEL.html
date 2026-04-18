@@ -99,10 +99,10 @@ horizons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Press Esc to interrupt the computations</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> **************************************************|</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># forecast 6 years ahead</span></span></span>
+<span class="r-in"><span><span class="co"># forecast 3 years ahead</span></span></span>
 <span class="r-in"><span><span class="va">predictive</span>    <span class="op">=</span> <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      <span class="va">posterior</span>, </span></span>
-<span class="r-in"><span>      <span class="fl">5</span>, </span></span>
+<span class="r-in"><span>      <span class="fl">3</span>, </span></span>
 <span class="r-in"><span>      exogenous_forecast <span class="op">=</span> <span class="va">ilo_exogenous_forecasts</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">predictive</span>, which_c <span class="op">=</span> <span class="st">"ARG"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  **************************************************|</span>
@@ -112,35 +112,27 @@ horizons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  **************************************************|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean         sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 27.08426 0.09643248    26.98796     27.18834</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 27.11891 0.09235275    26.99872     27.18997</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 27.12180 0.08042337    27.02538     27.21042</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 27.15213 0.10148440    27.03209     27.24871</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 27.16099 0.08383510    27.09950     27.27439</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 27.09490 0.07532608    27.01597     27.17225</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 27.05525 0.13824947    26.89764     27.21759</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 27.07207 0.14301723    26.96418     27.26212</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        mean       sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  9.084358 2.074068    6.304809     10.69514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 10.354824 1.213720    9.460503     12.01587</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 10.387878 1.865212    8.413359     12.49052</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  9.871698 3.943323    5.911174     14.10372</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  9.824249 3.953022    6.169397     14.64614</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       mean       sd 5% quantile 95% quantile</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 7.661769 2.358624    4.452608     9.371222</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 8.966183 3.164470    4.601118    10.985469</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 8.727773 3.729852    3.817163    11.901094</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       mean        sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 55.75576 1.2910711    54.66667     57.33231</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 54.97960 0.6108153    54.19126     55.53478</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 54.59021 0.9052444    53.72192     55.74770</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 55.13871 2.6263243    52.55812     58.24955</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 55.16800 2.8370336    51.58878     57.96677</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       mean       sd 5% quantile 95% quantile</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 56.60508 1.723899    54.96657     58.85585</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 55.48046 2.271852    53.88060     58.50043</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 55.28687 2.555210    53.05066     58.68573</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       mean        sd 5% quantile 95% quantile</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 61.33847 0.3841134    61.04494     61.86194</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 61.36352 0.5277770    60.63787     61.74206</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 60.91901 0.4900601    60.35758     61.39909</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 61.17752 0.6547480    60.53675     62.02677</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 61.16318 0.7391216    60.26563     61.90476</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 61.32586 0.5545387    60.61799     61.86675</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 60.95622 0.5845405    60.50316     61.74591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 60.56579 0.5043224    60.13459     61.19236</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

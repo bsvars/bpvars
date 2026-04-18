@@ -174,6 +174,6 @@ posterior     = estimate(burn_in, 5)                   # estimate the model; use
 #>  Press Esc to interrupt the computations
 #> **************************************************|
 
-# forecast 5 years ahead
-predictive    = forecast(posterior, horizon = 5)
+# forecast 3 years ahead
+predictive    = forecast(posterior, horizon = 3)
 ```

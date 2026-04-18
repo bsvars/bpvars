@@ -243,6 +243,11 @@ Browse package information
 
 Upload sample data set
 
+- [`ilo_conditional_forecasts`](http://bsvars.org/bpvars/dev/reference/ilo_conditional_forecasts.md)
+  : Data containing future observations for 189 countries from 2025 to
+  2027 to be used for conditional forecasts given the future values of
+  gdp.
+
 - [`ilo_dynamic_panel`](http://bsvars.org/bpvars/dev/reference/ilo_dynamic_panel.md)
   : A 4-variable annual system for forecasting labour market outcomes
   for 189 countries from 1991 to 2024
@@ -254,9 +259,8 @@ Upload sample data set
 - [`ilo_exogenous_forecasts`](http://bsvars.org/bpvars/dev/reference/ilo_exogenous_forecasts.md)
   :
 
-  Data containing future observations for 189 United Nations countries
-  from 2025 to 2029 to be used to forecast with models with
-  `ilo_exogenous_variables`
+  Data containing future observations for 189 countries from 2025 to
+  2027 to be used to forecast with models with `ilo_exogenous_variables`
 
 - [`ilo_exogenous_variables`](http://bsvars.org/bpvars/dev/reference/ilo_exogenous_variables.md)
   : A 3-variable annual system for of dummy observations for 2008, 2020,
