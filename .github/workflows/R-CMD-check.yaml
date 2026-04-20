@@ -44,6 +44,15 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - uses: r-lib/actions/setup-tinytex@v2
+      - run: tlmgr --version
+
+      - name: Install additional LaTeX packages
+        run: |
+          tlmgr update --self
+          tlmgr install pdfpages pdflscape
+          tlmgr list --only-installed
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
