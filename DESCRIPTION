@@ -55,9 +55,12 @@ LinkingTo:
     RcppArmadillo, 
     RcppProgress, 
     RcppTN
-Suggests: tinytest
+Suggests: 
+    knitr,
+    tinytest
 URL: https://bsvars.org/bpvars/
 BugReports: https://github.com/bsvars/bpvars/issues
 LazyData: true
 Encoding: UTF-8
+VignetteBuilder: knitr
 RoxygenNote: 7.3.3

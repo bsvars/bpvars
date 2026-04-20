@@ -1,0 +1,10 @@
+\documentclass{article}
+\usepackage{pdfpages}
+%\VignetteIndexEntry{Forecasting with Bayesian Panel Vector Autoregressions Using the R Package bpvars}
+%\VignetteKeywords{Dynamic Panel Data, Missing Observations, Hierarchical Prior Distributions, Pseudo-out-of-sample Forecasting, Forecast Performance Evaluation, R}
+%\VignettePackage{bpvars}
+%\VignetteEncoding{UTF-8}
+%\VignetteEngine{knitr::knitr}
+\begin{document}
+\includepdf[pages=-, fitpaper=true]{pdf/bpvars.pdf}
+\end{document}
