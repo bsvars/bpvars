@@ -7,7 +7,7 @@
 #' the labour market outcomes including the unemployment rate (UR), employment 
 #' rate (EPR), labour force participation rate (LFPR). The series are of various
 #' lengths and contain missing values due to data availability.
-#' Last data update was implemented on 2025-09-26.
+#' Last data update was implemented on 2026-04-20.
 #'
 #' @usage data(ilo_dynamic_panel_missing)
 #' 

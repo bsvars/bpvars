@@ -21,7 +21,7 @@ data(ilo_exogenous_variables_missing)
 \description{
 For each of the countries a time series of observations on 3 
 dummy variables for the years 2008, 2020, and 2021 is provided. 
-Last data update was implemented on 2025-09-26.
+Last data update was implemented on 2026-04-20.
 }
 \examples{
 data(ilo_exogenous_variables_missing)   # upload the data
