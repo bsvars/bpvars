@@ -1,0 +1,22 @@
+
+bibentry(bibtype = "Manual",
+  header       = "To cite the bsvars package in publications please use:",
+  title        = "bpvars: Forecasting with Bayesian Panel Vector Autoregressions",
+  author       = person(given = "Tomasz", family = "Wo\\'zniak", email = "wozniak.tom@pm.me"),
+  year         = 2026,
+  note     = "R package version 2.0",
+  url      = "https://CRAN.R-project.org/package=bpvars",
+  doi      = "10.32614/CRAN.package.bpvars",
+  textVersion = "Woźniak, T. (2026). bpvars: Forecasting with Bayesian Panel Vector Autoregressions. R package version 2.0, URL: https://cran.r-project.org/package=bpvars, DOI: 10.32614/CRAN.package.bpvars."
+)
+
+bibentry(bibtype = "article",
+  header       = "To cite the bsvars package in publications please use:",
+  title        = "Forecasting with Bayesian Panel Vector Autoregressions Using the R Package bpvars",
+  author       = c(person(given = "Miguel", family = "Sanchez-Martinez", email = "sanchezmartinez@ilo.org"), person(given = "Tomasz", family = "Wo\\'zniak", email = "tomasz.wozniak@unimelb.edu.au")),
+  year         = 2026,
+  journal      = "University of Melbourne Working Paper",
+  pages        = "1--39",
+  doi           = "",
+  textVersion = "Sanchez-Martinez, M., Woźniak, T. (2026). Forecasting with Bayesian Panel Vector Autoregressions Using the R Package bpvars, DOI: ."
+)
