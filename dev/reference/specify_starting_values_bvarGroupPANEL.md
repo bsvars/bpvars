@@ -5,7 +5,7 @@ Bayesian hierarchical panel VAR model with country grouping
 
 ## Super class
 
-`bpvars::StartingValuesBVARPANEL` -\> `StartingValuesBVARGROUPPANEL`
+`StartingValuesBVARPANEL` -\> `StartingValuesBVARGROUPPANEL`
 
 ## Public fields
 
@@ -72,30 +72,23 @@ Bayesian hierarchical panel VAR model with country grouping
 
 ### Public methods
 
-- [`specify_starting_values_bvarGroupPANEL$new()`](#method-StartingValuesBVARGROUPPANEL-new)
+- [`StartingValuesBVARGROUPPANEL$new()`](#method-StartingValuesBVARGROUPPANEL-initialize)
 
-- [`specify_starting_values_bvarGroupPANEL$get_starting_values()`](#method-StartingValuesBVARGROUPPANEL-get_starting_values)
+- [`StartingValuesBVARGROUPPANEL$get_starting_values()`](#method-StartingValuesBVARGROUPPANEL-get_starting_values)
 
-- [`specify_starting_values_bvarGroupPANEL$set_starting_values()`](#method-StartingValuesBVARGROUPPANEL-set_starting_values)
+- [`StartingValuesBVARGROUPPANEL$set_starting_values()`](#method-StartingValuesBVARGROUPPANEL-set_starting_values)
 
-- [`specify_starting_values_bvarGroupPANEL$clone()`](#method-StartingValuesBVARGROUPPANEL-clone)
+- [`StartingValuesBVARGROUPPANEL$clone()`](#method-StartingValuesBVARGROUPPANEL-clone)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `StartingValuesBVARGROUPPANEL$new()`
 
 Create new starting values StartingValuesBVARGROUPPANEL
 
 #### Usage
 
-    specify_starting_values_bvarGroupPANEL$new(
-      group_allocation = 1:C,
-      C,
-      G = C,
-      N,
-      p,
-      d = 0
-    )
+    StartingValuesBVARGROUPPANEL$new(group_allocation = 1:C, C, G = C, N, p, d = 0)
 
 #### Arguments
 
@@ -134,14 +127,14 @@ Starting values StartingValuesBVARGROUPPANEL
 
 ------------------------------------------------------------------------
 
-### Method `get_starting_values()`
+### `StartingValuesBVARGROUPPANEL$get_starting_values()`
 
 Returns the elements of the starting values StartingValuesBVARGROUPPANEL
 as a `list`.
 
 #### Usage
 
-    specify_starting_values_bvarGroupPANEL$get_starting_values()
+    StartingValuesBVARGROUPPANEL$get_starting_values()
 
 #### Examples
 
@@ -151,14 +144,14 @@ as a `list`.
 
 ------------------------------------------------------------------------
 
-### Method `set_starting_values()`
+### `StartingValuesBVARGROUPPANEL$set_starting_values()`
 
 Returns the elements of the starting values StartingValuesBVARGROUPPANEL
 as a `list`.
 
 #### Usage
 
-    specify_starting_values_bvarGroupPANEL$set_starting_values(last_draw)
+    StartingValuesBVARGROUPPANEL$set_starting_values(last_draw)
 
 #### Arguments
 
@@ -184,13 +177,13 @@ continuation of the MCMC estimation.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `StartingValuesBVARGROUPPANEL$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_starting_values_bvarGroupPANEL$clone(deep = FALSE)
+    StartingValuesBVARGROUPPANEL$clone(deep = FALSE)
 
 #### Arguments
 
@@ -206,7 +199,7 @@ sv = specify_starting_values_bvarGroupPANEL$new(rep(1,2), C = 2, G = 1, N = 3, p
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvarGroupPANEL$new`
+## Method `StartingValuesBVARGROUPPANEL$new()`
 ## ------------------------------------------------
 
 # starting values for Bayesian Panel VAR 2-country model with 4 lags for a 3-variable system.
@@ -214,7 +207,7 @@ sv = specify_starting_values_bvarGroupPANEL$new(C = 2, N = 3, p = 1)
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvarGroupPANEL$get_starting_values`
+## Method `StartingValuesBVARGROUPPANEL$get_starting_values()`
 ## ------------------------------------------------
 
 # starting values for a homoskedastic bsvar with 1 lag for a 3-variable system
@@ -326,7 +319,7 @@ sv$get_starting_values()   # show starting values as list
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvarGroupPANEL$set_starting_values`
+## Method `StartingValuesBVARGROUPPANEL$set_starting_values()`
 ## ------------------------------------------------
 
 sv = specify_starting_values_bvarGroupPANEL$new(rep(1,2), C = 2, N = 3, p = 1)

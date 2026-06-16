@@ -1,7 +1,7 @@
 # Bayesian estimation of a Bayesian Hierarchical Panel Vector Autoregression using Gibbs sampler
 
 Estimates the Bayesian Hierarchical Panel VAR using the Gibbs sampler
-proposed by Sanchez-Martinez & Woźniak (2024).
+proposed by Sanchez-Martinez & Woźniak (2026).
 
 ## Usage
 
@@ -137,6 +137,14 @@ returning every `thin` draw in the final sample. This procedure reduces
 the number of draws returned by the
 [`estimate()`](https://bsvars.org/bsvars/reference/estimate.html)
 function.
+
+## References
+
+Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel
+Vector Autoregressions Using the R Package bpvars. University of
+Melbourne Working Paper, 1-39,
+[doi:10.48550/arXiv.2606.14143](https://doi.org/10.48550/arXiv.2606.14143)
+.
 
 ## See also
 

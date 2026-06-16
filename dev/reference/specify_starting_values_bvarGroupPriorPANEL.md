@@ -58,23 +58,23 @@ the Bayesian hierarchical panel VAR model with country grouping
 
 ### Public methods
 
-- [`specify_starting_values_bvarGroupPriorPANEL$new()`](#method-StartingValuesBVARGROUPPRIORPANEL-new)
+- [`StartingValuesBVARGROUPPRIORPANEL$new()`](#method-StartingValuesBVARGROUPPRIORPANEL-initialize)
 
-- [`specify_starting_values_bvarGroupPriorPANEL$get_starting_values()`](#method-StartingValuesBVARGROUPPRIORPANEL-get_starting_values)
+- [`StartingValuesBVARGROUPPRIORPANEL$get_starting_values()`](#method-StartingValuesBVARGROUPPRIORPANEL-get_starting_values)
 
-- [`specify_starting_values_bvarGroupPriorPANEL$set_starting_values()`](#method-StartingValuesBVARGROUPPRIORPANEL-set_starting_values)
+- [`StartingValuesBVARGROUPPRIORPANEL$set_starting_values()`](#method-StartingValuesBVARGROUPPRIORPANEL-set_starting_values)
 
-- [`specify_starting_values_bvarGroupPriorPANEL$clone()`](#method-StartingValuesBVARGROUPPRIORPANEL-clone)
+- [`StartingValuesBVARGROUPPRIORPANEL$clone()`](#method-StartingValuesBVARGROUPPRIORPANEL-clone)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `StartingValuesBVARGROUPPRIORPANEL$new()`
 
 Create new starting values StartingValuesBVARGROUPPRIORPANEL
 
 #### Usage
 
-    specify_starting_values_bvarGroupPriorPANEL$new(
+    StartingValuesBVARGROUPPRIORPANEL$new(
       group_allocation = 1:C,
       C,
       G = C,
@@ -120,14 +120,14 @@ Starting values StartingValuesBVARGROUPPRIORPANEL
 
 ------------------------------------------------------------------------
 
-### Method `get_starting_values()`
+### `StartingValuesBVARGROUPPRIORPANEL$get_starting_values()`
 
 Returns the elements of the starting values
 StartingValuesBVARGROUPPRIORPANEL as a `list`.
 
 #### Usage
 
-    specify_starting_values_bvarGroupPriorPANEL$get_starting_values()
+    StartingValuesBVARGROUPPRIORPANEL$get_starting_values()
 
 #### Examples
 
@@ -137,14 +137,14 @@ StartingValuesBVARGROUPPRIORPANEL as a `list`.
 
 ------------------------------------------------------------------------
 
-### Method `set_starting_values()`
+### `StartingValuesBVARGROUPPRIORPANEL$set_starting_values()`
 
 Returns the elements of the starting values
 StartingValuesBVARGROUPPRIORPANEL as a `list`.
 
 #### Usage
 
-    specify_starting_values_bvarGroupPriorPANEL$set_starting_values(last_draw)
+    StartingValuesBVARGROUPPRIORPANEL$set_starting_values(last_draw)
 
 #### Arguments
 
@@ -170,13 +170,13 @@ continuation of the MCMC estimation.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `StartingValuesBVARGROUPPRIORPANEL$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_starting_values_bvarGroupPriorPANEL$clone(deep = FALSE)
+    StartingValuesBVARGROUPPRIORPANEL$clone(deep = FALSE)
 
 #### Arguments
 
@@ -192,7 +192,7 @@ sv = specify_starting_values_bvarGroupPriorPANEL$new(rep(1,2), C = 2, G = 1, N =
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvarGroupPriorPANEL$new`
+## Method `StartingValuesBVARGROUPPRIORPANEL$new()`
 ## ------------------------------------------------
 
 # starting values for Bayesian Panel VAR 2-country model with 4 lags for a 3-variable system.
@@ -200,7 +200,7 @@ sv = specify_starting_values_bvarGroupPriorPANEL$new(C = 2, N = 3, p = 1)
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvarGroupPriorPANEL$get_starting_values`
+## Method `StartingValuesBVARGROUPPRIORPANEL$get_starting_values()`
 ## ------------------------------------------------
 
 # starting values for a homoskedastic bsvar with 1 lag for a 3-variable system
@@ -299,7 +299,7 @@ sv$get_starting_values()   # show starting values as list
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvarGroupPriorPANEL$set_starting_values`
+## Method `StartingValuesBVARGROUPPRIORPANEL$set_starting_values()`
 ## ------------------------------------------------
 
 sv = specify_starting_values_bvarGroupPriorPANEL$new(rep(1,2), C = 2, N = 3, p = 1)

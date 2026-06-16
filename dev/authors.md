@@ -32,7 +32,8 @@ https://cran.r-project.org/package=bpvars, DOI:
     }
 
 Sanchez-Martinez, M., Woźniak, T. (2026). Forecasting with Bayesian
-Panel Vector Autoregressions Using the R Package bpvars, DOI: .
+Panel Vector Autoregressions Using the R Package bpvars, DOI:
+10.48550/arXiv.2606.14143.
 
     @Article{,
       title = {Forecasting with Bayesian Panel Vector Autoregressions Using the R Package bpvars},
@@ -40,4 +41,5 @@ Panel Vector Autoregressions Using the R Package bpvars, DOI: .
       year = {2026},
       journal = {University of Melbourne Working Paper},
       pages = {1--39},
+      doi = {10.48550/arXiv.2606.14143},
     }

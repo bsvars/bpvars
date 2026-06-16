@@ -52,25 +52,25 @@ Bayesian shrinkage and other procedures. *Journal of Econometrics*,
 
 ### Public methods
 
-- [`specify_bvarGroupPriorPANEL$new()`](#method-BVARGROUPPRIORPANEL-new)
+- [`BVARGROUPPRIORPANEL$new()`](#method-BVARGROUPPRIORPANEL-initialize)
 
-- [`specify_bvarGroupPriorPANEL$get_data_matrices()`](#method-BVARGROUPPRIORPANEL-get_data_matrices)
+- [`BVARGROUPPRIORPANEL$get_data_matrices()`](#method-BVARGROUPPRIORPANEL-get_data_matrices)
 
-- [`specify_bvarGroupPriorPANEL$get_prior()`](#method-BVARGROUPPRIORPANEL-get_prior)
+- [`BVARGROUPPRIORPANEL$get_prior()`](#method-BVARGROUPPRIORPANEL-get_prior)
 
-- [`specify_bvarGroupPriorPANEL$get_starting_values()`](#method-BVARGROUPPRIORPANEL-get_starting_values)
+- [`BVARGROUPPRIORPANEL$get_starting_values()`](#method-BVARGROUPPRIORPANEL-get_starting_values)
 
-- [`specify_bvarGroupPriorPANEL$get_type()`](#method-BVARGROUPPRIORPANEL-get_type)
+- [`BVARGROUPPRIORPANEL$get_type()`](#method-BVARGROUPPRIORPANEL-get_type)
 
-- [`specify_bvarGroupPriorPANEL$set_global2pooled()`](#method-BVARGROUPPRIORPANEL-set_global2pooled)
+- [`BVARGROUPPRIORPANEL$set_global2pooled()`](#method-BVARGROUPPRIORPANEL-set_global2pooled)
 
-- [`specify_bvarGroupPriorPANEL$set_adaptiveMH()`](#method-BVARGROUPPRIORPANEL-set_adaptiveMH)
+- [`BVARGROUPPRIORPANEL$set_adaptiveMH()`](#method-BVARGROUPPRIORPANEL-set_adaptiveMH)
 
-- [`specify_bvarGroupPriorPANEL$clone()`](#method-BVARGROUPPRIORPANEL-clone)
+- [`BVARGROUPPRIORPANEL$clone()`](#method-BVARGROUPPRIORPANEL-clone)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `BVARGROUPPRIORPANEL$new()`
 
 Create a new specification of the Bayesian Panel VAR model with country
 grouping for global prior parameters BVARGROUPPRIORPANEL. The groups can
@@ -81,7 +81,7 @@ empty.
 
 #### Usage
 
-    specify_bvarGroupPriorPANEL$new(
+    BVARGROUPPRIORPANEL$new(
       data,
       p = 1L,
       exogenous = NULL,
@@ -137,13 +137,13 @@ A new complete specification for the Bayesian Panel VAR model BVARPANEL.
 
 ------------------------------------------------------------------------
 
-### Method `get_data_matrices()`
+### `BVARGROUPPRIORPANEL$get_data_matrices()`
 
 Returns the data matrices as the DataMatricesBVARPANEL object.
 
 #### Usage
 
-    specify_bvarGroupPriorPANEL$get_data_matrices()
+    BVARGROUPPRIORPANEL$get_data_matrices()
 
 #### Examples
 
@@ -154,13 +154,13 @@ Returns the data matrices as the DataMatricesBVARPANEL object.
 
 ------------------------------------------------------------------------
 
-### Method `get_prior()`
+### `BVARGROUPPRIORPANEL$get_prior()`
 
 Returns the prior specification as the PriorBVARPANEL object.
 
 #### Usage
 
-    specify_bvarGroupPriorPANEL$get_prior()
+    BVARGROUPPRIORPANEL$get_prior()
 
 #### Examples
 
@@ -171,13 +171,13 @@ Returns the prior specification as the PriorBVARPANEL object.
 
 ------------------------------------------------------------------------
 
-### Method `get_starting_values()`
+### `BVARGROUPPRIORPANEL$get_starting_values()`
 
 Returns the starting values as the StartingValuesBVARPANEL object.
 
 #### Usage
 
-    specify_bvarGroupPriorPANEL$get_starting_values()
+    BVARGROUPPRIORPANEL$get_starting_values()
 
 #### Examples
 
@@ -188,13 +188,13 @@ Returns the starting values as the StartingValuesBVARPANEL object.
 
 ------------------------------------------------------------------------
 
-### Method `get_type()`
+### `BVARGROUPPRIORPANEL$get_type()`
 
 Returns the type of the model.
 
 #### Usage
 
-    specify_bvarGroupPriorPANEL$get_type()
+    BVARGROUPPRIORPANEL$get_type()
 
 #### Examples
 
@@ -205,14 +205,14 @@ Returns the type of the model.
 
 ------------------------------------------------------------------------
 
-### Method `set_global2pooled()`
+### `BVARGROUPPRIORPANEL$set_global2pooled()`
 
 Sets the prior mean of the global autoregressive parameters to the OLS
 pooled panel estimator following Zellner, Hong (1989).
 
 #### Usage
 
-    specify_bvarGroupPriorPANEL$set_global2pooled(x)
+    BVARGROUPPRIORPANEL$set_global2pooled(x)
 
 #### Arguments
 
@@ -231,14 +231,14 @@ pooled panel estimator following Zellner, Hong (1989).
 
 ------------------------------------------------------------------------
 
-### Method `set_adaptiveMH()`
+### `BVARGROUPPRIORPANEL$set_adaptiveMH()`
 
 Sets the parameters of adaptive Metropolis-Hastings sampler for the
 parameter nu.
 
 #### Usage
 
-    specify_bvarGroupPriorPANEL$set_adaptiveMH(x)
+    BVARGROUPPRIORPANEL$set_adaptiveMH(x)
 
 #### Arguments
 
@@ -257,13 +257,13 @@ parameter nu.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `BVARGROUPPRIORPANEL$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_bvarGroupPriorPANEL$clone(deep = FALSE)
+    BVARGROUPPRIORPANEL$clone(deep = FALSE)
 
 #### Arguments
 
@@ -282,7 +282,7 @@ spec = specify_bvarGroupPriorPANEL$new(
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPriorPANEL$get_data_matrices`
+## Method `BVARGROUPPRIORPANEL$get_data_matrices()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -301,7 +301,7 @@ spec$get_data_matrices()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPriorPANEL$get_prior`
+## Method `BVARGROUPPRIORPANEL$get_prior()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -329,7 +329,7 @@ spec$get_prior()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPriorPANEL$get_starting_values`
+## Method `BVARGROUPPRIORPANEL$get_starting_values()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -354,7 +354,7 @@ spec$get_starting_values()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPriorPANEL$get_type`
+## Method `BVARGROUPPRIORPANEL$get_type()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -365,7 +365,7 @@ spec$get_type()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPriorPANEL$set_global2pooled`
+## Method `BVARGROUPPRIORPANEL$set_global2pooled()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -375,7 +375,7 @@ spec$set_global2pooled()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPriorPANEL$set_adaptiveMH`
+## Method `BVARGROUPPRIORPANEL$set_adaptiveMH()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(

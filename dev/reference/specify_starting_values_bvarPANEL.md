@@ -54,23 +54,23 @@ Bayesian hierarchical panel VAR model.
 
 ### Public methods
 
-- [`specify_starting_values_bvarPANEL$new()`](#method-StartingValuesBVARPANEL-new)
+- [`StartingValuesBVARPANEL$new()`](#method-StartingValuesBVARPANEL-initialize)
 
-- [`specify_starting_values_bvarPANEL$get_starting_values()`](#method-StartingValuesBVARPANEL-get_starting_values)
+- [`StartingValuesBVARPANEL$get_starting_values()`](#method-StartingValuesBVARPANEL-get_starting_values)
 
-- [`specify_starting_values_bvarPANEL$set_starting_values()`](#method-StartingValuesBVARPANEL-set_starting_values)
+- [`StartingValuesBVARPANEL$set_starting_values()`](#method-StartingValuesBVARPANEL-set_starting_values)
 
-- [`specify_starting_values_bvarPANEL$clone()`](#method-StartingValuesBVARPANEL-clone)
+- [`StartingValuesBVARPANEL$clone()`](#method-StartingValuesBVARPANEL-clone)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `StartingValuesBVARPANEL$new()`
 
 Create new starting values StartingValuesBVARPANEL
 
 #### Usage
 
-    specify_starting_values_bvarPANEL$new(C, N, p, d = 0)
+    StartingValuesBVARPANEL$new(C, N, p, d = 0)
 
 #### Arguments
 
@@ -101,14 +101,14 @@ Starting values StartingValuesBVARPANEL
 
 ------------------------------------------------------------------------
 
-### Method `get_starting_values()`
+### `StartingValuesBVARPANEL$get_starting_values()`
 
 Returns the elements of the starting values StartingValuesBVARPANEL as a
 `list`.
 
 #### Usage
 
-    specify_starting_values_bvarPANEL$get_starting_values()
+    StartingValuesBVARPANEL$get_starting_values()
 
 #### Examples
 
@@ -118,14 +118,14 @@ Returns the elements of the starting values StartingValuesBVARPANEL as a
 
 ------------------------------------------------------------------------
 
-### Method `set_starting_values()`
+### `StartingValuesBVARPANEL$set_starting_values()`
 
 Returns the elements of the starting values StartingValuesBVARPANEL as a
 `list`.
 
 #### Usage
 
-    specify_starting_values_bvarPANEL$set_starting_values(last_draw)
+    StartingValuesBVARPANEL$set_starting_values(last_draw)
 
 #### Arguments
 
@@ -150,13 +150,13 @@ of the MCMC estimation.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `StartingValuesBVARPANEL$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_starting_values_bvarPANEL$clone(deep = FALSE)
+    StartingValuesBVARPANEL$clone(deep = FALSE)
 
 #### Arguments
 
@@ -172,7 +172,7 @@ sv = specify_starting_values_bvarPANEL$new(C = 2, N = 3, p = 1)
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvarPANEL$new`
+## Method `StartingValuesBVARPANEL$new()`
 ## ------------------------------------------------
 
 # starting values for Bayesian Panel VAR 2-country model with 4 lags for a 3-variable system.
@@ -180,7 +180,7 @@ sv = specify_starting_values_bvarPANEL$new(C = 2, N = 3, p = 4)
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvarPANEL$get_starting_values`
+## Method `StartingValuesBVARPANEL$get_starting_values()`
 ## ------------------------------------------------
 
 # starting values for a homoskedastic bsvar with 1 lag for a 3-variable system
@@ -255,7 +255,7 @@ sv$get_starting_values()   # show starting values as list
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvarPANEL$set_starting_values`
+## Method `StartingValuesBVARPANEL$set_starting_values()`
 ## ------------------------------------------------
 
 sv = specify_starting_values_bvarPANEL$new(C = 2, N = 3, p = 1)

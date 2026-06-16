@@ -32,21 +32,21 @@ Bayesian Panel VAR model for all countries \\c = 1, ..., C\\.
 
 ### Public methods
 
-- [`specify_panel_data_matrices$new()`](#method-DataMatricesBVARPANEL-new)
+- [`DataMatricesBVARPANEL$new()`](#method-DataMatricesBVARPANEL-initialize)
 
-- [`specify_panel_data_matrices$get_data_matrices()`](#method-DataMatricesBVARPANEL-get_data_matrices)
+- [`DataMatricesBVARPANEL$get_data_matrices()`](#method-DataMatricesBVARPANEL-get_data_matrices)
 
-- [`specify_panel_data_matrices$clone()`](#method-DataMatricesBVARPANEL-clone)
+- [`DataMatricesBVARPANEL$clone()`](#method-DataMatricesBVARPANEL-clone)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `DataMatricesBVARPANEL$new()`
 
 Create new data matrices DataMatricesBVARPANEL
 
 #### Usage
 
-    specify_panel_data_matrices$new(
+    DataMatricesBVARPANEL$new(
       data,
       p = 1L,
       exogenous = NULL,
@@ -81,13 +81,13 @@ New data matrices DataMatricesBVARPANEL
 
 ------------------------------------------------------------------------
 
-### Method `get_data_matrices()`
+### `DataMatricesBVARPANEL$get_data_matrices()`
 
 Returns the data matrices DataMatricesBVARPANEL as a `list`.
 
 #### Usage
 
-    specify_panel_data_matrices$get_data_matrices()
+    DataMatricesBVARPANEL$get_data_matrices()
 
 #### Examples
 
@@ -97,13 +97,13 @@ Returns the data matrices DataMatricesBVARPANEL as a `list`.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `DataMatricesBVARPANEL$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_panel_data_matrices$clone(deep = FALSE)
+    DataMatricesBVARPANEL$clone(deep = FALSE)
 
 #### Arguments
 
@@ -137,7 +137,7 @@ length(YX$Y); names(YX$Y)
 
 
 ## ------------------------------------------------
-## Method `specify_panel_data_matrices$get_data_matrices`
+## Method `DataMatricesBVARPANEL$get_data_matrices()`
 ## ------------------------------------------------
 
 data(ilo_dynamic_panel)

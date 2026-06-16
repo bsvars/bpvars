@@ -27,23 +27,23 @@ provided in element `posterior`.
 
 ### Public methods
 
-- [`specify_posterior_bvarPANEL$new()`](#method-PosteriorBVARPANEL-new)
+- [`PosteriorBVARPANEL$new()`](#method-PosteriorBVARPANEL-initialize)
 
-- [`specify_posterior_bvarPANEL$get_posterior()`](#method-PosteriorBVARPANEL-get_posterior)
+- [`PosteriorBVARPANEL$get_posterior()`](#method-PosteriorBVARPANEL-get_posterior)
 
-- [`specify_posterior_bvarPANEL$get_last_draw()`](#method-PosteriorBVARPANEL-get_last_draw)
+- [`PosteriorBVARPANEL$get_last_draw()`](#method-PosteriorBVARPANEL-get_last_draw)
 
-- [`specify_posterior_bvarPANEL$clone()`](#method-PosteriorBVARPANEL-clone)
+- [`PosteriorBVARPANEL$clone()`](#method-PosteriorBVARPANEL-clone)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `PosteriorBVARPANEL$new()`
 
 Create a new posterior output PosteriorBVARPANEL.
 
 #### Usage
 
-    specify_posterior_bvarPANEL$new(specification_bvarPANEL, posterior_bvarPANEL)
+    PosteriorBVARPANEL$new(specification_bvarPANEL, posterior_bvarPANEL)
 
 #### Arguments
 
@@ -62,13 +62,13 @@ A posterior output PosteriorBVARPANEL.
 
 ------------------------------------------------------------------------
 
-### Method `get_posterior()`
+### `PosteriorBVARPANEL$get_posterior()`
 
 Returns a list containing Bayesian estimation output.
 
 #### Usage
 
-    specify_posterior_bvarPANEL$get_posterior()
+    PosteriorBVARPANEL$get_posterior()
 
 #### Examples
 
@@ -80,7 +80,7 @@ Returns a list containing Bayesian estimation output.
 
 ------------------------------------------------------------------------
 
-### Method `get_last_draw()`
+### `PosteriorBVARPANEL$get_last_draw()`
 
 Returns an object of class BVARPANEL with the last draw of the current
 MCMC run as the starting value to be passed to the continuation of the
@@ -89,7 +89,7 @@ MCMC estimation using
 
 #### Usage
 
-    specify_posterior_bvarPANEL$get_last_draw()
+    PosteriorBVARPANEL$get_last_draw()
 
 #### Examples
 
@@ -101,13 +101,13 @@ MCMC estimation using
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `PosteriorBVARPANEL$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_posterior_bvarPANEL$clone(deep = FALSE)
+    PosteriorBVARPANEL$clone(deep = FALSE)
 
 #### Arguments
 
@@ -134,7 +134,7 @@ class(posterior)
 
 
 ## ------------------------------------------------
-## Method `specify_posterior_bvarPANEL$get_posterior`
+## Method `PosteriorBVARPANEL$get_posterior()`
 ## ------------------------------------------------
 
 specification = specify_bvarPANEL$new(
@@ -781,7 +781,7 @@ posterior$get_posterior()
 
 
 ## ------------------------------------------------
-## Method `specify_posterior_bvarPANEL$get_last_draw`
+## Method `PosteriorBVARPANEL$get_last_draw()`
 ## ------------------------------------------------
 
 specification = specify_bvarPANEL$new(

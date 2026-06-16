@@ -35,23 +35,23 @@ hierarchical panel VAR model.
 
 ### Public methods
 
-- [`specify_starting_values_bvars$new()`](#method-StartingValuesBVARs-new)
+- [`StartingValuesBVARs$new()`](#method-StartingValuesBVARs-initialize)
 
-- [`specify_starting_values_bvars$get_starting_values()`](#method-StartingValuesBVARs-get_starting_values)
+- [`StartingValuesBVARs$get_starting_values()`](#method-StartingValuesBVARs-get_starting_values)
 
-- [`specify_starting_values_bvars$set_starting_values()`](#method-StartingValuesBVARs-set_starting_values)
+- [`StartingValuesBVARs$set_starting_values()`](#method-StartingValuesBVARs-set_starting_values)
 
-- [`specify_starting_values_bvars$clone()`](#method-StartingValuesBVARs-clone)
+- [`StartingValuesBVARs$clone()`](#method-StartingValuesBVARs-clone)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `StartingValuesBVARs$new()`
 
 Create new starting values StartingValuesBVARs
 
 #### Usage
 
-    specify_starting_values_bvars$new(C, N, p, d = 0)
+    StartingValuesBVARs$new(C, N, p, d = 0)
 
 #### Arguments
 
@@ -82,14 +82,14 @@ Starting values StartingValuesBVARs
 
 ------------------------------------------------------------------------
 
-### Method `get_starting_values()`
+### `StartingValuesBVARs$get_starting_values()`
 
 Returns the elements of the starting values StartingValuesBVARs as a
 `list`.
 
 #### Usage
 
-    specify_starting_values_bvars$get_starting_values()
+    StartingValuesBVARs$get_starting_values()
 
 #### Examples
 
@@ -99,14 +99,14 @@ Returns the elements of the starting values StartingValuesBVARs as a
 
 ------------------------------------------------------------------------
 
-### Method `set_starting_values()`
+### `StartingValuesBVARs$set_starting_values()`
 
 Returns the elements of the starting values StartingValuesBVARs as a
 `list`.
 
 #### Usage
 
-    specify_starting_values_bvars$set_starting_values(last_draw)
+    StartingValuesBVARs$set_starting_values(last_draw)
 
 #### Arguments
 
@@ -131,13 +131,13 @@ the MCMC estimation.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `StartingValuesBVARs$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_starting_values_bvars$clone(deep = FALSE)
+    StartingValuesBVARs$clone(deep = FALSE)
 
 #### Arguments
 
@@ -153,7 +153,7 @@ sv = specify_starting_values_bvars$new(C = 2, N = 3, p = 1)
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvars$new`
+## Method `StartingValuesBVARs$new()`
 ## ------------------------------------------------
 
 # starting values for Bayesian VARs 2-country model with 4 lags for a 3-variable system.
@@ -161,7 +161,7 @@ sv = specify_starting_values_bvars$new(C = 2, N = 3, p = 4)
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvars$get_starting_values`
+## Method `StartingValuesBVARs$get_starting_values()`
 ## ------------------------------------------------
 
 # starting values for bvars with 1 lag for a 3-variable system
@@ -216,7 +216,7 @@ sv$get_starting_values()   # show starting values as list
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvars$set_starting_values`
+## Method `StartingValuesBVARs$set_starting_values()`
 ## ------------------------------------------------
 
 sv = specify_starting_values_bvars$new(C = 2, N = 3, p = 1)
