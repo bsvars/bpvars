@@ -15,7 +15,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/bsvars/bpvars/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/bsvars/bpvars/blob/v2.0/inst/CITATION)
 
 Woźniak, T. (2026). bpvars: Forecasting with Bayesian Panel Vector
 Autoregressions. R package version 2.0, URL:
