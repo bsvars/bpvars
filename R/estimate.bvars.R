@@ -3,7 +3,7 @@
 #' Autoregressions for cubic data using Gibbs sampler
 #'
 #' @description Estimates the Bayesian Hierarchical VARs for cubic data using the Gibbs 
-#' sampler proposed by Sanchez-Martinez & Woźniak (2024).
+#' sampler proposed by Sanchez-Martinez & Woźniak (2026).
 #' 
 #' @details 
 #' The Bayesian Hierarchical Vector Autoregressive models described in 
@@ -80,6 +80,11 @@
 #' \code{\link{forecast.PosteriorBVARs}}
 #'
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
+#' 
+#' @references
+#' Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+#' Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+#' 1-39, \doi{10.48550/arXiv.2606.14143}.
 #' 
 #' @method estimate BVARs
 #' 

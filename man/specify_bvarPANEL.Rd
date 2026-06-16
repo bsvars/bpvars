@@ -14,7 +14,7 @@ spec = specify_bvarPANEL$new(
 
 
 ## ------------------------------------------------
-## Method `specify_bvarPANEL$set_to_Jarocinski`
+## Method `BVARPANEL$set_to_Jarocinski()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -24,7 +24,7 @@ spec$set_to_Jarocinski()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarPANEL$get_data_matrices`
+## Method `BVARPANEL$get_data_matrices()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -34,7 +34,7 @@ spec$get_data_matrices()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarPANEL$get_prior`
+## Method `BVARPANEL$get_prior()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -44,7 +44,7 @@ spec$get_prior()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarPANEL$get_starting_values`
+## Method `BVARPANEL$get_starting_values()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -54,7 +54,7 @@ spec$get_starting_values()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarPANEL$get_type`
+## Method `BVARPANEL$get_type()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -64,7 +64,7 @@ spec$get_type()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarPANEL$set_global2pooled`
+## Method `BVARPANEL$set_global2pooled()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -74,7 +74,7 @@ spec$set_global2pooled()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarPANEL$set_adaptiveMH`
+## Method `BVARPANEL$set_adaptiveMH()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -96,264 +96,257 @@ Bayesian shrinkage and other procedures. \emph{Journal of Econometrics},
 \bold{40}(1), 183–202, \doi{10.1016/0304-4076(89)90036-5}.
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{p}}{a non-negative integer specifying the autoregressive lag order of the model.}
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{p}}{a non-negative integer specifying the autoregressive lag order of the model.}
 
-\item{\code{prior}}{an object PriorBSVAR with the prior specification.}
+    \item{\code{prior}}{an object PriorBSVAR with the prior specification.}
 
-\item{\code{data_matrices}}{an object DataMatricesBVARPANEL with the data matrices.}
+    \item{\code{data_matrices}}{an object DataMatricesBVARPANEL with the data matrices.}
 
-\item{\code{starting_values}}{an object StartingValuesBVARPANEL with the starting values.}
+    \item{\code{starting_values}}{an object StartingValuesBVARPANEL with the starting values.}
 
-\item{\code{adaptiveMH}}{a vector of four values setting the adaptive MH sampler 
+    \item{\code{adaptiveMH}}{a vector of four values setting the adaptive MH sampler 
 for nu: adaptive rate, target acceptance rate, the iteration at which to 
 start adapting, the initial scaling rate}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-BVARPANEL-new}{\code{specify_bvarPANEL$new()}}
-\item \href{#method-BVARPANEL-set_to_Jarocinski}{\code{specify_bvarPANEL$set_to_Jarocinski()}}
-\item \href{#method-BVARPANEL-get_data_matrices}{\code{specify_bvarPANEL$get_data_matrices()}}
-\item \href{#method-BVARPANEL-get_prior}{\code{specify_bvarPANEL$get_prior()}}
-\item \href{#method-BVARPANEL-get_starting_values}{\code{specify_bvarPANEL$get_starting_values()}}
-\item \href{#method-BVARPANEL-get_type}{\code{specify_bvarPANEL$get_type()}}
-\item \href{#method-BVARPANEL-set_global2pooled}{\code{specify_bvarPANEL$set_global2pooled()}}
-\item \href{#method-BVARPANEL-set_adaptiveMH}{\code{specify_bvarPANEL$set_adaptiveMH()}}
-\item \href{#method-BVARPANEL-clone}{\code{specify_bvarPANEL$clone()}}
-}
+  \itemize{
+    \item \href{#method-BVARPANEL-initialize}{\code{BVARPANEL$new()}}
+    \item \href{#method-BVARPANEL-set_to_Jarocinski}{\code{BVARPANEL$set_to_Jarocinski()}}
+    \item \href{#method-BVARPANEL-get_data_matrices}{\code{BVARPANEL$get_data_matrices()}}
+    \item \href{#method-BVARPANEL-get_prior}{\code{BVARPANEL$get_prior()}}
+    \item \href{#method-BVARPANEL-get_starting_values}{\code{BVARPANEL$get_starting_values()}}
+    \item \href{#method-BVARPANEL-get_type}{\code{BVARPANEL$get_type()}}
+    \item \href{#method-BVARPANEL-set_global2pooled}{\code{BVARPANEL$set_global2pooled()}}
+    \item \href{#method-BVARPANEL-set_adaptiveMH}{\code{BVARPANEL$set_adaptiveMH()}}
+    \item \href{#method-BVARPANEL-clone}{\code{BVARPANEL$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-BVARPANEL-new"></a>}}
-\if{latex}{\out{\hypertarget{method-BVARPANEL-new}{}}}
-\subsection{Method \code{new()}}{
-Create a new specification of the Bayesian Panel VAR model BVARPANEL.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$new(
+\if{html}{\out{<a id="method-BVARPANEL-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-BVARPANEL-initialize}{}}}
+\subsection{\code{BVARPANEL$new()}}{
+  Create a new specification of the Bayesian Panel VAR model BVARPANEL.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARPANEL$new(
   data,
   p = 1L,
   exogenous = NULL,
   stationary = rep(FALSE, ncol(data[[1]])),
   type = rep("real", ncol(data[[1]]))
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{a list with \code{C} elements of \code{(T_c+p)xN} matrices 
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data}}{a list with \code{C} elements of \code{(T_c+p)xN} matrices 
 with time series data.}
-
-\item{\code{p}}{a positive integer providing model's autoregressive lag order.}
-
-\item{\code{exogenous}}{a \code{(T+p)xd} matrix of exogenous variables.}
-
-\item{\code{stationary}}{an \code{N} logical vector - its element set to 
+      \item{\code{p}}{a positive integer providing model's autoregressive lag order.}
+      \item{\code{exogenous}}{a \code{(T+p)xd} matrix of exogenous variables.}
+      \item{\code{stationary}}{an \code{N} logical vector - its element set to 
 \code{FALSE} sets the prior mean for the autoregressive parameters of the 
 \code{N}th equation to the white noise process, otherwise to random walk.}
-
-\item{\code{type}}{an \code{N} character vector with elements set to "rate" or "real"
+      \item{\code{type}}{an \code{N} character vector with elements set to "rate" or "real"
 determining the truncation of the predictive density to \code{[0, 100]} and
 \code{(-Inf, Inf)} (no truncation) for each of the variables.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new complete specification for the Bayesian Panel VAR model BVARPANEL.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new complete specification for the Bayesian Panel VAR model BVARPANEL.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARPANEL-set_to_Jarocinski"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARPANEL-set_to_Jarocinski}{}}}
-\subsection{Method \code{set_to_Jarocinski()}}{
-Sets the model in line with the specification by Jarocinski (2010) as presented 
+\subsection{\code{BVARPANEL$set_to_Jarocinski()}}{
+  Sets the model in line with the specification by Jarocinski (2010) as presented 
 by Dieppe, Legrand, Roye (2016).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$set_to_Jarocinski()}\if{html}{\out{</div>}}
-}
-
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARPANEL$set_to_Jarocinski()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel
 )
 spec$set_to_Jarocinski()
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARPANEL-get_data_matrices"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARPANEL-get_data_matrices}{}}}
-\subsection{Method \code{get_data_matrices()}}{
-Returns the data matrices as the DataMatricesBVARPANEL object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$get_data_matrices()}\if{html}{\out{</div>}}
-}
-
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+\subsection{\code{BVARPANEL$get_data_matrices()}}{
+  Returns the data matrices as the DataMatricesBVARPANEL object.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARPANEL$get_data_matrices()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel
 )
 spec$get_data_matrices()
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARPANEL-get_prior"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARPANEL-get_prior}{}}}
-\subsection{Method \code{get_prior()}}{
-Returns the prior specification as the PriorBVARPANEL object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$get_prior()}\if{html}{\out{</div>}}
-}
-
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+\subsection{\code{BVARPANEL$get_prior()}}{
+  Returns the prior specification as the PriorBVARPANEL object.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARPANEL$get_prior()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel
 )
 spec$get_prior()
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARPANEL-get_starting_values"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARPANEL-get_starting_values}{}}}
-\subsection{Method \code{get_starting_values()}}{
-Returns the starting values as the StartingValuesBVARPANEL object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$get_starting_values()}\if{html}{\out{</div>}}
-}
-
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+\subsection{\code{BVARPANEL$get_starting_values()}}{
+  Returns the starting values as the StartingValuesBVARPANEL object.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARPANEL$get_starting_values()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel
 )
 spec$get_starting_values()
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARPANEL-get_type"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARPANEL-get_type}{}}}
-\subsection{Method \code{get_type()}}{
-Returns the type of the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$get_type()}\if{html}{\out{</div>}}
-}
-
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+\subsection{\code{BVARPANEL$get_type()}}{
+  Returns the type of the model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARPANEL$get_type()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel
 )
 spec$get_type()
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARPANEL-set_global2pooled"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARPANEL-set_global2pooled}{}}}
-\subsection{Method \code{set_global2pooled()}}{
-Sets the prior mean of the global autoregressive parameters to the OLS 
+\subsection{\code{BVARPANEL$set_global2pooled()}}{
+  Sets the prior mean of the global autoregressive parameters to the OLS 
 pooled panel estimator following Zellner, Hong (1989).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$set_global2pooled(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{a vector of four values setting the adaptive MH sampler for nu:
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARPANEL$set_global2pooled(x)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{x}}{a vector of four values setting the adaptive MH sampler for nu:
 adaptive rate, target acceptance rate, the iteration at which to 
 start adapting, the initial scaling rate}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel
 )
 spec$set_global2pooled()
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARPANEL-set_adaptiveMH"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARPANEL-set_adaptiveMH}{}}}
-\subsection{Method \code{set_adaptiveMH()}}{
-Sets the parameters of adaptive Metropolis-Hastings sampler for the parameter nu.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$set_adaptiveMH(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{a vector of four values setting the adaptive MH sampler for nu:
+\subsection{\code{BVARPANEL$set_adaptiveMH()}}{
+  Sets the parameters of adaptive Metropolis-Hastings sampler for the parameter nu.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARPANEL$set_adaptiveMH(x)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{x}}{a vector of four values setting the adaptive MH sampler for nu:
 adaptive rate, target acceptance rate, the iteration at which to 
 start adapting, the initial scaling rate}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel
 )
 spec$set_adaptiveMH(c(0.6, 0.4, 10, 0.1))
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARPANEL-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARPANEL-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarPANEL$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{BVARPANEL$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARPANEL$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

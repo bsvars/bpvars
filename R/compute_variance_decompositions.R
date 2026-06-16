@@ -2,7 +2,7 @@
 #' @title Computes posterior draws of the forecast error variance decomposition
 #' @description For each country, each of the draws from the posterior estimation 
 #' of the model is transformed into a draw from the posterior distribution of the forecast 
-#' error variance decomposition.
+#' error variance decomposition. See Sanchez-Martinez & Woźniak (2026).
 #' 
 #' @method compute_variance_decompositions PosteriorBVARPANEL
 #' 
@@ -25,6 +25,10 @@
 #' 
 #' @references 
 #' Lütkepohl, H. (2017). Structural VAR Tools, Chapter 4, In: Structural vector autoregressive analysis. Cambridge University Press.
+#' 
+#' Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+#' Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+#' 1-39, \doi{10.48550/arXiv.2606.14143}.
 #' 
 #' @examples
 #' # specify the model and set seed
@@ -85,7 +89,7 @@ compute_variance_decompositions.PosteriorBVARPANEL <- function(posterior, horizo
 #' @title Computes posterior draws of the forecast error variance decomposition
 #' @description For each country, each of the draws from the posterior estimation 
 #' of the model is transformed into a draw from the posterior distribution of the forecast 
-#' error variance decomposition.
+#' error variance decomposition. See Sanchez-Martinez & Woźniak (2026).
 #' 
 #' @param posterior posterior estimation outcome - an object of class 
 #' \code{PosteriorBVARGROUPPANEL} obtained by running the \code{estimate} function.
@@ -101,6 +105,10 @@ compute_variance_decompositions.PosteriorBVARPANEL <- function(posterior, horizo
 #' 
 #' @references 
 #' Lütkepohl, H. (2017). Structural VAR Tools, Chapter 4, In: Structural vector autoregressive analysis. Cambridge University Press.
+#' 
+#' Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+#' Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+#' 1-39, \doi{10.48550/arXiv.2606.14143}.
 #' 
 #' @method compute_variance_decompositions PosteriorBVARGROUPPANEL
 #' 
@@ -169,7 +177,7 @@ compute_variance_decompositions.PosteriorBVARGROUPPANEL <- function(posterior, h
 #' @title Computes posterior draws of the forecast error variance decomposition
 #' @description For each country, each of the draws from the posterior estimation 
 #' of the model is transformed into a draw from the posterior distribution of the forecast 
-#' error variance decomposition.
+#' error variance decomposition. See Sanchez-Martinez & Woźniak (2026).
 #' 
 #' @param posterior posterior estimation outcome - an object of class 
 #' \code{PosteriorBVARs} obtained by running the \code{estimate} function.
@@ -185,6 +193,10 @@ compute_variance_decompositions.PosteriorBVARGROUPPANEL <- function(posterior, h
 #' 
 #' @references 
 #' Lütkepohl, H. (2017). Structural VAR Tools, Chapter 4, In: Structural vector autoregressive analysis. Cambridge University Press.
+#' 
+#' Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+#' Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+#' 1-39, \doi{10.48550/arXiv.2606.14143}.
 #' 
 #' @method compute_variance_decompositions PosteriorBVARs
 #' 

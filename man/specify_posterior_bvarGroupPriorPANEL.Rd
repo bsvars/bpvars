@@ -23,72 +23,73 @@ spec = specify_bvarGroupPriorPANEL$new(
 \code{\link{specify_bvarGroupPriorPANEL}}
 }
 \section{Super classes}{
-\code{bpvars::PosteriorBVARPANEL} -> \code{bpvars::PosteriorBVARGROUPPANEL} -> \code{PosteriorBVARGROUPPRIORPANEL}
+\code{PosteriorBVARPANEL} -> \code{PosteriorBVARGROUPPANEL} -> \code{PosteriorBVARGROUPPRIORPANEL}
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{last_draw}}{an object of class BVARGROUPPRIORPANEL with the last draw of the 
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{last_draw}}{an object of class BVARGROUPPRIORPANEL with the last draw of the 
 current MCMC run as the starting value to be passed to the continuation 
 of the MCMC estimation using \code{estimate()}.}
 
-\item{\code{posterior}}{a list containing Bayesian estimation output.}
-}
-\if{html}{\out{</div>}}
+    \item{\code{posterior}}{a list containing Bayesian estimation output.}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-PosteriorBVARGROUPPRIORPANEL-new}{\code{specify_posterior_bvarGroupPriorPANEL$new()}}
-\item \href{#method-PosteriorBVARGROUPPRIORPANEL-clone}{\code{specify_posterior_bvarGroupPriorPANEL$clone()}}
+  \itemize{
+    \item \href{#method-PosteriorBVARGROUPPRIORPANEL-initialize}{\code{PosteriorBVARGROUPPRIORPANEL$new()}}
+    \item \href{#method-PosteriorBVARGROUPPRIORPANEL-clone}{\code{PosteriorBVARGROUPPRIORPANEL$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="bpvars" data-topic="PosteriorBVARPANEL" data-id="get_last_draw"><a href='../../bpvars/html/PosteriorBVARPANEL.html#method-PosteriorBVARPANEL-get_last_draw'><code>bpvars::PosteriorBVARPANEL$get_last_draw()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="bpvars" data-topic="PosteriorBVARPANEL" data-id="get_posterior"><a href='../../bpvars/html/PosteriorBVARPANEL.html#method-PosteriorBVARPANEL-get_posterior'><code>bpvars::PosteriorBVARPANEL$get_posterior()</code></a></span></li>
+  <li><code>PosteriorBVARPANEL$get_last_draw()</code></li>
+  <li><code>PosteriorBVARPANEL$get_posterior()</code></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-PosteriorBVARGROUPPRIORPANEL-new"></a>}}
-\if{latex}{\out{\hypertarget{method-PosteriorBVARGROUPPRIORPANEL-new}{}}}
-\subsection{Method \code{new()}}{
-Create a new posterior output PosteriorBVARGROUPPRIORPANEL.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_posterior_bvarGroupPriorPANEL$new(specification, posterior)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{specification}}{an object of class BVARGROUPPRIORPANEL with the last 
+\if{html}{\out{<a id="method-PosteriorBVARGROUPPRIORPANEL-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-PosteriorBVARGROUPPRIORPANEL-initialize}{}}}
+\subsection{\code{PosteriorBVARGROUPPRIORPANEL$new()}}{
+  Create a new posterior output PosteriorBVARGROUPPRIORPANEL.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{PosteriorBVARGROUPPRIORPANEL$new(specification, posterior)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{specification}}{an object of class BVARGROUPPRIORPANEL with the last 
 draw of the current MCMC run as the starting value.}
+      \item{\code{posterior}}{a list containing Bayesian estimation output.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A posterior output PosteriorBVARGROUPPRIORPANEL.
+  }
+}
 
-\item{\code{posterior}}{a list containing Bayesian estimation output.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A posterior output PosteriorBVARGROUPPRIORPANEL.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-PosteriorBVARGROUPPRIORPANEL-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-PosteriorBVARGROUPPRIORPANEL-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_posterior_bvarGroupPriorPANEL$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{PosteriorBVARGROUPPRIORPANEL$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{PosteriorBVARGROUPPRIORPANEL$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

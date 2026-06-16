@@ -2,7 +2,7 @@
 #' @title Bayesian recursive pseudo-out-of-sample forecasting
 #'
 #' @description Performs the recursive pseudo-out-of-sample forecasting exercise
-#' using expanding window samples.
+#' using expanding window samples following Sanchez-Martinez & Woźniak (2026).
 #' 
 #' @param model_spec an object generated using one of the \code{specify_*} 
 #' functions containing model specification.
@@ -23,6 +23,11 @@
 #' \code{\link{specify_poosf_exercise}}, \code{\link{estimate.BVARPANEL}}
 #'
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
+#' 
+#' @references
+#' Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+#' Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+#' 1-39, \doi{10.48550/arXiv.2606.14143}.
 #' 
 #' @examples
 #' spec = specify_bvarPANEL$new(ilo_dynamic_panel[1:5])   # specify the model

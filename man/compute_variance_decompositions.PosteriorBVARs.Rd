@@ -22,7 +22,7 @@ variance decompositions.
 \description{
 For each country, each of the draws from the posterior estimation 
 of the model is transformed into a draw from the posterior distribution of the forecast 
-error variance decomposition.
+error variance decomposition. See Sanchez-Martinez & Woźniak (2026).
 }
 \examples{
 # specify the model and set seed
@@ -40,6 +40,10 @@ fevd           = compute_variance_decompositions(posterior, horizon = 4)
 }
 \references{
 Lütkepohl, H. (2017). Structural VAR Tools, Chapter 4, In: Structural vector autoregressive analysis. Cambridge University Press.
+
+Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+1-39, \doi{10.48550/arXiv.2606.14143}.
 }
 \seealso{
 \code{\link{estimate.PosteriorBVARs}}, 

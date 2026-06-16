@@ -49,7 +49,7 @@ Samples from the joint predictive density of the dependent
 variables for all countries at forecast horizons 
 from 1 to \code{horizon} specified as an argument of the function. 
 Also implements conditional forecasting based on the provided projections
-for some of the variables.
+for some of the variables. See Sanchez-Martinez & Woźniak (2026).
 }
 \details{
 The package provides a range of options regarding the forecasting procedure.
@@ -127,6 +127,10 @@ Waggoner, D. F., & Zha, T. (1999)
 Conditional forecasts in dynamic multivariate models, 
 \emph{Review of Economics and Statistics}, \bold{81}(4), 639-651,
 \doi{10.1162/003465399558508}.
+
+Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+1-39, \doi{10.48550/arXiv.2606.14143}.
 }
 \seealso{
 \code{\link{specify_bvarGroupPANEL}}, \code{\link{estimate.PosteriorBVARGROUPPANEL}}, 

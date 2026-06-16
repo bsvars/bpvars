@@ -18,7 +18,7 @@ spec = specify_bvarGroupPriorPANEL$new(
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPriorPANEL$get_data_matrices`
+## Method `BVARGROUPPRIORPANEL$get_data_matrices()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -28,7 +28,7 @@ spec$get_data_matrices()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPriorPANEL$get_prior`
+## Method `BVARGROUPPRIORPANEL$get_prior()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -38,7 +38,7 @@ spec$get_prior()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPriorPANEL$get_starting_values`
+## Method `BVARGROUPPRIORPANEL$get_starting_values()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -48,7 +48,7 @@ spec$get_starting_values()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPriorPANEL$get_type`
+## Method `BVARGROUPPRIORPANEL$get_type()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -58,7 +58,7 @@ spec$get_type()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPriorPANEL$set_global2pooled`
+## Method `BVARGROUPPRIORPANEL$set_global2pooled()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -68,7 +68,7 @@ spec$set_global2pooled()
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPriorPANEL$set_adaptiveMH`
+## Method `BVARGROUPPRIORPANEL$set_adaptiveMH()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(
@@ -83,50 +83,51 @@ Bayesian shrinkage and other procedures. \emph{Journal of Econometrics},
 \bold{40}(1), 183–202, \doi{10.1016/0304-4076(89)90036-5}.
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{p}}{a non-negative integer specifying the autoregressive lag order of the model.}
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{p}}{a non-negative integer specifying the autoregressive lag order of the model.}
 
-\item{\code{G}}{a non-negative integer specifying the number of country groupings.}
+    \item{\code{G}}{a non-negative integer specifying the number of country groupings.}
 
-\item{\code{estimate_groups}}{a logical value denoting whether the groups are to be estimated.}
+    \item{\code{estimate_groups}}{a logical value denoting whether the groups are to be estimated.}
 
-\item{\code{prior}}{an object PriorBSVAR with the prior specification.}
+    \item{\code{prior}}{an object PriorBSVAR with the prior specification.}
 
-\item{\code{data_matrices}}{an object DataMatricesBVARPANEL with the data matrices.}
+    \item{\code{data_matrices}}{an object DataMatricesBVARPANEL with the data matrices.}
 
-\item{\code{starting_values}}{an object StartingValuesBVARGROUPPRIORPANEL with the starting values.}
+    \item{\code{starting_values}}{an object StartingValuesBVARGROUPPRIORPANEL with the starting values.}
 
-\item{\code{adaptiveMH}}{a vector of four values setting the adaptive MH sampler 
+    \item{\code{adaptiveMH}}{a vector of four values setting the adaptive MH sampler 
 for nu: adaptive rate, target acceptance rate, the iteration at which to 
 start adapting, the initial scaling rate}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-BVARGROUPPRIORPANEL-new}{\code{specify_bvarGroupPriorPANEL$new()}}
-\item \href{#method-BVARGROUPPRIORPANEL-get_data_matrices}{\code{specify_bvarGroupPriorPANEL$get_data_matrices()}}
-\item \href{#method-BVARGROUPPRIORPANEL-get_prior}{\code{specify_bvarGroupPriorPANEL$get_prior()}}
-\item \href{#method-BVARGROUPPRIORPANEL-get_starting_values}{\code{specify_bvarGroupPriorPANEL$get_starting_values()}}
-\item \href{#method-BVARGROUPPRIORPANEL-get_type}{\code{specify_bvarGroupPriorPANEL$get_type()}}
-\item \href{#method-BVARGROUPPRIORPANEL-set_global2pooled}{\code{specify_bvarGroupPriorPANEL$set_global2pooled()}}
-\item \href{#method-BVARGROUPPRIORPANEL-set_adaptiveMH}{\code{specify_bvarGroupPriorPANEL$set_adaptiveMH()}}
-\item \href{#method-BVARGROUPPRIORPANEL-clone}{\code{specify_bvarGroupPriorPANEL$clone()}}
-}
+  \itemize{
+    \item \href{#method-BVARGROUPPRIORPANEL-initialize}{\code{BVARGROUPPRIORPANEL$new()}}
+    \item \href{#method-BVARGROUPPRIORPANEL-get_data_matrices}{\code{BVARGROUPPRIORPANEL$get_data_matrices()}}
+    \item \href{#method-BVARGROUPPRIORPANEL-get_prior}{\code{BVARGROUPPRIORPANEL$get_prior()}}
+    \item \href{#method-BVARGROUPPRIORPANEL-get_starting_values}{\code{BVARGROUPPRIORPANEL$get_starting_values()}}
+    \item \href{#method-BVARGROUPPRIORPANEL-get_type}{\code{BVARGROUPPRIORPANEL$get_type()}}
+    \item \href{#method-BVARGROUPPRIORPANEL-set_global2pooled}{\code{BVARGROUPPRIORPANEL$set_global2pooled()}}
+    \item \href{#method-BVARGROUPPRIORPANEL-set_adaptiveMH}{\code{BVARGROUPPRIORPANEL$set_adaptiveMH()}}
+    \item \href{#method-BVARGROUPPRIORPANEL-clone}{\code{BVARGROUPPRIORPANEL$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-BVARGROUPPRIORPANEL-new"></a>}}
-\if{latex}{\out{\hypertarget{method-BVARGROUPPRIORPANEL-new}{}}}
-\subsection{Method \code{new()}}{
-Create a new specification of the Bayesian Panel VAR model with country 
+\if{html}{\out{<a id="method-BVARGROUPPRIORPANEL-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-BVARGROUPPRIORPANEL-initialize}{}}}
+\subsection{\code{BVARGROUPPRIORPANEL$new()}}{
+  Create a new specification of the Bayesian Panel VAR model with country 
 grouping for global prior parameters BVARGROUPPRIORPANEL. The groups can be pre-specified, 
 which requires the argument \code{group_allocation} to be provided, or estimated,
 which requires the argument \code{G} for the number of groups to be provided 
 and the argument \code{group_allocation} to be left empty.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarGroupPriorPANEL$new(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARGROUPPRIORPANEL$new(
   data,
   p = 1L,
   exogenous = NULL,
@@ -134,208 +135,199 @@ and the argument \code{group_allocation} to be left empty.
   type = rep("real", ncol(data[[1]])),
   G = NULL,
   group_allocation = NULL
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{a list with \code{C} elements of \code{(T_c+p)xN} matrices 
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data}}{a list with \code{C} elements of \code{(T_c+p)xN} matrices 
 with time series data.}
-
-\item{\code{p}}{a positive integer providing model's autoregressive lag order.}
-
-\item{\code{exogenous}}{a \code{(T+p)xd} matrix of exogenous variables.}
-
-\item{\code{stationary}}{an \code{N} logical vector - its element set to 
+      \item{\code{p}}{a positive integer providing model's autoregressive lag order.}
+      \item{\code{exogenous}}{a \code{(T+p)xd} matrix of exogenous variables.}
+      \item{\code{stationary}}{an \code{N} logical vector - its element set to 
 \code{FALSE} sets the prior mean for the autoregressive parameters of the 
 \code{N}th equation to the white noise process, otherwise to random walk.}
-
-\item{\code{type}}{an \code{N} character vector with elements set to "rate" or "real"
+      \item{\code{type}}{an \code{N} character vector with elements set to "rate" or "real"
 determining the truncation of the predictive density to \code{[0, 100]} and
 \code{(-Inf, Inf)} (no truncation) for each of the variables.}
-
-\item{\code{G}}{a positive integer specifying the number of country groups. Its 
+      \item{\code{G}}{a positive integer specifying the number of country groups. Its 
 specification is required if \code{group_allocation} is not provided and 
 the country groups to be estimated.}
-
-\item{\code{group_allocation}}{an argument that can be provided as a numeric 
+      \item{\code{group_allocation}}{an argument that can be provided as a numeric 
 vector with integer numbers denoting group allocations to pre-specify the
 the country groups, in which case they are not estimated, or left empty
 if the country groups are to be estimated.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new complete specification for the Bayesian Panel VAR model BVARPANEL.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new complete specification for the Bayesian Panel VAR model BVARPANEL.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARGROUPPRIORPANEL-get_data_matrices"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARGROUPPRIORPANEL-get_data_matrices}{}}}
-\subsection{Method \code{get_data_matrices()}}{
-Returns the data matrices as the DataMatricesBVARPANEL object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarGroupPriorPANEL$get_data_matrices()}\if{html}{\out{</div>}}
-}
-
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+\subsection{\code{BVARGROUPPRIORPANEL$get_data_matrices()}}{
+  Returns the data matrices as the DataMatricesBVARPANEL object.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARGROUPPRIORPANEL$get_data_matrices()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel
 )
 spec$get_data_matrices()
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARGROUPPRIORPANEL-get_prior"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARGROUPPRIORPANEL-get_prior}{}}}
-\subsection{Method \code{get_prior()}}{
-Returns the prior specification as the PriorBVARPANEL object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarGroupPriorPANEL$get_prior()}\if{html}{\out{</div>}}
-}
-
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+\subsection{\code{BVARGROUPPRIORPANEL$get_prior()}}{
+  Returns the prior specification as the PriorBVARPANEL object.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARGROUPPRIORPANEL$get_prior()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel
 )
 spec$get_prior()
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARGROUPPRIORPANEL-get_starting_values"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARGROUPPRIORPANEL-get_starting_values}{}}}
-\subsection{Method \code{get_starting_values()}}{
-Returns the starting values as the StartingValuesBVARPANEL object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarGroupPriorPANEL$get_starting_values()}\if{html}{\out{</div>}}
-}
-
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+\subsection{\code{BVARGROUPPRIORPANEL$get_starting_values()}}{
+  Returns the starting values as the StartingValuesBVARPANEL object.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARGROUPPRIORPANEL$get_starting_values()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel
 )
 spec$get_starting_values()
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARGROUPPRIORPANEL-get_type"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARGROUPPRIORPANEL-get_type}{}}}
-\subsection{Method \code{get_type()}}{
-Returns the type of the model.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarGroupPriorPANEL$get_type()}\if{html}{\out{</div>}}
-}
-
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+\subsection{\code{BVARGROUPPRIORPANEL$get_type()}}{
+  Returns the type of the model.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARGROUPPRIORPANEL$get_type()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel
 )
 spec$get_type()
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARGROUPPRIORPANEL-set_global2pooled"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARGROUPPRIORPANEL-set_global2pooled}{}}}
-\subsection{Method \code{set_global2pooled()}}{
-Sets the prior mean of the global autoregressive parameters to the OLS 
+\subsection{\code{BVARGROUPPRIORPANEL$set_global2pooled()}}{
+  Sets the prior mean of the global autoregressive parameters to the OLS 
 pooled panel estimator following Zellner, Hong (1989).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarGroupPriorPANEL$set_global2pooled(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{a vector of four values setting the adaptive MH sampler for nu:
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARGROUPPRIORPANEL$set_global2pooled(x)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{x}}{a vector of four values setting the adaptive MH sampler for nu:
 adaptive rate, target acceptance rate, the iteration at which to 
 start adapting, the initial scaling rate}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel
 )
 spec$set_global2pooled()
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARGROUPPRIORPANEL-set_adaptiveMH"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARGROUPPRIORPANEL-set_adaptiveMH}{}}}
-\subsection{Method \code{set_adaptiveMH()}}{
-Sets the parameters of adaptive Metropolis-Hastings sampler for the parameter nu.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarGroupPriorPANEL$set_adaptiveMH(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{a vector of four values setting the adaptive MH sampler for nu:
+\subsection{\code{BVARGROUPPRIORPANEL$set_adaptiveMH()}}{
+  Sets the parameters of adaptive Metropolis-Hastings sampler for the parameter nu.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARGROUPPRIORPANEL$set_adaptiveMH(x)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{x}}{a vector of four values setting the adaptive MH sampler for nu:
 adaptive rate, target acceptance rate, the iteration at which to 
 start adapting, the initial scaling rate}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{spec = specify_bvarPANEL$new(
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{spec = specify_bvarPANEL$new(
    data = ilo_dynamic_panel[1:5]
 )
 spec$set_adaptiveMH(c(0.6, 0.4, 10, 0.1))
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-BVARGROUPPRIORPANEL-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-BVARGROUPPRIORPANEL-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_bvarGroupPriorPANEL$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{BVARGROUPPRIORPANEL$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{BVARGROUPPRIORPANEL$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

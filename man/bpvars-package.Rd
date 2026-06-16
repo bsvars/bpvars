@@ -7,7 +7,8 @@
 \title{Forecasting with Bayesian Panel Vector Autoregressions}
 \description{
 Provides Bayesian estimation and forecasting of dynamic panel data using 
-Bayesian Panel Vector Autoregressions with hierarchical prior distributions. 
+Bayesian Panel Vector Autoregressions with hierarchical prior distributions
+following the specification by Sanchez-Martinez & Woźniak (2026) \doi{10.48550/arXiv.2606.14143}. 
 The models include country-specific Vector Autoregressions (VARs) that share a global prior 
 distribution that extend the model by Jarociński (2010) \doi{10.1002/jae.1082}. 
 Under this prior expected value, each country's system follows 
@@ -27,15 +28,17 @@ this. Extraordinary computational speed is achieved thanks to employing
 frontier econometric and numerical techniques and algorithms written in 'C++'. 
 The 'bpvars' package is aligned regarding objects, workflows, and code 
 structure with the R packages 'bsvars' by Woźniak (2024) 
-\doi{10.32614/CRAN.package.bsvars} and 'bsvarSIGNs' by Wang & Woźniak (2025) 
-\doi{10.32614/CRAN.package.bsvarSIGNs}, and they constitute an integrated 
+\doi{10.32614/CRAN.package.bsvars}, 'bsvarSIGNs' by Wang & Woźniak (2025) 
+\doi{10.32614/CRAN.package.bsvarSIGNs}, 
+and 'bvars' by Liu, Ramirez Hassan, & Woźniak (2026)
+\doi{10.32614/CRAN.package.bvars} and they constitute an integrated  
 toolset. Copyright: 2025 International Labour Organization. The International 
 Labour Organization should not be held responsible for any issues arising 
 from the use of the 'bpvars' package or from the results obtained with it.
 }
 \details{
 The package provides a set of functions for predictive analysis with the 
-Bayesian Hierarchical Panel Vector Autoregression. 
+Bayesian Hierarchical Panel Vector Autoregression by Sanchez-Martinez & Woźniak (2026). 
 
 \strong{The Model.} The model specification is initiated using function 
 \code{\link{specify_bvarPANEL}} that creates an object of class 
@@ -182,6 +185,10 @@ the West of Europe: a Comparison. Journal of Applied Econometrics, 25(5),
 Karlsson, S. (2013). Forecasting with Bayesian Vector Autoregression, 
 in: \emph{Handbook of Economic Forecasting}, Elsevier. volume \bold{2}, 791–897,
 \doi{10.1016/B978-0-444-62731-5.00015-4}.
+
+Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+1-39, \doi{10.48550/arXiv.2606.14143}.
 
 Woźniak, T. (2016). Bayesian Vector Autoregressions, 
 \emph{Australian Economic Review}, \bold{49}, 365-380, 

@@ -28,7 +28,7 @@ An object of class \code{ForecastsPOOS} containing the outcome of Bayesian
 }
 \description{
 Performs the recursive pseudo-out-of-sample forecasting exercise
-using expanding window samples.
+using expanding window samples following Sanchez-Martinez & Woźniak (2026).
 }
 \examples{
 spec = specify_bvars$new(ilo_dynamic_panel[1:5])  # specify the model
@@ -41,6 +41,11 @@ poos = specify_poosf_exercise$new(                # specify the forecasting exer
        )   
 fore = forecast_poos_recursively(spec, poos)      # execute the forecasting exercise
 
+}
+\references{
+Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+1-39, \doi{10.48550/arXiv.2606.14143}.
 }
 \seealso{
 \code{\link{forecast.PosteriorBVARPANEL}}, \code{\link{specify_bvarPANEL}},

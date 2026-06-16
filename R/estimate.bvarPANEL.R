@@ -3,7 +3,7 @@
 #' Autoregression using Gibbs sampler
 #'
 #' @description Estimates the Bayesian Hierarchical Panel VAR using the Gibbs 
-#' sampler proposed by Sanchez-Martinez & Woźniak (2024).
+#' sampler proposed by Sanchez-Martinez & Woźniak (2026).
 #' 
 #' @details 
 #' The Bayesian Hierarchical Panel Vector Autoregressive model described in 
@@ -84,6 +84,11 @@
 #' \code{\link{forecast.PosteriorBVARPANEL}}
 #'
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
+#' 
+#' @references
+#' Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+#' Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+#' 1-39, \doi{10.48550/arXiv.2606.14143}.
 #' 
 #' @method estimate BVARPANEL
 #' 

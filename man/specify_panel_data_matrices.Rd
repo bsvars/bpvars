@@ -15,7 +15,7 @@ length(YX$Y); names(YX$Y)
 
 
 ## ------------------------------------------------
-## Method `specify_panel_data_matrices$get_data_matrices`
+## Method `DataMatricesBVARPANEL$get_data_matrices()`
 ## ------------------------------------------------
 
 data(ilo_dynamic_panel)
@@ -24,104 +24,104 @@ YX$get_data_matrices()
 
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{Y}}{a list with \code{C} elements with \code{(T_c + p) x N} matrices 
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{Y}}{a list with \code{C} elements with \code{(T_c + p) x N} matrices 
 of dependent variables, \eqn{\mathbf{Y}_c}, possibly with missing 
 observations given by \code{NA}.}
 
-\item{\code{missing}}{a list with \code{C} elements with \code{T_c x N} matrices
+    \item{\code{missing}}{a list with \code{C} elements with \code{T_c x N} matrices
 containing value \code{1} for missing observation and \code{0} otherwise.}
 
-\item{\code{type}}{an \code{N} character vector with elements set to "rate" or "real"
+    \item{\code{type}}{an \code{N} character vector with elements set to "rate" or "real"
 determining the truncation of the predictive density to \code{[0, 100]} and
 \code{(-Inf, Inf)} (no truncation) for each of the variables.}
 
-\item{\code{exogenous}}{a list with \code{C} elements with \code{(T_c + p) x N} 
+    \item{\code{exogenous}}{a list with \code{C} elements with \code{(T_c + p) x N} 
 matrices of exogenous variables.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-DataMatricesBVARPANEL-new}{\code{specify_panel_data_matrices$new()}}
-\item \href{#method-DataMatricesBVARPANEL-get_data_matrices}{\code{specify_panel_data_matrices$get_data_matrices()}}
-\item \href{#method-DataMatricesBVARPANEL-clone}{\code{specify_panel_data_matrices$clone()}}
-}
+  \itemize{
+    \item \href{#method-DataMatricesBVARPANEL-initialize}{\code{DataMatricesBVARPANEL$new()}}
+    \item \href{#method-DataMatricesBVARPANEL-get_data_matrices}{\code{DataMatricesBVARPANEL$get_data_matrices()}}
+    \item \href{#method-DataMatricesBVARPANEL-clone}{\code{DataMatricesBVARPANEL$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-DataMatricesBVARPANEL-new"></a>}}
-\if{latex}{\out{\hypertarget{method-DataMatricesBVARPANEL-new}{}}}
-\subsection{Method \code{new()}}{
-Create new data matrices DataMatricesBVARPANEL
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_panel_data_matrices$new(
+\if{html}{\out{<a id="method-DataMatricesBVARPANEL-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-DataMatricesBVARPANEL-initialize}{}}}
+\subsection{\code{DataMatricesBVARPANEL$new()}}{
+  Create new data matrices DataMatricesBVARPANEL
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataMatricesBVARPANEL$new(
   data,
   p = 1L,
   exogenous = NULL,
   type = rep("real", ncol(data[[1]]))
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data}}{a list containing \code{(T_c+p)xN} matrices with country-specific
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{data}}{a list containing \code{(T_c+p)xN} matrices with country-specific
 time series data.}
-
-\item{\code{p}}{a positive integer providing model's autoregressive lag order.}
-
-\item{\code{exogenous}}{a list containing \code{(T_c+p)xd} matrices with 
+      \item{\code{p}}{a positive integer providing model's autoregressive lag order.}
+      \item{\code{exogenous}}{a list containing \code{(T_c+p)xd} matrices with 
 country-specific of exogenous variables. This matrix should not include a 
 constant term.}
-
-\item{\code{type}}{an \code{N} character vector with elements set to "rate" or "real"
+      \item{\code{type}}{an \code{N} character vector with elements set to "rate" or "real"
 determining the truncation of the predictive density to \code{[0, 100]} and
 \code{(-Inf, Inf)} (no truncation) for each of the variables.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    New data matrices DataMatricesBVARPANEL
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-New data matrices DataMatricesBVARPANEL
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataMatricesBVARPANEL-get_data_matrices"></a>}}
 \if{latex}{\out{\hypertarget{method-DataMatricesBVARPANEL-get_data_matrices}{}}}
-\subsection{Method \code{get_data_matrices()}}{
-Returns the data matrices DataMatricesBVARPANEL as a \code{list}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_panel_data_matrices$get_data_matrices()}\if{html}{\out{</div>}}
-}
-
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{data(ilo_dynamic_panel)
+\subsection{\code{DataMatricesBVARPANEL$get_data_matrices()}}{
+  Returns the data matrices DataMatricesBVARPANEL as a \code{list}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataMatricesBVARPANEL$get_data_matrices()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{data(ilo_dynamic_panel)
 YX = specify_panel_data_matrices$new(ilo_dynamic_panel)
 YX$get_data_matrices()
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataMatricesBVARPANEL-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-DataMatricesBVARPANEL-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_panel_data_matrices$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{DataMatricesBVARPANEL$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataMatricesBVARPANEL$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

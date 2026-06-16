@@ -38,7 +38,7 @@ the MCMC estimation using the \code{estimate()} method. }
 }
 \description{
 Estimates the Bayesian Hierarchical VARs for cubic data using the Gibbs 
-sampler proposed by Sanchez-Martinez & Woźniak (2024).
+sampler proposed by Sanchez-Martinez & Woźniak (2026).
 }
 \details{
 The Bayesian Hierarchical Vector Autoregressive models described in 
@@ -97,6 +97,11 @@ specification = specify_bvars$new(
 burn_in       = estimate(specification, 10)             # run the burn-in; use say S = 10000
 posterior     = estimate(burn_in, 10)                   # estimate the model; use say S = 10000
 
+}
+\references{
+Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+1-39, \doi{10.48550/arXiv.2606.14143}.
 }
 \seealso{
 \code{\link{bpvars}}, \code{\link{specify_bvars}}, 

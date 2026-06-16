@@ -6,7 +6,7 @@
 #' log-predictive score \code{"lps"}, root-mean-squared-forecast error \code{"rmsfe"}, 
 #' mean-absolute-forecast error \code{"mafe"} from the output of the recursive 
 #' pseudo-out-of-sample forecastinge exercise performed using function 
-#' \code{\link{forecast_poos_recursively}}.
+#' \code{\link{forecast_poos_recursively}}. See Sanchez-Martinez & Woźniak (2026).
 #' 
 #' @param forecasts an object containing the
 #' outcome of Bayesian recursive pseudo-out-of-sample forecasting exercise
@@ -22,6 +22,12 @@
 #' \code{\link{forecast_poos_recursively.BVARGROUPPANEL}}
 #'
 #' @author Tomasz Woźniak \email{wozniak.tom@pm.me}
+#' 
+#' @references
+#' 
+#' Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+#' Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+#' 1-39, \doi{10.48550/arXiv.2606.14143}.
 #' 
 #' @examples
 #' spec = specify_bvarPANEL$new(ilo_dynamic_panel[1:5])               # specify the model

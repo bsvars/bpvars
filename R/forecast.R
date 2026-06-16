@@ -8,7 +8,7 @@ generics::forecast
 #' variables for all countries at forecast horizons 
 #' from 1 to \code{horizon} specified as an argument of the function. 
 #' Also implements conditional forecasting based on the provided projections
-#' for some of the variables.
+#' for some of the variables. See Sanchez-Martinez & Woźniak (2026).
 #' 
 #' @details 
 #' The package provides a range of options regarding the forecasting procedure.
@@ -96,6 +96,10 @@ generics::forecast
 #' Conditional forecasts in dynamic multivariate models, 
 #' \emph{Review of Economics and Statistics}, \bold{81}(4), 639-651,
 #' \doi{10.1162/003465399558508}.
+#'
+#' Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+#' Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+#' 1-39, \doi{10.48550/arXiv.2606.14143}.
 #'
 #' @seealso \code{\link{specify_bvarPANEL}}, \code{\link{estimate.PosteriorBVARPANEL}}, 
 #' \code{\link{summary.ForecastsPANEL}}, \code{\link{plot.ForecastsPANEL}}
@@ -388,7 +392,7 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #' variables for all countries at forecast horizons 
 #' from 1 to \code{horizon} specified as an argument of the function. 
 #' Also implements conditional forecasting based on the provided projections
-#' for some of the variables.
+#' for some of the variables. See Sanchez-Martinez & Woźniak (2026).
 #' 
 #' @details 
 #' The package provides a range of options regarding the forecasting procedure.
@@ -476,6 +480,10 @@ forecast.PosteriorBVARGROUPPANEL = function(
 #' Conditional forecasts in dynamic multivariate models, 
 #' \emph{Review of Economics and Statistics}, \bold{81}(4), 639-651,
 #' \doi{10.1162/003465399558508}.
+#'
+#' Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+#' Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+#' 1-39, \doi{10.48550/arXiv.2606.14143}.
 #'
 #' @seealso \code{\link{specify_bvars}}, \code{\link{estimate.PosteriorBVARs}}, 
 #' \code{\link{summary.ForecastsPANEL}}, \code{\link{plot.ForecastsPANEL}}

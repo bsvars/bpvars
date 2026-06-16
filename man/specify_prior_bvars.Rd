@@ -13,7 +13,7 @@ prior$M
 
 
 ## ------------------------------------------------
-## Method `specify_prior_bvars$new`
+## Method `PriorBVARs$new()`
 ## ------------------------------------------------
 
 # a prior for 2-country, 3-variable example with one lag and stationary data
@@ -22,7 +22,7 @@ prior$M
 
 
 ## ------------------------------------------------
-## Method `specify_prior_bvars$get_prior`
+## Method `PriorBVARs$get_prior()`
 ## ------------------------------------------------
 
 # a prior for 2-country, 3-variable example with four lags
@@ -31,125 +31,121 @@ prior$get_prior() # show the prior as list
 
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{M}}{an \code{KxN} matrix, the mean of the MNIW prior
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{M}}{an \code{KxN} matrix, the mean of the MNIW prior
 distribution for the autoregressive matrices \eqn{\mathbf{A}_c}}
 
-\item{\code{W}}{a \code{KxK} column-specific covariance matrix of the
+    \item{\code{W}}{a \code{KxK} column-specific covariance matrix of the
 MNIW prior distribution for the autoregressive matrices \eqn{\mathbf{A}_c}}
 
-\item{\code{S_inv}}{an \code{NxN} row-specific precision matrix of the
+    \item{\code{S_inv}}{an \code{NxN} row-specific precision matrix of the
 MNIW prior distribution for the covariance matrices \eqn{\mathbf{\Sigma}_c}}
 
-\item{\code{lambda}}{a positive shape of the exponential prior distribution 
+    \item{\code{lambda}}{a positive shape of the exponential prior distribution 
 for the shape parameter \eqn{\nu}.}
 
-\item{\code{mu_m}}{a scalar mean of the normal prior distribution
+    \item{\code{mu_m}}{a scalar mean of the normal prior distribution
 for the average persistence parameter \eqn{m}.}
 
-\item{\code{sigma2_m}}{a positive scalar variance of the normal prior 
+    \item{\code{sigma2_m}}{a positive scalar variance of the normal prior 
 distribution for the average persistence parameter \eqn{m}.}
 
-\item{\code{s_w}}{a positive scalar scale of the inverse-gamma 2 prior 
+    \item{\code{s_w}}{a positive scalar scale of the inverse-gamma 2 prior 
 distribution for parameter \eqn{w}.}
 
-\item{\code{nu_w}}{a positive scalar shape of the inverse-gamma 2  prior 
+    \item{\code{nu_w}}{a positive scalar shape of the inverse-gamma 2  prior 
 distribution for parameter \eqn{w}.}
 
-\item{\code{s_s}}{a positive scalar scale parameter of the 
+    \item{\code{s_s}}{a positive scalar scale parameter of the 
 gamma prior distribution for parameter \eqn{s}.}
 
-\item{\code{a_s}}{a positive scalar shape parameter of the
+    \item{\code{a_s}}{a positive scalar shape parameter of the
 gamma prior distribution for parameter \eqn{s}.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-PriorBVARs-new}{\code{specify_prior_bvars$new()}}
-\item \href{#method-PriorBVARs-get_prior}{\code{specify_prior_bvars$get_prior()}}
-\item \href{#method-PriorBVARs-clone}{\code{specify_prior_bvars$clone()}}
-}
+  \itemize{
+    \item \href{#method-PriorBVARs-initialize}{\code{PriorBVARs$new()}}
+    \item \href{#method-PriorBVARs-get_prior}{\code{PriorBVARs$get_prior()}}
+    \item \href{#method-PriorBVARs-clone}{\code{PriorBVARs$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-PriorBVARs-new"></a>}}
-\if{latex}{\out{\hypertarget{method-PriorBVARs-new}{}}}
-\subsection{Method \code{new()}}{
-Create a new prior specification PriorBVARs.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_prior_bvars$new(C, N, p, d = 0, stationary = rep(FALSE, N))}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{C}}{a positive integer - the number of countries in the data.}
-
-\item{\code{N}}{a positive integer - the number of dependent variables in the model.}
-
-\item{\code{p}}{a positive integer - the autoregressive lag order of the SVAR model.}
-
-\item{\code{d}}{a positive integer - the number of \code{exogenous} variables in the model.}
-
-\item{\code{stationary}}{an \code{N} logical vector - its element set to 
+\if{html}{\out{<a id="method-PriorBVARs-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-PriorBVARs-initialize}{}}}
+\subsection{\code{PriorBVARs$new()}}{
+  Create a new prior specification PriorBVARs.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{PriorBVARs$new(C, N, p, d = 0, stationary = rep(FALSE, N))}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{C}}{a positive integer - the number of countries in the data.}
+      \item{\code{N}}{a positive integer - the number of dependent variables in the model.}
+      \item{\code{p}}{a positive integer - the autoregressive lag order of the SVAR model.}
+      \item{\code{d}}{a positive integer - the number of \code{exogenous} variables in the model.}
+      \item{\code{stationary}}{an \code{N} logical vector - its element set to 
 \code{FALSE} sets the prior mean for the autoregressive parameters of the 
 \code{N}th equation to the white noise process, otherwise to random walk.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new prior specification PriorBVARs.
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{# a prior for 2-country, 3-variable example with one lag and stationary data
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new prior specification PriorBVARs.
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{# a prior for 2-country, 3-variable example with one lag and stationary data
 prior = specify_prior_bvars$new(C = 2, N = 3, p = 1)
 prior$M
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-PriorBVARs-get_prior"></a>}}
 \if{latex}{\out{\hypertarget{method-PriorBVARs-get_prior}{}}}
-\subsection{Method \code{get_prior()}}{
-Returns the elements of the prior specification PriorBVARs as a \code{list}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_prior_bvars$get_prior()}\if{html}{\out{</div>}}
-}
-
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{# a prior for 2-country, 3-variable example with four lags
+\subsection{\code{PriorBVARs$get_prior()}}{
+  Returns the elements of the prior specification PriorBVARs as a \code{list}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{PriorBVARs$get_prior()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{# a prior for 2-country, 3-variable example with four lags
 prior = specify_prior_bvars$new(C = 2, N = 3, p = 4)
 prior$get_prior() # show the prior as list
-
 }
-\if{html}{\out{</div>}}
-
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-PriorBVARs-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-PriorBVARs-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{specify_prior_bvars$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{PriorBVARs$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{PriorBVARs$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

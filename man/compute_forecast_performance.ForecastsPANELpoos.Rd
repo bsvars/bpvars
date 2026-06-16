@@ -25,7 +25,7 @@ Computes forecasting performance measures selected from:
 log-predictive score \code{"lps"}, root-mean-squared-forecast error \code{"rmsfe"}, 
 mean-absolute-forecast error \code{"mafe"} from the output of the recursive 
 pseudo-out-of-sample forecastinge exercise performed using function 
-\code{\link{forecast_poos_recursively}}.
+\code{\link{forecast_poos_recursively}}. See Sanchez-Martinez & Woźniak (2026).
 }
 \examples{
 spec = specify_bvarPANEL$new(ilo_dynamic_panel[1:5])               # specify the model
@@ -33,6 +33,11 @@ poos = specify_poosf_exercise$new(spec, 2, 5, 1, 30)    # specify the forecastin
 fore = forecast_poos_recursively(spec, poos)                  # perform the forecasting  exercise
 fp   = compute_forecast_performance(fore, "pls")   # compute forecasting performance measures
 
+}
+\references{
+Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel Vector 
+Autoregressions Using the R Package bpvars. University of Melbourne Working Paper,
+1-39, \doi{10.48550/arXiv.2606.14143}.
 }
 \seealso{
 \code{\link{forecast_poos_recursively}}, 
