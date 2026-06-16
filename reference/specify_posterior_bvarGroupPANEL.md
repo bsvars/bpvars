@@ -12,7 +12,7 @@ the last draw provided in element `posterior`.
 
 ## Super class
 
-`bpvars::PosteriorBVARPANEL` -\> `PosteriorBVARGROUPPANEL`
+`PosteriorBVARPANEL` -\> `PosteriorBVARGROUPPANEL`
 
 ## Public fields
 
@@ -31,24 +31,24 @@ the last draw provided in element `posterior`.
 
 ### Public methods
 
-- [`specify_posterior_bvarGroupPANEL$new()`](#method-PosteriorBVARGROUPPANEL-new)
+- [`PosteriorBVARGROUPPANEL$new()`](#method-PosteriorBVARGROUPPANEL-initialize)
 
-- [`specify_posterior_bvarGroupPANEL$clone()`](#method-PosteriorBVARGROUPPANEL-clone)
+- [`PosteriorBVARGROUPPANEL$clone()`](#method-PosteriorBVARGROUPPANEL-clone)
 
 Inherited methods
 
-- [`bpvars::PosteriorBVARPANEL$get_last_draw()`](http://bsvars.org/bpvars/reference/PosteriorBVARPANEL.html#method-get_last_draw)
-- [`bpvars::PosteriorBVARPANEL$get_posterior()`](http://bsvars.org/bpvars/reference/PosteriorBVARPANEL.html#method-get_posterior)
+- `PosteriorBVARPANEL$get_last_draw()`
+- `PosteriorBVARPANEL$get_posterior()`
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `PosteriorBVARGROUPPANEL$new()`
 
 Create a new posterior output PosteriorBVARGROUPPANEL.
 
 #### Usage
 
-    specify_posterior_bvarGroupPANEL$new(specification, posterior)
+    PosteriorBVARGROUPPANEL$new(specification, posterior)
 
 #### Arguments
 
@@ -67,13 +67,13 @@ A posterior output PosteriorBVARGROUPPANEL.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `PosteriorBVARGROUPPANEL$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_posterior_bvarGroupPANEL$clone(deep = FALSE)
+    PosteriorBVARGROUPPANEL$clone(deep = FALSE)
 
 #### Arguments
 

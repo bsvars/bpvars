@@ -54,23 +54,23 @@ Bayesian hierarchical panel VAR model.
 
 ### Public methods
 
-- [`specify_starting_values_bvarPANEL$new()`](#method-StartingValuesBVARPANEL-new)
+- [`StartingValuesBVARPANEL$new()`](#method-StartingValuesBVARPANEL-initialize)
 
-- [`specify_starting_values_bvarPANEL$get_starting_values()`](#method-StartingValuesBVARPANEL-get_starting_values)
+- [`StartingValuesBVARPANEL$get_starting_values()`](#method-StartingValuesBVARPANEL-get_starting_values)
 
-- [`specify_starting_values_bvarPANEL$set_starting_values()`](#method-StartingValuesBVARPANEL-set_starting_values)
+- [`StartingValuesBVARPANEL$set_starting_values()`](#method-StartingValuesBVARPANEL-set_starting_values)
 
-- [`specify_starting_values_bvarPANEL$clone()`](#method-StartingValuesBVARPANEL-clone)
+- [`StartingValuesBVARPANEL$clone()`](#method-StartingValuesBVARPANEL-clone)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `StartingValuesBVARPANEL$new()`
 
 Create new starting values StartingValuesBVARPANEL
 
 #### Usage
 
-    specify_starting_values_bvarPANEL$new(C, N, p, d = 0)
+    StartingValuesBVARPANEL$new(C, N, p, d = 0)
 
 #### Arguments
 
@@ -101,14 +101,14 @@ Starting values StartingValuesBVARPANEL
 
 ------------------------------------------------------------------------
 
-### Method `get_starting_values()`
+### `StartingValuesBVARPANEL$get_starting_values()`
 
 Returns the elements of the starting values StartingValuesBVARPANEL as a
 `list`.
 
 #### Usage
 
-    specify_starting_values_bvarPANEL$get_starting_values()
+    StartingValuesBVARPANEL$get_starting_values()
 
 #### Examples
 
@@ -118,14 +118,14 @@ Returns the elements of the starting values StartingValuesBVARPANEL as a
 
 ------------------------------------------------------------------------
 
-### Method `set_starting_values()`
+### `StartingValuesBVARPANEL$set_starting_values()`
 
 Returns the elements of the starting values StartingValuesBVARPANEL as a
 `list`.
 
 #### Usage
 
-    specify_starting_values_bvarPANEL$set_starting_values(last_draw)
+    StartingValuesBVARPANEL$set_starting_values(last_draw)
 
 #### Arguments
 
@@ -150,13 +150,13 @@ of the MCMC estimation.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `StartingValuesBVARPANEL$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_starting_values_bvarPANEL$clone(deep = FALSE)
+    StartingValuesBVARPANEL$clone(deep = FALSE)
 
 #### Arguments
 
@@ -172,7 +172,7 @@ sv = specify_starting_values_bvarPANEL$new(C = 2, N = 3, p = 1)
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvarPANEL$new`
+## Method `StartingValuesBVARPANEL$new()`
 ## ------------------------------------------------
 
 # starting values for Bayesian Panel VAR 2-country model with 4 lags for a 3-variable system.
@@ -180,7 +180,7 @@ sv = specify_starting_values_bvarPANEL$new(C = 2, N = 3, p = 4)
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvarPANEL$get_starting_values`
+## Method `StartingValuesBVARPANEL$get_starting_values()`
 ## ------------------------------------------------
 
 # starting values for a homoskedastic bsvar with 1 lag for a 3-variable system
@@ -189,73 +189,73 @@ sv$get_starting_values()   # show starting values as list
 #> $A_c
 #> , , 1
 #> 
-#>               [,1]          [,2]          [,3]
-#> [1,] -1.747944e-03  7.272224e-04 -0.0018154588
-#> [2,]  2.158987e-04 -7.126292e-05  0.0012884166
-#> [3,]  8.749626e-05  5.314838e-04 -0.0002860749
-#> [4,] -5.887764e-04 -1.573786e-03 -0.0001609573
+#>               [,1]         [,2]         [,3]
+#> [1,]  0.0001852815 0.0008190492 0.0003883010
+#> [2,]  0.0008873240 0.0005189019 0.0004066908
+#> [3,]  0.0002059307 0.0003624973 0.0009074711
+#> [4,] -0.0022305519 0.0008953130 0.0004045349
 #> 
 #> , , 2
 #> 
-#>               [,1]          [,2]         [,3]
-#> [1,] -0.0007467667 -0.0002234728 2.124251e-04
-#> [2,] -0.0017971085  0.0002347082 2.416216e-04
-#> [3,] -0.0008412467 -0.0002899310 1.223435e-03
-#> [4,] -0.0001931980 -0.0015100012 4.130245e-05
+#>              [,1]          [,2]          [,3]
+#> [1,] 1.549831e-03 -0.0004536336  9.979931e-05
+#> [2,] 4.397918e-04  0.0007811692  5.313644e-04
+#> [3,] 1.272904e-03  0.0006758488 -9.064482e-04
+#> [4,] 2.125325e-05  0.0007196550 -1.020071e-03
 #> 
 #> 
 #> $Sigma_c
 #> , , 1
 #> 
-#>            [,1]       [,2]      [,3]
-#> [1,]  6.2640369 -1.7305479 0.1867046
-#> [2,] -1.7305479  5.5274890 0.7728585
-#> [3,]  0.1867046  0.7728585 0.8636057
+#>             [,1]       [,2]        [,3]
+#> [1,]  0.63697928 -0.1340802  0.02598222
+#> [2,] -0.13408016  4.1581714 -0.13626879
+#> [3,]  0.02598222 -0.1362688  1.13343815
 #> 
 #> , , 2
 #> 
-#>            [,1]       [,2]       [,3]
-#> [1,]  3.8107824  0.9301838 -1.2155180
-#> [2,]  0.9301838  2.7118549 -0.8660853
-#> [3,] -1.2155180 -0.8660853  0.7685027
+#>           [,1]        [,2]        [,3]
+#> [1,]  6.962050 -1.19908343 -1.35700920
+#> [2,] -1.199083  6.58234263 -0.08728492
+#> [3,] -1.357009 -0.08728492  1.18854308
 #> 
 #> 
 #> $A
 #>               [,1]          [,2]          [,3]
-#> [1,]  1.0004446834 -0.0007232218 -6.718497e-04
-#> [2,]  0.0004878582  1.0014330785  2.279409e-05
-#> [3,]  0.0006717321  0.0010135872  9.997689e-01
-#> [4,] -0.0007579427 -0.0002816474  8.897188e-04
+#> [1,]  9.999070e-01  0.0011537442 -0.0007686428
+#> [2,]  1.090224e-03  1.0003949745 -0.0003847204
+#> [3,] -6.428193e-05 -0.0005097384  1.0009751815
+#> [4,] -5.323123e-05 -0.0005282103  0.0001009873
 #> 
 #> $V
-#>            [,1]       [,2]      [,3]       [,4]
-#> [1,]  7.5257736 -2.6551540 3.7976247 -0.4458565
-#> [2,] -2.6551540  3.5247794 0.4885544  1.1913887
-#> [3,]  3.7976247  0.4885544 3.9588498  0.1259825
-#> [4,] -0.4458565  1.1913887 0.1259825  6.6583321
+#>             [,1]       [,2]       [,3]        [,4]
+#> [1,]  2.59563991  0.2130839  0.7007901 -0.06621208
+#> [2,]  0.21308392  4.4276015 -0.2114750 -3.05028808
+#> [3,]  0.70079014 -0.2114750  2.4657567 -0.21524988
+#> [4,] -0.06621208 -3.0502881 -0.2152499  2.37413718
 #> 
 #> $Sigma
-#>           [,1]      [,2]      [,3]
-#> [1,]  5.811775  3.730395 -3.642561
-#> [2,]  3.730395  4.749678 -1.608519
-#> [3,] -3.642561 -1.608519  5.017827
+#>           [,1]     [,2]      [,3]
+#> [1,]  4.773482 2.410161 -2.829625
+#> [2,]  2.410161 8.139780  1.150940
+#> [3,] -2.829625 1.150940  6.214514
 #> 
 #> $nu
 #> [1] 4.1
 #> 
 #> $m
-#> [1] 0.001187005
+#> [1] 0.001868389
 #> 
 #> $w
-#> [1] 0.2966828
+#> [1] 2.103943
 #> 
 #> $s
-#> [1] 0.2397762
+#> [1] 1.403311
 #> 
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvarPANEL$set_starting_values`
+## Method `StartingValuesBVARPANEL$set_starting_values()`
 ## ------------------------------------------------
 
 sv = specify_starting_values_bvarPANEL$new(C = 2, N = 3, p = 1)

@@ -17,7 +17,7 @@ Bayesian shrinkage and other procedures. *Journal of Econometrics*,
 
 ## Super class
 
-`bpvars::BVARPANEL` -\> `BVARGROUPPANEL`
+`BVARPANEL` -\> `BVARGROUPPANEL`
 
 ## Public fields
 
@@ -56,24 +56,24 @@ Bayesian shrinkage and other procedures. *Journal of Econometrics*,
 
 ### Public methods
 
-- [`specify_bvarGroupPANEL$new()`](#method-BVARGROUPPANEL-new)
+- [`BVARGROUPPANEL$new()`](#method-BVARGROUPPANEL-initialize)
 
-- [`specify_bvarGroupPANEL$set_global2pooled()`](#method-BVARGROUPPANEL-set_global2pooled)
+- [`BVARGROUPPANEL$set_global2pooled()`](#method-BVARGROUPPANEL-set_global2pooled)
 
-- [`specify_bvarGroupPANEL$clone()`](#method-BVARGROUPPANEL-clone)
+- [`BVARGROUPPANEL$clone()`](#method-BVARGROUPPANEL-clone)
 
 Inherited methods
 
-- [`bpvars::BVARPANEL$get_data_matrices()`](http://bsvars.org/bpvars/reference/BVARPANEL.html#method-get_data_matrices)
-- [`bpvars::BVARPANEL$get_prior()`](http://bsvars.org/bpvars/reference/BVARPANEL.html#method-get_prior)
-- [`bpvars::BVARPANEL$get_starting_values()`](http://bsvars.org/bpvars/reference/BVARPANEL.html#method-get_starting_values)
-- [`bpvars::BVARPANEL$get_type()`](http://bsvars.org/bpvars/reference/BVARPANEL.html#method-get_type)
-- [`bpvars::BVARPANEL$set_adaptiveMH()`](http://bsvars.org/bpvars/reference/BVARPANEL.html#method-set_adaptiveMH)
-- [`bpvars::BVARPANEL$set_to_Jarocinski()`](http://bsvars.org/bpvars/reference/BVARPANEL.html#method-set_to_Jarocinski)
+- `BVARPANEL$get_data_matrices()`
+- `BVARPANEL$get_prior()`
+- `BVARPANEL$get_starting_values()`
+- `BVARPANEL$get_type()`
+- `BVARPANEL$set_adaptiveMH()`
+- `BVARPANEL$set_to_Jarocinski()`
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `BVARGROUPPANEL$new()`
 
 Create a new specification of the Bayesian Panel VAR model with country
 grouping BVARGROUPPANEL. The groups can be pre-specified, which requires
@@ -83,7 +83,7 @@ the argument `group_allocation` to be left empty.
 
 #### Usage
 
-    specify_bvarGroupPANEL$new(
+    BVARGROUPPANEL$new(
       data,
       p = 1L,
       exogenous = NULL,
@@ -139,14 +139,14 @@ A new complete specification for the Bayesian Panel VAR model BVARPANEL.
 
 ------------------------------------------------------------------------
 
-### Method `set_global2pooled()`
+### `BVARGROUPPANEL$set_global2pooled()`
 
 Sets the prior mean of the global autoregressive parameters to the OLS
 pooled panel estimator following Zellner, Hong (1989).
 
 #### Usage
 
-    specify_bvarGroupPANEL$set_global2pooled(x)
+    BVARGROUPPANEL$set_global2pooled(x)
 
 #### Arguments
 
@@ -166,13 +166,13 @@ pooled panel estimator following Zellner, Hong (1989).
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `BVARGROUPPANEL$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_bvarGroupPANEL$clone(deep = FALSE)
+    BVARGROUPPANEL$clone(deep = FALSE)
 
 #### Arguments
 
@@ -191,7 +191,7 @@ spec = specify_bvarGroupPANEL$new(
 
 
 ## ------------------------------------------------
-## Method `specify_bvarGroupPANEL$set_global2pooled`
+## Method `BVARGROUPPANEL$set_global2pooled()`
 ## ------------------------------------------------
 
 spec = specify_bvarGroupPANEL$new(

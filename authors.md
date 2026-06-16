@@ -15,15 +15,31 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/bsvars/bpvars/blob/v1.0/DESCRIPTION)
+[`inst/CITATION`](https://github.com/bsvars/bpvars/blob/master/inst/CITATION)
 
-Woźniak T (2025). *bpvars: Forecasting with Bayesian Panel Vector
-Autoregressions*. R package version 1.0, <https://bsvars.org/bpvars/>.
+Woźniak, T. (2026). bpvars: Forecasting with Bayesian Panel Vector
+Autoregressions. R package version 2.0, URL:
+https://cran.r-project.org/package=bpvars, DOI:
+10.32614/CRAN.package.bpvars.
 
     @Manual{,
       title = {bpvars: Forecasting with Bayesian Panel Vector Autoregressions},
-      author = {Tomasz Woźniak},
-      year = {2025},
-      note = {R package version 1.0},
-      url = {https://bsvars.org/bpvars/},
+      author = {Tomasz Wo\'zniak},
+      year = {2026},
+      note = {R package version 2.0},
+      url = {https://CRAN.R-project.org/package=bpvars},
+      doi = {10.32614/CRAN.package.bpvars},
+    }
+
+Sanchez-Martinez, M., Woźniak, T. (2026). Forecasting with Bayesian
+Panel Vector Autoregressions Using the R Package bpvars, DOI:
+10.48550/arXiv.2606.14143.
+
+    @Article{,
+      title = {Forecasting with Bayesian Panel Vector Autoregressions Using the R Package bpvars},
+      author = {Miguel Sanchez-Martinez and Tomasz Wo\'zniak},
+      year = {2026},
+      journal = {University of Melbourne Working Paper},
+      pages = {1--39},
+      doi = {10.48550/arXiv.2606.14143},
     }

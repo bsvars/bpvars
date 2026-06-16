@@ -1,7 +1,7 @@
 # Bayesian recursive pseudo-out-of-sample forecasting
 
 Performs the recursive pseudo-out-of-sample forecasting exercise using
-expanding window samples.
+expanding window samples following Sanchez-Martinez & Woźniak (2026).
 
 ## Usage
 
@@ -36,6 +36,14 @@ of `horizons` and the `training_sample` plus one. Each element of the
 list is an object of class `ForecastsPANEL` containing the forecasts for
 each country, see
 [`forecast.PosteriorBVARPANEL`](http://bsvars.org/bpvars/reference/forecast.PosteriorBVARPANEL.md).
+
+## References
+
+Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel
+Vector Autoregressions Using the R Package bpvars. University of
+Melbourne Working Paper, 1-39,
+[doi:10.48550/arXiv.2606.14143](https://doi.org/10.48550/arXiv.2606.14143)
+.
 
 ## See also
 

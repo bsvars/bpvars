@@ -76,21 +76,21 @@ hierarchical panel VAR model.
 
 ### Public methods
 
-- [`specify_prior_bvarPANEL$new()`](#method-PriorBVARPANEL-new)
+- [`PriorBVARPANEL$new()`](#method-PriorBVARPANEL-initialize)
 
-- [`specify_prior_bvarPANEL$get_prior()`](#method-PriorBVARPANEL-get_prior)
+- [`PriorBVARPANEL$get_prior()`](#method-PriorBVARPANEL-get_prior)
 
-- [`specify_prior_bvarPANEL$clone()`](#method-PriorBVARPANEL-clone)
+- [`PriorBVARPANEL$clone()`](#method-PriorBVARPANEL-clone)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `PriorBVARPANEL$new()`
 
 Create a new prior specification PriorBVARPANEL.
 
 #### Usage
 
-    specify_prior_bvarPANEL$new(C, N, p, d = 0, stationary = rep(FALSE, N))
+    PriorBVARPANEL$new(C, N, p, d = 0, stationary = rep(FALSE, N))
 
 #### Arguments
 
@@ -128,13 +128,13 @@ A new prior specification PriorBVARPANEL.
 
 ------------------------------------------------------------------------
 
-### Method `get_prior()`
+### `PriorBVARPANEL$get_prior()`
 
 Returns the elements of the prior specification PriorBSVAR as a `list`.
 
 #### Usage
 
-    specify_prior_bvarPANEL$get_prior()
+    PriorBVARPANEL$get_prior()
 
 #### Examples
 
@@ -144,13 +144,13 @@ Returns the elements of the prior specification PriorBSVAR as a `list`.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `PriorBVARPANEL$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_prior_bvarPANEL$clone(deep = FALSE)
+    PriorBVARPANEL$clone(deep = FALSE)
 
 #### Arguments
 
@@ -171,7 +171,7 @@ prior$M
 
 
 ## ------------------------------------------------
-## Method `specify_prior_bvarPANEL$new`
+## Method `PriorBVARPANEL$new()`
 ## ------------------------------------------------
 
 # a prior for 2-country, 3-variable example with one lag and stationary data
@@ -185,7 +185,7 @@ prior$M
 
 
 ## ------------------------------------------------
-## Method `specify_prior_bvarPANEL$get_prior`
+## Method `PriorBVARPANEL$get_prior()`
 ## ------------------------------------------------
 
 # a prior for 2-coutnry, 3-variable example with four lags

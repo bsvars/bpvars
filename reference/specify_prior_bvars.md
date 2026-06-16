@@ -59,21 +59,21 @@ model for each country.
 
 ### Public methods
 
-- [`specify_prior_bvars$new()`](#method-PriorBVARs-new)
+- [`PriorBVARs$new()`](#method-PriorBVARs-initialize)
 
-- [`specify_prior_bvars$get_prior()`](#method-PriorBVARs-get_prior)
+- [`PriorBVARs$get_prior()`](#method-PriorBVARs-get_prior)
 
-- [`specify_prior_bvars$clone()`](#method-PriorBVARs-clone)
+- [`PriorBVARs$clone()`](#method-PriorBVARs-clone)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `PriorBVARs$new()`
 
 Create a new prior specification PriorBVARs.
 
 #### Usage
 
-    specify_prior_bvars$new(C, N, p, d = 0, stationary = rep(FALSE, N))
+    PriorBVARs$new(C, N, p, d = 0, stationary = rep(FALSE, N))
 
 #### Arguments
 
@@ -111,13 +111,13 @@ A new prior specification PriorBVARs.
 
 ------------------------------------------------------------------------
 
-### Method `get_prior()`
+### `PriorBVARs$get_prior()`
 
 Returns the elements of the prior specification PriorBVARs as a `list`.
 
 #### Usage
 
-    specify_prior_bvars$get_prior()
+    PriorBVARs$get_prior()
 
 #### Examples
 
@@ -127,13 +127,13 @@ Returns the elements of the prior specification PriorBVARs as a `list`.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `PriorBVARs$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_prior_bvars$clone(deep = FALSE)
+    PriorBVARs$clone(deep = FALSE)
 
 #### Arguments
 
@@ -154,7 +154,7 @@ prior$M
 
 
 ## ------------------------------------------------
-## Method `specify_prior_bvars$new`
+## Method `PriorBVARs$new()`
 ## ------------------------------------------------
 
 # a prior for 2-country, 3-variable example with one lag and stationary data
@@ -168,7 +168,7 @@ prior$M
 
 
 ## ------------------------------------------------
-## Method `specify_prior_bvars$get_prior`
+## Method `PriorBVARs$get_prior()`
 ## ------------------------------------------------
 
 # a prior for 2-country, 3-variable example with four lags

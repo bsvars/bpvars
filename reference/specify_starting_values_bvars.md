@@ -35,23 +35,23 @@ hierarchical panel VAR model.
 
 ### Public methods
 
-- [`specify_starting_values_bvars$new()`](#method-StartingValuesBVARs-new)
+- [`StartingValuesBVARs$new()`](#method-StartingValuesBVARs-initialize)
 
-- [`specify_starting_values_bvars$get_starting_values()`](#method-StartingValuesBVARs-get_starting_values)
+- [`StartingValuesBVARs$get_starting_values()`](#method-StartingValuesBVARs-get_starting_values)
 
-- [`specify_starting_values_bvars$set_starting_values()`](#method-StartingValuesBVARs-set_starting_values)
+- [`StartingValuesBVARs$set_starting_values()`](#method-StartingValuesBVARs-set_starting_values)
 
-- [`specify_starting_values_bvars$clone()`](#method-StartingValuesBVARs-clone)
+- [`StartingValuesBVARs$clone()`](#method-StartingValuesBVARs-clone)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `StartingValuesBVARs$new()`
 
 Create new starting values StartingValuesBVARs
 
 #### Usage
 
-    specify_starting_values_bvars$new(C, N, p, d = 0)
+    StartingValuesBVARs$new(C, N, p, d = 0)
 
 #### Arguments
 
@@ -82,14 +82,14 @@ Starting values StartingValuesBVARs
 
 ------------------------------------------------------------------------
 
-### Method `get_starting_values()`
+### `StartingValuesBVARs$get_starting_values()`
 
 Returns the elements of the starting values StartingValuesBVARs as a
 `list`.
 
 #### Usage
 
-    specify_starting_values_bvars$get_starting_values()
+    StartingValuesBVARs$get_starting_values()
 
 #### Examples
 
@@ -99,14 +99,14 @@ Returns the elements of the starting values StartingValuesBVARs as a
 
 ------------------------------------------------------------------------
 
-### Method `set_starting_values()`
+### `StartingValuesBVARs$set_starting_values()`
 
 Returns the elements of the starting values StartingValuesBVARs as a
 `list`.
 
 #### Usage
 
-    specify_starting_values_bvars$set_starting_values(last_draw)
+    StartingValuesBVARs$set_starting_values(last_draw)
 
 #### Arguments
 
@@ -131,13 +131,13 @@ the MCMC estimation.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `StartingValuesBVARs$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_starting_values_bvars$clone(deep = FALSE)
+    StartingValuesBVARs$clone(deep = FALSE)
 
 #### Arguments
 
@@ -153,7 +153,7 @@ sv = specify_starting_values_bvars$new(C = 2, N = 3, p = 1)
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvars$new`
+## Method `StartingValuesBVARs$new()`
 ## ------------------------------------------------
 
 # starting values for Bayesian VARs 2-country model with 4 lags for a 3-variable system.
@@ -161,7 +161,7 @@ sv = specify_starting_values_bvars$new(C = 2, N = 3, p = 4)
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvars$get_starting_values`
+## Method `StartingValuesBVARs$get_starting_values()`
 ## ------------------------------------------------
 
 # starting values for bvars with 1 lag for a 3-variable system
@@ -171,52 +171,52 @@ sv$get_starting_values()   # show starting values as list
 #> , , 1
 #> 
 #>               [,1]          [,2]          [,3]
-#> [1,] -0.0008439452 -0.0007882124  0.0001943920
-#> [2,] -0.0003762337  0.0003822045 -0.0010544180
-#> [3,] -0.0009723747  0.0005832566  0.0002652598
-#> [4,]  0.0003887593 -0.0008468751 -0.0007845331
+#> [1,] -0.0011085675 -0.0001978905 -0.0013404320
+#> [2,] -0.0004023415 -0.0021867963  0.0003385493
+#> [3,]  0.0008131702 -0.0007578514 -0.0015615494
+#> [4,]  0.0000595284  0.0013349899  0.0017041468
 #> 
 #> , , 2
 #> 
 #>               [,1]          [,2]          [,3]
-#> [1,]  0.0002853872 -0.0006962775 -0.0007984509
-#> [2,] -0.0012866067 -0.0015543635 -0.0003771572
-#> [3,] -0.0007154793 -0.0022001920 -0.0008928337
-#> [4,] -0.0007581746 -0.0007670535 -0.0012432983
+#> [1,]  5.413216e-05  0.0001977299 -0.0001768038
+#> [2,]  3.775696e-04 -0.0001645073 -0.0005625921
+#> [3,] -9.796387e-04  0.0002826896  0.0010619837
+#> [4,] -1.067624e-03 -0.0003604902  0.0007249878
 #> 
 #> 
 #> $Sigma_c
 #> , , 1
 #> 
-#>           [,1]        [,2]        [,3]
-#> [1,] 13.439611 -1.11358127 -3.15303610
-#> [2,] -1.113581  3.25161200 -0.03968527
-#> [3,] -3.153036 -0.03968527  4.14559302
+#>           [,1]      [,2]      [,3]
+#> [1,]  8.528677  8.324654 -1.665982
+#> [2,]  8.324654 10.461182 -1.722317
+#> [3,] -1.665982 -1.722317  1.821717
 #> 
 #> , , 2
 #> 
-#>            [,1]      [,2]       [,3]
-#> [1,]  5.6932944  8.183204 -0.9675549
-#> [2,]  8.1832045 12.081936 -1.2255126
-#> [3,] -0.9675549 -1.225513  2.9932015
+#>           [,1]      [,2]       [,3]
+#> [1,] 5.9911612  2.126774  0.8801813
+#> [2,] 2.1267736  4.206568 -2.3698911
+#> [3,] 0.8801813 -2.369891  2.8129706
 #> 
 #> 
 #> $nu
 #> [1] 4.1 4.1
 #> 
 #> $m
-#> [1] -0.0008362471 -0.0010932186
+#> [1] -0.0006002325  0.0016053817
 #> 
 #> $w
-#> [1] 2.6617484 0.4549631
+#> [1] 0.9798671 3.4109203
 #> 
 #> $s
-#> [1] 2.729605 2.342323
+#> [1] 0.8229502 0.7573296
 #> 
 
 
 ## ------------------------------------------------
-## Method `specify_starting_values_bvars$set_starting_values`
+## Method `StartingValuesBVARs$set_starting_values()`
 ## ------------------------------------------------
 
 sv = specify_starting_values_bvars$new(C = 2, N = 3, p = 1)

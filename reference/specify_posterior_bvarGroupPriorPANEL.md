@@ -12,7 +12,7 @@ the last draw provided in element `posterior`.
 
 ## Super classes
 
-`bpvars::PosteriorBVARPANEL` -\> `bpvars::PosteriorBVARGROUPPANEL` -\>
+`PosteriorBVARPANEL` -\> `PosteriorBVARGROUPPANEL` -\>
 `PosteriorBVARGROUPPRIORPANEL`
 
 ## Public fields
@@ -32,24 +32,24 @@ the last draw provided in element `posterior`.
 
 ### Public methods
 
-- [`specify_posterior_bvarGroupPriorPANEL$new()`](#method-PosteriorBVARGROUPPRIORPANEL-new)
+- [`PosteriorBVARGROUPPRIORPANEL$new()`](#method-PosteriorBVARGROUPPRIORPANEL-initialize)
 
-- [`specify_posterior_bvarGroupPriorPANEL$clone()`](#method-PosteriorBVARGROUPPRIORPANEL-clone)
+- [`PosteriorBVARGROUPPRIORPANEL$clone()`](#method-PosteriorBVARGROUPPRIORPANEL-clone)
 
 Inherited methods
 
-- [`bpvars::PosteriorBVARPANEL$get_last_draw()`](http://bsvars.org/bpvars/reference/PosteriorBVARPANEL.html#method-get_last_draw)
-- [`bpvars::PosteriorBVARPANEL$get_posterior()`](http://bsvars.org/bpvars/reference/PosteriorBVARPANEL.html#method-get_posterior)
+- `PosteriorBVARPANEL$get_last_draw()`
+- `PosteriorBVARPANEL$get_posterior()`
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `PosteriorBVARGROUPPRIORPANEL$new()`
 
 Create a new posterior output PosteriorBVARGROUPPRIORPANEL.
 
 #### Usage
 
-    specify_posterior_bvarGroupPriorPANEL$new(specification, posterior)
+    PosteriorBVARGROUPPRIORPANEL$new(specification, posterior)
 
 #### Arguments
 
@@ -68,13 +68,13 @@ A posterior output PosteriorBVARGROUPPRIORPANEL.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `PosteriorBVARGROUPPRIORPANEL$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_posterior_bvarGroupPriorPANEL$clone(deep = FALSE)
+    PosteriorBVARGROUPPRIORPANEL$clone(deep = FALSE)
 
 #### Arguments
 

@@ -30,13 +30,13 @@ window samples.
 
 ### Public methods
 
-- [`specify_poosf_exercise$new()`](#method-POOSForecastSetup-new)
+- [`POOSForecastSetup$new()`](#method-POOSForecastSetup-initialize)
 
-- [`specify_poosf_exercise$clone()`](#method-POOSForecastSetup-clone)
+- [`POOSForecastSetup$clone()`](#method-POOSForecastSetup-clone)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `POOSForecastSetup$new()`
 
 Create a new specification `POOSForecastSetup` of the recursive
 pseudo-out-of-sample forecasting exercise using expanding window
@@ -44,13 +44,7 @@ samples.
 
 #### Usage
 
-    specify_poosf_exercise$new(
-      spec,
-      S,
-      S_burn,
-      horizons = 1L,
-      training_sample = 1L
-    )
+    POOSForecastSetup$new(spec, S, S_burn, horizons = 1L, training_sample = 1L)
 
 #### Arguments
 
@@ -93,13 +87,13 @@ samples.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `POOSForecastSetup$clone()`
 
 The objects of this class are cloneable with this method.
 
 #### Usage
 
-    specify_poosf_exercise$clone(deep = FALSE)
+    POOSForecastSetup$clone(deep = FALSE)
 
 #### Arguments
 
@@ -115,7 +109,7 @@ poos = specify_poosf_exercise$new(spec, 5000, 1000, 1:2, 10)
 
 
 ## ------------------------------------------------
-## Method `specify_poosf_exercise$new`
+## Method `POOSForecastSetup$new()`
 ## ------------------------------------------------
 
 spec = specify_bvarPANEL$new(ilo_dynamic_panel)

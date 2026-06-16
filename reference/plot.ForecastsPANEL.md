@@ -104,7 +104,7 @@ posterior     = estimate(burn_in, 10)                     # estimate the model
 #>  Press Esc to interrupt the computations
 #> **************************************************|
 
-# forecast 5 years ahead
+# forecast 6 years ahead
 predictive    = forecast(posterior, 6)
 plot(predictive, which_c = "ARG")                                # plot forecasts
 

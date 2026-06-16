@@ -5,6 +5,7 @@ score `"lps"`, root-mean-squared-forecast error `"rmsfe"`,
 mean-absolute-forecast error `"mafe"` from the output of the recursive
 pseudo-out-of-sample forecastinge exercise performed using function
 [`forecast_poos_recursively`](http://bsvars.org/bpvars/reference/forecast_poos_recursively.md).
+See Sanchez-Martinez & Woźniak (2026).
 
 ## Usage
 
@@ -30,6 +31,14 @@ compute_forecast_performance(forecasts, measures = c("pls", "rmsfe", "mafe"))
 ## Value
 
 An object of class `ForecastingPerformance`
+
+## References
+
+Sanchez-Martinez & Woźniak (2026). Forecasting with Bayesian Panel
+Vector Autoregressions Using the R Package bpvars. University of
+Melbourne Working Paper, 1-39,
+[doi:10.48550/arXiv.2606.14143](https://doi.org/10.48550/arXiv.2606.14143)
+.
 
 ## See also
 
