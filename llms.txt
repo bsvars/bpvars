@@ -47,7 +47,7 @@ website](https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/bsvarSIGNs
 [![bpvars
 website](https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/bpvars/bpvars.png)](https://bsvars.org/bpvars/)
 [![bvars
-website](reference/figures/logo.png)](https://bsvars.org/bvars/)
+website](https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/bvars/bvars.png)](https://bsvars.org/bvars/)
 [![StealLikeBayes
 website](https://raw.githubusercontent.com/bsvars/hex/refs/heads/main/StealLikeBayes/StealLikeBayes.png)](https://bsvars.org/StealLikeBayes/)
 
