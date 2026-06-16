@@ -1,5 +1,3 @@
-# bpvars (development version)
-
 # bpvars 2.0
 
 1. The package includes a vignette!
