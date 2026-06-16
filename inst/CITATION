@@ -17,6 +17,6 @@ bibentry(bibtype = "article",
   year         = 2026,
   journal      = "University of Melbourne Working Paper",
   pages        = "1--39",
-  doi           = "",
-  textVersion = "Sanchez-Martinez, M., Woźniak, T. (2026). Forecasting with Bayesian Panel Vector Autoregressions Using the R Package bpvars, DOI: ."
+  doi           = "10.48550/arXiv.2606.14143",
+  textVersion = "Sanchez-Martinez, M., Woźniak, T. (2026). Forecasting with Bayesian Panel Vector Autoregressions Using the R Package bpvars, DOI: 10.48550/arXiv.2606.14143."
 )
